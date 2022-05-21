@@ -2,21 +2,22 @@ import classNames from 'classnames'
 import React from 'react'
 import Spinner from './Spinner'
 
-const Button = ({ children, className, variant, loading, ...props }) => {
+const Button = ({ children, className, variant = 'primary', size = 'lg', loading, ...props }) => {
   return (
     <button
       className={classNames(
-        'block w-full border rounded-md h-[56px] px-8 font-bold text-white flex items-center justify-center',
+        'w-full rounded-md h-[56px] px-8 font-bold text-white flex items-center justify-center',
         {
           'bg-indigo-600': variant === 'primary',
           'opacity-80': loading,
+          'px-3 h-[40px] text-sm': size === 'sm',
         },
         className
       )}
       disabled={loading}
       {...props}
     >
-      {loading ? <Spinner /> : children}
+      {loading ? <Spinner color='#fff' /> : children}
     </button>
   )
 }

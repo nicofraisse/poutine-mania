@@ -7,7 +7,7 @@ import '../styles/globals.css'
 function MyApp({ Component, pageProps }) {
   return (
     <Provider session={pageProps.session}>
-      <Layout>
+      <Layout {...pageProps}>
         <>
           <Component {...pageProps} />
           <Toaster position='bottom-right' />

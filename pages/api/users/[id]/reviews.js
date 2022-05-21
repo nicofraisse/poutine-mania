@@ -6,26 +6,9 @@ const handler = async (req, res) => {
   const client = await connectToDatabase()
   const db = await client.db()
   const session = await getSession({ req })
+  console.log(req.query)
 
-  const data = await db
-    .collection('reviews')
-    .aggregate([
-      {
-        $match: {
-          userId: new ObjectId(session.user._id),
-        },
-      },
-      {
-        $lookup: {
-          from: 'restaurants',
-          localField: 'restaurantId',
-          foreignField: '_id',
-          as: 'restaurant',
-        },
-      },
-      { $unwind: '$restaurant' },
-    ])
-    .toArray()
+  const data = await db.collection('reviews').find({}).toArray()
 
   res.status(200).json(data)
 }

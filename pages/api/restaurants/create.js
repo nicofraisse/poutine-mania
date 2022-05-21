@@ -6,6 +6,7 @@ const handler = async (req, res) => {
 
   await db.collection('restaurants').insertOne({
     name: req.body.name,
+    addresses: JSON.parse(req.body.addresses),
   })
 
   const data = await db.collection('restaurants').find({}).toArray()

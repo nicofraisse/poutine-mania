@@ -7,19 +7,21 @@ import Form from 'components/Form'
 import Field from 'components/Field'
 import Button from 'components/Button'
 
-const SignUp = () => {
+const SignUp = ({ onSubmit }) => {
   const { push } = useRouter()
 
-  const handleSubmit = (values) => {
+  const handleSubmit = (values, formikBag) => {
     axios
       .post('/api/auth/signup', values)
-      .then((data) => {
-        toast.success('Sign up successful')
+      .then(() => {
+        toast.success('Inscription réussie!')
         push('/')
+        formikBag.setSubmitting(false)
+        onSubmit && onSubmit()
       })
       .catch((e) => {
-        console.log(e)
-        toast.error(e.response.data.message)
+        toast.error(e?.response?.data?.message || e.message)
+        formikBag.setSubmitting(false)
       })
   }
 

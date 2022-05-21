@@ -2,5 +2,16 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/": "pages/index.js"
+  "/restaurants": "pages/restaurants.js",
+  "/next/dist/pages/_error": "pages/next/dist/pages/_error.js",
+  "/api/auth/[...nextauth]": "pages/api/auth/[...nextauth].js",
+  "/restaurants/[id]": "pages/restaurants/[id].js",
+  "/api/restaurants": "pages/api/restaurants.js",
+  "/api/restaurants/[id]": "pages/api/restaurants/[id].js",
+  "/api/restaurants/[id]/reviews": "pages/api/restaurants/[id]/reviews.js",
+  "/admin": "pages/admin.js",
+  "/admin/restaurants": "pages/admin/restaurants.js",
+  "/restaurants/[id]/edit": "pages/restaurants/[id]/edit.js",
+  "/admin/create-restaurant": "pages/admin/create-restaurant.js",
+  "/api/restaurants/create": "pages/api/restaurants/create.js"
 }

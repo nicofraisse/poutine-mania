@@ -4,6 +4,7 @@ import axios from 'axios'
 import * as Yup from 'yup'
 import { useRouter } from 'next/dist/client/router'
 import { useState, useEffect } from 'react'
+import toast from 'react-hot-toast'
 
 const EditRestaurants = () => {
   const [restaurant, setRestaurant] = useState(null)
@@ -17,9 +18,8 @@ const EditRestaurants = () => {
         .then(({ data }) => {
           setLoading(false)
           setRestaurant(data)
-          console.log('found', data)
         })
-        .catch((e) => console.log('error, e'))
+        .catch((e) => toast.error(e.message))
     }
   }, [query])
 

@@ -6,18 +6,12 @@ module.exports = {
     config.resolve.alias['context'] = path.join(__dirname, 'context')
     config.resolve.alias['data'] = path.join(__dirname, 'data')
     config.resolve.alias['lib'] = path.join(__dirname, 'lib')
-    config.resolve.alias['hooks'] = path.join(__dirname, 'hooks')
+    // config.resolve.alias['hooks'] = path.join(__dirname, 'hooks')
     config.resolve.alias['context'] = path.join(__dirname, 'context')
     config.resolve.alias['styles'] = path.join(__dirname, 'styles')
     config.module.rules.push({
-      test: /\.(graphql|gql)$/,
       include: [options.dir],
       exclude: /node_modules/,
-      use: [
-        {
-          loader: 'graphql-tag/loader',
-        },
-      ],
     })
 
     return config
