@@ -1,6 +1,7 @@
 import React from 'react'
 import RatingPill from 'components/RatingPill'
 import { Image } from 'react-feather'
+import { formatRating } from '../lib/formatRating'
 
 const RestaurantHeader = ({ restaurant }) => {
   return (
@@ -26,7 +27,9 @@ const RestaurantHeader = ({ restaurant }) => {
 
             <RatingPill avgRating={restaurant.avgRating} reviewCount={restaurant.reviewCount} />
           </div>
-          <div className='mt-2'>Restaurant à Frankfurt • $$ • 6.0/10 (2 avis)</div>
+          <div className='mt-2'>
+            Restaurant à Frankfurt • $$ • {formatRating(restaurant.avgRating)}/10 (2 avis)
+          </div>
         </div>
       </div>
     </div>

@@ -20,11 +20,7 @@ const Layout = (props) => {
           <Sidebar />
         </div>
         <div style={{ width: 'calc(100vw - 300px)' }}>
-          <Header
-            handleOpenSignup={() => setSignupOpen(true)}
-            handleOpenLogin={() => setLoginOpen(true)}
-            handleOpenRate={() => setRateOpen(true)}
-          />
+          <Header handleOpenSignup={() => setSignupOpen(true)} />
 
           <main className='min-h-screen-minus-nav'>{props.children}</main>
         </div>
@@ -42,31 +38,6 @@ const Layout = (props) => {
       >
         <h2 className='font-black text-3xl text-center pb-3 pt-5'>Créer mon compte</h2>
         <SignUp onSubmit={() => setSignupOpen(false)} />
-      </Modal>
-      <Modal
-        classNames={{
-          overlay: 'customOverlay',
-          modal: 'customModal',
-        }}
-        open={loginOpen}
-        onClose={() => setLoginOpen(false)}
-        closeIcon={<X />}
-        center
-      >
-        <h2 className='font-black text-3xl text-center pb-3 pt-5'>Connexion</h2>
-        <Login onSubmit={() => setLoginOpen(false)} />
-      </Modal>
-      <Modal
-        classNames={{
-          overlay: 'customOverlay',
-          modal: 'customModal',
-        }}
-        open={rateOpen}
-        onClose={() => setRateOpen(false)}
-        closeIcon={<X />}
-        center
-      >
-        <RateRestaurant onClose={() => setRateOpen(false)} />
       </Modal>
     </div>
   )

@@ -9,6 +9,7 @@ import { useGet } from '../../lib/useAxios'
 import toast from 'react-hot-toast'
 import classNames from 'classnames'
 import Spinner from '../Spinner'
+import { formatRating } from '../../lib/formatRating'
 
 const PublicProfile = ({ user }) => {
   const [searchQuery, setSearchQuery] = useState('')
@@ -92,7 +93,7 @@ const PublicProfile = ({ user }) => {
             key={i}
             className='border rounded my-2 p-6 text-gray-400 flex items-center cursor-pointer hover:bg-gray-50 flex-wrap-reverse break-all'
           >
-            {r.restaurant.name}: {r.rating}/10
+            {r.restaurant.name}: {formatRating(r.rating)}/10
           </div>
         ))}
 

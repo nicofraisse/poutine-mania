@@ -7,11 +7,15 @@ import { useState, createRef } from 'react'
 import Dropdown from './Dropdown'
 import Image from 'next/image'
 import Input from 'components/Input'
+import { useRateRestaurant } from './context/RateRestaurantProvider'
+import { useLoginForm } from './context/LoginFormProvider'
 
 const Header = ({ handleOpenSignup, handleOpenLogin, handleOpenRate }) => {
   const { currentUser } = useCurrentUser()
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const toggleRef = createRef()
+  const { rateRestaurant } = useRateRestaurant()
+  const { openLogin } = useLoginForm()
 
   return (
     <header className='flex justify-between items-center h-[64px] w-full bg-light-orange pl-4 border-b'>
@@ -26,7 +30,7 @@ const Header = ({ handleOpenSignup, handleOpenLogin, handleOpenRate }) => {
         <ul className='flex items-center'>
           {currentUser && (
             <>
-              <Button size='sm' className='flex ml-6 mr-2' onClick={handleOpenRate}>
+              <Button size='sm' className='flex ml-6 mr-2' onClick={rateRestaurant}>
                 <Edit className='mr-2' /> Noter
               </Button>
               <div className='relative mx-5'>
@@ -58,7 +62,7 @@ const Header = ({ handleOpenSignup, handleOpenLogin, handleOpenRate }) => {
           {!currentUser && (
             <>
               <div className='mx-4 text-neutral-700 hover:text-neutral-900'>
-                <Button href='/login' size='sm' variant='secondary' onClick={handleOpenLogin}>
+                <Button size='sm' variant='secondary' onClick={openLogin}>
                   Connexion
                 </Button>
               </div>

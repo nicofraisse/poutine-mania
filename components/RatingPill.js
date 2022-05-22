@@ -1,4 +1,5 @@
 import classNames from 'classnames'
+import { formatRating } from '../lib/formatRating'
 
 const RatingPill = ({ avgRating, reviewCount }) => {
   return (
@@ -12,7 +13,7 @@ const RatingPill = ({ avgRating, reviewCount }) => {
     >
       {reviewCount > 0 ? (
         <>
-          <span className='font-bold mr-1'>{avgRating}/10</span>
+          <span className='font-bold mr-1'>{formatRating(avgRating)}/10</span>
           <span className='text-xs text-gray-600'> • {reviewCount} avis</span>
         </>
       ) : (

@@ -1,14 +1,20 @@
 import React from 'react'
+import { formatRating } from '../lib/formatRating'
+import { formatName } from '../lib/formatName'
 
 const ReviewCard = ({ review }) => {
   return (
     <div className='py-6 px-1 border-t'>
       <h3 className='font-bold inline'>
-        <span className='p-2 bg-green-200 rounded mr-1'>{review.rating}/10</span> Excellente
-        poutine!
+        <span className='p-2 bg-green-200 rounded mr-1'>{formatRating(review.rating)}/10</span>{' '}
+        Excellente poutine!
       </h3>
       <div className='text-gray-400 ml-1 text-sm inline'>
-        - par <span className='font-bold'>Madelaine Cyr</span>, 30/02/2021
+        - par{' '}
+        <span className='font-bold cursor-pointer hover:text-gray-500'>
+          {formatName(review.user)}
+        </span>
+        , le 30/02/2021
       </div>
 
       <p className='text-gray-600 mt-4 text-sm'>
