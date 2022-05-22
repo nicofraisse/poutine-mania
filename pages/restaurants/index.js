@@ -4,7 +4,6 @@ import Link from 'next/link'
 import toast from 'react-hot-toast'
 import Spinner from 'components/Spinner'
 import RatingPill from 'components/RatingPill'
-
 import Map from 'components/Map'
 
 const Restaurants = () => {
