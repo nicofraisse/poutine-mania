@@ -120,15 +120,49 @@ const RateRestaurant = ({ onClose, preselectedRestaurant }) => {
             email: Yup.string().min(1).required('Required'),
             password: Yup.string().min(1).required('Required'),
           })}
-          className='w-[300px] p-4'
+          className='w-[600px] p-4'
         >
           {({ isSubmitting }) => (
             <>
-              <Field name='email' />
-              <Field name='password' type='password' />
-              <Button type='submit' variant='primary' className='mt-6' loading={isSubmitting}>
-                Connexion
-              </Button>
+              <div className='flex'>
+                <div className='grow'>
+                  <Field
+                    name='rating'
+                    label='Note sur 10 (requis)'
+                    type='number'
+                    min={0}
+                    max={10}
+                  />
+                  <Field name='title' label='Titre' type='text' />
+                  <Field name='comment' label='Commentaire' type='textarea' />
+                  <Button type='submit' variant='primary' className='mt-6' loading={isSubmitting}>
+                    Noter
+                  </Button>
+                </div>
+                <div className='flex w-1/6 justify-center'>
+                  <div className='bg-zinc-300 h-full rounded-full w-3'></div>
+                  <ReactSlider
+                    min={0}
+                    max={10}
+                    invert={true}
+                    orientation='vertical'
+                    className='ml-[-30px]'
+                    defaultValue={6}
+                    onChange={(rating) => setFormValues({ ...formValues, rating })}
+                    renderThumb={(props) => (
+                      <div
+                        {...props}
+                        className='text-5xl cursor-pointer hover:transform hover:scale-125 transition duration-200'
+                      >
+                        {getSmiley(formValues.rating)}
+                      </div>
+                    )}
+                  />
+                </div>
+                {/* <div className='text-center mt-14 text-lg'>
+                  <span className='font-bold text-3xl mr-1'>{formValues.rating}</span>/ 10
+                </div> */}
+              </div>
             </>
           )}
         </Form>
