@@ -12,9 +12,9 @@ const ReviewStats = ({ reviews }) => {
       <div className='flex items-center justify-between'>
         <div className='flex items-center'>
           <h2 className='pl-1 text-xl font-bold mr-3'>{reviews.length} avis</h2>
-          <div className='flex items-center underline text-md text-gray-600 font-bold'>
+          <div className='flex items-center underline text-md text-gray-600 font-bold hover:bg-gray-100 p-2 rounded-lg select-none cursor-pointer'>
             <Edit3 size={20} className='mr-1' />
-            Laissez le vôtre
+            Notez leur poutine
           </div>
         </div>
         <div className='flex'>

@@ -4,6 +4,7 @@ import 'mapbox-gl/dist/mapbox-gl.css'
 import { X } from 'react-feather'
 import { useRouter } from 'next/router'
 import RatingPill from 'components/RatingPill'
+import { flatten, minBy, maxBy } from 'lodash'
 
 const MAPBOX_TOKEN =
   'pk.eyJ1Ijoibmljb2ZyYWlzc2UiLCJhIjoiY2thZzZtemk3MDE4NzJybXVtMjF5a2xyOSJ9.6JURdkZj5FnZ5lxMzPncOA'
@@ -54,16 +55,35 @@ const MarkerAndPopup = ({ restaurant, address }) => {
 }
 
 const MapMap = ({ restaurants }) => {
+  console.log({ restaurants })
+  const allCoordinates = flatten(restaurants.map((r) => r.addresses.map((a) => a.value.center)))
+  const minLongitude = minBy(allCoordinates, (c) => c[0])?.[0]
+  const minLatitude = minBy(allCoordinates, (c) => c[1])?.[1]
+  const maxLongitude = maxBy(allCoordinates, (c) => c[0])?.[0]
+  const maxLatitude = maxBy(allCoordinates, (c) => c[1])?.[1]
+
+  console.log('bounds', [
+    [minLongitude, minLatitude],
+    [maxLongitude, maxLatitude],
+  ])
+
+  if (restaurants.length === 0) return 'nothing'
+
   return (
     <div className='h-full'>
       <Map
         reuseMaps
         id='mymap'
-        initialViewState={{
-          longitude: -72.5421,
-          latitude: 46.343,
-          zoom: 6,
-        }}
+        // initialViewState={{
+        //   longitude: -72.5421,
+        //   latitude: 46.343,
+        //   zoom: 6,
+        // }}
+        bounds={[
+          [minLongitude, minLatitude],
+          [maxLongitude, maxLatitude],
+        ]}
+        fitBoundsOptions={{ padding: 60, maxZoom: 13 }}
         style={{ width: '100%', height: '100%' }}
         mapStyle='mapbox://styles/mapbox/streets-v9'
         mapboxAccessToken={MAPBOX_TOKEN}
