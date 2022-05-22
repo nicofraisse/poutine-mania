@@ -11,6 +11,7 @@ const Button = ({ children, className, variant = 'primary', size = 'lg', loading
           'bg-indigo-600': variant === 'primary',
           'opacity-80': loading,
           'px-3 h-[40px] text-sm': size === 'sm',
+          'bg-none border-2 border-indigo-600 text-indigo-600': variant === 'secondary',
         },
         className
       )}

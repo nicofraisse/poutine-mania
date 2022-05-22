@@ -4,7 +4,7 @@ import { useState } from 'react'
 import 'react-responsive-modal/styles.css'
 import { X } from 'react-feather'
 import SignUp from '../forms/SignUp'
-import Login from '../forms/LogIn'
+import Login from '../forms/Login'
 import RateRestaurant from '../forms/RateRestaurant'
 import Sidebar from './Sidebar'
 

@@ -1,17 +1,42 @@
 import axios from 'axios'
 import { useRouter } from 'next/dist/client/router'
 import React from 'react'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Trash, Edit } from 'react-feather'
 import Link from 'next/link'
 import toast from 'react-hot-toast'
 import Spinner from '../../components/Spinner'
 
+import { MapProvider } from 'react-map-gl'
+import Map from '../../components/Map'
+import classNames from 'classnames'
+
+// mapboxgl.accessToken = process.env.MAPBOX_API_KEY
+
+const RateSection = ({ avgRating, reviewCount }) => {
+  return (
+    <div
+      className={classNames('px-2 py-[4px] text-sm rounded flex items-center bg-green-100', {
+        'bg-gray-100': reviewCount === 0,
+        'bg-yellow-100': avgRating < 7,
+        'bg-red-100': avgRating < 4,
+      })}
+    >
+      {reviewCount > 0 ? (
+        <>
+          <span className='font-bold mr-1'>{avgRating}/10</span>
+          <span className='text-xs text-gray-600'> • {reviewCount} avis</span>
+        </>
+      ) : (
+        <span className='text-xs text-gray-600'>Aucun avis</span>
+      )}
+    </div>
+  )
+}
+
 const Restaurants = () => {
   const [restaurants, setRestaurants] = useState([])
   const [loading, setLoading] = useState(true)
-
-  const { push, reload } = useRouter()
 
   useEffect(() => {
     axios
@@ -27,10 +52,12 @@ const Restaurants = () => {
 
   if (!restaurants) return 'no restaurants'
 
+  console.log(restaurants)
+
   return (
     <div className='flex w-full h-screen-minus-navbar'>
       <div className='grow overflow-x-scroll pt-6 w-1/2'>
-        {[...restaurants, ...restaurants, ...restaurants, ...restaurants].map((r) => (
+        {restaurants.map((r) => (
           <Link
             key={r._id}
             className='px-3 pb-6'
@@ -38,23 +65,23 @@ const Restaurants = () => {
             target='_blank'
             passHref
           >
-            <a target='_blank' rel='noopener noreferrer' className='px-3 pb-6 block'>
+            <a target='_blank' rel='noopener noreferrer' className='px-4 pb-6 block'>
               <div className='pb-6 border-b flex justify-between items-start'>
                 <div className='bg-gray-200 rounded-lg w-1/4 h-24 mr-3'></div>
-                <div className='w-3/4'>
-                  <div className='flex justify-between'>
+                <div>
+                  <div className='flex justify-between items-center mb-2'>
                     <div className='font-bold text-lg'>{r.name}</div>
-                    <div className='px-2 bg-green-100 text-sm rounded flex items-center'>
-                      <span className='font-bold mr-1'>6/10</span>
-                      <span className='text-xs text-gray-600'> • 34 avis</span>
-                    </div>
+                    <RateSection avgRating={r.avgRating} reviewCount={r.reviewCount} />
                   </div>
+
                   <div className='text-sm text-gray-500'>
-                    10 rue de Castelneau, H3X 4L0 Montréal
+                    {r.addresses.length === 1
+                      ? r.addresses[0].label
+                      : `${r.addresses.length} adresses au Québec`}
                   </div>
                   <div className='text-ellipsis text-xs text-gray-500 mt-3'>
-                    "...la poutine était vraiment excellente, miam. Les frites un peu sèches mais
-                    quand même bonnes. Les frites un peu sèches mais quand..."{' '}
+                    &quot;...la poutine était vraiment excellente, miam. Les frites un peu sèches
+                    mais quand même bonnes. Les frites un peu sèches mais quand...&quot;{' '}
                     <span className='font-bold underline'>lire la suite</span>
                   </div>
                 </div>
@@ -63,7 +90,9 @@ const Restaurants = () => {
           </Link>
         ))}
       </div>
-      <div className='bg-blue-100 w-1/2'>Map</div>
+      <div className='w-1/2'>
+        <Map restaurants={restaurants} />
+      </div>
     </div>
   )
 }

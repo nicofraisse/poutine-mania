@@ -8,18 +8,21 @@ import classNames from 'classnames'
 const Item = ({ label, href, icon }) => {
   const { pathname } = useRouter()
   const isActive = pathname?.split('/')[1] === href
+  const Icon = icon
 
   return (
     <Link href={'/' + href} passHref>
       <div
         className={classNames(
-          'flex items-center p-5 pl-12 text-xl hover:bg-gray-100 cursor-pointer',
+          'flex items-center p-5 pl-12 text-lg hover:bg-gray-100 cursor-pointer',
           {
             'bg-light-orange font-bold': isActive,
           }
         )}
       >
-        <span className='mr-5'>{icon}</span>
+        <span className='mr-5'>
+          <Icon size={22} />
+        </span>
         {label}
       </div>
     </Link>
@@ -28,7 +31,7 @@ const Item = ({ label, href, icon }) => {
 
 const Sidebar = () => {
   return (
-    <nav className='w-[320px] h-screen border-r bg-white pt-2'>
+    <nav className='w-[300px] h-screen border-r bg-white pt-2'>
       <Link href='/'>
         <a>
           <div className='flex items-center pl-8'>
@@ -40,13 +43,13 @@ const Sidebar = () => {
           </div>
         </a>
       </Link>
-      <Item label='Découvrir' icon={<Hash />} href='feed' />
-      <Item label='À essayer (3)' icon={<Watch />} href='watchlist' />
-      <Item label='Restaurants' icon={<Search />} href='restaurants' />
-      <Item label='Mon top poutines' icon={<Heart />} href='mon-top' />
-      <Item label='Communauté' icon={<Users />} href='users' />
-      <Item label='Profil' icon={<User />} href='profil' />
-      <Item label='Admin' icon={<Lock />} href='admin' />
+      <Item label='Découvrir' icon={Hash} href='feed' />
+      <Item label='À essayer (3)' icon={Watch} href='watchlist' />
+      <Item label='Restaurants' icon={Search} href='restaurants' />
+      <Item label='Mon top poutines' icon={Heart} href='mon-top' />
+      <Item label='Communauté' icon={Users} href='users' />
+      <Item label='Profil' icon={User} href='profil' />
+      <Item label='Admin' icon={Lock} href='admin' />
     </nav>
   )
 }

@@ -4,5 +4,11 @@
     "files": [
       "static/chunks/node_modules_next_dist_client_dev_noop_js.js"
     ]
+  },
+  "../node_modules/react-map-gl/dist/esm/components/map.js -> mapbox-gl": {
+    "id": "./node_modules/mapbox-gl/dist/mapbox-gl.js",
+    "files": [
+      "static/chunks/node_modules_mapbox-gl_dist_mapbox-gl_js.js"
+    ]
   }
 }

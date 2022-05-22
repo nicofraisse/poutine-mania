@@ -18,7 +18,7 @@ const SignUp = () => {
         push('/')
       })
       .catch((e) => {
-\        toast.error(e.response.data.message)
+        toast.error(e.response.data.message)
       })
   }
 
@@ -50,7 +50,7 @@ const SignUp = () => {
             ) : null}
 
             <Button type='submit' variant='primary' className='mt-6'>
-              Je m'inscris
+              Je m&apos;inscris
             </Button>
           </>
         )}

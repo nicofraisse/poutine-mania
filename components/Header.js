@@ -57,13 +57,13 @@ const Header = ({ handleOpenSignup, handleOpenLogin, handleOpenRate }) => {
           )}
           {!currentUser && (
             <>
-              <div className=' mx-5 text-neutral-700 hover:text-neutral-900'>
-                <Button variant='primary' onClick={handleOpenSignup}>
+              <div className='mx-4 text-neutral-700 hover:text-neutral-900'>
+                <Button variant='primary' size='sm' onClick={handleOpenSignup}>
                   Inscription
                 </Button>
               </div>
-              <div className=' mx-5 text-neutral-700 hover:text-neutral-900'>
-                <Button variant='primary' href='/login' onClick={handleOpenLogin}>
+              <div className='mr-4 text-neutral-700 hover:text-neutral-900'>
+                <Button href='/login' size='sm' variant='secondary' onClick={handleOpenLogin}>
                   Connexion
                 </Button>
               </div>

@@ -3,6 +3,8 @@ import Input from 'components/Input'
 import { MinusCircle, Plus, PlusCircle } from 'react-feather'
 import { useState, useEffect } from 'react'
 import { useField, useFormikContext } from 'formik'
+import { useGet } from '../../lib/useAxios'
+import axios from 'axios'
 
 const DynamicInput = ({ value, onChange, ...props }) => {
   const [inputs, setInputs] = useState([''])
@@ -13,9 +15,10 @@ const DynamicInput = ({ value, onChange, ...props }) => {
     setFieldValue(field.name, JSON.stringify(inputs))
   }, [inputs, field.name, setFieldValue])
 
-  const handleChange = (e, index) => {
+  const handleChange = async (e, index) => {
     const inputsCopy = [...inputs]
     inputsCopy[index] = e.target.value
+
     setInputs(inputsCopy)
   }
 

@@ -48,7 +48,7 @@ const SignUp = ({ onSubmit }) => {
           <Field name='password' type='password' />
 
           <Button type='submit' variant='primary' className='mt-6' loading={isSubmitting}>
-            Je m'inscris
+            Je m&apos;inscris
           </Button>
         </>
       )}
