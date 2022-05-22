@@ -28,7 +28,7 @@ const Index = () => {
             </div>
             <div className='mb-4'>
               <ExternalLink className='mr-2 inline' size={20} />
-              <a target='_blank' href='https://www.poutineville.ca' className='underline'>
+              <a target='_blank' href='https://www.poutineville.ca' className='underline' rel="noreferrer">
                 https://www.poutineville.ca
               </a>
             </div>
