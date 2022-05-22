@@ -1,7 +1,6 @@
 import classNames from 'classnames'
 
 const RatingPill = ({ avgRating, reviewCount }) => {
-  console.log({ reviewCount })
   return (
     <div
       className={classNames('px-2 py-[4px] text-sm rounded flex items-center', {

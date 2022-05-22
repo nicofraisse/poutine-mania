@@ -27,13 +27,12 @@ const getSmiley = (value) => {
   }
 }
 
-const RateRestaurant = ({ onClose }) => {
+const RateRestaurant = ({ onClose, preselectedRestaurant }) => {
   const [searchQuery, setSearchQuery] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [selectedRestaurant, setSelectedRestaurant] = useState(null)
+  const [selectedRestaurant, setSelectedRestaurant] = useState(preselectedRestaurant || null)
   const [formValues, setFormValues] = useState({})
-  const [step, setStep] = useState(1)
-
+  const [step, setStep] = useState(preselectedRestaurant ? 2 : 1)
   const { data: searchResults } = useGet(`/api/restaurants?search=${searchQuery}`)
 
   const handleSubmit = async () => {

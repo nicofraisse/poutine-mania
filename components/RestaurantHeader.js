@@ -1,19 +1,19 @@
 import React from 'react'
 import RatingPill from 'components/RatingPill'
+import { Image } from 'react-feather'
 
 const RestaurantHeader = ({ restaurant }) => {
-  console.log(restaurant)
   return (
     <div className='relative' style={{ height: '17vw' }}>
       <div className='flex w-full h-full'>
-        <div className='w-1/3 bg-gray-200 flex items-center justify-center border border-gray-400'>
-          photo
+        <div className='w-1/3 bg-gray-100 flex items-center justify-center border-r-2 border-gray-50'>
+          <Image className='text-gray-300' size='80' alt='default' />
         </div>
-        <div className='w-1/3 bg-gray-200 flex items-center justify-center border border-gray-400'>
-          photo
+        <div className='w-1/3 bg-gray-100 flex items-center justify-center border-r-2 border-gray-50'>
+          <Image className='text-gray-300' size='80' alt='default' />
         </div>
-        <div className='w-1/3 bg-gray-200 flex items-center justify-center border border-gray-400'>
-          photo
+        <div className='w-1/3 bg-gray-100 flex items-center justify-center'>
+          <Image className='text-gray-300' size='80' alt='default' />
         </div>
       </div>
       <div className='absolute top-0 h-full w-full flex items-center justify-center'>

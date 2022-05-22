@@ -55,17 +55,11 @@ const MarkerAndPopup = ({ restaurant, address }) => {
 }
 
 const MapMap = ({ restaurants }) => {
-  console.log({ restaurants })
   const allCoordinates = flatten(restaurants.map((r) => r.addresses.map((a) => a.value.center)))
   const minLongitude = minBy(allCoordinates, (c) => c[0])?.[0]
   const minLatitude = minBy(allCoordinates, (c) => c[1])?.[1]
   const maxLongitude = maxBy(allCoordinates, (c) => c[0])?.[0]
   const maxLatitude = maxBy(allCoordinates, (c) => c[1])?.[1]
-
-  console.log('bounds', [
-    [minLongitude, minLatitude],
-    [maxLongitude, maxLatitude],
-  ])
 
   if (restaurants.length === 0) return 'nothing'
 

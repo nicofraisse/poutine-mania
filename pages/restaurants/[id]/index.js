@@ -14,23 +14,28 @@ const Index = () => {
       <RestaurantHeader restaurant={restaurant} />
       <div className='flex h-screen'>
         <div className='w-2/3'>
-          <RestaurantReviews />
+          <RestaurantReviews restaurant={restaurant} />
         </div>
         <div className='w-1/3 h-full p-8 pl-4'>
           <div className='sticky top-8 border text-sm p-4 rounded-lg'>
             <div className='mb-4'>
-              <MapPin className='mr-2 inline' size={20} />
-              <span>{restaurant.addresses[0].label}</span>
+              <ExternalLink className='mr-2 inline' size={20} />
+              <a
+                target='_blank'
+                href='https://www.poutineville.ca'
+                className='underline'
+                rel='noreferrer'
+              >
+                https://www.poutineville.ca
+              </a>
             </div>
             <div className='mb-4'>
               <PhoneCall className='mr-2 inline' size={20} />
               <span>+1 (514) 610-3238</span>
             </div>
             <div className='mb-4'>
-              <ExternalLink className='mr-2 inline' size={20} />
-              <a target='_blank' href='https://www.poutineville.ca' className='underline' rel="noreferrer">
-                https://www.poutineville.ca
-              </a>
+              <MapPin className='mr-2 inline' size={20} />
+              <span>{restaurant.addresses[0].label}</span>
             </div>
             <div className='border h-[300px]'>
               <Map restaurants={[restaurant]} />
