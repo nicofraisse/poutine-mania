@@ -3,10 +3,7 @@
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
   "/api/auth/[...nextauth]": "pages/api/auth/[...nextauth].js",
+  "/next/dist/pages/_error": "pages/next/dist/pages/_error.js",
   "/restaurants": "pages/restaurants.js",
-  "/api/restaurants": "pages/api/restaurants.js",
-  "/restaurants/[id]": "pages/restaurants/[id].js",
-  "/api/restaurants/[id]": "pages/api/restaurants/[id].js",
-  "/api/restaurants/[id]/reviews": "pages/api/restaurants/[id]/reviews.js",
-  "/next/dist/pages/_error": "pages/next/dist/pages/_error.js"
+  "/api/restaurants": "pages/api/restaurants.js"
 }
