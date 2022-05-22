@@ -11,7 +11,7 @@ import AutocompleteSelect from '../../components/controls/AutocompleteSelect'
 import Spinner from '../Spinner'
 
 const RestaurantForm = ({ type, onSubmit }) => {
-  const { push, query } = useRouter()
+  const { query } = useRouter()
 
   const {
     data: restaurant,
@@ -39,7 +39,7 @@ const RestaurantForm = ({ type, onSubmit }) => {
     }
   }
 
-  if (loading) return <Spinner />
+  if (loading || (type === 'update' && !restaurant)) return <Spinner />
 
   return (
     <Form

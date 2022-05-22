@@ -31,10 +31,10 @@ const Item = ({ label, href, icon }) => {
 
 const Sidebar = () => {
   return (
-    <nav className='w-[300px] h-screen border-r bg-white pt-2'>
+    <nav className='w-[300px] h-screen border-r bg-white pt-2 overflow-scroll fixed'>
       <Link href='/'>
         <a>
-          <div className='flex items-center pl-8'>
+          <div className='flex items-center pl-8 mb-2'>
             <Image alt='poutine-logo' src='/poutine.png' width={1.506 * 80} height={80} />
             <div className='text-lg font-black mt-[-8px] ml-1'>
               <div className='text-amber-600'>POUTINE</div>
@@ -43,11 +43,11 @@ const Sidebar = () => {
           </div>
         </a>
       </Link>
-      <Item label='Découvrir' icon={Hash} href='feed' />
-      <Item label='À essayer (3)' icon={Watch} href='watchlist' />
+      {/* <Item label='Découvrir' icon={Hash} href='feed' /> */}
+      {/* <Item label='À essayer (3)' icon={Watch} href='watchlist' /> */}
       <Item label='Restaurants' icon={Search} href='restaurants' />
-      <Item label='Mon top poutines' icon={Heart} href='mon-top' />
-      <Item label='Communauté' icon={Users} href='users' />
+      {/* <Item label='Mon top poutines' icon={Heart} href='mon-top' /> */}
+      {/* <Item label='Communauté' icon={Users} href='users' /> */}
       <Item label='Profil' icon={User} href='profil' />
       <Item label='Admin' icon={Lock} href='admin' />
     </nav>

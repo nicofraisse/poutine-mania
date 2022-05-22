@@ -3,6 +3,7 @@ import Map, { Marker, Popup } from 'react-map-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import { X } from 'react-feather'
 import { useRouter } from 'next/router'
+import RatingPill from 'components/RatingPill'
 
 const MAPBOX_TOKEN =
   'pk.eyJ1Ijoibmljb2ZyYWlzc2UiLCJhIjoiY2thZzZtemk3MDE4NzJybXVtMjF5a2xyOSJ9.6JURdkZj5FnZ5lxMzPncOA'
@@ -35,10 +36,7 @@ const MarkerAndPopup = ({ restaurant, address }) => {
             onClick={() => window.open(`/restaurants/${restaurant._id}`)}
           >
             <div className='font-bold text-base mb-1'>{restaurant.name}</div>
-            <div className='px-2 bg-green-100 text-sm rounded flex items-center'>
-              <span className='font-bold mr-1'>6/10</span>
-              <span className='text-xs text-gray-600'> • 34 avis</span>
-            </div>
+            <RatingPill avgRating={restaurant.avgRating} reviewCount={restaurant.reviewCount} />
             <div
               onClick={(e) => {
                 e.stopPropagation()

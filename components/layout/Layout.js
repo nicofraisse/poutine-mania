@@ -16,8 +16,10 @@ const Layout = (props) => {
   return (
     <div>
       <div className='flex'>
-        <Sidebar />
-        <div className='grow'>
+        <div className='w-[300px]'>
+          <Sidebar />
+        </div>
+        <div style={{ width: 'calc(100vw - 300px)' }}>
           <Header
             handleOpenSignup={() => setSignupOpen(true)}
             handleOpenLogin={() => setLoginOpen(true)}
