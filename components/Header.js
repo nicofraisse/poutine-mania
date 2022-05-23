@@ -17,7 +17,7 @@ const Header = ({ toggleMobileSidebar }) => {
   const { openLogin, openSignup } = useLoginForm()
 
   return (
-    <header className='flex justify-between items-center h-[64px] w-full bg-indigo-white pl-4 border-b sticky top-0 z-10 bg-white'>
+    <header className='flex justify-between items-center h-[64px] w-full bg-indigo-white pl-4 border-b sticky top-0 z-20 bg-white'>
       <Menu className='md:hidden w-20 mr-2' onClick={() => toggleMobileSidebar()} />
       <Input
         type='text'
