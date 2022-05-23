@@ -4,6 +4,7 @@ import { RateRestaurantProvider } from 'components/context/RateRestaurantProvide
 import Layout from '../components/layout/Layout'
 import '../styles/globals.css'
 import { LoginFormProvider } from '../components/context/LoginFormProvider'
+import { useCurrentUser } from 'lib/useCurrentUser'
 
 function MyApp({ Component, pageProps }) {
   return (

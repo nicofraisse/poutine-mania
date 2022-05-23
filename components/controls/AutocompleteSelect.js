@@ -23,11 +23,12 @@ const AddressAutocompleteSelect = ({ onChange, value, ...props }) => {
 
   return (
     <AsyncPaginate
-      {...props}
       isMulti={true}
       loadOptions={loadOptions}
       onChange={handleChange}
       debounceTimeout={1000}
+      value={value}
+      {...props}
     />
   )
 }

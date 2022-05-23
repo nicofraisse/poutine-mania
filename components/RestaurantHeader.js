@@ -1,9 +1,12 @@
 import React from 'react'
 import RatingPill from 'components/RatingPill'
 import { Image } from 'react-feather'
-import { formatRating } from '../lib/formatRating'
+import { repeat } from 'lodash'
 
 const RestaurantHeader = ({ restaurant }) => {
+  const city = restaurant?.addresses?.[0]?.value?.context?.find((el) =>
+    el.id?.includes('place')
+  )?.text
   return (
     <div className='relative' style={{ height: '17vw' }}>
       <div className='flex w-full h-full'>
@@ -17,18 +20,19 @@ const RestaurantHeader = ({ restaurant }) => {
           <Image className='text-gray-300' size='80' alt='default' />
         </div>
       </div>
-      <div className='absolute top-0 h-full w-full flex items-center justify-center'>
-        <div
-          className='bg-white p-5 border-8 shadow-xl border-orange-200'
-          style={{ width: 'calc(0.5 * (100vw))', maxWidth: 600 }}
-        >
-          <div className='flex justify-between items-center'>
-            <h1 className='text-3xl font-bold'>{restaurant.name}</h1>
-
-            <RatingPill avgRating={restaurant.avgRating} reviewCount={restaurant.reviewCount} />
+      <div className='absolute top-0 left-0 w-full h-full bg-gradient-to-t from-gray-500 flex items-end text-center'>
+        <div className='p-2 lg:p-5 w-full'>
+          <div className='flex justify-between items-center text-white'>
+            <h1 className='text-lg lg:text-3xl font-bold text-white text-center'>
+              {restaurant.name}
+            </h1>
           </div>
-          <div className='mt-2'>
-            Restaurant à Frankfurt • $$ • {formatRating(restaurant.avgRating)}/10 (2 avis)
+          <div className='lg:mt-2 text-white flex items-center text-sm lg:text-base'>
+            <span className='mr-1'>
+              {city && `Restaurant à ${city} •`}{' '}
+              {restaurant.priceRange && `${repeat('$', restaurant.priceRange)}	• `}
+            </span>
+            <RatingPill avgRating={restaurant.avgRating} reviewCount={restaurant.reviewCount} />
           </div>
         </div>
       </div>

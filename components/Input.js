@@ -32,7 +32,7 @@ const Input = ({ className, value, type, isSearch, ...props }) => {
   return (
     <input
       type={type}
-      className='border-2 border-gray-300 rounded-md py-[8px] px-2 text-sm w-full'
+      className='border-2 border-gray-300 rounded-md py-[8px] px-2 text-sm w-full truncate break-all'
       placeholder={placeholder}
       defaultValue={value}
       {...props}

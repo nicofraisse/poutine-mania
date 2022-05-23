@@ -48,7 +48,7 @@ const RateRestaurant = ({ onSubmit, preselectedRestaurant, existingReview }) => 
 
   if (step === 1) {
     return (
-      <div className='w-[600px] pb-20 h-[400px]'>
+      <div className='lg:w-[600px] pb-20 h-[400px]'>
         <div className='font-bold text-xl'>Quelle poutine voulez-vous noter?</div>
         <input
           onChange={(e) => setSearchQuery(e.target.value)}
@@ -65,7 +65,7 @@ const RateRestaurant = ({ onSubmit, preselectedRestaurant, existingReview }) => 
         <div className='text-right absolute bottom-8 right-8'>
           Restaurant introuvable?{' '}
           <span className='text-blue-500 hover:opacity-70'>
-            <Link href='/create-restaurant'>Ajouter un restaurant</Link>
+            <Link href='/admin/create-restaurant'>Ajouter un restaurant</Link>
           </span>
         </div>
       </div>
@@ -73,56 +73,46 @@ const RateRestaurant = ({ onSubmit, preselectedRestaurant, existingReview }) => 
   }
 
   if (step === 2) {
-    console.log('the existing', existingReview)
     return (
-      <>
-        <Form
-          initialValues={
-            { ...existingReview, title: ' hesck', comment: 'OK MAN' } || {
-              rating: null,
-              title: '',
-              comment: '',
-            }
-          }
-          onSubmit={handleSubmit}
-          validationSchema={Yup.object({
-            rating: Yup.number().min(0).max(10).required('Requis'),
-            title: Yup.string().min(3),
-            comment: Yup.string().min(5),
-          })}
-          className='w-[600px] p-4'
-        >
-          {({ isSubmitting, values }) => (
-            <>
-              {JSON.stringify(values)}
-              <div className='font-bold text-xl mb-4'>
-                {existingReview ? 'Modifier votre ' : 'Laissez un '}
-                avis sur la poutine de{' '}
-                <span className='font-black text-orange-800'>
-                  {selectedRestaurant.name || preselectedRestaurant.name}
-                </span>
-              </div>
-              <Field name='rating' label='Note sur 10' control={RatingButtons} />
-              <Field name='title' label='Titre' />
-              <Field name='comment' label='Commentaire' type='textarea' />
-              <div className='flex items-center justify-between mt-6'>
-                <button
-                  className='flex items-center rounded text-gray-400 hover:text-gray-700'
-                  onClick={() => {
-                    setStep(1)
-                  }}
-                >
-                  <ChevronLeft className='mr-2' size={20} />
-                  Noter un autre restaurant
-                </button>
-                <Button type='submit' variant='primary' className='w-60' loading={isSubmitting}>
-                  Soumettre
-                </Button>
-              </div>
-            </>
-          )}
-        </Form>
-      </>
+      <Form
+        initialValues={existingReview || { rating: null, title: '', comment: '' }}
+        onSubmit={handleSubmit}
+        validationSchema={Yup.object({
+          rating: Yup.number().min(0).max(10).required('Requis'),
+          title: Yup.string().min(3),
+          comment: Yup.string().min(5),
+        })}
+        className='w-screen lg:w-[600px] p-2 lg:p-4'
+      >
+        {({ isSubmitting, values }) => (
+          <>
+            <div className='font-bold text-xl mb-4'>
+              {existingReview ? 'Modifier votre ' : 'Laissez un '}
+              avis sur la poutine de{' '}
+              <span className='font-black text-orange-800'>
+                {selectedRestaurant.name || preselectedRestaurant.name}
+              </span>
+            </div>
+            <Field name='rating' label='Note sur 10' control={RatingButtons} />
+            <Field name='title' label='Titre' />
+            <Field name='comment' label='Commentaire' type='textarea' />
+            <div className='flex items-center justify-between mt-6'>
+              <button
+                className='flex items-center rounded text-gray-400 hover:text-gray-700'
+                onClick={() => {
+                  setStep(1)
+                }}
+              >
+                <ChevronLeft className='mr-2' size={20} />
+                Noter un autre restaurant
+              </button>
+              <Button type='submit' variant='primary' className='w-60' loading={isSubmitting}>
+                Soumettre
+              </Button>
+            </div>
+          </>
+        )}
+      </Form>
     )
   }
 }

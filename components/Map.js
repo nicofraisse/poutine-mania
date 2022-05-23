@@ -5,13 +5,14 @@ import { X } from 'react-feather'
 import { useRouter } from 'next/router'
 import RatingPill from 'components/RatingPill'
 import { flatten, minBy, maxBy } from 'lodash'
+import { ratingColors } from 'data/ratingColors'
+import { round } from 'lodash'
 
 const MAPBOX_TOKEN =
   'pk.eyJ1Ijoibmljb2ZyYWlzc2UiLCJhIjoiY2thZzZtemk3MDE4NzJybXVtMjF5a2xyOSJ9.6JURdkZj5FnZ5lxMzPncOA'
 
-const MarkerAndPopup = ({ restaurant, address }) => {
+const MarkerAndPopup = ({ restaurant, address, isShowPage }) => {
   const [showPopup, setShowPopup] = useState(false)
-  const { push } = useRouter()
   return (
     <>
       <Marker
@@ -21,6 +22,7 @@ const MarkerAndPopup = ({ restaurant, address }) => {
         anchor='bottom'
         onClick={() => setShowPopup(!showPopup)}
         className='cursor-pointer'
+        color={restaurant.reviewCount > 0 ? ratingColors[round(restaurant.avgRating)] : '#bbb'}
       />
       {showPopup && (
         <Popup
@@ -33,11 +35,12 @@ const MarkerAndPopup = ({ restaurant, address }) => {
           closeOnClick={false}
         >
           <div
-            className='relative w-28 flex flex-col items-center'
+            className='relative w-36 flex flex-col items-center'
             onClick={() => window.open(`/restaurants/${restaurant._id}`)}
           >
             <div className='font-bold text-base mb-1'>{restaurant.name}</div>
             <RatingPill avgRating={restaurant.avgRating} reviewCount={restaurant.reviewCount} />
+            <div className='text-xs mt-2'>{address.label}</div>
             <div
               onClick={(e) => {
                 e.stopPropagation()
@@ -54,7 +57,7 @@ const MarkerAndPopup = ({ restaurant, address }) => {
   )
 }
 
-const MapMap = ({ restaurants }) => {
+const MapMap = ({ restaurants, isShowPage }) => {
   const allCoordinates = flatten(restaurants.map((r) => r.addresses.map((a) => a.value.center)))
   const minLongitude = minBy(allCoordinates, (c) => c[0])?.[0]
   const minLatitude = minBy(allCoordinates, (c) => c[1])?.[1]
@@ -88,6 +91,7 @@ const MapMap = ({ restaurants }) => {
               key={`${restaurant.id}-${address.label}`}
               restaurant={restaurant}
               address={address}
+              isShowPage={isShowPage}
             />
           ))
         )}

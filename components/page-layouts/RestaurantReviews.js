@@ -17,10 +17,10 @@ const ReviewStats = ({ reviews, restaurant }) => {
       <div className='flex items-center justify-between'>
         <div className='flex items-center'>
           <h2 className='pl-1 text-xl font-bold mr-5 '>{reviews.length} avis</h2>
-          <ReactSelect placeholder='trier par' options={[]} />
-          <ReactSelect placeholder='langue' options={[]} className='ml-3' />
+          {/* <ReactSelect placeholder='trier par' options={[]} /> */}
+          {/* <ReactSelect placeholder='langue' options={[]} className='ml-3' /> */}
         </div>
-        <div className='flex items-center'>
+        <div className='flex wrap items-center'>
           <div className='w-48'>
             <Button
               size='sm'
@@ -63,7 +63,7 @@ const RestaurantReviews = ({ restaurant }) => {
   }
 
   return (
-    <div className='p-5 pt-8'>
+    <div className='p-2 lg:p-5 pt-8'>
       <ReviewStats reviews={reviews} restaurant={restaurant} />
 
       {reviews.map((r) => (

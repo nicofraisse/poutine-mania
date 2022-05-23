@@ -11,7 +11,7 @@ import AutocompleteSelect from '../../components/controls/AutocompleteSelect'
 import Spinner from '../Spinner'
 
 const RestaurantForm = ({ type, onSubmit }) => {
-  const { query } = useRouter()
+  const { query, push } = useRouter()
 
   const {
     data: restaurant,
@@ -27,6 +27,7 @@ const RestaurantForm = ({ type, onSubmit }) => {
           setSubmitting(false)
           toast.success(type + ' success')
           onSubmit && onSubmit()
+          push(`/admin/restaurants`)
         })
         .catch((err) => toast.error(err.message))
     } else if (type === 'update') {
@@ -34,8 +35,9 @@ const RestaurantForm = ({ type, onSubmit }) => {
         .post(`/api/restaurants/${query.id}/update`, values)
         .then(() => {
           toast.success(type + ' success')
+          push(`/admin/restaurants`)
         })
-        .catch((err) => toase.error(err))
+        .catch((err) => toast.error(err.message))
     }
   }
 
@@ -45,19 +47,27 @@ const RestaurantForm = ({ type, onSubmit }) => {
     <Form
       initialValues={{
         name: type === 'update' ? restaurant.name : '',
+        phoneNumber: type === 'update' ? restaurant.phoneNumber : '',
+        website: type === 'update' ? restaurant.website : '',
         addresses: type === 'update' ? restaurant.addresses : [],
+        priceRange: type === 'update' ? restaurant.priceRange : [],
       }}
       onSubmit={handleSubmit}
       validationSchema={Yup.object({
         name: Yup.string().min(1).required('Required'),
+        phoneNumber: Yup.string().min(1),
+        website: Yup.string().min(1),
         addresses: Yup.array().min(1, 'Requis').required('required'),
+        priceRange: Yup.number().min(1).max(3),
       })}
     >
       {({ isSubmitting, errors }) => (
         <>
           <Field name='name' />
           <Field name='addresses' control={AutocompleteSelect} label='Adresse(s)' />
-          {JSON.stringify(errors)}
+          <Field name='phoneNumber' label='Numéro de téléphone' />
+          <Field name='website' label='Site internet' />
+          <Field name='priceRange' type='number' label='Gamme de prix' min={1} max={3} />
           <Button
             loading={isSubmitting}
             className='bg-gray-300 px-4 py-1 rounded-lg shadoow w-40'

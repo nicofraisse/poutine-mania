@@ -6,9 +6,11 @@ import toast from 'react-hot-toast'
 import Form from 'components/Form'
 import Field from 'components/Field'
 import Button from 'components/Button'
+import { useLoginForm } from '../context/LoginFormProvider'
 
 const SignUp = ({ onSubmit }) => {
   const { push } = useRouter()
+  const { openLogin, closeSignup } = useLoginForm()
 
   const handleSubmit = (values, formikBag) => {
     axios
@@ -23,6 +25,11 @@ const SignUp = ({ onSubmit }) => {
         toast.error(e?.response?.data?.message || e.message)
         formikBag.setSubmitting(false)
       })
+  }
+
+  const handleSwitchForm = () => {
+    closeSignup()
+    openLogin()
   }
 
   return (
@@ -46,7 +53,12 @@ const SignUp = ({ onSubmit }) => {
 
           <Field name='email' />
           <Field name='password' type='password' />
-
+          <div className='text-sm'>
+            Vous avez déjà un compte?{' '}
+            <span className='font-bold cursor-pointer hover:underline' onClick={handleSwitchForm}>
+              Connectez-vous
+            </span>
+          </div>
           <Button type='submit' variant='primary' className='mt-6' loading={isSubmitting}>
             Je m&apos;inscris
           </Button>

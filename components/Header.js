@@ -2,23 +2,23 @@ import Link from 'next/link'
 import { signOut } from 'next-auth/client'
 import { useCurrentUser } from 'lib/useCurrentUser'
 import Button from './Button'
-import { Edit, Edit3, Search, User, Users } from 'react-feather'
+import { Edit3, Menu, User } from 'react-feather'
 import { useState, createRef } from 'react'
 import Dropdown from './Dropdown'
-import Image from 'next/image'
 import Input from 'components/Input'
 import { useRateRestaurant } from './context/RateRestaurantProvider'
 import { useLoginForm } from './context/LoginFormProvider'
 
-const Header = ({ handleOpenSignup, handleOpenLogin, handleOpenRate }) => {
+const Header = ({ toggleMobileSidebar }) => {
   const { currentUser } = useCurrentUser()
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const toggleRef = createRef()
   const { rateRestaurant } = useRateRestaurant()
-  const { openLogin } = useLoginForm()
+  const { openLogin, openSignup } = useLoginForm()
 
   return (
-    <header className='flex justify-between items-center h-[64px] w-full bg-indigo-white pl-4 border-b'>
+    <header className='flex justify-between items-center h-[64px] w-full bg-indigo-white pl-4 border-b sticky top-0 z-10 bg-white'>
+      <Menu className='md:hidden w-20 mr-2' onClick={() => toggleMobileSidebar()} />
       <Input
         type='text'
         className='block font-bold text-sm'
@@ -33,12 +33,13 @@ const Header = ({ handleOpenSignup, handleOpenLogin, handleOpenRate }) => {
               <Button
                 variant='light'
                 size='sm'
-                className='flex ml-6 mr-2 w-48'
+                className='flex lg:ml-6 mr-2 w-32 lg:w-48'
                 onClick={() => rateRestaurant()}
               >
                 <Edit3 className='mr-2' /> Noter une poutine
               </Button>
-              <div className='relative mx-5 z-20'>
+
+              <div className='relative mx-3 lg:mx-5 z-20'>
                 <div
                   className='h-[48px] w-[48px] bg-gray-400 rounded-full cursor-pointer hover:opacity-80 flex items-center justify-center'
                   onClick={() => setDropdownOpen(!dropdownOpen)}
@@ -68,13 +69,13 @@ const Header = ({ handleOpenSignup, handleOpenLogin, handleOpenRate }) => {
           )}
           {!currentUser && (
             <>
-              <div className='mx-4 text-neutral-700 hover:text-neutral-900'>
-                <Button size='sm' variant='secondary' onClick={openLogin}>
+              <div className='mx-1 lg:mx-4'>
+                <Button size='sm' variant='noBorder' onClick={openLogin}>
                   Connexion
                 </Button>
               </div>
-              <div className='mr-4 text-neutral-700 hover:text-neutral-900'>
-                <Button variant='primary' size='sm' onClick={handleOpenSignup}>
+              <div className='mr-1 lg:mr-4'>
+                <Button variant='secondary' size='sm' onClick={openSignup}>
                   Inscription
                 </Button>
               </div>

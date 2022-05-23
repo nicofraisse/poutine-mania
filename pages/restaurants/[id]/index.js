@@ -5,6 +5,7 @@ import RestaurantReviews from 'components/page-layouts/RestaurantReviews'
 import RestaurantHeader from 'components/RestaurantHeader'
 import { ExternalLink, MapPin, Phone, PhoneCall } from 'react-feather'
 import Map from 'components/Map'
+
 const Index = () => {
   const { query } = useRouter()
   const {
@@ -16,32 +17,35 @@ const Index = () => {
   return (
     <div>
       <RestaurantHeader restaurant={restaurant} />
-      <div className='flex h-screen'>
-        <div className='w-2/3'>
+      <div className='flex flex-col-reverse lg:flex-row lg:h-screen'>
+        <div className='lg:w-2/3'>
           <RestaurantReviews restaurant={restaurant} />
         </div>
-        <div className='w-1/3 h-full p-8 pl-4'>
-          <div className='sticky top-8 border text-sm p-4 rounded-lg'>
-            <div className='mb-4'>
-              <ExternalLink className='mr-2 inline' size={20} />
-              <a
-                target='_blank'
-                href='https://www.poutineville.ca'
-                className='underline'
-                rel='noreferrer'
-              >
-                https://www.poutineville.ca
-              </a>
+        <div className='lg:w-1/3 lg:h-full p-4 lg:p-8 lg:pl-4'>
+          <div className='lg:sticky lg:top-8 border text-sm p-4 rounded-lg'>
+            {restaurant.website && (
+              <div className='mb-4 flex items-center'>
+                <ExternalLink className='mr-2 inline shrink-0' size={20} />
+                <a target='_blank' href={restaurant.website} className='underline' rel='noreferrer'>
+                  {restaurant.website}
+                </a>
+              </div>
+            )}
+            {restaurant.phoneNumber && (
+              <div className='mb-4 flex items-center'>
+                <PhoneCall className='mr-2 inline shrink-0' size={20} />
+                <span>{restaurant.phoneNumber}</span>
+              </div>
+            )}
+            <div className='mb-4 flex items-center'>
+              <MapPin className='mr-2 inline shrink-0' size={20} />
+              <span>
+                {restaurant.addresses.length > 1
+                  ? `${restaurant.addresses.length} addresses au Québec`
+                  : restaurant.addresses[0].label}
+              </span>
             </div>
-            <div className='mb-4'>
-              <PhoneCall className='mr-2 inline' size={20} />
-              <span>+1 (514) 610-3238</span>
-            </div>
-            <div className='mb-4'>
-              <MapPin className='mr-2 inline' size={20} />
-              <span>{restaurant.addresses[0].label}</span>
-            </div>
-            <div className='border h-[300px]'>
+            <div className='border h-[200px] lg:h-[300px]'>
               <Map restaurants={[restaurant]} />
             </div>
           </div>

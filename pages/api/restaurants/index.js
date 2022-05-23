@@ -6,7 +6,6 @@ const handler = async (req, res) => {
   let result
 
   if (req.query.search) {
-    console.log(req.query.search)
     result = await db
       .collection('restaurants')
       .aggregate([
@@ -23,7 +22,6 @@ const handler = async (req, res) => {
         },
       ])
       .toArray()
-    console.log('resultts', result)
   } else {
     result = await db
       .collection('restaurants')

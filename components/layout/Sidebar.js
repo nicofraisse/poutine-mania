@@ -4,8 +4,9 @@ import { Hash, Heart, Home, Lock, Search, User, Users, Watch } from 'react-feath
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import classNames from 'classnames'
+import { useCurrentUser } from 'lib/useCurrentUser'
 
-const Item = ({ label, href, icon }) => {
+const Item = ({ label, href, icon, disabled }) => {
   const { pathname } = useRouter()
   const isActive = pathname?.split('/')[1] === href
   const Icon = icon
@@ -14,13 +15,15 @@ const Item = ({ label, href, icon }) => {
     <Link href={'/' + href} passHref>
       <div
         className={classNames(
-          'flex items-center p-5 pl-12 text-lg hover:bg-gray-100 cursor-pointer',
+          'flex items-center p-4 xl:p-5 pl-6 xl:pl-12 text-base xl:text-lg cursor-pointer select-none',
           {
-            'bg-orange-500 font-bold text-white': isActive,
+            'bg-orange-100 font-bold text-orange-600': isActive,
+            'hover:bg-orange-100': !disabled,
+            'text-gray-300 hover:bg-white cursor-default pointer-events-none': disabled,
           }
         )}
       >
-        <span className='mr-5'>
+        <span className='mr-3 xl:mr-5'>
           <Icon size={22} />
         </span>
         {label}
@@ -29,12 +32,22 @@ const Item = ({ label, href, icon }) => {
   )
 }
 
-const Sidebar = () => {
+const Sidebar = ({ showMobileSidebar }) => {
+  const { currentUser } = useCurrentUser()
+  // if (!currentUser) return null
+
   return (
-    <nav className='w-[300px] h-screen border-r bg-white pt-2 overflow-scroll fixed'>
+    <nav
+      className={classNames({
+        'invisible md:visible md:w-[200px] xl:w-[300px] h-screen border-r bg-white pt-2 overflow-scroll fixed':
+          !showMobileSidebar,
+        'visible fixed top-0 left-0 h-screen bg-white shadow-md md:invisible z-20':
+          showMobileSidebar,
+      })}
+    >
       <Link href='/'>
         <a>
-          <div className='flex items-center pl-8 mb-2'>
+          <div className='flex items-center xl:pl-8 xl:mb-2 transform scale-75 xl:scale-100'>
             <Image alt='poutine-logo' src='/poutine.png' width={1.506 * 80} height={80} />
             <div className='text-lg font-black mt-[-8px] ml-1'>
               <div className='text-amber-600'>POUTINE</div>
@@ -43,13 +56,12 @@ const Sidebar = () => {
           </div>
         </a>
       </Link>
-      <Item label='Découvrir' icon={Hash} href='feed' />
-      <Item label='À essayer (3)' icon={Watch} href='watchlist' />
+      <Item label='Découvrir' icon={Hash} href='feed' disabled />
       <Item label='Restaurants' icon={Search} href='restaurants' />
-      <Item label='Mon top poutines' icon={Heart} href='mon-top' />
-      <Item label='Communauté' icon={Users} href='users' />
-      <Item label='Profil' icon={User} href='profil' />
-      <Item label='Admin' icon={Lock} href='admin' />
+      <Item label='À essayer (3)' icon={Watch} href='watchlist' disabled />
+      <Item label='Mon top poutines' icon={Heart} href='mon-top' disabled />
+      {currentUser && <Item label='Profil' icon={User} href='profil' disabled />}
+      {currentUser?.isAdmin && <Item label='Admin' icon={Lock} href='admin' />}
     </nav>
   )
 }

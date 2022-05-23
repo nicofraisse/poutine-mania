@@ -14,7 +14,7 @@ export default NextAuth({
       const client = await connectToDatabase()
       const db = await client.db()
       const foundUser = await db.collection('users').findOne({ email: user.email })
-      session.user = { _id: foundUser._id, email: foundUser.email }
+      session.user = { _id: foundUser._id, email: foundUser.email, isAdmin: foundUser.isAdmin }
       return Promise.resolve(session)
     },
   },

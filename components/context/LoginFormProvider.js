@@ -2,29 +2,32 @@ import { createContext, useContext, useState } from 'react'
 import { X } from 'react-feather'
 import Modal from 'react-responsive-modal'
 import Login from '../forms/Login'
+import SignUp from '../forms/SignUp'
 
 const LoginFormContext = createContext({})
 
 export const LoginFormProvider = ({ children }) => {
   const [loginOpen, setLoginOpen] = useState(false)
+  const [signupOpen, setSignupOpen] = useState(false)
+
   const openLogin = (message) => {
     setLoginOpen(true)
   }
 
-  // if (not logged in) {
-  //   return (
-  //     <Alert
-  //       className="m-4"
-  //       title="Error loading user"
-  //       type="error"
-  //       showIcon
-  //       description={error.message}
-  //     />
-  //   )
-  // }
+  const closeLogin = (message) => {
+    setLoginOpen(false)
+  }
+
+  const openSignup = (message) => {
+    setSignupOpen(true)
+  }
+
+  const closeSignup = (message) => {
+    setSignupOpen(false)
+  }
 
   return (
-    <LoginFormContext.Provider value={{ openLogin }}>
+    <LoginFormContext.Provider value={{ openLogin, openSignup, closeLogin, closeSignup }}>
       <>
         {children}
         <Modal
@@ -39,6 +42,19 @@ export const LoginFormProvider = ({ children }) => {
         >
           <h2 className='font-black text-3xl text-center pb-3 pt-5'>Connexion</h2>
           <Login onSubmit={() => setLoginOpen(false)} />
+        </Modal>
+        <Modal
+          classNames={{
+            overlay: 'customOverlay',
+            modal: 'customModal',
+          }}
+          open={signupOpen}
+          onClose={() => setSignupOpen(false)}
+          closeIcon={<X />}
+          center
+        >
+          <h2 className='font-black text-3xl text-center pb-3 pt-5'>Créer mon compte</h2>
+          <SignUp onSubmit={() => setSignupOpen(false)} />
         </Modal>
       </>
     </LoginFormContext.Provider>
