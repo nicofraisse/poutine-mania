@@ -1,23 +1,23 @@
-import { useRef } from 'react';
+import { useRef } from 'react'
 
-import classes from './profile-form.module.css';
+import classes from './profile-form.module.css'
 
 function ProfileForm(props) {
-  const oldPasswordRef = useRef();
-  const newPasswordRef = useRef();
+  const oldPasswordRef = useRef()
+  const newPasswordRef = useRef()
 
   function submitHandler(event) {
-    event.preventDefault();
+    event.preventDefault()
 
-    const enteredOldPassword = oldPasswordRef.current.value;
-    const enteredNewPassword = newPasswordRef.current.value;
+    const enteredOldPassword = oldPasswordRef.current.value
+    const enteredNewPassword = newPasswordRef.current.value
 
     // optional: Add validation
 
     props.onChangePassword({
       oldPassword: enteredOldPassword,
-      newPassword: enteredNewPassword
-    });
+      newPassword: enteredNewPassword,
+    })
   }
 
   return (
@@ -34,7 +34,7 @@ function ProfileForm(props) {
         <button>Change Password</button>
       </div>
     </form>
-  );
+  )
 }
 
-export default ProfileForm;
+export default ProfileForm

@@ -16,7 +16,7 @@ const Item = ({ label, href, icon }) => {
         className={classNames(
           'flex items-center p-5 pl-12 text-lg hover:bg-gray-100 cursor-pointer',
           {
-            'bg-light-orange font-bold': isActive,
+            'bg-orange-500 font-bold text-white': isActive,
           }
         )}
       >
@@ -43,11 +43,11 @@ const Sidebar = () => {
           </div>
         </a>
       </Link>
-      {/* <Item label='Découvrir' icon={Hash} href='feed' /> */}
-      {/* <Item label='À essayer (3)' icon={Watch} href='watchlist' /> */}
+      <Item label='Découvrir' icon={Hash} href='feed' />
+      <Item label='À essayer (3)' icon={Watch} href='watchlist' />
       <Item label='Restaurants' icon={Search} href='restaurants' />
-      {/* <Item label='Mon top poutines' icon={Heart} href='mon-top' /> */}
-      {/* <Item label='Communauté' icon={Users} href='users' /> */}
+      <Item label='Mon top poutines' icon={Heart} href='mon-top' />
+      <Item label='Communauté' icon={Users} href='users' />
       <Item label='Profil' icon={User} href='profil' />
       <Item label='Admin' icon={Lock} href='admin' />
     </nav>

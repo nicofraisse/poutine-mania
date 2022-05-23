@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { signOut } from 'next-auth/client'
 import { useCurrentUser } from 'lib/useCurrentUser'
 import Button from './Button'
-import { Edit, Search, Users } from 'react-feather'
+import { Edit, Edit3, Search, User, Users } from 'react-feather'
 import { useState, createRef } from 'react'
 import Dropdown from './Dropdown'
 import Image from 'next/image'
@@ -18,7 +18,7 @@ const Header = ({ handleOpenSignup, handleOpenLogin, handleOpenRate }) => {
   const { openLogin } = useLoginForm()
 
   return (
-    <header className='flex justify-between items-center h-[64px] w-full bg-light-orange pl-4 border-b'>
+    <header className='flex justify-between items-center h-[64px] w-full bg-indigo-white pl-4 border-b'>
       <Input
         type='text'
         className='block font-bold text-sm'
@@ -30,15 +30,22 @@ const Header = ({ handleOpenSignup, handleOpenLogin, handleOpenRate }) => {
         <ul className='flex items-center'>
           {currentUser && (
             <>
-              <Button size='sm' className='flex ml-6 mr-2' onClick={rateRestaurant}>
-                <Edit className='mr-2' /> Noter
+              <Button
+                variant='light'
+                size='sm'
+                className='flex ml-6 mr-2 w-48'
+                onClick={() => rateRestaurant()}
+              >
+                <Edit3 className='mr-2' /> Noter une poutine
               </Button>
-              <div className='relative mx-5'>
+              <div className='relative mx-5 z-20'>
                 <div
-                  className='h-[48px] w-[48px] bg-gray-400 rounded-full cursor-pointer hover:opacity-80'
+                  className='h-[48px] w-[48px] bg-gray-400 rounded-full cursor-pointer hover:opacity-80 flex items-center justify-center'
                   onClick={() => setDropdownOpen(!dropdownOpen)}
                   ref={toggleRef}
-                ></div>
+                >
+                  <User className='text-white' size={30} />
+                </div>
                 <Dropdown isOpen={dropdownOpen} setIsOpen={setDropdownOpen} toggleRef={toggleRef}>
                   <>
                     <div className='hover:bg-gray-100 rounded-t-lg px-3 py-2 text-gray-700 cursor-pointer'>

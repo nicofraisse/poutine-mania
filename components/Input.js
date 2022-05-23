@@ -7,9 +7,9 @@ const Input = ({ className, value, type, isSearch, ...props }) => {
   if (type === 'textarea') {
     return (
       <textarea
-        value={value || ''}
         className='border-2 border-gray-300 rounded-md py-[8px] px-2 text-sm w-full h-[120px]'
         placeholder={placeholder}
+        defaultValue={value}
         {...props}
       />
     )
@@ -19,21 +19,22 @@ const Input = ({ className, value, type, isSearch, ...props }) => {
       <div className='relative w-full'>
         <input
           type={type}
-          value={value || ''}
           className='border-2 border-gray-300 rounded-md py-[8px] px-2 text-sm w-full'
           placeholder={placeholder}
+          defaultValue={value}
           {...props}
         />
         <Search className='absolute top-2 right-2 text-gray-400' />
       </div>
     )
   }
+
   return (
     <input
       type={type}
-      value={value || ''}
       className='border-2 border-gray-300 rounded-md py-[8px] px-2 text-sm w-full'
       placeholder={placeholder}
+      defaultValue={value}
       {...props}
     />
   )

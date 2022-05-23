@@ -21,11 +21,6 @@ const AddressAutocompleteSelect = ({ onChange, value, ...props }) => {
     setFieldValue(field.name, data)
   }
 
-  // const convertToOption = (v) => {
-  //   const parsed = JSON.parse(value)
-  //   console.log(parsed)
-  // }
-
   return (
     <AsyncPaginate
       {...props}
@@ -33,7 +28,6 @@ const AddressAutocompleteSelect = ({ onChange, value, ...props }) => {
       loadOptions={loadOptions}
       onChange={handleChange}
       debounceTimeout={1000}
-      // value={convertToOption}
     />
   )
 }

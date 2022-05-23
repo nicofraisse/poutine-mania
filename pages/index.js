@@ -1,21 +1,15 @@
-import PublicProfile from '../components/profile/PublicProfile'
-import { useCurrentUser } from 'lib/useCurrentUser'
-import SiteMap from '../components/SiteMap'
 import Spinner from '../components/Spinner'
+import { useRouter } from 'next/router'
+import { useLayoutEffect } from 'react'
 
 function HomePage() {
-  const { currentUser, loading } = useCurrentUser()
-  const isAdmin = true
-  if (loading) return <Spinner />
-  if (!currentUser) return 'please login'
+  const { replace, isFallback } = useRouter()
 
-  return (
-    <>
-      {isAdmin && <SiteMap />}
-      <PublicProfile />
-    </>
-  )
-  return
+  useLayoutEffect(() => {
+    replace('/restaurants')
+  }, [replace, isFallback])
+
+  return <Spinner />
 }
 
 export default HomePage

@@ -1,15 +1,13 @@
 import classNames from 'classnames'
 import { formatRating } from '../lib/formatRating'
+import { round } from 'lodash'
+import { ratingColors } from 'data/ratingColors'
 
 const RatingPill = ({ avgRating, reviewCount }) => {
   return (
     <div
-      className={classNames('px-2 py-[4px] text-sm rounded flex items-center', {
-        'bg-green-100': avgRating >= 7,
-        'bg-yellow-100': avgRating >= 4 && avgRating < 7,
-        'bg-red-100': reviewCount > 0 && avgRating < 4,
-        'bg-gray-100': reviewCount === 0,
-      })}
+      className={classNames('px-2 py-[4px] text-sm rounded flex items-center')}
+      style={{ backgroundColor: avgRating ? ratingColors[round(avgRating)] : '#eee' }}
     >
       {reviewCount > 0 ? (
         <>

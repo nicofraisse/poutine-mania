@@ -10,8 +10,12 @@ const handler = async (req, res) => {
   if (session) {
     await db.collection('reviews').insertOne({
       rating: req.body.rating,
+      title: req.body.title,
+      comment: req.body.comment,
       restaurantId: new ObjectId(req.body.restaurantId),
       userId: new ObjectId(session.user._id),
+
+      createdAt: new Date(),
     })
 
     const data = await db.collection('reviews').find({}).toArray()

@@ -3,8 +3,8 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import toast from 'react-hot-toast'
 import Spinner from 'components/Spinner'
-import RatingPill from 'components/RatingPill'
 import Map from 'components/Map'
+import RestaurantCard from '../../components/RestaurantCard'
 
 const Restaurants = () => {
   const [restaurants, setRestaurants] = useState([])
@@ -17,8 +17,10 @@ const Restaurants = () => {
         setLoading(false)
         setRestaurants(data)
       })
-      .catch((err) => toast.error(err))
+      .catch((err) => toast.error(err.message))
   }, [])
+
+  console.log(restaurants)
 
   if (loading) return <Spinner />
 
@@ -31,29 +33,7 @@ const Restaurants = () => {
           <div className='px-4 block' key={r._id}>
             <Link href={`/restaurants/${r._id}`} target='_blank' passHref>
               <a target='_blank' rel='noopener noreferrer'>
-                <div className='py-6 flex justify-between items-start hover:bg-gray-50'>
-                  <div
-                    className='bg-gray-200 rounded-lg w-1/4 h-24 mr-3'
-                    style={{ minWidth: '23%' }}
-                  ></div>
-                  <div style={{ minWidth: '75%' }}>
-                    <div className='flex justify-between items-center mb-2'>
-                      <div className='font-bold text-lg'>{r.name}</div>
-                      <RatingPill avgRating={r.avgRating} reviewCount={r.reviewCount} />
-                    </div>
-
-                    <div className='text-sm text-gray-500'>
-                      {r.addresses.length === 1
-                        ? r.addresses[0].label
-                        : `${r.addresses.length} adresses au Québec`}
-                    </div>
-                    <div className='text-ellipsis text-xs text-gray-500 mt-3'>
-                      &quot;...la poutine était vraiment excellente, miam. Les frites un peu sèches
-                      mais quand même bonnes. Les frites un peu sèches mais quand...&quot;{' '}
-                      <span className='font-bold underline'>lire la suite</span>
-                    </div>
-                  </div>
-                </div>
+                <RestaurantCard restaurant={r} />
               </a>
             </Link>
             <div className='w-full border-b'></div>

@@ -7,7 +7,11 @@ import { ExternalLink, MapPin, Phone, PhoneCall } from 'react-feather'
 import Map from 'components/Map'
 const Index = () => {
   const { query } = useRouter()
-  const { data: restaurant, loading, error } = useGet(`/api/restaurants/${query.id}`)
+  const {
+    data: restaurant,
+    loading,
+    error,
+  } = useGet(`/api/restaurants/${query.id}`, { skip: !query.id })
   if (!restaurant || loading) return <Spinner />
   return (
     <div>
