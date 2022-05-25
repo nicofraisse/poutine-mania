@@ -16,7 +16,7 @@ const Input = ({ className, value, type, isSearch, ...props }) => {
   }
   if (isSearch) {
     return (
-      <div className='relative w-full'>
+      <div className={classNames('relative', className)}>
         <input
           type={type}
           className='border-2 border-gray-300 rounded-md py-[8px] px-2 text-sm w-full'

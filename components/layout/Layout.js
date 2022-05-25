@@ -11,9 +11,8 @@ const Layout = (props) => {
   return (
     <div>
       <div className='flex'>
-        <div className='md:w-[200px] xl:w-[300px]'>
-          <Sidebar showMobileSidebar={showMobileSidebar} />
-        </div>
+        <Sidebar showMobileSidebar={showMobileSidebar} toggleMobileSidebar={toggleMobileSidebar} />
+
         <div className='grow'>
           <Header toggleMobileSidebar={toggleMobileSidebar} />
           <main className='min-h-screen-minus-nav'>{props.children}</main>

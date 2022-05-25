@@ -15,7 +15,7 @@ const Item = ({ label, href, icon, disabled }) => {
     <Link href={'/' + href} passHref>
       <div
         className={classNames(
-          'flex items-center p-4 xl:p-5 pl-6 xl:pl-12 text-base xl:text-lg cursor-pointer select-none',
+          'flex items-center p-3 xl:p-5 pl-4 xl:pl-12 text-base xl:text-lg cursor-pointer select-none',
           {
             'bg-orange-100 font-bold text-orange-600': isActive,
             'hover:bg-orange-100': !disabled,
@@ -32,37 +32,42 @@ const Item = ({ label, href, icon, disabled }) => {
   )
 }
 
-const Sidebar = ({ showMobileSidebar }) => {
+const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
   const { currentUser } = useCurrentUser()
-  // if (!currentUser) return null
 
   return (
-    <nav
-      className={classNames({
-        'invisible md:visible md:w-[200px] xl:w-[300px] h-screen border-r bg-white pt-2 overflow-scroll fixed':
-          !showMobileSidebar,
-        'visible fixed top-0 left-0 h-screen bg-white shadow-md md:invisible z-20':
-          showMobileSidebar,
-      })}
-    >
-      <Link href='/'>
-        <a>
-          <div className='flex items-center xl:pl-8 xl:mb-2 transform scale-75 xl:scale-100'>
-            <Image alt='poutine-logo' src='/poutine.png' width={1.506 * 80} height={80} />
-            <div className='text-lg font-black mt-[-8px] ml-1'>
-              <div className='text-amber-600'>POUTINE</div>
-              <div className='mt-[-10px] text-orange-600'>MANIA</div>
+    <>
+      {showMobileSidebar && (
+        <div className='bg-black fixed h-screen w-screen z-10 bg-opacity-40 block lg:hidden'></div>
+      )}
+      <nav
+        className={classNames(
+          'lg:block fixed lg:static lg:w-[200px] xl:w-[300px] border-r lg:pt-2',
+          {
+            hidden: !showMobileSidebar,
+            'block bg-white h-screen shadow-xl z-10': showMobileSidebar,
+          }
+        )}
+      >
+        <Link href='/'>
+          <a>
+            <div className='flex items-center xl:pl-8 xl:mb-2 transform scale-75 xl:scale-100'>
+              <Image alt='poutine-logo' src='/poutine.png' width={1.506 * 80} height={80} />
+              <div className='text-lg font-black mt-[-8px] ml-1'>
+                <div className='text-amber-600'>POUTINE</div>
+                <div className='mt-[-10px] text-orange-600'>MANIA</div>
+              </div>
             </div>
-          </div>
-        </a>
-      </Link>
-      <Item label='Découvrir' icon={Hash} href='feed' disabled />
-      <Item label='Restaurants' icon={Search} href='restaurants' />
-      <Item label='À essayer (3)' icon={Watch} href='watchlist' disabled />
-      <Item label='Mon top poutines' icon={Heart} href='mon-top' disabled />
-      {currentUser && <Item label='Profil' icon={User} href='profil' disabled />}
-      {currentUser?.isAdmin && <Item label='Admin' icon={Lock} href='admin' />}
-    </nav>
+          </a>
+        </Link>
+        <Item label='Découvrir' icon={Hash} href='feed' disabled />
+        <Item label='Restaurants' icon={Search} href='restaurants' />
+        <Item label='À essayer (3)' icon={Watch} href='watchlist' disabled />
+        <Item label='Mon top poutines' icon={Heart} href='mon-top' disabled />
+        {currentUser && <Item label='Profil' icon={User} href='profil' disabled />}
+        {currentUser?.isAdmin && <Item label='Admin' icon={Lock} href='admin' />}
+      </nav>
+    </>
   )
 }
 
