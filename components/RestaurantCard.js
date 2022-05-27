@@ -2,6 +2,8 @@ import RatingPill from 'components/RatingPill'
 import ReadMore from 'components/ReadMore'
 import { Image } from 'react-feather'
 import { repeat } from 'lodash'
+import { useRestaurantCardHover } from './context/RestaurantCardHoverProvider'
+import classNames from 'classnames'
 
 const LastComment = ({ comment }) => {
   if (!comment) return null
@@ -13,11 +15,18 @@ const LastComment = ({ comment }) => {
 }
 
 const RestaurantCard = ({ restaurant }) => {
-  const { avgRating, name, reviewCount, addresses, reviews } = restaurant
+  const { avgRating, name, reviewCount, succursales, reviews } = restaurant
+  const { setHoveredId, hoveredId } = useRestaurantCardHover()
   const lastComment = reviews[0]?.comment
 
   return (
-    <div className='py-3 lg:py-6 px-1 lg:px-2 flex justify-between items-start hover:bg-slate-50'>
+    <div
+      className={classNames('py-3 lg:py-6 px-1 lg:px-2 flex justify-between items-start', {
+        'bg-slate-50': hoveredId === restaurant._id,
+      })}
+      onMouseEnter={() => setHoveredId(restaurant._id)}
+      onMouseLeave={() => setHoveredId(null)}
+    >
       <div
         className='bg-gray-100 rounded w-1/4 h-24 mr-2 lg:mr-3 flex items-center justify-center'
         style={{ minWidth: '23%' }}
@@ -33,7 +42,9 @@ const RestaurantCard = ({ restaurant }) => {
           <span className='font-bold'>
             {restaurant.priceRange && `${repeat('$', restaurant.priceRange)}	• `}
           </span>
-          {addresses.length === 1 ? addresses[0].label : `${addresses.length} adresses au Québec`}
+          {succursales.length === 1
+            ? succursales[0].address.label
+            : `${succursales.length} adresses au Québec`}
         </div>
         <LastComment comment={lastComment} />
       </div>

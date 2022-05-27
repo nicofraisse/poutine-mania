@@ -18,15 +18,15 @@ const AddressAutocompleteSelect = ({ onChange, value, ...props }) => {
   }
 
   const handleChange = (data) => {
-    setFieldValue(field.name, data)
+    onChange(data.value)
   }
 
   return (
     <AsyncPaginate
-      isMulti={true}
       loadOptions={loadOptions}
       onChange={handleChange}
       debounceTimeout={1000}
+      className='text-sm'
       value={value}
       {...props}
     />

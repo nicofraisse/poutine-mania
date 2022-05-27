@@ -6,47 +6,51 @@ import Spinner from 'components/Spinner'
 import Map from 'components/Map'
 import RestaurantCard from '../../components/RestaurantCard'
 import { useRestaurantSearch } from 'components/context/RestaurantSearchProvider'
+import { useGet } from 'lib/useAxios'
+import { RestaurantCardHoverProvider } from 'components/context/RestaurantCardHoverProvider'
 
 const Restaurants = () => {
-  const [restaurants, setRestaurants] = useState([])
-  const [loading, setLoading] = useState(true)
-  const { searchValue } = useRestaurantSearch()
+  const { searchValue, nonDebouncedValue } = useRestaurantSearch()
 
-  useEffect(() => {
-    console.log({ searchValue })
-    const trimmedSearchValue = searchValue?.trim()
-    axios
-      .get(`/api/restaurants${trimmedSearchValue ? `?search=${trimmedSearchValue}` : ''}`)
-      .then(({ data }) => {
-        setLoading(false)
-        setRestaurants(data)
-      })
-      .catch((err) => toast.error(err.message))
-  }, [searchValue])
+  const trimmedSearchValue = searchValue?.trim()
+  const { data: restaurants, loading: restaurantsLoading } = useGet(
+    `/api/restaurants${trimmedSearchValue ? `?search=${trimmedSearchValue}` : ''}`
+  )
+  if (!restaurants) return <Spinner />
 
-  if (loading) return <Spinner />
-
-  // if (!restaurants) return 'no restaurants'
+  const loading = searchValue !== nonDebouncedValue || restaurantsLoading
 
   return (
-    <div className='flex w-full h-screen-minus-navbar'>
-      <div className='pt-6 w-1/2 overflow-y-auto'>
-        <h2 className='font-bold text-gray-500 pl-6 text-xl'>{restaurants.length} résultats</h2>
-        {restaurants?.map((r) => (
-          <div className='px-1 lg:px-4 block' key={r._id}>
-            <Link href={`/restaurants/${r._id}`} target='_blank' passHref>
-              <a target='_blank' rel='noopener noreferrer'>
-                <RestaurantCard restaurant={r} />
-              </a>
-            </Link>
-            <div className='w-full border-b'></div>
+    <RestaurantCardHoverProvider>
+      <div className='flex w-full h-screen-minus-navbar'>
+        <div className='pt-5 w-1/2 overflow-y-auto'>
+          <div className='h-12'>
+            {loading ? (
+              <div className='absolute mt-[-10px]'>
+                <Spinner />
+              </div>
+            ) : (
+              <h2 className='font-bold text-gray-500 pl-6 text-xl flex items-center'>
+                {restaurants.length} résultat{restaurants.length > 1 && 's'}
+              </h2>
+            )}
           </div>
-        ))}
+          {restaurants?.map((r) => (
+            <div className='px-1 lg:px-4 block' key={r._id}>
+              <Link href={`/restaurants/${r._id}`} target='_blank' passHref>
+                <a target='_blank' rel='noopener noreferrer'>
+                  <RestaurantCard restaurant={r} />
+                </a>
+              </Link>
+              <div className='w-full border-b'></div>
+            </div>
+          ))}
+        </div>
+        <div className='w-1/2'>
+          <Map restaurants={restaurants} />
+        </div>
       </div>
-      <div className='w-1/2'>
-        <Map restaurants={restaurants} />
-      </div>
-    </div>
+    </RestaurantCardHoverProvider>
   )
 }
 

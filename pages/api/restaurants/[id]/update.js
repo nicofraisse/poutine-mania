@@ -9,10 +9,9 @@ const handler = async (req, res) => {
     {
       $set: {
         name: req.body.name,
-        addresses: req.body.addresses,
         website: req.body.website,
-        phoneNumber: req.body.phoneNumber,
         priceRange: req.body.priceRange,
+        succursales: req.body.succursales,
       },
     }
   )

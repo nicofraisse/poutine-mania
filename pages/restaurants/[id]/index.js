@@ -40,13 +40,13 @@ const Index = () => {
             <div className='mb-4 flex items-center'>
               <MapPin className='mr-2 inline shrink-0' size={20} />
               <span>
-                {restaurant.addresses.length > 1
-                  ? `${restaurant.addresses.length} addresses au Québec`
-                  : restaurant.addresses[0].label}
+                {restaurant.succursales.length > 1
+                  ? `${restaurant.succursales.length} addresses au Québec`
+                  : restaurant.succursales.address[0].label}
               </span>
             </div>
             <div className='border h-[200px] lg:h-[300px]'>
-              <Map restaurants={[restaurant]} />
+              <Map restaurants={[restaurant]} isShowPage />
             </div>
           </div>
         </div>

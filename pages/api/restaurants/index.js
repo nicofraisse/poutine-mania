@@ -36,7 +36,6 @@ const handler = async (req, res) => {
         },
       ])
       .toArray()
-    console.log('ok', req.query.search, result)
   } else {
     result = await db
       .collection('restaurants')

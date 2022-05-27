@@ -16,7 +16,11 @@ const ReviewStats = ({ reviews, restaurant }) => {
     <div className='mb-5  rounded'>
       <div className='flex items-center justify-between'>
         <div className='flex items-center'>
-          <h2 className='pl-1 text-xl font-bold mr-5 '>{reviews.length} avis</h2>
+          <h2 className='pl-1 text-xl font-bold mr-5 '>
+            {reviews.length > 0
+              ? `${reviews.length} avis`
+              : 'Soyez la première personne à laisser son avis!'}
+          </h2>
           {/* <ReactSelect placeholder='trier par' options={[]} /> */}
           {/* <ReactSelect placeholder='langue' options={[]} className='ml-3' /> */}
         </div>
