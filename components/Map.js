@@ -64,7 +64,7 @@ const MapMap = ({ restaurants, isShowPage }) => {
   const maxLongitude = maxBy(allCoordinates, (c) => c[0])?.[0]
   const maxLatitude = maxBy(allCoordinates, (c) => c[1])?.[1]
 
-  if (restaurants.length === 0) return 'nothing'
+  // if (restaurants.length === 0) return 'nothing'
 
   return (
     <div className='h-full'>

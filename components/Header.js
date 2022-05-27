@@ -9,6 +9,7 @@ import Input from 'components/Input'
 import { useRateRestaurant } from './context/RateRestaurantProvider'
 import { useLoginForm } from './context/LoginFormProvider'
 import Image from 'next/image'
+import RestaurantSearchBar from './RestaurantSearchBar'
 
 const Header = ({ toggleMobileSidebar }) => {
   const { currentUser } = useCurrentUser()
@@ -31,12 +32,7 @@ const Header = ({ toggleMobileSidebar }) => {
         </div>
       </div>
 
-      <Input
-        type='text'
-        className='font-bold text-sm hidden sm:block grow mx-6 lg:mx-0'
-        placeholder='Rechercher une poutine'
-        isSearch
-      />
+      <RestaurantSearchBar />
 
       <nav>
         <div className='flex items-center'>

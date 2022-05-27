@@ -20,8 +20,23 @@ const handler = async (req, res) => {
             },
           },
         },
+        {
+          $lookup: {
+            from: 'reviews',
+            localField: '_id',
+            foreignField: 'restaurantId',
+            as: 'reviews',
+          },
+        },
+        {
+          $addFields: {
+            reviewCount: { $size: '$reviews' },
+            avgRating: { $avg: '$reviews.rating' },
+          },
+        },
       ])
       .toArray()
+    console.log('ok', req.query.search, result)
   } else {
     result = await db
       .collection('restaurants')

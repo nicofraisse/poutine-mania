@@ -4,20 +4,22 @@ import { RateRestaurantProvider } from 'components/context/RateRestaurantProvide
 import Layout from '../components/layout/Layout'
 import '../styles/globals.css'
 import { LoginFormProvider } from '../components/context/LoginFormProvider'
-import { useCurrentUser } from 'lib/useCurrentUser'
+import { RestaurantSearchProvider } from '../components/context/RestaurantSearchProvider'
 
 function MyApp({ Component, pageProps }) {
   return (
     <Provider session={pageProps.session}>
       <LoginFormProvider>
-        <RateRestaurantProvider>
-          <Layout {...pageProps}>
-            <>
-              <Component {...pageProps} />
-              <Toaster position='bottom-right' />
-            </>
-          </Layout>
-        </RateRestaurantProvider>
+        <RestaurantSearchProvider>
+          <RateRestaurantProvider>
+            <Layout {...pageProps}>
+              <>
+                <Component {...pageProps} />
+                <Toaster position='bottom-right' />
+              </>
+            </Layout>
+          </RateRestaurantProvider>
+        </RestaurantSearchProvider>
       </LoginFormProvider>
     </Provider>
   )

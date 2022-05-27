@@ -6,10 +6,11 @@ const Button = ({ children, className, variant = 'primary', size = 'lg', loading
   return (
     <button
       className={classNames(
-        'rounded-md font-bold text-white flex items-center justify-center select-none',
+        'rounded-md font-bold flex items-center justify-center select-none',
         {
           'w-full px-8': ['primary', 'secondary'].includes(variant),
           'bg-teal-600 h-[56px]': variant === 'primary',
+          'text-white': variant !== 'light',
           'opacity-80': loading,
           'px-3 lg:px-3 h-[40px] text-sm': size === 'sm',
           'bg-none border-2 border-orange-600 text-orange-600': variant === 'secondary',
