@@ -42,8 +42,13 @@ const RestaurantCard = ({ restaurant }) => {
           <span className='font-bold'>
             {restaurant.priceRange && `${repeat('$', restaurant.priceRange)}	• `}
           </span>
+          {restaurant.categories.map((c) => (
+            <span key={c} className='font-bold'>
+              {c} •
+            </span>
+          ))}
           {succursales.length === 1
-            ? succursales[0].address.label
+            ? succursales[0].address.place_name
             : `${succursales.length} adresses au Québec`}
         </div>
         <LastComment comment={lastComment} />

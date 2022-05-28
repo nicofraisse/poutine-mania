@@ -19,7 +19,7 @@ const ReviewStats = ({ reviews, restaurant }) => {
           <h2 className='pl-1 text-xl font-bold mr-5 '>
             {reviews.length > 0
               ? `${reviews.length} avis`
-              : 'Soyez la première personne à laisser son avis!'}
+              : 'Soyez la première personne à laisser un avis!'}
           </h2>
           {/* <ReactSelect placeholder='trier par' options={[]} /> */}
           {/* <ReactSelect placeholder='langue' options={[]} className='ml-3' /> */}

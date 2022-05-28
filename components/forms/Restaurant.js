@@ -8,6 +8,7 @@ import { useGet } from 'lib/useAxios'
 import Form from 'components/Form'
 import Field from 'components/Field'
 import AutocompleteSelect from '../../components/controls/AutocompleteSelect'
+import CategorySelect from '../../components/controls/CategorySelect'
 import Spinner from '../Spinner'
 import { Plus, Trash } from 'react-feather'
 import { cloneDeep } from 'lodash'
@@ -20,12 +21,14 @@ const RestaurantForm = ({ type, onSubmit }) => {
   const { data: restaurant, loading } = useGet(`/api/restaurants/${query.id}`, { skip: !query.id })
 
   const handleSubmit = (values, { setSubmitting }) => {
-    console.log(succursales)
+    console.log('on est ic', type)
     if (succursales.find((s) => !s.address && !s.hide)) {
       setSubmitting(false)
       window.alert('Adresse vide!')
       return
     }
+
+    console.log('HERE', values, succursales)
 
     const submitValues = {
       name: values.name,
@@ -33,7 +36,10 @@ const RestaurantForm = ({ type, onSubmit }) => {
       website: values.website,
       phoneNumber: values.phoneNumber,
       priceRange: values.priceRange,
+      categories: values.categories.map((c) => c.value),
     }
+
+    console.log('DA VALS', submitValues)
     if (type === 'create') {
       axios
         .post('/api/restaurants/create', submitValues)
@@ -45,6 +51,7 @@ const RestaurantForm = ({ type, onSubmit }) => {
         })
         .catch((err) => toast.error(err.message))
     } else if (type === 'update') {
+      console.log('will submit', submitValues)
       axios
         .post(`/api/restaurants/${query.id}/update`, submitValues)
         .then(() => {
@@ -57,7 +64,6 @@ const RestaurantForm = ({ type, onSubmit }) => {
 
   useEffect(() => {
     if (restaurant?.succursales && succursales[0].address === '') {
-      console.log('ok')
       setSuccursales(restaurant.succursales)
     }
   }, [restaurant, succursales])
@@ -78,6 +84,7 @@ const RestaurantForm = ({ type, onSubmit }) => {
     name: type === 'update' ? restaurant.name : '',
     website: type === 'update' ? restaurant.website : '',
     priceRange: type === 'update' ? restaurant.priceRange : [],
+    categories: type === 'update' ? restaurant.categories : [],
   }
 
   if (type === 'update') {
@@ -104,9 +111,10 @@ const RestaurantForm = ({ type, onSubmit }) => {
         <>
           {console.log({ values })}
           <Field name='name' />
-
+          <Field name='categories' control={CategorySelect} label='Catégorie(s)' />
           <Field name='website' label='Site internet' />
           <Field name='priceRange' type='number' label='Gamme de prix' min={1} max={3} />
+          <div className='text-xs text-gray-500 mb-3 -mt-2'>- de 6$ / 6$-8$ / 8$ et +</div>
           {succursales.map((succursale, index) => (
             <div
               key={index}
@@ -122,7 +130,6 @@ const RestaurantForm = ({ type, onSubmit }) => {
                     if (window.confirm('Supprimer la succursale?')) {
                       setFieldValue(`address-${index}`, { label: '', value: '' })
                       setFieldValue(`phoneNumber-${index}`, '')
-
                       setSuccursales(
                         succursales.map((s, i) => {
                           if (i === index) {
@@ -135,14 +142,12 @@ const RestaurantForm = ({ type, onSubmit }) => {
                   }}
                 />
               )}
-              <div>index: {index}</div>
               <Field
                 name={`address-${index}`}
                 onChange={(value, formikBag) => {
                   setFieldValue(`address-${index}`, { label: value.place_name, value })
                   updateSuccursaleField(value, index, 'address')
                 }}
-                // value={succursales[index].address}
                 control={AutocompleteSelect}
                 label='Adresse'
               />
@@ -154,7 +159,6 @@ const RestaurantForm = ({ type, onSubmit }) => {
               />
             </div>
           ))}
-
           <div className='flex items-center justify-between'>
             <Button
               type='button'

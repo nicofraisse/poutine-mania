@@ -4,7 +4,7 @@ import { Image } from 'react-feather'
 import { repeat } from 'lodash'
 
 const RestaurantHeader = ({ restaurant }) => {
-  const city = restaurant?.addresses?.[0]?.value?.context?.find((el) =>
+  const city = restaurant?.succursales[0].address?.context?.find((el) =>
     el.id?.includes('place')
   )?.text
   return (
@@ -29,7 +29,7 @@ const RestaurantHeader = ({ restaurant }) => {
           </div>
           <div className='lg:mt-2 text-white flex items-center text-sm lg:text-base'>
             <span className='mr-1'>
-              {city && `Restaurant à ${city} •`}{' '}
+              {`${restaurant.categories[0]} à ${city} •`}{' '}
               {restaurant.priceRange && `${repeat('$', restaurant.priceRange)}	• `}
             </span>
             <RatingPill avgRating={restaurant.avgRating} reviewCount={restaurant.reviewCount} />

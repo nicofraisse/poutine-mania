@@ -42,7 +42,7 @@ const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
       )}
       <nav
         className={classNames(
-          'lg:block fixed lg:static lg:w-[200px] xl:w-[300px] border-r lg:pt-2 h-screen',
+          'lg:block fixed lg:static lg:min-w-[200px] xl:min-w-[300px] border-r lg:pt-2 h-screen',
           {
             hidden: !showMobileSidebar,
             'block bg-white h-screen shadow-xl z-10': showMobileSidebar,

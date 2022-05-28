@@ -12,6 +12,7 @@ const handler = async (req, res) => {
         website: req.body.website,
         priceRange: req.body.priceRange,
         succursales: req.body.succursales,
+        categories: req.body.categories,
       },
     }
   )

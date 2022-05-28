@@ -8,17 +8,13 @@ import Map from 'components/Map'
 
 const Index = () => {
   const { query } = useRouter()
-  const {
-    data: restaurant,
-    loading,
-    error,
-  } = useGet(`/api/restaurants/${query.id}`, { skip: !query.id })
+  const { data: restaurant, loading } = useGet(`/api/restaurants/${query.id}`, { skip: !query.id })
   if (!restaurant || loading) return <Spinner />
   return (
     <div>
       <RestaurantHeader restaurant={restaurant} />
       <div className='flex flex-col-reverse lg:flex-row lg:h-screen'>
-        <div className='lg:w-2/3'>
+        <div className='lg:basis-2/3'>
           <RestaurantReviews restaurant={restaurant} />
         </div>
         <div className='lg:w-1/3 lg:h-full p-4 lg:p-8 lg:pl-4'>
@@ -42,7 +38,7 @@ const Index = () => {
               <span>
                 {restaurant.succursales.length > 1
                   ? `${restaurant.succursales.length} addresses au Québec`
-                  : restaurant.succursales.address[0].label}
+                  : restaurant.succursales[0].address.place_name}
               </span>
             </div>
             <div className='border h-[200px] lg:h-[300px]'>

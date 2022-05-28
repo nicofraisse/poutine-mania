@@ -40,8 +40,8 @@ const MarkerAndPopup = ({
     <div>
       <Marker
         key={restaurant._id}
-        longitude={address.value.center[0]}
-        latitude={address.value.center[1]}
+        longitude={address.center[0]}
+        latitude={address.center[1]}
         anchor='bottom'
         onClick={togglePopup}
       >
@@ -53,21 +53,21 @@ const MarkerAndPopup = ({
         ></div>
         <MapPin
           size={40}
-          color={isHovered ? '#4f46e5' : '#666'}
+          color={isHovered ? '#4f46e5' : '#777'}
           fill={
             isHovered
               ? '#a5b4fc'
               : restaurant.reviewCount > 0
               ? ratingColors[round(restaurant.avgRating)]
-              : '#bbb'
+              : 'rgba(170, 170, 170, 0.3)'
           }
           className={classNames('transition duration-100', { 'transform scale-110': isHovered })}
         />
       </Marker>
       {isPopupOpen && (
         <Popup
-          longitude={address.value.center[0]}
-          latitude={address.value.center[1]}
+          longitude={address.center[0]}
+          latitude={address.center[1]}
           anchor='bottom'
           offset={44}
           closeButton={false}
@@ -85,7 +85,7 @@ const MarkerAndPopup = ({
             {!isShowPage && (
               <RatingPill avgRating={restaurant.avgRating} reviewCount={restaurant.reviewCount} />
             )}
-            <div className='text-xs mt-2'>{address.label}</div>
+            <div className='text-xs mt-2'>{address.place_name}</div>
             <div
               onClick={(e) => {
                 e.stopPropagation()
@@ -103,9 +103,7 @@ const MarkerAndPopup = ({
 }
 
 const MapMap = ({ restaurants, isShowPage }) => {
-  const allCoordinates = flatten(
-    restaurants.map((r) => r.succursales.map((s) => s.address.value.center))
-  )
+  const allCoordinates = flatten(restaurants.map((r) => r.succursales.map((s) => s.address.center)))
   const minLongitude = minBy(allCoordinates, (c) => c[0])?.[0]
   const minLatitude = minBy(allCoordinates, (c) => c[1])?.[1]
   const maxLongitude = maxBy(allCoordinates, (c) => c[0])?.[0]
@@ -145,7 +143,7 @@ const MapMap = ({ restaurants, isShowPage }) => {
         mapboxAccessToken={MAPBOX_TOKEN}
       >
         {restaurants.map((restaurant, parentIndex) =>
-          restaurant?.addresses?.map((address, index) => (
+          restaurant?.succursales?.map(({ address }, index) => (
             <MarkerAndPopup
               key={`${restaurant.id}-${address.label}`}
               restaurant={restaurant}
