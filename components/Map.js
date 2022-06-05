@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Map, { Marker, Popup } from 'react-map-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import { X, MapPin } from 'react-feather'
@@ -36,6 +36,12 @@ const MarkerAndPopup = ({
     }
   }
 
+  const theRef = useRef()
+
+  if (theRef.current) {
+    theRef.current.parentNode.style.zIndex = isHovered ? 100 : 10
+  }
+
   return (
     <div>
       <Marker
@@ -62,6 +68,7 @@ const MarkerAndPopup = ({
               : 'rgba(170, 170, 170, 0.3)'
           }
           className={classNames('transition duration-100', { 'transform scale-110': isHovered })}
+          ref={theRef}
         />
       </Marker>
       {isPopupOpen && (
@@ -153,7 +160,7 @@ const MapMap = ({ restaurants, isShowPage }) => {
         {restaurants.map((restaurant, parentIndex) =>
           restaurant?.succursales?.map(({ address }, index) => (
             <MarkerAndPopup
-              key={`${restaurant.id}-${address.label}`}
+              key={`${restaurant._id}-${address.place_name}`}
               restaurant={restaurant}
               address={address}
               isShowPage={isShowPage}

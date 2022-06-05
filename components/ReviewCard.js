@@ -12,6 +12,8 @@ import Modal from 'react-responsive-modal'
 const ReviewCard = ({ review, handleEdit, handleDelete }) => {
   const [imgModalOpen, setImgModalOpen] = useState(false)
   const { currentUser } = useCurrentUser()
+
+  console.log({ review })
   return (
     <>
       <div className='py-3 lg:py-6 border-t flex'>
@@ -59,13 +61,15 @@ const ReviewCard = ({ review, handleEdit, handleDelete }) => {
 
           <div className='text-gray-700 break-words mb-2'>{review.comment}</div>
 
-          <Image
-            publicId={review.photos[0]}
-            alt='poutine-user-photo'
-            width={200}
-            className='border rounded-md'
-            onClick={() => setImgModalOpen(true)}
-          />
+          {review.photos?.[0] && (
+            <Image
+              publicId={review.photos?.[0]}
+              alt='poutine-user-photo'
+              width={200}
+              className='border rounded-md'
+              onClick={() => setImgModalOpen(true)}
+            />
+          )}
         </div>
       </div>
       <Modal
@@ -80,7 +84,7 @@ const ReviewCard = ({ review, handleEdit, handleDelete }) => {
       >
         <div className='border w-full '>
           <Image
-            publicId={review.photos[0]}
+            publicId={review.photos?.[0]}
             alt='poutine-user-photo'
             width={'100%'}
             className='border rounded-md'

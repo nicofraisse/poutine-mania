@@ -1,26 +1,42 @@
 import React from 'react'
 import RatingPill from 'components/RatingPill'
-import { Image } from 'react-feather'
-import { repeat } from 'lodash'
+import { Image as ImageIcon } from 'react-feather'
+import { repeat, flatten } from 'lodash'
+import { Image } from './Image'
 
 const RestaurantHeader = ({ restaurant }) => {
   const city = restaurant?.succursales[0].address?.context?.find((el) =>
     el.id?.includes('place')
   )?.text
+
+  const images = flatten(restaurant.reviews.map((r) => r.photos)).filter(Boolean)
+
   return (
     <div className='relative' style={{ height: '17vw' }}>
       <div className='flex w-full h-full'>
         <div className='w-1/3 bg-gray-100 flex items-center justify-center border-r-2 border-gray-50'>
-          <Image className='text-gray-300' size='80' alt='default' />
+          {images[0] ? (
+            <Image publicId={images[0]} className='w-full h-full object-cover object-center' />
+          ) : (
+            <ImageIcon className='text-gray-300' size='80' alt='default' />
+          )}
         </div>
         <div className='w-1/3 bg-gray-100 flex items-center justify-center border-r-2 border-gray-50'>
-          <Image className='text-gray-300' size='80' alt='default' />
+          {images[1] ? (
+            <Image publicId={images[1]} className='w-full h-full object-cover object-center' />
+          ) : (
+            <ImageIcon className='text-gray-300' size='80' alt='default' />
+          )}
         </div>
         <div className='w-1/3 bg-gray-100 flex items-center justify-center'>
-          <Image className='text-gray-300' size='80' alt='default' />
+          {images[2] ? (
+            <Image publicId={images[2]} className='w-full h-full object-cover object-center' />
+          ) : (
+            <ImageIcon className='text-gray-300' size='80' alt='default' />
+          )}{' '}
         </div>
       </div>
-      <div className='absolute top-0 left-0 w-full h-full bg-gradient-to-t from-gray-500 flex items-end text-center'>
+      <div className='absolute top-0 left-0 w-full h-full bg-gradient-to-t from-[#000000aa] flex items-end text-center'>
         <div className='p-2 lg:p-5 w-full'>
           <div className='flex justify-between items-center text-white'>
             <h1 className='text-lg lg:text-3xl font-bold text-white text-center'>

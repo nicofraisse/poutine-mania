@@ -20,7 +20,8 @@ const RateRestaurant = ({ onSubmit, preselectedRestaurant, existingReview }) => 
   const { data: searchResults } = useGet(`/api/restaurants?search=${searchQuery}`)
 
   const uploadToCloudinary = async (files) => {
-    if (!files) return null
+    console.log({ files })
+    if (!files || files.length === 0) return null
     const formData = new FormData()
     for (const file of files) {
       formData.append('file', file)
@@ -36,7 +37,7 @@ const RateRestaurant = ({ onSubmit, preselectedRestaurant, existingReview }) => 
     const publicId = await uploadToCloudinary(values.photos)
     const submitValues = {
       ...values,
-      photos: publicId && [publicId],
+      photos: publicId ? [publicId] : null,
       restaurantId: selectedRestaurant._id,
     }
     const url = existingReview ? `/api/reviews/${existingReview._id}/update` : '/api/reviews/create'
@@ -117,17 +118,22 @@ const RateRestaurant = ({ onSubmit, preselectedRestaurant, existingReview }) => 
             </div>
 
             <div className='flex items-center justify-between mt-6'>
-              <button
-                className='flex items-center rounded text-gray-400 hover:text-gray-700'
-                onClick={() => {
-                  setStep(1)
-                }}
-              >
-                <ChevronLeft className='mr-2' size={20} />
-                Noter un autre restaurant
-              </button>
+              {existingReview ? (
+                <div></div>
+              ) : (
+                <button
+                  className='flex items-center rounded text-gray-400 hover:text-gray-700'
+                  onClick={() => {
+                    setStep(1)
+                  }}
+                >
+                  <ChevronLeft className='mr-2' size={20} />
+                  Noter un autre restaurant
+                </button>
+              )}
+
               <Button type='submit' variant='primary' className='w-60' loading={isSubmitting}>
-                Soumettre
+                {existingReview ? 'Mettreà jour' : 'Soumettre'}
               </Button>
             </div>
           </>

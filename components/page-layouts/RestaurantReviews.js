@@ -26,7 +26,7 @@ const ReviewStats = ({ reviews, restaurant }) => {
         </div>
         <div className='flex wrap items-center'>
           <div className='flex'>
-            <Button
+            {/* <Button
               size='sm'
               variant='secondary'
               onClick={() => rateRestaurant(restaurant)}
@@ -34,7 +34,7 @@ const ReviewStats = ({ reviews, restaurant }) => {
             >
               <Camera size={20} className='mr-1' />
               Poster une photo
-            </Button>
+            </Button> */}
             <Button
               size='sm'
               onClick={() => rateRestaurant(restaurant)}

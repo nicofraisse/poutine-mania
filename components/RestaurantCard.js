@@ -1,9 +1,10 @@
 import RatingPill from 'components/RatingPill'
 import ReadMore from 'components/ReadMore'
-import { Image, MapPin } from 'react-feather'
+import { Image as ImageIcon, MapPin } from 'react-feather'
 import { repeat } from 'lodash'
 import { useRestaurantCardHover } from './context/RestaurantCardHoverProvider'
 import classNames from 'classnames'
+import { Image } from './Image'
 
 const LastComment = ({ comment }) => {
   if (!comment) return null
@@ -23,6 +24,8 @@ const RestaurantCard = ({ restaurant }) => {
     el.id?.includes('place')
   )?.text
 
+  const image = restaurant.reviews?.find((r) => r.photos?.[0])?.photos[0]
+
   return (
     <div
       className={classNames('py-3 lg:py-6 px-1 lg:px-2 flex justify-between items-start', {
@@ -32,12 +35,21 @@ const RestaurantCard = ({ restaurant }) => {
       onMouseLeave={() => setHoveredId(null)}
     >
       <div
-        className='bg-gray-100 rounded w-1/4 h-24 mr-2 lg:mr-3 flex items-center justify-center'
-        style={{ minWidth: '23%' }}
+        className='bg-gray-100 rounded w-1/4 h-28 mr-2 lg:mr-3 flex items-center justify-center'
+        style={{ minWidth: '29%' }}
       >
-        <Image className='text-gray-300' size={48} alt='placeholder' />
+        {image ? (
+          <Image
+            publicId={image}
+            alt={`${restaurant.name}-photo`}
+            className='w-full h-full object-cover object-center rounded'
+          />
+        ) : (
+          <ImageIcon className='text-gray-300' size={48} alt='placeholder' />
+        )}
       </div>
-      <div style={{ minWidth: '75%' }}>
+
+      <div style={{ minWidth: '71%' }}>
         <div className='flex justify-between items-start mb-1 lg:mb-1'>
           <div className='font-bold text-base lg:text-lg text-teal-600'>{name}</div>
           <div className='ml-2'>
