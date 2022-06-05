@@ -8,13 +8,13 @@ const Button = ({ children, className, variant = 'primary', size = 'lg', loading
       className={classNames(
         'rounded-md font-bold flex items-center justify-center select-none',
         {
-          'w-full px-8': ['primary', 'secondary'].includes(variant),
+          'px-8': ['primary', 'secondary'].includes(variant),
           'bg-teal-600 h-[56px]': variant === 'primary',
           'text-white': variant !== 'light',
           'opacity-80': loading,
           'px-3 lg:px-3 h-[40px] text-sm': size === 'sm',
-          'bg-none border-2 border-orange-600 text-orange-600': variant === 'secondary',
-          'bg-none border-none border-orange-600 text-orange-600': variant === 'noBorder',
+          'bg-none border-2 border-teal-600 text-teal-600': variant === 'secondary',
+          'bg-none border-none border-teal-600 text-teal-600': variant === 'noBorder',
           'text-md text-gray-500 bg-gray-100 hover:bg-gray-200 lg:p-2 rounded-lg':
             variant === 'light',
         },

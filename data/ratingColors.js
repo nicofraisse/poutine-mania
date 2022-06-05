@@ -9,4 +9,5 @@ export const ratingColors = [
   '#d9f3b6',
   '#cbf3b4',
   '#bcf3b1',
+  '#bcf3b1',
 ]

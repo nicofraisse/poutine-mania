@@ -16,4 +16,7 @@ module.exports = {
 
     return config
   },
+  env: {
+    CLOUD_NAME: process.env.CLOUD_NAME,
+  },
 }

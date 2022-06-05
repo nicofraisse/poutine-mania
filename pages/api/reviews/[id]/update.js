@@ -8,7 +8,14 @@ const handler = async (req, res) => {
     .collection('reviews')
     .updateOne(
       { _id: ObjectId(req.query.id) },
-      { $set: { title: req.body.title, rating: req.body.rating, comment: req.body.comment } }
+      {
+        $set: {
+          title: req.body.title,
+          rating: req.body.rating,
+          comment: req.body.comment,
+          photos: req.body.photos,
+        },
+      }
     )
   res.status(200).json(updatedReview)
 }

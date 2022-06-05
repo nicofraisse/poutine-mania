@@ -7,7 +7,11 @@ const RatingPill = ({ avgRating, reviewCount, single }) => {
   return (
     <div
       className={classNames(
-        'px-2 py-[4px] text-xs lg:text-sm text-gray-800 rounded flex items-center'
+        'text-xs lg:text-sm text-gray-800 rounded flex items-center justify-center',
+        {
+          'h-6 min-w-20': reviewCount === 0,
+          'h-8 min-w-24': reviewCount !== 0,
+        }
       )}
       style={{ backgroundColor: avgRating ? ratingColors[round(avgRating)] : '#eee' }}
     >

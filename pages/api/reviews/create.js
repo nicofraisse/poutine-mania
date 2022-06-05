@@ -6,7 +6,7 @@ const handler = async (req, res) => {
   const client = await connectToDatabase()
   const db = await client.db()
   const session = await getSession({ req })
-
+  console.log('body', req.body)
   if (session) {
     await db.collection('reviews').insertOne({
       rating: req.body.rating,
@@ -14,7 +14,7 @@ const handler = async (req, res) => {
       comment: req.body.comment,
       restaurantId: new ObjectId(req.body.restaurantId),
       userId: new ObjectId(session.user._id),
-
+      photos: req.body.photos,
       createdAt: new Date(),
     })
 

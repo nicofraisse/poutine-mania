@@ -25,7 +25,16 @@ const ReviewStats = ({ reviews, restaurant }) => {
           {/* <ReactSelect placeholder='langue' options={[]} className='ml-3' /> */}
         </div>
         <div className='flex wrap items-center'>
-          <div className='w-48'>
+          <div className='flex'>
+            <Button
+              size='sm'
+              variant='secondary'
+              onClick={() => rateRestaurant(restaurant)}
+              className='flex items-center mr-2'
+            >
+              <Camera size={20} className='mr-1' />
+              Poster une photo
+            </Button>
             <Button
               size='sm'
               onClick={() => rateRestaurant(restaurant)}
@@ -42,7 +51,8 @@ const ReviewStats = ({ reviews, restaurant }) => {
 }
 
 const RestaurantReviews = ({ restaurant }) => {
-  const { data: reviews, loading, error } = useGet(`/api/restaurants/${restaurant._id}/reviews`)
+  const { data: reviews, loading } = useGet(`/api/restaurants/${restaurant._id}/reviews`)
+
   const { reload } = useRouter()
   const { rateRestaurant } = useRateRestaurant()
 

@@ -5,14 +5,38 @@ const handler = async (req, res) => {
   const db = await client.db()
   let result
 
-  if (req.query.search) {
+  const { search, sort, order } = req.query
+
+  const baseAggregaor = [
+    {
+      $lookup: {
+        from: 'reviews',
+        localField: '_id',
+        foreignField: 'restaurantId',
+        as: 'reviews',
+      },
+    },
+    {
+      $addFields: {
+        reviewCount: { $size: '$reviews' },
+        avgRating: { $avg: '$reviews.rating' },
+      },
+    },
+    {
+      $sort: {
+        [sort]: Number(order),
+      },
+    },
+  ]
+
+  if (search) {
     result = await db
       .collection('restaurants')
       .aggregate([
         {
           $search: {
             autocomplete: {
-              query: req.query.search,
+              query: search,
               path: 'name',
               fuzzy: {
                 maxEdits: 1,
@@ -20,42 +44,11 @@ const handler = async (req, res) => {
             },
           },
         },
-        {
-          $lookup: {
-            from: 'reviews',
-            localField: '_id',
-            foreignField: 'restaurantId',
-            as: 'reviews',
-          },
-        },
-        {
-          $addFields: {
-            reviewCount: { $size: '$reviews' },
-            avgRating: { $avg: '$reviews.rating' },
-          },
-        },
+        ...baseAggregaor,
       ])
       .toArray()
   } else {
-    result = await db
-      .collection('restaurants')
-      .aggregate([
-        {
-          $lookup: {
-            from: 'reviews',
-            localField: '_id',
-            foreignField: 'restaurantId',
-            as: 'reviews',
-          },
-        },
-        {
-          $addFields: {
-            reviewCount: { $size: '$reviews' },
-            avgRating: { $avg: '$reviews.rating' },
-          },
-        },
-      ])
-      .toArray()
+    result = await db.collection('restaurants').aggregate(baseAggregaor).toArray()
   }
   res.status(200).json(result)
 }

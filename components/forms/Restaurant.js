@@ -11,7 +11,7 @@ import AutocompleteSelect from '../../components/controls/AutocompleteSelect'
 import CategorySelect from '../../components/controls/CategorySelect'
 import Spinner from '../Spinner'
 import { Plus, Trash } from 'react-feather'
-import { cloneDeep } from 'lodash'
+import { cloneDeep, isString } from 'lodash'
 import classNames from 'classnames'
 
 const RestaurantForm = ({ type, onSubmit }) => {
@@ -20,8 +20,11 @@ const RestaurantForm = ({ type, onSubmit }) => {
 
   const { data: restaurant, loading } = useGet(`/api/restaurants/${query.id}`, { skip: !query.id })
 
+  console.log({ restaurant })
+
   const handleSubmit = (values, { setSubmitting }) => {
-    console.log('on est ic', type)
+    console.log({ values })
+    // return
     if (succursales.find((s) => !s.address && !s.hide)) {
       setSubmitting(false)
       window.alert('Adresse vide!')
@@ -36,7 +39,7 @@ const RestaurantForm = ({ type, onSubmit }) => {
       website: values.website,
       phoneNumber: values.phoneNumber,
       priceRange: values.priceRange,
-      categories: values.categories.map((c) => c.value),
+      categories: values.categories.map((c) => (isString(c) ? c : c.value)),
     }
 
     console.log('DA VALS', submitValues)

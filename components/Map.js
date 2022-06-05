@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Map, { Marker, Popup } from 'react-map-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import { X, MapPin } from 'react-feather'
@@ -103,6 +103,7 @@ const MarkerAndPopup = ({
 }
 
 const MapMap = ({ restaurants, isShowPage }) => {
+  const [userCoordinates, setUserCoordinates] = useState()
   const allCoordinates = flatten(restaurants.map((r) => r.succursales.map((s) => s.address.center)))
   const minLongitude = minBy(allCoordinates, (c) => c[0])?.[0]
   const minLatitude = minBy(allCoordinates, (c) => c[1])?.[1]
@@ -110,6 +111,7 @@ const MapMap = ({ restaurants, isShowPage }) => {
   const maxLatitude = maxBy(allCoordinates, (c) => c[1])?.[1]
 
   const [openPopups, setOpenPopups] = useState([])
+  const [userPopupOpen, setUserPopupOpen] = useState(false)
 
   const openPopup = (id) => {
     setOpenPopups([...openPopups, id])
@@ -122,6 +124,13 @@ const MapMap = ({ restaurants, isShowPage }) => {
   }
 
   const closeAllPopups = () => setOpenPopups([])
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      console.log({ position })
+      setUserCoordinates([position.coords.longitude, position.coords.latitude])
+    })
+  }, [])
 
   return (
     <div
@@ -157,6 +166,37 @@ const MapMap = ({ restaurants, isShowPage }) => {
               closeAllPopups={closeAllPopups}
             />
           ))
+        )}
+        {userCoordinates && (
+          <div>
+            <Marker
+              longitude={userCoordinates[0]}
+              latitude={userCoordinates[1]}
+              onClick={() => {
+                setUserPopupOpen(true)
+                setTimeout(() => {
+                  setUserPopupOpen(false)
+                }, 2000)
+              }}
+            >
+              <div className='h-8 w-8 bg-white rounded-full shadow flex items-center justify-center'>
+                <div className='h-5 w-5 bg-blue-500 transition animate-pulse scale-105 rounded-full '></div>
+              </div>
+            </Marker>
+            <Marker longitude={userCoordinates[0]} latitude={userCoordinates[1]}>
+              <div
+                className={classNames(
+                  'transition bg-white shadow duration-500 mt-[-38px] px-2 rounded text-gray-600 z-20',
+                  {
+                    'opacity-100': userPopupOpen,
+                    'opacity-0': !userPopupOpen,
+                  }
+                )}
+              >
+                Vous êtes ici
+              </div>
+            </Marker>
+          </div>
         )}
       </Map>
     </div>

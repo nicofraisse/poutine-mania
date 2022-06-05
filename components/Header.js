@@ -21,9 +21,13 @@ const Header = ({ toggleMobileSidebar }) => {
   return (
     <header className='flex justify-between items-center h-[64px] w-full bg-indigo-white pl-4 border-b sticky top-0 z-10 bg-white'>
       <div className='flex items-center lg:hidden'>
-        <Menu className='mr-3' onClick={() => toggleMobileSidebar()} size={28} />
+        <Menu
+          className='mr-3 min-w-12 cursor-pointer hover:opacity-70'
+          onClick={() => toggleMobileSidebar()}
+          size={28}
+        />
 
-        <div className='-mb-2 block select-none' onClick={() => toggleMobileSidebar()}>
+        <div className='-mb-2 block select-none min-w-20' onClick={() => toggleMobileSidebar()}>
           <Link href='/'>
             <a>
               <Image alt='poutine-logo' src='/poutine.png' width={1.506 * 50} height={50} />

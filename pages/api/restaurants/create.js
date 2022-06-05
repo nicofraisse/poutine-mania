@@ -10,6 +10,7 @@ const handler = async (req, res) => {
     priceRange: req.body.priceRange,
     succursales: req.body.succursales,
     categories: req.body.categories,
+    createdAt: new Date(),
   })
 
   const data = await db.collection('restaurants').find({}).toArray()

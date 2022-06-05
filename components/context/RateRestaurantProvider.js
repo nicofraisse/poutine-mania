@@ -34,7 +34,7 @@ export const RateRestaurantProvider = ({ children }) => {
         <Modal
           classNames={{
             overlay: 'customOverlay',
-            modal: 'customModal',
+            modal: 'rateModal',
           }}
           open={rateRestaurantOpen}
           onClose={() => setRateRestaurantOpen(false)}
