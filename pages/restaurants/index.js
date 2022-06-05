@@ -25,7 +25,7 @@ const sortOrders = [
 
 const Restaurants = () => {
   const { searchValue, nonDebouncedValue } = useRestaurantSearch()
-  const [sortType, setSortType] = useState('nom')
+  const [sortType, setSortType] = useState('reviewCount')
   const [sortOrder, setSortOrder] = useState(-1)
 
   const trimmedSearchValue = searchValue?.trim()
@@ -67,14 +67,14 @@ const Restaurants = () => {
                   options={sortTypes}
                   className='mr-2 text-sm'
                   onChange={({ value }) => setSortType(value)}
-                  defaultValue={{ label: 'Nom', value: 'name' }}
+                  defaultValue={{ label: "Nombre d'avis", value: 'avgRating' }}
                 />
                 <ReactSelect
                   placeholder='Ordre'
                   options={sortOrders}
                   className='text-sm'
                   onChange={({ value }) => setSortOrder(value)}
-                  defaultValue={{ label: 'Descendant', value: -1 }}
+                  defaultValue={{ label: 'Décroissant', value: -1 }}
                 />
               </div>
             </div>

@@ -1,49 +1,28 @@
-import { useState } from 'react'
-import axios from 'axios'
-
-import { Check, ChevronLeft, ChevronRight, Edit3, Plus, X } from 'react-feather'
-
 import Link from 'next/link'
+import { Edit3, User } from 'react-feather'
+import { maxBy } from 'lodash'
 import { useCurrentUser } from '../../lib/useCurrentUser'
 import { useGet } from '../../lib/useAxios'
-import toast from 'react-hot-toast'
-import classNames from 'classnames'
 import Spinner from '../Spinner'
-import { formatRating } from '../../lib/formatRating'
+import ProfileReviewCard from '../ProfileReviewCard'
 
 const PublicProfile = ({ user }) => {
-  const [searchQuery, setSearchQuery] = useState('')
-  const [selectedRestaurant, setSelectedRestaurant] = useState(null)
-  const [modalOpen, setModalOpen] = useState(false)
-  const [formValues, setFormValues] = useState({})
-  const [step, setStep] = useState(1)
-  const [selectedTab, setSelectedTab] = useState('favorite')
   const { currentUser } = useCurrentUser()
-  const { data: ratedRestaurants } = useGet(`api/users/${user?._id}/reviews`, {
+  const { data: reviews } = useGet(`/api/users/${user?._id}/reviews`, {
     skip: !user,
   })
-  const { data: searchResults } = useGet(`/api/restaurants?search=${searchQuery}`)
 
-  const handleSubmit = async () => {
-    setModalOpen(false)
-    await axios
-      .post('/api/reviews/create', {
-        ...formValues,
-        restaurantId: selectedRestaurant._id,
-      })
-      .then(() => toast.success('Review created!'))
-      .catch(() => toast.error('Error'))
-  }
-
-  if (!user) return <Spinner />
+  if (!user || !reviews) return <Spinner />
 
   return (
     <div className='py-10'>
       <div className='max-w-2xl mx-auto'>
-        <div className='flex items-start justify-start mb-10 border bg-slate-100 p-4 rounded-xl'>
-          <div className='w-32 h-32 rounded-full bg-gray-300 flex-shrink-0'></div>
-          <div className='pl-10 w-full'>
-            <div className='mb-1 w-full items-center justify-between flex'>
+        <div className='flex items-start justify-start mb-10 border bg-slate-100 p-5 pl-6 rounded-xl'>
+          <div className='w-28 h-28 rounded-full bg-gray-300 flex-shrink-0 flex items-center justify-center'>
+            <User className='text-white' size={64} />
+          </div>
+          <div className='pl-8 w-full'>
+            <div className='mb-2 mt-2 w-full items-center justify-between flex'>
               <div className='font-black text-3xl'>
                 {user.firstName} {user.lastName}
               </div>
@@ -52,15 +31,37 @@ const PublicProfile = ({ user }) => {
                   <Edit3 className='mr-2' /> Modifier
                 </button>
               ) : (
-                <button className='text-base mx-3 bg-blue-400 px-4 py-1 rounded-lg text-white -mb-1 inline-block'>
-                  Suivre
-                </button>
+                // <button className='text-base mx-3 bg-blue-400 px-4 py-1 rounded-lg text-white -mb-1 inline-block'>
+                //   Suivre
+                // </button>
+                ''
               )}
             </div>
-            <div className='text-lg'>58 poutines notées | 12 abonnés </div>
+            <div className='text-lg'>
+              {reviews.length > 0 ? (
+                <span className='text-xl'>😋</span>
+              ) : (
+                <span className='text-xl'>😢</span>
+              )}{' '}
+              {reviews.length} poutine
+              {reviews.length > 1 && 's'} notée{reviews.length > 1 && 's'} {/*| 12 abonnés*/}{' '}
+            </div>
+            {reviews.length > 0 && (
+              <div className='text-lg mt-1'>
+                <span className='text-xl'>❤️</span> Poutine préférée:
+                <Link href={`/restaurants/${maxBy(reviews, 'rating').restaurants[0]._id}`}>
+                  <a
+                    target='_blank'
+                    className='text-gray-600 font-bold border border-gray-400 px-2 bg-white rounded-lg hover:text-gray-400 ml-1'
+                  >
+                    {maxBy(reviews, 'rating').restaurants[0].name}
+                  </a>
+                </Link>
+              </div>
+            )}
           </div>
         </div>
-        <div className='w-full flex font-bold'>
+        {/* <div className='w-full flex font-bold'>
           <div
             onClick={() => setSelectedTab('favorite')}
             className={classNames(
@@ -86,26 +87,21 @@ const PublicProfile = ({ user }) => {
             )}
           >
             Toutes les poutines notées
-          </div>
-        </div>
-        {ratedRestaurants?.map((r, i) => (
-          <div
-            key={i}
-            className='border rounded my-2 p-6 text-gray-400 flex items-center cursor-pointer hover:bg-gray-50 flex-wrap-reverse break-all'
-          >
-            {r.restaurant.name}: {formatRating(r.rating)}/10
-          </div>
+          </div> */}
+        {/* </div> */}
+
+        {reviews.map((review) => (
+          <ProfileReviewCard review={review} key={review._id} />
         ))}
 
-        <div
+        {/* <div
           className='border rounded my-2 p-6 text-gray-400 flex items-center cursor-pointer hover:bg-gray-50'
           onClick={() => setModalOpen(true)}
         >
           <Plus size={32} className='mr-4' />
           Ajouter une poutine
-        </div>
+        </div> */}
       </div>
-      {modalOpen && 'salute'}
     </div>
   )
 }

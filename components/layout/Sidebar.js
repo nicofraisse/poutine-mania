@@ -8,7 +8,7 @@ import { useCurrentUser } from 'lib/useCurrentUser'
 
 const Item = ({ label, href, icon, disabled }) => {
   const { pathname } = useRouter()
-  const isActive = pathname?.split('/')[1] === href
+  const isActive = pathname?.split('/')[1] === href.split('/')[0]
   const Icon = icon
 
   return (
@@ -69,7 +69,7 @@ const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
           <Item label='Restaurants' icon={Search} href='restaurants' />
           <Item label='À essayer (3)' icon={Watch} href='watchlist' disabled />
           <Item label='Mon top poutines' icon={Heart} href='mon-top' disabled />
-          {currentUser && <Item label='Profil' icon={User} href='profil' disabled />}
+          {currentUser && <Item label='Profil' icon={User} href={`users/${currentUser._id}`} />}
           {currentUser?.isAdmin && <Item label='Admin' icon={Lock} href='admin' />}
         </nav>
       </div>

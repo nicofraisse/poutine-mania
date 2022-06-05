@@ -9,8 +9,9 @@ const RatingPill = ({ avgRating, reviewCount, single }) => {
       className={classNames(
         'text-xs lg:text-sm text-gray-800 rounded flex items-center justify-center',
         {
-          'h-6 min-w-20': reviewCount === 0,
-          'h-8 min-w-24': reviewCount !== 0,
+          'h-6 min-w-20': reviewCount === 0 && !single,
+          'h-8 min-w-24': reviewCount !== 0 && !single,
+          'h-8 min-w-16': single,
         }
       )}
       style={{ backgroundColor: avgRating ? ratingColors[round(avgRating)] : '#eee' }}
@@ -18,7 +19,9 @@ const RatingPill = ({ avgRating, reviewCount, single }) => {
       {reviewCount > 0 ? (
         <>
           <span className='font-bold mr-1'>{formatRating(avgRating)}/10</span>
-          {reviewCount && <span className='text-xs text-gray-600'> • {reviewCount} avis</span>}
+          {reviewCount && !single && (
+            <span className='text-xs text-gray-600'> • {reviewCount} avis</span>
+          )}
         </>
       ) : (
         <span className='text-xs text-gray-600'>Aucun avis</span>

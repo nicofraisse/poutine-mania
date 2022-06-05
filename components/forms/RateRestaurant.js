@@ -20,7 +20,6 @@ const RateRestaurant = ({ onSubmit, preselectedRestaurant, existingReview }) => 
   const { data: searchResults } = useGet(`/api/restaurants?search=${searchQuery}`)
 
   const uploadToCloudinary = async (files) => {
-    console.log({ files })
     if (!files || files.length === 0) return null
     const formData = new FormData()
     for (const file of files) {

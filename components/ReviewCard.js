@@ -8,23 +8,25 @@ import { round } from 'lodash'
 import { User, X } from 'react-feather'
 import { Image } from './Image'
 import Modal from 'react-responsive-modal'
+import Link from 'next/link'
 
 const ReviewCard = ({ review, handleEdit, handleDelete }) => {
   const [imgModalOpen, setImgModalOpen] = useState(false)
   const { currentUser } = useCurrentUser()
 
-  console.log({ review })
   return (
     <>
       <div className='py-3 lg:py-6 border-t flex'>
         <div className='basis-1/6 flex flex-col items-center justify-centere text-gray-500'>
-          <div className='py-2 px-6 border-gray-100 rounded-lg hover:bg-gray-100 transition duration-150 cursor-pointer'>
-            <div className='bg-gray-50 border h-12 w-12 rounded-full text-gray-300 flex items-center justify-center'>
-              <User />
+          <Link href={`/users/${review.user._id}`} passHref>
+            <div className='py-2 px-6 border-gray-100 rounded-lg hover:bg-gray-100 transition duration-150 cursor-pointer'>
+              <div className='bg-gray-50 border h-12 w-12 rounded-full text-gray-300 flex items-center justify-center'>
+                <User />
+              </div>
+              <div className='text-center text-sm mt-2 font-bold'>{review.user.firstName}</div>
+              <div className='text-center text-sm'>4 avis</div>
             </div>
-            <div className='text-center text-sm mt-2 font-bold'>{review.user.firstName}</div>
-            <div className='text-center text-sm'>4 avis</div>
-          </div>
+          </Link>
         </div>
         <div className='basis-5/6 shrink'>
           <div className='text-base font-bold mb-3 flex items-center'>

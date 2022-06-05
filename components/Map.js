@@ -39,7 +39,7 @@ const MarkerAndPopup = ({
   const theRef = useRef()
 
   if (theRef.current) {
-    theRef.current.parentNode.style.zIndex = isHovered ? 100 : 10
+    theRef.current.parentNode.style.zIndex = isHovered ? 100 : 1
   }
 
   return (
@@ -85,7 +85,7 @@ const MarkerAndPopup = ({
           }}
         >
           <div
-            className='relative w-36 flex flex-col items-center'
+            className='relative w-36 flex flex-col items-center z-100'
             onClick={() => window.open(`/restaurants/${restaurant._id}`)}
           >
             <div className='font-bold text-base mb-1'>{restaurant.name}</div>
