@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react'
 import { Trash, Edit } from 'react-feather'
 import Link from 'next/link'
 import toast from 'react-hot-toast'
+import Spinner from '../../components/Spinner'
 
 const Restaurants = () => {
   const [restaurants, setRestaurants] = useState([])
@@ -19,7 +20,7 @@ const Restaurants = () => {
         setLoading(false)
         setRestaurants(data)
       })
-      .catch((err) => toast.error(err))
+      .catch((err) => toast.error(err.message))
   }, [])
 
   const handleDelete = async ({ _id, name }) => {
@@ -34,7 +35,7 @@ const Restaurants = () => {
     }
   }
 
-  if (loading || !restaurants) return 'loading'
+  if (loading || !restaurants) return <Spinner />
 
   return (
     <div className='w-full min-h-screen-minus-navbar'>

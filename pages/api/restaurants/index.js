@@ -24,7 +24,7 @@ const handler = async (req, res) => {
     },
     {
       $sort: {
-        [sort]: Number(order),
+        [sort]: Number(order) || 1,
       },
     },
   ]
