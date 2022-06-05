@@ -127,7 +127,6 @@ const MapMap = ({ restaurants, isShowPage }) => {
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
-      console.log({ position })
       setUserCoordinates([position.coords.longitude, position.coords.latitude])
     })
   }, [])

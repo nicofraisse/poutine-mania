@@ -20,18 +20,12 @@ const RestaurantForm = ({ type, onSubmit }) => {
 
   const { data: restaurant, loading } = useGet(`/api/restaurants/${query.id}`, { skip: !query.id })
 
-  console.log({ restaurant })
-
   const handleSubmit = (values, { setSubmitting }) => {
-    console.log({ values })
-    // return
     if (succursales.find((s) => !s.address && !s.hide)) {
       setSubmitting(false)
       window.alert('Adresse vide!')
       return
     }
-
-    console.log('HERE', values, succursales)
 
     const submitValues = {
       name: values.name,
@@ -42,7 +36,6 @@ const RestaurantForm = ({ type, onSubmit }) => {
       categories: values.categories.map((c) => (isString(c) ? c : c.value)),
     }
 
-    console.log('DA VALS', submitValues)
     if (type === 'create') {
       axios
         .post('/api/restaurants/create', submitValues)
@@ -54,7 +47,6 @@ const RestaurantForm = ({ type, onSubmit }) => {
         })
         .catch((err) => toast.error(err.message))
     } else if (type === 'update') {
-      console.log('will submit', submitValues)
       axios
         .post(`/api/restaurants/${query.id}/update`, submitValues)
         .then(() => {
@@ -70,10 +62,6 @@ const RestaurantForm = ({ type, onSubmit }) => {
       setSuccursales(restaurant.succursales)
     }
   }, [restaurant, succursales])
-
-  useEffect(() => {
-    console.log({ succursales })
-  }, [succursales])
 
   const updateSuccursaleField = (value, index, field) => {
     const succursalesCopy = cloneDeep(succursales)
@@ -112,7 +100,6 @@ const RestaurantForm = ({ type, onSubmit }) => {
     >
       {({ isSubmitting, values, setFieldValue }) => (
         <>
-          {console.log({ values })}
           <Field name='name' />
           <Field name='categories' control={CategorySelect} label='Catégorie(s)' />
           <Field name='website' label='Site internet' />

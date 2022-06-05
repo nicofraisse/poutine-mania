@@ -10,8 +10,6 @@ const Layout = (props) => {
   }
   useEffect(() => {
     window.addEventListener('resize', () => {
-      console.log('resize')
-      console.log(window.innerWidth)
       if (window.innerWidth >= 1024) {
         setShowMobileSidebar(false)
       }

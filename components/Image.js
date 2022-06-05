@@ -7,7 +7,6 @@ const Image = ({ publicId, alt, ...props }) => {
     return <div className='p-3 border'>No image</div>
   }
 
-  console.log(process.env.MONGO_URI)
   return (
     <CloudinaryImage cloudName={process.env.CLOUD_NAME} publicId={publicId} alt={alt} {...props} />
   )

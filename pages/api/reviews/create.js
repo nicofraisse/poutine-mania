@@ -6,7 +6,6 @@ const handler = async (req, res) => {
   const client = await connectToDatabase()
   const db = await client.db()
   const session = await getSession({ req })
-  console.log('body', req.body)
   if (session) {
     await db.collection('reviews').insertOne({
       rating: req.body.rating,

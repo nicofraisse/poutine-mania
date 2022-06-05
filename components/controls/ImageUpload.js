@@ -8,8 +8,6 @@ const ImageUpload = ({ onChange, ...props }) => {
   const [field] = useField(props)
   const { setFieldValue } = useFormikContext()
 
-  console.log(field)
-
   const handleChange = (changeEvent) => {
     const reader = new FileReader()
 
@@ -17,8 +15,6 @@ const ImageUpload = ({ onChange, ...props }) => {
       setImageSrc(onLoadEvent.target.result)
       setFieldValue(field.name, changeEvent.target.files)
     }
-
-    // console.log(changeEvent.target.files)
 
     reader.readAsDataURL(changeEvent.target.files[0])
   }
