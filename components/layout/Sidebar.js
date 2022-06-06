@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 import classNames from 'classnames'
 import { useCurrentUser } from 'lib/useCurrentUser'
 
-const Item = ({ label, href, icon, disabled }) => {
+const Item = ({ label, href, icon, disabled, onClick }) => {
   const { pathname } = useRouter()
   const isActive = pathname?.split('/')[1] === href.split('/')[0]
   const Icon = icon
@@ -14,6 +14,7 @@ const Item = ({ label, href, icon, disabled }) => {
   return (
     <Link href={'/' + href} passHref>
       <div
+        onClick={onClick}
         className={classNames(
           'flex items-center p-3 xl:p-4 pl-4 xl:pl-9 text-base xl:text-lg cursor-pointer select-none',
           {
@@ -46,7 +47,7 @@ const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
       <div
         className={classNames('fixed lg:static lg:block lg:min-w-[200px] xl:min-w-[256px]', {
           hidden: !showMobileSidebar,
-          'block bg-white h-screen shadow-xl z-10': showMobileSidebar,
+          'block bg-white h-screen  z-10': showMobileSidebar,
         })}
       >
         <nav
@@ -65,12 +66,38 @@ const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
               </div>
             </a>
           </Link>
-          <Item label='Découvrir' icon={Hash} href='feed' disabled />
-          <Item label='Restaurants' icon={Search} href='restaurants' />
-          <Item label='À essayer (3)' icon={Watch} href='watchlist' disabled />
-          <Item label='Mon top poutines' icon={Heart} href='mon-top' disabled />
-          {currentUser && <Item label='Profil' icon={User} href={`users/${currentUser._id}`} />}
-          {currentUser?.isAdmin && <Item label='Admin' icon={Lock} href='admin' />}
+          <Item onClick={toggleMobileSidebar} label='Découvrir' icon={Hash} href='feed' disabled />
+          <Item
+            onClick={toggleMobileSidebar}
+            label='Restaurants'
+            icon={Search}
+            href='restaurants'
+          />
+          <Item
+            onClick={toggleMobileSidebar}
+            label='À essayer (3)'
+            icon={Watch}
+            href='watchlist'
+            disabled
+          />
+          <Item
+            onClick={toggleMobileSidebar}
+            label='Mon top poutines'
+            icon={Heart}
+            href='mon-top'
+            disabled
+          />
+          {currentUser && (
+            <Item
+              onClick={toggleMobileSidebar}
+              label='Profil'
+              icon={User}
+              href={`users/${currentUser._id}`}
+            />
+          )}
+          {currentUser?.isAdmin && (
+            <Item onClick={toggleMobileSidebar} label='Admin' icon={Lock} href='admin' />
+          )}
         </nav>
       </div>
     </>

@@ -48,8 +48,8 @@ const Restaurants = () => {
           <Map restaurants={restaurants} />
         </div>
         <div className='pt-5 w-screen md:w-1/2 md:max-w-[560px] md:overflow-y-auto'>
-          <div className='h-12'>
-            <div className='flex flex-wrap items-center justify-between pl-6 pr-5'>
+          <div className='min-h-12'>
+            <div className='flex flex-wrap items-center justify-between lg:pl-6 lg:pr-5 px-2 mb-3 lg:mb-0'>
               {loading ? (
                 <div className=' mt-[-10px]'>
                   <Spinner />

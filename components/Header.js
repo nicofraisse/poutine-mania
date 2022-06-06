@@ -85,14 +85,14 @@ const Header = ({ toggleMobileSidebar }) => {
           )}
           {!currentUser && (
             <>
-              <div className='mx-1 lg:mx-4'>
+              {/* <div className='mx-1 lg:mx-4'>
                 <Button size='sm' variant='noBorder' onClick={openLogin}>
                   Connexion
                 </Button>
-              </div>
-              <div className='mr-1 lg:mr-4'>
-                <Button variant='secondary' size='sm' onClick={openSignup}>
-                  Inscription
+              </div> */}
+              <div className='mx-1 lg:mx-4'>
+                <Button variant='secondary' size='sm' onClick={openLogin}>
+                  Connexion
                 </Button>
               </div>
             </>

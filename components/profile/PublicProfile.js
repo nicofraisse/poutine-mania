@@ -15,19 +15,19 @@ const PublicProfile = ({ user }) => {
   if (!user || !reviews) return <Spinner />
 
   return (
-    <div className='py-10'>
-      <div className='max-w-2xl mx-auto'>
-        <div className='flex items-start justify-start mb-10 border bg-slate-50 p-5 pl-6 rounded-xl'>
+    <div className='py-10 px-2 md:px-0'>
+      <div className='max-w-[600px] mx-auto'>
+        <div className='flex flex-col text-center sm:text-left sm:flex-row items-center sm:items-start justify-start mb-10 border bg-slate-50 p-5 pl-6 rounded-xl'>
           <div className='w-28 h-28 rounded-full bg-gray-300 flex-shrink-0 flex items-center justify-center'>
             <User className='text-white' size={64} />
           </div>
-          <div className='pl-8 w-full'>
-            <div className='mb-2 mt-2 w-full items-center justify-between flex'>
+          <div className='sm:pl-8 w-full'>
+            <div className='mb-2 mt-2 w-full items-center sm:justify-between flex flex-col sm:flex-row'>
               <div className='font-black text-3xl'>
                 {user.firstName} {user.lastName}
               </div>
               {user._id === currentUser?._id ? (
-                <button className='text-base mx-3 px-4 py-1 rounded-lg text-gray-500 -mb-1 hover:text-gray-700 flex'>
+                <button className='text-base mx-3 px-4 py-1 rounded-lg text-gray-500 sm:-mb-1 hover:text-gray-700 flex'>
                   Modifier
                 </button>
               ) : (

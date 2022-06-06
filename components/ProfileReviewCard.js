@@ -10,29 +10,32 @@ const ProfileReviewCard = ({ review }) => {
   const [imgModalOpen, setImgModalOpen] = useState(false)
   return (
     <>
-      <div className='flex items-center text-gray-400'>
-        <Edit3 size={20} className='mr-1 inline' /> Nicolas Fraisse a noté{' '}
-        <Link href={`/restaurants/${review.restaurants[0]._id}`}>
-          <a className='text-teal-500 ml-[6px] font-bold hover:text-teal-600'>
-            {review.restaurants[0].name}
-          </a>
-        </Link>
+      <div className='text-gray-400 block sm:flex justify-between items-center'>
+        <span>
+          <Edit3 size={20} className='mr-2 inline -mt-1' /> Nicolas Fraisse a noté
+          <Link href={`/restaurants/${review.restaurants[0]._id}`}>
+            <a className='text-teal-500 ml-[6px] font-bold hover:text-teal-600'>
+              {review.restaurants[0].name}
+            </a>
+          </Link>
+        </span>
+        <span className='text-gray-400 text-sm ml-1 font-normal'>
+          <span className='inline sm:hidden'>- le</span>{' '}
+          {formatDate(review.createdAt, 'MMMM d, yyyy')}
+        </span>
       </div>
-      <div className='text-gray-700 mb mt-2 mb-8 border shadow-md rounded-lg p-4'>
+      <div className='text-gray-700 mb mt-2 mb-8 border shadow-md rounded-lg p-3 sm:p-4'>
         {/* <div className='flex items-center mb-2 pb-2'>
           <div className='px-2 w-full border-b pb-2 rounded-lg'>
            
             · Montréal, QC (11 avis)
           </div>
         </div> */}
-        <div className='flex mb-2 items-center'>
-          <RatingPill avgRating={review.rating} reviewCount={1} single />
+        <div className='flex mb-2 '>
+          <RatingPill avgRating={review.rating} reviewCount={1} single className='inline' />
           <span className='font-bold ml-2'>{review.title}</span>
-          <span className='text-gray-400 text-sm ml-2 font-normal'>
-            · le {formatDate(review.createdAt, 'dd/MM/yyyy')}
-          </span>
         </div>
-        <p className='rounded-lg p-1 w-full'>{review.comment}</p>
+        <p className='rounded-lg p-1 w-full '>{review.comment}</p>
         <div className='flex items-start'>
           {review.photos?.[0] && (
             <Image

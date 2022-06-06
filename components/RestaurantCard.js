@@ -49,7 +49,7 @@ const RestaurantCard = ({ restaurant }) => {
         )}
       </div>
 
-      <div style={{ minWidth: '71%' }}>
+      <div style={{ minWidth: '69%' }}>
         <div className='flex justify-between items-start mb-1 lg:mb-1'>
           <div className='font-bold text-base lg:text-lg text-teal-600'>{name}</div>
           <div className='ml-2'>
