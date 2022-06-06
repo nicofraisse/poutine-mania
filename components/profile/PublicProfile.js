@@ -17,7 +17,7 @@ const PublicProfile = ({ user }) => {
   return (
     <div className='py-10'>
       <div className='max-w-2xl mx-auto'>
-        <div className='flex items-start justify-start mb-10 border bg-slate-100 p-5 pl-6 rounded-xl'>
+        <div className='flex items-start justify-start mb-10 border bg-slate-50 p-5 pl-6 rounded-xl'>
           <div className='w-28 h-28 rounded-full bg-gray-300 flex-shrink-0 flex items-center justify-center'>
             <User className='text-white' size={64} />
           </div>
@@ -28,7 +28,7 @@ const PublicProfile = ({ user }) => {
               </div>
               {user._id === currentUser?._id ? (
                 <button className='text-base mx-3 px-4 py-1 rounded-lg text-gray-500 -mb-1 hover:text-gray-700 flex'>
-                  <Edit3 className='mr-2' /> Modifier
+                  Modifier
                 </button>
               ) : (
                 // <button className='text-base mx-3 bg-blue-400 px-4 py-1 rounded-lg text-white -mb-1 inline-block'>

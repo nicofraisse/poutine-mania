@@ -11,16 +11,16 @@ const RatingPill = ({ avgRating, reviewCount, single }) => {
         {
           'h-6 min-w-20': reviewCount === 0 && !single,
           'h-8 min-w-24': reviewCount !== 0 && !single,
-          'h-8 min-w-16': single,
+          'h-7 min-w-14 flex justify-center': single,
         }
       )}
       style={{ backgroundColor: avgRating ? ratingColors[round(avgRating)] : '#eee' }}
     >
       {reviewCount > 0 ? (
         <>
-          <span className='font-bold mr-1'>{formatRating(avgRating)}/10</span>
+          <span className='font-bold'>{formatRating(avgRating)}/10</span>
           {reviewCount && !single && (
-            <span className='text-xs text-gray-600'> • {reviewCount} avis</span>
+            <span className='text-xs text-gray-600 ml-1'> • {reviewCount} avis</span>
           )}
         </>
       ) : (

@@ -21,12 +21,24 @@ const handler = async (req, res) => {
           localField: 'userId',
           foreignField: '_id',
           as: 'user',
+          pipeline: [
+            {
+              $lookup: {
+                from: 'reviews',
+                localField: '_id',
+                foreignField: 'userId',
+                as: 'reviews',
+              },
+            },
+          ],
         },
       },
+
       { $unwind: '$user' },
     ])
     .toArray()
 
+  console.log(data)
   res.status(200).json(data)
 }
 

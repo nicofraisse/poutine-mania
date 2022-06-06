@@ -21,6 +21,7 @@ const RateRestaurant = ({ onSubmit, preselectedRestaurant, existingReview }) => 
 
   const uploadToCloudinary = async (files) => {
     if (!files || files.length === 0) return null
+    if (typeof files?.[0] === 'string') return 'skip'
     const formData = new FormData()
     for (const file of files) {
       formData.append('file', file)
@@ -33,10 +34,11 @@ const RateRestaurant = ({ onSubmit, preselectedRestaurant, existingReview }) => 
     return data.public_id
   }
   const handleSubmit = async (values) => {
+    console.log({ values })
     const publicId = await uploadToCloudinary(values.photos)
     const submitValues = {
       ...values,
-      photos: publicId ? [publicId] : null,
+      ...(publicId !== 'skip' && { photos: publicId ? [publicId] : null }),
       restaurantId: selectedRestaurant._id,
     }
     const url = existingReview ? `/api/reviews/${existingReview._id}/update` : '/api/reviews/create'

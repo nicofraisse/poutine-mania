@@ -24,12 +24,12 @@ const ReviewCard = ({ review, handleEdit, handleDelete }) => {
                 <User />
               </div>
               <div className='text-center text-sm mt-2 font-bold'>{review.user.firstName}</div>
-              <div className='text-center text-sm'>4 avis</div>
+              <div className='text-center text-sm'>{review.user.reviews.length} avis</div>
             </div>
           </Link>
         </div>
         <div className='basis-5/6 shrink'>
-          <div className='text-base font-bold mb-3 flex items-center'>
+          <div className='text-base font-bold mb-3 inline items-center'>
             <span
               className='py-1 px-2 bg-green-200 rounded mr-2 text-gray-700'
               style={{ backgroundColor: ratingColors[round(review.rating)] }}
@@ -44,18 +44,19 @@ const ReviewCard = ({ review, handleEdit, handleDelete }) => {
             {(review.userId === currentUser?._id || currentUser?.isAdmin) && (
               <>
                 <span className='text-gray-400 mx-2'>•</span>
+
                 <button
                   className='text-sm text-gray-400 hover:text-gray-500'
                   onClick={() => handleEdit(review)}
                 >
-                  modifier
+                  Modifier
                 </button>
                 <span className='text-sm text-gray-400 font-normal mx-1'>/</span>
                 <button
                   className='text-sm text-gray-400 hover:text-gray-500'
                   onClick={() => handleDelete(review._id)}
                 >
-                  supprimer
+                  Supprimer
                 </button>
               </>
             )}
