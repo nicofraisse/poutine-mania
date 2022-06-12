@@ -66,7 +66,7 @@ const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
               </div>
             </a>
           </Link>
-          <Item onClick={toggleMobileSidebar} label='Découvrir' icon={Hash} href='feed' disabled />
+          <Item onClick={toggleMobileSidebar} label='Découvrir' icon={Hash} href='/' />
           <Item
             onClick={toggleMobileSidebar}
             label='Restaurants'

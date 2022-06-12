@@ -46,7 +46,7 @@ export const LoginFormProvider = ({ children }) => {
         <Modal
           classNames={{
             overlay: 'customOverlay',
-            modal: 'rateModal',
+            modal: 'customModal',
           }}
           open={signupOpen}
           onClose={() => setSignupOpen(false)}

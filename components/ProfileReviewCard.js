@@ -5,6 +5,7 @@ import Modal from 'react-responsive-modal'
 import { Image } from './Image'
 import RatingPill from './RatingPill'
 import { formatDate } from 'lib/formatDate'
+import { formatName } from '../lib/formatName'
 
 const ProfileReviewCard = ({ review }) => {
   const [imgModalOpen, setImgModalOpen] = useState(false)
@@ -12,7 +13,8 @@ const ProfileReviewCard = ({ review }) => {
     <>
       <div className='text-gray-400 block sm:flex justify-between items-center'>
         <span>
-          <Edit3 size={20} className='mr-2 inline -mt-1' /> Nicolas Fraisse a noté
+          <Edit3 size={20} className='mr-2 inline -mt-1' />
+          {formatName(review.user)}
           <Link href={`/restaurants/${review.restaurants[0]._id}`}>
             <a className='text-teal-500 ml-[6px] font-bold hover:text-teal-600'>
               {review.restaurants[0].name}

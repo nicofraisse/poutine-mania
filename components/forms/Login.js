@@ -5,11 +5,9 @@ import * as Yup from 'yup'
 import Form from 'components/Form'
 import Field from 'components/Field'
 import { useLoginForm } from '../context/LoginFormProvider'
-import { providers, session } from 'next-auth/client'
 
-const Login = ({ onSubmit, providers, session }) => {
+const Login = ({ onSubmit }) => {
   const { openSignup, closeLogin } = useLoginForm()
-  console.log({ providers, session })
 
   const handleSubmit = (values) => {
     signIn('credentials', values)
@@ -105,14 +103,6 @@ const Login = ({ onSubmit, providers, session }) => {
       )}
     </Form>
   )
-}
-
-Login.getInitialProps = async (context) => {
-  console.log({ context })
-  return {
-    providers: await providers(context),
-    session: await getSession(context),
-  }
 }
 
 export default Login
