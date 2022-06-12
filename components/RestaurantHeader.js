@@ -40,8 +40,8 @@ const RestaurantHeader = ({ restaurant }) => {
         <div className='p-2 md:p-5 w-full'>
           <div className='flex justify-between items-center text-white'>
             <h1
-              className='text-xl md:text-3xl font-bold text-white text-center shadow-lg'
-              style={{ textShadow: '0px 0px 4px rgba(0, 0, 0, 0.5)' }}
+              className='text-xl md:text-3xl font-bold text-white text-center'
+              style={{ textShadow: '0px 0px 6px rgba(0, 0, 0, 0.6)' }}
             >
               {restaurant.name}
             </h1>

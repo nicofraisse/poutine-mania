@@ -5,7 +5,7 @@ const handler = async (req, res) => {
   const db = await client.db()
   let result
 
-  const { search, sort, order } = req.query
+  const { search, sort, order, limit, minReviewCount } = req.query
 
   const baseAggregaor = [
     {
@@ -21,6 +21,14 @@ const handler = async (req, res) => {
         reviewCount: { $size: '$reviews' },
         avgRating: { $avg: '$reviews.rating' },
       },
+    },
+    {
+      $match: {
+        reviewCount: { $gte: minReviewCount ? Number(minReviewCount) : 0 },
+      },
+    },
+    {
+      $limit: limit ? Number(limit) : Number.MAX_SAFE_INTEGER,
     },
     {
       $sort: {

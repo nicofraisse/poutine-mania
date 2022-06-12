@@ -9,6 +9,12 @@ function HomePage() {
 
   const { data: reviews, loading } = useGet(`/api/reviews?skip=${paginationSkip}`)
 
+  const { data: restaurants, loading: restaurantsLoading } = useGet(
+    `/api/restaurants?sort=avgRating&order=-1&limit=3&minReviewCount=3`
+  )
+
+  console.log(restaurants)
+
   useEffect(() => {
     if (reviews) {
       setAllReviews((prevAllReviews) => [...prevAllReviews, ...reviews])
@@ -16,11 +22,9 @@ function HomePage() {
   }, [reviews])
 
   const handleScroll = (e) => {
-    console.log('scroling')
     const { offsetHeight, scrollTop, scrollHeight } = e.target
-
-    if (offsetHeight + scrollTop === scrollHeight) {
-      console.log('it is now')
+    if (offsetHeight + scrollTop >= scrollHeight - 10) {
+      console.log('bottom')
       setPaginationSkip(allReviews.length)
     }
   }
@@ -28,20 +32,21 @@ function HomePage() {
   if (!reviews) return <Spinner />
 
   return (
-    <div
-      className='py-10 px-2 md:px-0 h-screen-minus-navbar overflow-y-scroll'
-      onScroll={handleScroll}
-    >
-      <div className='max-w-[600px] mx-auto'>
-        {allReviews.map((review) => (
-          <ProfileReviewCard review={review} key={review._id} />
-        ))}
-      </div>
-      {loading && (
-        <div className='my-3 flex justify-center'>
-          <Spinner />
+    <div className='h-screen-minus-navbar overflow-y-scroll' onScroll={handleScroll}>
+      <div className='flex'>
+        <div>
+          <div className='max-w-[600px] m-2 sm:m-10'>
+            {allReviews.map((review) => (
+              <ProfileReviewCard review={review} key={review._id} />
+            ))}
+          </div>
+          {loading && (
+            <div className='my-3 flex justify-center'>
+              <Spinner />
+            </div>
+          )}
         </div>
-      )}
+      </div>
     </div>
   )
 }
