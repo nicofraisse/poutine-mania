@@ -50,7 +50,7 @@ const Restaurants = () => {
         <div className='pt-5 w-screen md:w-1/2 md:max-w-[560px] md:overflow-y-auto'>
           <div className='min-h-12'>
             <div className='flex flex-wrap items-center justify-between lg:pl-6 lg:pr-5 px-2 mb-3 lg:mb-0'>
-              {loading ? (
+              {/* {loading ? (
                 <div className=' mt-[-10px]'>
                   <Spinner />
                 </div>
@@ -58,7 +58,7 @@ const Restaurants = () => {
                 <h2 className='font-bold text-gray-500 text-xl flex items-center mr-2'>
                   {restaurants.length} résultat{restaurants.length > 1 && 's'}
                 </h2>
-              )}
+              )} */}
 
               <div className='flex items-center'>
                 <div className='text-sm font-bold text-gray-500 mr-2'>Tri par</div>
