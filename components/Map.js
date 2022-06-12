@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import Map, { Marker, Popup } from 'react-map-gl'
+import Map, { Marker, Popup, NavigationControl } from 'react-map-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import { X, MapPin } from 'react-feather'
 import { useRouter } from 'next/router'
@@ -9,6 +9,9 @@ import { ratingColors } from 'data/ratingColors'
 import { round } from 'lodash'
 import { useRestaurantCardHover } from './context/RestaurantCardHoverProvider'
 import classNames from 'classnames'
+import Image from 'next/image'
+import Color from 'color'
+import { Image as CloudImage } from 'components/Image'
 
 const MAPBOX_TOKEN =
   'pk.eyJ1Ijoibmljb2ZyYWlzc2UiLCJhIjoiY2thZzZtemk3MDE4NzJybXVtMjF5a2xyOSJ9.6JURdkZj5FnZ5lxMzPncOA'
@@ -42,6 +45,8 @@ const MarkerAndPopup = ({
     theRef.current.parentNode.style.zIndex = isHovered ? 100 : 1
   }
 
+  // console.log({ isPopupOpen })
+  const image = restaurant.reviews?.find((r) => r.photos?.[0])?.photos[0]
   return (
     <div>
       <Marker
@@ -49,25 +54,45 @@ const MarkerAndPopup = ({
         longitude={address.center[0]}
         latitude={address.center[1]}
         anchor='bottom'
-        onClick={togglePopup}
       >
         <div
-          className='0 w-10 h-10 absolute z-10'
+          className='0 w-10 h-10 absolute z-10 flex items-center justify-center'
           onMouseEnter={() => !isShowPage && setHoveredId(restaurant._id)}
           onMouseLeave={() => !isShowPage && setHoveredId(null)}
           data-pin='yes'
-        ></div>
+          onClick={(e) => {
+            e.stopPropagation()
+            togglePopup()
+          }}
+        >
+          <Image
+            alt='poutine-logo'
+            src='/poutine1.png'
+            width={26}
+            height={26}
+            className={classNames('transform -translate-y-1 z-30', { ' scale-110': isHovered })}
+            onClick={() => {
+              togglePopup()
+            }}
+          />
+        </div>
         <MapPin
           size={40}
-          color={isHovered ? '#4f46e5' : '#777'}
-          fill={
+          color={
             isHovered
-              ? '#a5b4fc'
+              ? '#4f46e5'
               : restaurant.reviewCount > 0
-              ? ratingColors[round(restaurant.avgRating)]
-              : 'rgba(170, 170, 170, 0.3)'
+              ? Color(ratingColors[round(restaurant.avgRating)]).darken(0.4)
+              : 'rgb(205, 205, 205)'
           }
-          className={classNames('transition duration-100', { 'transform scale-110': isHovered })}
+          fill={
+            restaurant.reviewCount > 0
+              ? Color(ratingColors[round(restaurant.avgRating)]).saturate(0.5)
+              : 'white'
+          }
+          className={classNames('transition duration-100', {
+            'transform scale-110': isHovered,
+          })}
           ref={theRef}
         />
       </Marker>
@@ -85,14 +110,31 @@ const MarkerAndPopup = ({
           }}
         >
           <div
-            className='relative w-36 flex flex-col items-center z-100'
-            onClick={() => window.open(`/restaurants/${restaurant._id}`)}
+            className={classNames('relative flex flex-col items-center z-100', {
+              'w-44': !isShowPage,
+              'w-36': isShowPage,
+            })}
+            onClick={() => !isShowPage && window.open(`/restaurants/${restaurant._id}`)}
           >
             <div className='font-bold text-base mb-1'>{restaurant.name}</div>
             {!isShowPage && (
               <RatingPill avgRating={restaurant.avgRating} reviewCount={restaurant.reviewCount} />
             )}
-            <div className='text-xs mt-2'>{address.place_name}</div>
+            {image && !isShowPage && (
+              <CloudImage
+                publicId={image}
+                alt={`${restaurant.name}-photo`}
+                className='max-h-[100px] mt-2 object-cover object-center rounded'
+              />
+            )}
+            <div
+              className={classNames('leading-3', {
+                'text-[11px] mt-2': !isShowPage,
+                'text-[12px]': isShowPage,
+              })}
+            >
+              {address.place_name}
+            </div>
             <div
               onClick={(e) => {
                 e.stopPropagation()
@@ -157,6 +199,7 @@ const MapMap = ({ restaurants, isShowPage }) => {
         mapStyle='mapbox://styles/mapbox/streets-v9'
         mapboxAccessToken={MAPBOX_TOKEN}
       >
+        <NavigationControl position='bottom-right' />
         {restaurants.map((restaurant, parentIndex) =>
           restaurant?.succursales?.map(({ address }, index) => (
             <MarkerAndPopup
@@ -184,15 +227,20 @@ const MapMap = ({ restaurants, isShowPage }) => {
                   setUserPopupOpen(false)
                 }, 2000)
               }}
+              style={{ zIndex: 40 }}
             >
-              <div className='h-8 w-8 bg-white rounded-full shadow flex items-center justify-center'>
+              <div className='h-8 w-8 bg-white rounded-full shadow flex items-center justify-center z-50'>
                 <div className='h-5 w-5 bg-blue-500 transition animate-pulse scale-105 rounded-full '></div>
               </div>
             </Marker>
-            <Marker longitude={userCoordinates[0]} latitude={userCoordinates[1]}>
+            <Marker
+              longitude={userCoordinates[0]}
+              latitude={userCoordinates[1]}
+              style={{ zIndex: 40 }}
+            >
               <div
                 className={classNames(
-                  'transition bg-white shadow duration-500 mt-[-38px] px-2 rounded text-gray-600 z-20',
+                  'transition bg-white shadow duration-500 mt-[-38px] px-2 rounded text-gray-600',
                   {
                     'opacity-100': userPopupOpen,
                     'opacity-0': !userPopupOpen,

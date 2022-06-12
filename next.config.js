@@ -16,6 +16,9 @@ module.exports = {
 
     return config
   },
+  images: {
+    domains: ['platform-lookaside.fbsbx.com'],
+  },
   env: {
     CLOUD_NAME: process.env.CLOUD_NAME,
   },

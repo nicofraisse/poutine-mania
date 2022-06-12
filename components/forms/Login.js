@@ -5,9 +5,12 @@ import * as Yup from 'yup'
 import Form from 'components/Form'
 import Field from 'components/Field'
 import { useLoginForm } from '../context/LoginFormProvider'
+import { providers, session } from 'next-auth/client'
 
-const Login = ({ onSubmit }) => {
+const Login = ({ onSubmit, providers, session }) => {
   const { openSignup, closeLogin } = useLoginForm()
+  console.log({ providers, session })
+
   const handleSubmit = (values) => {
     signIn('credentials', values)
       .then(() => {
@@ -42,6 +45,12 @@ const Login = ({ onSubmit }) => {
               Inscrivez-vous
             </span>
           </div>
+          <Button type='button' onClick={() => signIn('google')}>
+            Sign in with Google
+          </Button>
+          <Button type='button' onClick={() => signIn('facebook')}>
+            Sign in with Facebook
+          </Button>
           <Button type='submit' variant='primary' className='mt-6' loading={isSubmitting}>
             Connexion
           </Button>
@@ -49,6 +58,14 @@ const Login = ({ onSubmit }) => {
       )}
     </Form>
   )
+}
+
+Login.getInitialProps = async (context) => {
+  console.log({ context })
+  return {
+    providers: await providers(context),
+    session: await getSession(context),
+  }
 }
 
 export default Login

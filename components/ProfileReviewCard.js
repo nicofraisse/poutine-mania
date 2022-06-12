@@ -21,7 +21,7 @@ const ProfileReviewCard = ({ review }) => {
         </span>
         <span className='text-gray-400 text-sm ml-1 font-normal'>
           <span className='inline sm:hidden'>- le</span>{' '}
-          {formatDate(review.createdAt, 'MMMM d, yyyy')}
+          {formatDate(review.createdAt, 'd MMMM yyyy')}
         </span>
       </div>
       <div className='text-gray-700 mb mt-2 mb-8 border shadow-md rounded-lg p-3 sm:p-4'>

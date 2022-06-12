@@ -9,6 +9,9 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },
+  "peerOptionalDependencies": {
+    "mongodb": "^4.0.1"
+  },
   "dependencies": {
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
@@ -16,12 +19,13 @@
     "bcryptjs": "^2.4.3",
     "classnames": "^2.3.1",
     "cloudinary-react": "^1.7.2",
+    "color": "^4.2.3",
     "date-fns": "^2.28.0",
     "formik": "^2.2.9",
     "framer-motion": "^6.3.3",
     "i": "^0.3.7",
     "mapbox-gl": "^2.8.2",
-    "mongodb": "^4.0.1",
+    "mongodb": "3.5.9",
     "next": "^11.1.4",
     "next-auth": "^3.27.3",
     "npm": "^8.10.0",
@@ -43,5 +47,8 @@
     "eslint-config-next": "11.0.1",
     "postcss": "^8.4.13",
     "tailwindcss": "^3.0.24"
+  },
+  "optionalDependencies": {
+    "mongodb": "^3.6.0"
   }
 }

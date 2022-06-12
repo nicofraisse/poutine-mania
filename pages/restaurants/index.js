@@ -44,7 +44,7 @@ const Restaurants = () => {
   return (
     <RestaurantCardHoverProvider>
       <div className='flex w-full flex-col md:flex-row-reverse h-screen-minus-navbar overflow-y-auto'>
-        <div className='md:min-h-auto grow w-screen md:w-1/2' style={{ minHeight: '50vh' }}>
+        <div className='md:min-h-auto grow w-screen md:w-1/2' style={{ minHeight: '60vh' }}>
           <Map restaurants={restaurants} />
         </div>
         <div className='pt-5 w-screen md:w-1/2 md:max-w-[560px] md:overflow-y-auto'>
@@ -81,8 +81,8 @@ const Restaurants = () => {
           </div>
           {restaurants?.map((r) => (
             <div className='px-1 lg:px-4 block' key={r._id}>
-              <Link href={`/restaurants/${r._id}`} target='_blank' passHref>
-                <a target='_blank' rel='noopener noreferrer'>
+              <Link href={`/restaurants/${r._id}`} passHref>
+                <a rel='noopener noreferrer'>
                   <RestaurantCard restaurant={r} />
                 </a>
               </Link>

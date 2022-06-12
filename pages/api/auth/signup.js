@@ -36,6 +36,8 @@ async function handler(req, res) {
     firstName: firstName,
     lastName: lastName,
     password: hashedPassword,
+    createdAt: new Date(),
+    updatedAt: new Date(),
   })
 
   res.status(201).json({ message: 'Utilisateur créé!' })
