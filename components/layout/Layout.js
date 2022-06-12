@@ -16,14 +16,12 @@ const Layout = (props) => {
     })
   }, [])
   return (
-    <div>
-      <div className='flex'>
-        <Sidebar showMobileSidebar={showMobileSidebar} toggleMobileSidebar={toggleMobileSidebar} />
-
-        <div className='grow'>
-          <Header toggleMobileSidebar={toggleMobileSidebar} />
-          <main className='min-h-screen-minus-nav'>{props.children}</main>
-        </div>
+    <div className='flex'>
+      <Sidebar showMobileSidebar={showMobileSidebar} toggleMobileSidebar={toggleMobileSidebar} />
+      HAAHAH
+      <div className='grow'>
+        <Header toggleMobileSidebar={toggleMobileSidebar} />
+        <main className='min-h-screen-minus-nav'>{props.children}</main>
       </div>
     </div>
   )

@@ -28,6 +28,8 @@ const Header = ({ toggleMobileSidebar }) => {
     window.addEventListener('resize', () => {
       if (window.innerWidth < 640) {
         setIsMobile(true)
+      } else {
+        setIsMobile(false)
       }
     })
   }, [])
@@ -39,7 +41,7 @@ const Header = ({ toggleMobileSidebar }) => {
   }, [showSearchBar])
 
   return (
-    <header className='flex justify-between items-center h-[64px] w-full bg-indigo-white pl-4 border-b sticky top-0 z-10 bg-white'>
+    <header className='flex justify-between items-center h-[64px] w-screen bg-indigo-white pl-4 border-b sticky top-0 z-10 bg-white'>
       <div className='flex items-center lg:hidden'>
         <Menu
           className='mr-3 min-w-12 cursor-pointer hover:opacity-70'
