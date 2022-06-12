@@ -35,21 +35,21 @@ const RestaurantCard = ({ restaurant }) => {
       onMouseLeave={() => setHoveredId(null)}
     >
       <div
-        className='bg-gray-100 rounded w-1/4 h-28 mr-2 lg:mr-3 flex items-center justify-center'
+        className='bg-gray-100 rounded w-1/4 h-28 min-w-28 mr-2 lg:mr-3 flex items-center justify-center'
         style={{ minWidth: '29%' }}
       >
         {image ? (
           <Image
             publicId={image}
             alt={`${restaurant.name}-photo`}
-            className='w-full h-full object-cover object-center rounded'
+            className='h-28 min-w-28 object-cover object-center rounded'
           />
         ) : (
           <ImageIcon className='text-gray-300' size={48} alt='placeholder' />
         )}
       </div>
 
-      <div style={{ minWidth: '69%' }}>
+      <div style={{ minWidth: '68%' }}>
         <div className='flex justify-between items-start mb-1 lg:mb-1'>
           <div className='font-bold text-base lg:text-lg text-teal-600'>{name}</div>
           <div className='ml-2'>

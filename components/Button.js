@@ -8,9 +8,11 @@ const Button = ({ children, className, variant = 'primary', size = 'lg', loading
       className={classNames(
         'rounded-md font-bold flex items-center justify-center select-none',
         {
-          'px-8': ['primary', 'secondary'].includes(variant),
+          'px-8':
+            ['primary', 'secondary'].includes(variant) &&
+            !(className && className.includes('text-')),
           'bg-teal-600 h-[56px]': variant === 'primary',
-          'text-white': variant !== 'light',
+          'text-white': variant !== 'light' && !(className && className.includes('text-')),
           'opacity-80': loading,
           'px-3 lg:px-3 h-[40px] text-sm': size === 'sm',
           'bg-none border-2 border-teal-600 text-teal-600': variant === 'secondary',

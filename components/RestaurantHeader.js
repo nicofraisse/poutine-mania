@@ -12,7 +12,7 @@ const RestaurantHeader = ({ restaurant }) => {
   const images = flatten(restaurant.reviews.map((r) => r.photos)).filter(Boolean)
 
   return (
-    <div className='relative' style={{ height: '17vw' }}>
+    <div className='relative h-1/3vw sm:h-1/4vw lg:h-1/5vw 2xl:h-1/6vw'>
       <div className='flex w-full h-full'>
         <div className='w-1/3 bg-gray-100 flex items-center justify-center border-r-2 border-gray-50'>
           {images[0] ? (
@@ -37,13 +37,16 @@ const RestaurantHeader = ({ restaurant }) => {
         </div>
       </div>
       <div className='absolute top-0 left-0 w-full h-full bg-gradient-to-t from-[#000000aa] flex items-end text-center'>
-        <div className='p-2 lg:p-5 w-full'>
+        <div className='p-2 md:p-5 w-full'>
           <div className='flex justify-between items-center text-white'>
-            <h1 className='text-lg lg:text-3xl font-bold text-white text-center'>
+            <h1
+              className='text-xl md:text-3xl font-bold text-white text-center shadow-lg'
+              style={{ textShadow: '0px 0px 4px rgba(0, 0, 0, 0.5)' }}
+            >
               {restaurant.name}
             </h1>
           </div>
-          <div className='lg:mt-2 text-white flex items-center text-sm lg:text-base'>
+          <div className='lg:mt-2 text-white flex items-center text-sm md:text-base'>
             <span className='mr-1'>
               {`${restaurant.categories[0]} à ${city} •`}{' '}
               {restaurant.priceRange && `${repeat('$', restaurant.priceRange)}	• `}

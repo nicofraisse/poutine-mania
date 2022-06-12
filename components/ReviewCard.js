@@ -9,6 +9,7 @@ import { User, X } from 'react-feather'
 import { Image } from './Image'
 import Modal from 'react-responsive-modal'
 import Link from 'next/link'
+import NextImage from 'next/image'
 
 const ReviewCard = ({ review, handleEdit, handleDelete }) => {
   const [imgModalOpen, setImgModalOpen] = useState(false)
@@ -19,17 +20,31 @@ const ReviewCard = ({ review, handleEdit, handleDelete }) => {
       <div className='py-3 lg:py-6 border-t flex'>
         <div className='basis-1/6 flex flex-col items-center justify-centere text-gray-500'>
           <Link href={`/users/${review.user._id}`} passHref>
-            <div className='py-2 px-6 border-gray-100 rounded-lg hover:bg-gray-100 transition duration-150 cursor-pointer'>
-              <div className='bg-gray-50 border h-12 w-12 rounded-full text-gray-300 flex items-center justify-center'>
-                <User />
+            <div className='pr-3 min-w-24'>
+              <div className='py-2 px-2 sm:px-3 flex flex-col items-center border-gray-100 rounded-lg hover:bg-gray-100 transition duration-150 cursor-pointer'>
+                <div className='bg-gray-50 border h-12 w-12 rounded-full text-gray-300 flex items-center justify-center'>
+                  {review.user.image ? (
+                    <NextImage
+                      alt='user-image'
+                      src={review.user.image}
+                      width='100%'
+                      height='100%'
+                      className='rounded-full object-cover object-center'
+                    />
+                  ) : (
+                    <User />
+                  )}
+                </div>
+                <div className='text-center text-xs sm:text-sm mt-2 font-bold break-words max-w-28'>
+                  {review.user.firstName || review.user.name}
+                </div>
+                <div className='text-center text-sm'>{review.user.reviews.length} avis</div>
               </div>
-              <div className='text-center text-sm mt-2 font-bold'>{review.user.firstName}</div>
-              <div className='text-center text-sm'>{review.user.reviews.length} avis</div>
             </div>
           </Link>
         </div>
         <div className='basis-5/6 shrink'>
-          <div className='text-base font-bold mb-3 inline items-center'>
+          <div className='text-base font-bold inline items-center'>
             <span
               className='py-1 px-2 bg-green-200 rounded mr-2 text-gray-700'
               style={{ backgroundColor: ratingColors[round(review.rating)] }}
@@ -37,9 +52,9 @@ const ReviewCard = ({ review, handleEdit, handleDelete }) => {
               {formatRating(review.rating)}/10
             </span>
             {review.title}{' '}
-            {review.title && <span className='text-gray-400 ml-2 mr-1 font-normal'>•</span>}
-            <span className='text-gray-400 text-sm ml-1 font-normal'>
-              Publié le {formatDate(review.createdAt, 'dd/MM/yyyy')}
+            {review.title && <span className='text-gray-400 ml-1 font-normal'>•</span>}
+            <span className='text-gray-400 text-[15px] ml-1 font-normal'>
+              {formatDate(review.createdAt, 'd MMMM yyyy')}
             </span>
             {(review.userId === currentUser?._id || currentUser?.isAdmin) && (
               <>
@@ -62,7 +77,7 @@ const ReviewCard = ({ review, handleEdit, handleDelete }) => {
             )}
           </div>
 
-          <div className='text-gray-700 break-words mb-2'>{review.comment}</div>
+          <div className='text-gray-700 break-words my-2'>{review.comment}</div>
 
           {review.photos?.[0] && (
             <Image
