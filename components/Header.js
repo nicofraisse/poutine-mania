@@ -41,7 +41,7 @@ const Header = ({ toggleMobileSidebar }) => {
   }, [showSearchBar])
 
   return (
-    <header className='flex justify-between items-center h-[64px] w-screen bg-indigo-white pl-4 border-b sticky top-0 z-10 bg-white'>
+    <header className='flex justify-between items-center h-[64px] w-screen md:w-auto bg-indigo-white pl-4 border-b sticky top-0 z-10 bg-white'>
       <div className='flex items-center lg:hidden'>
         <Menu
           className='mr-3 min-w-12 cursor-pointer hover:opacity-70'
@@ -88,7 +88,7 @@ const Header = ({ toggleMobileSidebar }) => {
                   className='flex grow lg:ml-6 xs:w-48'
                   onClick={() => rateRestaurant()}
                 >
-                  <Edit3 className='sm:mr-2' /> <span className='hidden sm:block'>Noter</span>
+                  <Edit3 className='xs:mr-2' /> <span className='hidden xs:block'>Noter</span>
                   <span className='hidden xs:inline'> &nbsp;une poutine</span>
                 </Button>
 
@@ -127,7 +127,7 @@ const Header = ({ toggleMobileSidebar }) => {
                   Connexion
                 </Button>
               </div> */}
-                <div className='mx-1 lg:mx-4'>
+                <div className='ml-1 mr-1 md:mr-4'>
                   <Button variant='secondary' size='sm' onClick={openLogin}>
                     Connexion
                   </Button>

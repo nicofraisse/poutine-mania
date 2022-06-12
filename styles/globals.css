@@ -62,14 +62,6 @@ a {
   }
 }
 
-.min-h-screen-minus-navbar {
-  min-height: calc(100vh - 64px);
-}
-
-.h-screen-minus-navbar {
-  height: calc(100vh - 64px);
-}
-
 .map-container {
   height: 400px;
 }

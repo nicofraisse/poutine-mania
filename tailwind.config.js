@@ -59,11 +59,19 @@ module.exports = {
         lg: '1024px',
         xl: '1280px',
         full: '100%',
+        auto: 'auto',
+        'screen-minus-navbar': 'calc(100vh - 64px)',
       },
       maxWidth: (theme, { breakpoints }) => ({
         ...theme('spacing'),
       }),
       minWidth: (theme, { breakpoints }) => ({
+        ...theme('spacing'),
+      }),
+      minHeight: (theme, { breakpoints }) => ({
+        ...theme('spacing'),
+      }),
+      maxHeight: (theme, { breakpoints }) => ({
         ...theme('spacing'),
       }),
     },

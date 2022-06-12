@@ -44,12 +44,12 @@ const Restaurants = () => {
   return (
     <RestaurantCardHoverProvider>
       <div className='flex w-full flex-col md:flex-row-reverse h-screen-minus-navbar overflow-y-auto'>
-        <div className='md:min-h-auto grow w-screen md:w-1/2' style={{ minHeight: '60vh' }}>
+        <div className='grow w-screen md:w-1/2 min-h-2/3vh max-h-2/3vh md:min-h-screen-minus-navbar md:max-h-screen-minus-navbar'>
           <Map restaurants={restaurants} />
         </div>
         <div className='pt-5 w-screen md:w-1/2 md:max-w-[560px] md:overflow-y-auto'>
           <div className='min-h-12'>
-            <div className='flex flex-wrap items-center justify-between lg:pl-6 lg:pr-5 px-2 mb-3 lg:mb-0'>
+            <div className='flex flex-wrap items-center justify-between lg:pl-6 lg:pr-5 px-2 m b-3 lg:mb-0'>
               {loading ? (
                 <div className=' mt-[-10px]'>
                   <Spinner />
