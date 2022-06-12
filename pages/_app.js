@@ -11,7 +11,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <>
       <Head>
-        <title>My page title</title>
+        <title>Poutine Mania</title>
 
         <meta
           name='viewport'
