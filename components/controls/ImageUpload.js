@@ -29,7 +29,7 @@ const ImageUpload = ({ onChange, ...props }) => {
   return (
     <div>
       <input type='file' name='file' onChange={handleChange} hidden ref={inputRef} />
-      <div type='button' className='border-2 border-gray-300 rounded-lg p-3'>
+      <div type='button' className='p-3'>
         {imageExists ? (
           <div className='relative border h-40 inline-flex'>
             {imageSrc ? (
