@@ -31,7 +31,7 @@ const Login = ({ onSubmit }) => {
         email: Yup.string().min(1).required('Required'),
         password: Yup.string().min(1).required('Required'),
       })}
-      className='w-[330px] p-4'
+      className='sm:w-[360px] p-4'
     >
       {({ isSubmitting }) => (
         <>

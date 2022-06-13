@@ -1,20 +1,50 @@
 import Link from 'next/link'
 import React, { useState } from 'react'
-import { Edit3, X, MessageCircle } from 'react-feather'
+import { Edit3, X, MessageCircle, User } from 'react-feather'
 import Modal from 'react-responsive-modal'
 import { Image } from './Image'
 import RatingPill from './RatingPill'
 import { formatDate } from 'lib/formatDate'
 import { formatName } from '../lib/formatName'
+import NextImage from 'next/image'
 
-const ProfileReviewCard = ({ review }) => {
+const ProfileReviewCard = ({ review, isIndex, userName }) => {
   const [imgModalOpen, setImgModalOpen] = useState(false)
+  console.log(review)
   return (
     <>
       <div className='text-gray-400 block sm:flex justify-between items-center'>
         <span>
-          <Edit3 size={20} className='mr-2 inline -mt-1' />
-          {formatName(review.user)}
+          {isIndex ? (
+            <>
+              <div className='inline-block relative top-5 translate-y-[-15px] translate-x-[-6px]'>
+                {review.user.image ? (
+                  <NextImage
+                    alt='user-image'
+                    src={review.user.image}
+                    width={24}
+                    height={24}
+                    className='rounded-full object-cover object-center'
+                  />
+                ) : (
+                  <div className='h-6 w-6 rounded-full bg-gray-300 flex items-center justify-center translate-y-[-2px]'>
+                    <User className='text-white' size={16} />
+                  </div>
+                )}
+              </div>
+              <Link href={`/users/${review.user._id}`} passHref>
+                <span className='font-bold hover:text-gray-500 cursor-pointer'>
+                  {formatName(review?.user)}{' '}
+                </span>
+              </Link>
+            </>
+          ) : (
+            <>
+              <Edit3 size={20} className='mr-2 inline -mt-1' />
+              {userName}
+            </>
+          )}
+          a noté
           <Link href={`/restaurants/${review.restaurants[0]._id}`}>
             <a className='text-teal-500 ml-[6px] font-bold hover:text-teal-600'>
               {review.restaurants[0].name}

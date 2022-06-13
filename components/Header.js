@@ -50,7 +50,7 @@ const Header = ({ toggleMobileSidebar }) => {
         />
 
         {!(isMobile && showSearchBar) && (
-          <div className='-mb-2 block select-none min-w-20' onClick={() => toggleMobileSidebar()}>
+          <div className='-mb-2 block select-none min-w-20'>
             <Link href='/'>
               <a>
                 <Image alt='poutine-logo' src='/poutine.png' width={1.506 * 50} height={50} />
@@ -101,13 +101,19 @@ const Header = ({ toggleMobileSidebar }) => {
                     <User className='text-white' size={30} />
                   </div>
                   <Dropdown isOpen={dropdownOpen} setIsOpen={setDropdownOpen} toggleRef={toggleRef}>
-                    <>
+                    <div
+                      onClick={() => {
+                        setTimeout(() => {
+                          setDropdownOpen(false)
+                        }, 100)
+                      }}
+                    >
                       <div className='hover:bg-gray-100 rounded-t-lg px-3 py-2 text-gray-700 cursor-pointer'>
                         <Link href={`/users/${currentUser._id}`}>Mon profil</Link>
                       </div>
-                      <div className='hover:bg-gray-100 px-3 py-2 text-gray-700 cursor-pointer'>
+                      {/* <div className='hover:bg-gray-100 px-3 py-2 text-gray-700 cursor-pointer'>
                         <Link href='/profile'>Paramètres</Link>
-                      </div>
+                      </div> */}
 
                       <div
                         className='hover:bg-gray-100 px-3 py-2 rounded-b-lg text-gray-700 cursor-pointer'
@@ -115,7 +121,7 @@ const Header = ({ toggleMobileSidebar }) => {
                       >
                         Déconnextion
                       </div>
-                    </>
+                    </div>
                   </Dropdown>
                 </div>
               </>

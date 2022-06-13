@@ -73,7 +73,7 @@ const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
             icon={Search}
             href='restaurants'
           />
-          <Item
+          {/* <Item
             onClick={toggleMobileSidebar}
             label='À essayer (3)'
             icon={Watch}
@@ -86,7 +86,7 @@ const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
             icon={Heart}
             href='mon-top'
             disabled
-          />
+          /> */}
           {currentUser && (
             <Item
               onClick={toggleMobileSidebar}

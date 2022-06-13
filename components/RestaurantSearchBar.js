@@ -17,7 +17,7 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit }, ref) => {
     <form className='w-full' onSubmit={handleSearch} ref={ref}>
       <Input
         type='text'
-        className='font-bold text-sm grow sm:mx-6 lg:mx-0'
+        className='font-bold text-sm grow sm:ml-6 mr-1 lg:mx-0'
         placeholder='Rechercher une poutine'
         isSearch
         value={searchValue}

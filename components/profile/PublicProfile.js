@@ -14,8 +14,6 @@ const PublicProfile = ({ user }) => {
     skip: !user,
   })
 
-  console.log(currentUser)
-
   if (!user || !reviews) return <Spinner />
 
   return (
@@ -103,7 +101,7 @@ const PublicProfile = ({ user }) => {
         {/* </div> */}
 
         {reviews.map((review) => (
-          <ProfileReviewCard review={review} key={review._id} />
+          <ProfileReviewCard review={review} key={review._id} userName={formatName(user)} />
         ))}
 
         {/* <div

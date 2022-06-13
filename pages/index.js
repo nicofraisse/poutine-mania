@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { MapPin } from 'react-feather'
 import classNames from 'classnames'
 import RatingPill from '../components/RatingPill'
+import Link from 'next/link'
 
 function HomePage() {
   const [paginationSkip, setPaginationSkip] = useState(0)
@@ -15,8 +16,6 @@ function HomePage() {
   const { data: restaurants, loading: restaurantsLoading } = useGet(
     `/api/restaurants?sort=avgRating&order=-1&limit=3&minReviewCount=1`
   )
-
-  console.log(restaurants)
 
   useEffect(() => {
     if (reviews) {
@@ -43,7 +42,7 @@ function HomePage() {
         <div className='md:p-4'>
           <div className='md:sticky md:top-[28px] md:pl-2 xl:pl-5 md:min-w-[400px]'>
             <h2 className='text-2xl font-bold'>Les meilleures poutines</h2>
-            <div className='text-gray-500'>Notées par la communauté</div>
+            <div className='text-gray-500 mb-4'>Notées par la communauté</div>
             {restaurants?.map((r, i) => (
               <div
                 key={r._id}
@@ -61,7 +60,11 @@ function HomePage() {
                     {i === 0 ? '🥇' : i === 1 ? '🥈' : '🥉'}
                   </span>
                   <div>
-                    <div className='text-xl font-black text-teal-500 mb-1'>{r.name}</div>
+                    <Link href={`/restaurants/${r._id}`} passHref>
+                      <a className='text-xl font-black text-teal-500 mb-1 hover:text-teal-600'>
+                        {r.name}
+                      </a>
+                    </Link>
                     <div className='text-xs text-gray-400'>
                       <MapPin size={15} className='inline mt-[-2px]' />{' '}
                       {r.succursales.length === 1
@@ -80,13 +83,15 @@ function HomePage() {
         <div className='max-w-[600px]'>
           <h2 className='text-2xl font-bold my-4 mt-10 md:mt-7'>Derniers avis</h2>
           {allReviews.map((review) => (
-            <ProfileReviewCard review={review} key={review._id} />
+            <ProfileReviewCard review={review} key={review._id} isIndex />
           ))}
-          {loading && (
-            <div className='my-3 flex justify-center'>
-              <Spinner />
-            </div>
-          )}
+          <div className='h-[72px]'>
+            {loading && (
+              <div className='flex justify-center'>
+                <Spinner />
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
