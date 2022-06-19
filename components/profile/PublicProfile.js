@@ -37,9 +37,12 @@ const PublicProfile = ({ user }) => {
             <div className='mb-2 mt-2 w-full items-center sm:justify-between flex flex-col sm:flex-row'>
               <div className='font-black text-3xl'>{formatName(user)}</div>
               {user._id === currentUser?._id ? (
-                <button className='text-base mx-3 px-4 py-1 rounded-lg text-gray-500 sm:-mb-1 hover:text-gray-700 flex'>
+                <Link
+                  className='text-base mx-3 px-4 py-1 rounded-lg text-gray-500 sm:-mb-1 hover:text-gray-700 flex'
+                  href={`/users/${user._id}/edit`}
+                >
                   Modifier
-                </button>
+                </Link>
               ) : (
                 // <button className='text-base mx-3 bg-blue-400 px-4 py-1 rounded-lg text-white -mb-1 inline-block'>
                 //   Suivre

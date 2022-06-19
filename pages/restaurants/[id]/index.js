@@ -13,16 +13,15 @@ const Index = () => {
   const [showMap, setShowMap] = useState(false)
 
   useEffect(() => {
-    if (window?.innerWidth < 1280) {
-      setShowMap(false)
-    }
-    // window.addEventListener('resize', () => {
-    //   if (window.innerWidth < 1280) {
-    //     setShowMap(false)
-    //   } else {
-    //     setShowMap(true)
-    //   }
-    // })
+    setShowMap(window?.innerWidth >= 1280)
+
+    window.addEventListener('resize', () => {
+      if (window.innerWidth < 1280) {
+        setShowMap(false)
+      } else {
+        setShowMap(true)
+      }
+    })
   }, [])
 
   if (!restaurant || loading) return <Spinner />

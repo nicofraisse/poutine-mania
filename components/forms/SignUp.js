@@ -52,14 +52,7 @@ const SignUp = ({ onSubmit }) => {
             className='border-gray-600 border-2 bg-white text-gray-600 w-full mb-4'
             onClick={() => signIn('google')}
           >
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              xmlnsXlink='http://www.w3.org/1999/xlink'
-              viewBox='0 0 48 48'
-              width='32px'
-              height='32px'
-              className='mr-3'
-            >
+            <svg viewBox='0 0 48 48' width='32px' height='32px' className='mr-3'>
               <defs>
                 <path
                   id='a'
@@ -87,7 +80,6 @@ const SignUp = ({ onSubmit }) => {
               viewBox='0 0 512 512'
               id='Layer_1'
               data-name='Layer 1'
-              xmlns='http://www.w3.org/2000/svg'
               fill='white'
               className='mr-3'
             >

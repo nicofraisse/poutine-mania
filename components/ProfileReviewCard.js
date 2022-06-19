@@ -41,7 +41,7 @@ const ProfileReviewCard = ({ review, isIndex, userName }) => {
           ) : (
             <>
               <Edit3 size={20} className='mr-2 inline -mt-1' />
-              {userName}
+              {userName}&nbsp;
             </>
           )}
           a noté

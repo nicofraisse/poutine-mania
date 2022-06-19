@@ -12,7 +12,7 @@ import Image from 'next/image'
 import RestaurantSearchBar from './RestaurantSearchBar'
 
 const Header = ({ toggleMobileSidebar }) => {
-  const { currentUser } = useCurrentUser()
+  const { currentUser, loading } = useCurrentUser()
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const toggleRef = createRef()
   const searchBarRef = useRef()
@@ -80,7 +80,19 @@ const Header = ({ toggleMobileSidebar }) => {
             >
               <Search />
             </Button>
-            {currentUser && (
+            {loading ? (
+              <div className='animate-pulse flex items-center pointer-events-none'>
+                <Button variant='light' size='sm' className='flex grow lg:ml-6 xs:w-48'>
+                  <Edit3 className='xs:mr-2' /> <span className='hidden xs:block'>Noter</span>
+                  <span className='hidden xs:inline'> &nbsp;une poutine</span>
+                </Button>
+                <div className='relative mx-4 lg:mx-5 z-20'>
+                  <div className='h-[44px] w-[44px] bg-gray-400 rounded-full cursor-pointer hover:opacity-80 flex items-center justify-center'>
+                    <User className='text-white' size={30} />
+                  </div>
+                </div>
+              </div>
+            ) : currentUser ? (
               <>
                 <Button
                   variant='light'
@@ -98,7 +110,17 @@ const Header = ({ toggleMobileSidebar }) => {
                     onClick={() => setDropdownOpen(!dropdownOpen)}
                     ref={toggleRef}
                   >
-                    <User className='text-white' size={30} />
+                    {currentUser.image ? (
+                      <Image
+                        alt='user-image'
+                        src={currentUser.image}
+                        width='100%'
+                        height='100%'
+                        className='rounded-full object-cover object-center'
+                      />
+                    ) : (
+                      <User className='text-white' size={30} />
+                    )}
                   </div>
                   <Dropdown isOpen={dropdownOpen} setIsOpen={setDropdownOpen} toggleRef={toggleRef}>
                     <div
@@ -119,21 +141,18 @@ const Header = ({ toggleMobileSidebar }) => {
                         className='hover:bg-gray-100 px-3 py-2 rounded-b-lg text-gray-700 cursor-pointer'
                         onClick={signOut}
                       >
-                        Déconnextion
+                        Déconnexion
                       </div>
                     </div>
                   </Dropdown>
                 </div>
               </>
-            )}
-            {!currentUser && (
-              <>
-                <div className='mx-2 md:mx-4'>
-                  <Button variant='secondary' size='sm' onClick={openLogin}>
-                    Connexion
-                  </Button>
-                </div>
-              </>
+            ) : (
+              <div className='mx-2 md:mx-4'>
+                <Button variant='secondary' size='sm' onClick={openLogin}>
+                  Connexion
+                </Button>
+              </div>
             )}
           </div>
         </nav>
