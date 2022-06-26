@@ -6,7 +6,8 @@ Social website to rate & review poutines
 - `npm run dev`
 
 ## Todo
-- [ ] My favorites page
+- [ ] Favorite a restaurant feature * page
+- [ ] "Add towatch list"/"poutines to try" feature & page
 - [ ] Edit profile (name, profile photo, password, deactivate/delete account)
 - [ ] Follow user feature
 - [ ] About us/contact page
