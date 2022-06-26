@@ -6,7 +6,9 @@ Social website to rate & review poutines
 - `npm run dev`
 
 ## Todo
-- [ ] Favorite a restaurant feature * page
+- [ ] Enhance mobile UI (more relevant home page content with clear CTAs, smaller text, better harmony in spacing between elements etc)
+- [ ] Test on mobile browsers including FB, IG & LinkedIn native browsers 
+- [ ] Favorite a restaurant feature & page
 - [ ] "Add towatch list"/"poutines to try" feature & page
 - [ ] Edit profile (name, profile photo, password, deactivate/delete account)
 - [ ] Follow user feature
