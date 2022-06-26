@@ -6,7 +6,7 @@ Social website to rate & review poutines
 - `npm run dev`
 
 ## Todo
-[ ] My favorites page
+[ ] -  My favorites page
 [] Edit profile (name, profile photo, password, deactivate/delete account)
 [] Follow user feature
 [] About us/contact page
