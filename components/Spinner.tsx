@@ -1,7 +1,13 @@
 import classNames from 'classnames'
 import React from 'react'
 
-const Spinner = ({ color = '#333', className = 'w-8', noPadding }) => {
+type Props = {
+  color?: string
+  className?: string
+  noPadding?: boolean
+}
+
+const Spinner = ({ color = '#333', className = 'w-8', noPadding }: Props) => {
   return (
     <div className={classNames({ 'p-3': !noPadding })}>
       <svg
