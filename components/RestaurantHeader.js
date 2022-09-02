@@ -16,21 +16,33 @@ const RestaurantHeader = ({ restaurant }) => {
       <div className='flex w-full h-full'>
         <div className='w-1/3 bg-gray-100 flex items-center justify-center border-r-2 border-gray-50'>
           {images[0] ? (
-            <Image publicId={images[0]} className='w-full h-full object-cover object-center' />
+            <Image
+              publicId={images[0]}
+              className='w-full h-full object-cover object-center'
+              alt='restaurant-main-image-1'
+            />
           ) : (
             <ImageIcon className='text-gray-300' size='80' alt='default' />
           )}
         </div>
         <div className='w-1/3 bg-gray-100 flex items-center justify-center border-r-2 border-gray-50'>
           {images[1] ? (
-            <Image publicId={images[1]} className='w-full h-full object-cover object-center' />
+            <Image
+              publicId={images[1]}
+              className='w-full h-full object-cover object-center'
+              alt='restaurant-main-image-2'
+            />
           ) : (
             <ImageIcon className='text-gray-300' size='80' alt='default' />
           )}
         </div>
         <div className='w-1/3 bg-gray-100 flex items-center justify-center'>
           {images[2] ? (
-            <Image publicId={images[2]} className='w-full h-full object-cover object-center' />
+            <Image
+              publicId={images[2]}
+              className='w-full h-full object-cover object-center'
+              alt='restaurant-main-image-3'
+            />
           ) : (
             <ImageIcon className='text-gray-300' size='80' alt='default' />
           )}{' '}
