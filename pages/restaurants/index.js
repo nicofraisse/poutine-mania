@@ -9,6 +9,10 @@ import { useRestaurantSearch } from 'components/context/RestaurantSearchProvider
 import { useGet } from 'lib/useAxios'
 import { RestaurantCardHoverProvider } from 'components/context/RestaurantCardHoverProvider'
 import ReactSelect from 'react-select'
+import { Sliders } from 'react-feather'
+import Button from 'components/Button'
+import useClickOutside from '../../lib/useClickOutside'
+import classNames from 'classnames'
 
 const sortTypes = [
   { label: 'Nom', value: 'name' },
@@ -27,6 +31,8 @@ const Restaurants = () => {
   const { searchValue, nonDebouncedValue } = useRestaurantSearch()
   const [sortType, setSortType] = useState('reviewCount')
   const [sortOrder, setSortOrder] = useState(-1)
+  const [filtersOpen, setFiltersOpen] = useState(false)
+  const filtersRef = useClickOutside(() => setFiltersOpen(false))
 
   const trimmedSearchValue = searchValue?.trim()
   const searchQuery = trimmedSearchValue ? `?search=${trimmedSearchValue}` : ''
@@ -49,45 +55,60 @@ const Restaurants = () => {
         </div>
         <div className='pt-5 w-screen md:w-1/2 md:max-w-[560px] md:overflow-y-auto'>
           <div className='min-h-12'>
-            <div className='flex flex-wrap items-center justify-between lg:pl-6 lg:pr-5 px-2 m b-3 lg:mb-0'>
+            <div className='lg:pl-6 lg:pr-5 px-2 m b-3 lg:mb-0 flex justify-between items-start'>
               {loading ? (
-                <div className=' mt-[-10px]'>
+                <div className='h-12 flex items-center '>
                   <Spinner />
                 </div>
               ) : (
-                restaurants.length === 0 && (
-                  <h2 className='font-bold text-gray-500 text-xl flex items-center mr-2'>
-                    {restaurants.length} résultat{restaurants.length > 1 && 's'}
-                  </h2>
-                )
+                <h2 className='font-bold text-gray-500 text-xl flex items-center h-12 mr-2'>
+                  {restaurants.length} résultat{restaurants.length > 1 && 's'}{' '}
+                  {searchValue && `pour "${searchValue}"`}
+                </h2>
               )}
 
-              <div className='flex items-center'>
-                <div className='text-sm font-bold text-gray-500 mr-2'>Tri par</div>
-                <ReactSelect
-                  placeholder='Trier par...'
-                  options={sortTypes}
-                  className='mr-2 text-sm'
-                  onChange={({ value }) => setSortType(value)}
-                  defaultValue={{ label: "Nombre d'avis", value: 'avgRating' }}
-                />
-                <ReactSelect
-                  placeholder='Ordre'
-                  options={sortOrders}
-                  className='text-sm'
-                  onChange={({ value }) => setSortOrder(value)}
-                  defaultValue={{ label: 'Décroissant', value: -1 }}
-                />
+              <div className='relative' ref={filtersRef}>
+                <Button
+                  variant='light'
+                  height='sm'
+                  className='w-[40px]'
+                  onClick={() => setFiltersOpen(!filtersOpen)}
+                >
+                  <Sliders />
+                </Button>
+
+                <div
+                  className={classNames(
+                    'flex items-center absolute top-[48px] right-0 w-[375px] bg-white transition-opacity duration-300 p-3 rounded border',
+                    {
+                      'shadow-lg opacity-100': filtersOpen,
+                      'shadow-none opacity-0 pointer-events-none': !filtersOpen,
+                    }
+                  )}
+                >
+                  <div className='text-sm font-bold text-gray-500 mr-2'>Tri par</div>
+                  <ReactSelect
+                    placeholder='Trier par...'
+                    options={sortTypes}
+                    className='mr-2 text-sm'
+                    onChange={({ value }) => setSortType(value)}
+                    defaultValue={{ label: "Nombre d'avis", value: 'avgRating' }}
+                  />
+                  <ReactSelect
+                    placeholder='Ordre'
+                    options={sortOrders}
+                    className='text-sm'
+                    onChange={({ value }) => setSortOrder(value)}
+                    defaultValue={{ label: 'Décroissant', value: -1 }}
+                  />
+                </div>
               </div>
             </div>
           </div>
           {restaurants?.map((r) => (
             <div className='px-1 lg:px-4 block' key={r._id}>
-              <Link href={`/restaurants/${r._id}`} passHref>
-                <a rel='noopener noreferrer'>
-                  <RestaurantCard restaurant={r} />
-                </a>
-              </Link>
+              <RestaurantCard restaurant={r} />
+
               <div className='w-full border-b'></div>
             </div>
           ))}

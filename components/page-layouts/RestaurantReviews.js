@@ -36,9 +36,9 @@ const ReviewStats = ({ reviews, restaurant }) => {
               Poster une photo
             </Button> */}
             <Button
-              size='sm'
+              height='sm'
               onClick={() => rateRestaurant(restaurant)}
-              className='flex items-center'
+              className='flex items-center px-4 h-[44px]'
             >
               <Edit3 size={20} className='mr-1' />
               Noter leur poutine

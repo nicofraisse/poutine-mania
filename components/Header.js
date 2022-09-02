@@ -82,7 +82,7 @@ const Header = ({ toggleMobileSidebar }) => {
             </Button>
             {loading ? (
               <div className='animate-pulse flex items-center pointer-events-none'>
-                <Button variant='light' size='sm' className='flex grow lg:ml-6 xs:w-48'>
+                <Button variant='light' height='sm' className='flex grow lg:ml-6 xs:w-48'>
                   <Edit3 className='xs:mr-2' /> <span className='hidden xs:block'>Noter</span>
                   <span className='hidden xs:inline'> &nbsp;une poutine</span>
                 </Button>
@@ -96,7 +96,7 @@ const Header = ({ toggleMobileSidebar }) => {
               <>
                 <Button
                   variant='light'
-                  size='sm'
+                  height='sm'
                   className='flex grow lg:ml-6 xs:w-48'
                   onClick={() => rateRestaurant()}
                 >
@@ -149,7 +149,7 @@ const Header = ({ toggleMobileSidebar }) => {
               </>
             ) : (
               <div className='mx-2 md:mx-4'>
-                <Button variant='secondary' size='sm' onClick={openLogin}>
+                <Button variant='secondary' width='sm' onClick={openLogin} height='sm'>
                   Connexion
                 </Button>
               </div>

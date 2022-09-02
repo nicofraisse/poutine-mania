@@ -37,7 +37,9 @@ const Login = ({ onSubmit }) => {
         <>
           <Button
             type='button'
-            className='border-gray-600 border-2 bg-white text-gray-600 w-full mb-4'
+            variant='white'
+            className='w-full mb-4'
+            bgClassName='bg-white'
             onClick={() => signIn('google')}
           >
             <svg

@@ -5,6 +5,7 @@ import { repeat } from 'lodash'
 import { useRestaurantCardHover } from './context/RestaurantCardHoverProvider'
 import classNames from 'classnames'
 import { Image } from './Image'
+import Link from 'next/link'
 
 const LastComment = ({ comment }) => {
   if (!comment) return null
@@ -29,7 +30,7 @@ const RestaurantCard = ({ restaurant }) => {
   return (
     <div
       className={classNames('py-3 lg:py-6 px-1 lg:px-2 flex justify-between items-start', {
-        'bg-slate-': hoveredId === restaurant._id,
+        'bg-slate-50': hoveredId === restaurant._id,
       })}
       onMouseEnter={() => setHoveredId(restaurant._id)}
       onMouseLeave={() => setHoveredId(null)}
@@ -51,7 +52,13 @@ const RestaurantCard = ({ restaurant }) => {
 
       <div style={{ minWidth: '68%' }}>
         <div className='flex justify-between items-start mb-1 lg:mb-1'>
-          <div className='font-bold text-base lg:text-lg text-teal-600'>{name}</div>
+          <Link href={`/restaurants/${restaurant._id}`} passHref>
+            <a rel='noopener noreferrer'>
+              <div className='font-bold text-base lg:text-lg text-teal-600 hover:underline'>
+                {name}
+              </div>
+            </a>
+          </Link>
           <div className='ml-2'>
             <RatingPill avgRating={avgRating} reviewCount={reviewCount} />
           </div>

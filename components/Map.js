@@ -25,6 +25,7 @@ const MarkerAndPopup = ({
   popupId,
   closeOtherPopups,
   isShowPage,
+  isSmallMarker,
 }) => {
   // const [showPopup, setShowPopup] = useState(false)
   const { hoveredId, setHoveredId } = useRestaurantCardHover()
@@ -55,53 +56,76 @@ const MarkerAndPopup = ({
         latitude={address.center[1]}
         anchor='bottom'
       >
-        <div
-          className='0 w-10 h-10 absolute z-10 flex items-center justify-center'
-          onMouseEnter={() => !isShowPage && setHoveredId(restaurant._id)}
-          onMouseLeave={() => !isShowPage && setHoveredId(null)}
-          data-pin='yes'
-          onClick={(e) => {
-            e.stopPropagation()
-            togglePopup()
-          }}
-        >
-          <Image
-            alt='poutine-logo'
-            src='/poutine1.png'
-            width={26}
-            height={26}
-            className={classNames('transform -translate-y-1 z-30', { ' scale-110': isHovered })}
-            onClick={() => {
+        {isSmallMarker ? (
+          <div
+            onMouseEnter={() => !isShowPage && setHoveredId(restaurant._id)}
+            onMouseLeave={() => !isShowPage && setHoveredId(null)}
+            data-pin='yes'
+            onClick={(e) => {
+              e.stopPropagation()
               togglePopup()
             }}
-          />
-        </div>
-        <MapPin
-          size={40}
-          color={
-            isHovered
-              ? '#4f46e5'
-              : restaurant.reviewCount > 0
-              ? Color(ratingColors[round(restaurant.avgRating)]).darken(0.4)
-              : 'rgb(205, 205, 205)'
-          }
-          fill={
-            restaurant.reviewCount > 0
-              ? Color(ratingColors[round(restaurant.avgRating)]).saturate(0.5)
-              : 'white'
-          }
-          className={classNames('transition duration-100', {
-            'transform scale-110': isHovered,
-          })}
-          ref={theRef}
-        />
+            className='w-4 h-4 rounded-full border-white shadow-md border-2'
+            style={{
+              backgroundColor: isHovered
+                ? '#4f46e5'
+                : restaurant.reviewCount > 0
+                ? Color(ratingColors[round(restaurant.avgRating)]).darken(0.4)
+                : 'rgb(160, 160, 160)',
+            }}
+          ></div>
+        ) : (
+          <>
+            <div
+              className='0 w-10 h-10 absolute z-10 flex items-center justify-center'
+              onMouseEnter={() => !isShowPage && setHoveredId(restaurant._id)}
+              onMouseLeave={() => !isShowPage && setHoveredId(null)}
+              data-pin='yes'
+              onClick={(e) => {
+                e.stopPropagation()
+                togglePopup()
+              }}
+            >
+              <Image
+                alt='poutine-logo'
+                src='/poutine1.png'
+                width={26}
+                height={26}
+                className={classNames('transform -translate-y-1 z-30', { ' scale-110': isHovered })}
+                onClick={() => {
+                  togglePopup()
+                }}
+              />
+            </div>
+
+            <MapPin
+              size={40}
+              color={
+                isHovered
+                  ? '#4f46e5'
+                  : restaurant.reviewCount > 0
+                  ? Color(ratingColors[round(restaurant.avgRating)]).darken(0.4)
+                  : 'rgb(205, 205, 205)'
+              }
+              fill={
+                restaurant.reviewCount > 0
+                  ? Color(ratingColors[round(restaurant.avgRating)]).saturate(0.5)
+                  : 'white'
+              }
+              className={classNames('transition duration-100', {
+                'transform scale-110': isHovered,
+              })}
+              ref={theRef}
+            />
+          </>
+        )}
       </Marker>
       {isPopupOpen && (
         <Popup
           longitude={address.center[0]}
           latitude={address.center[1]}
           anchor='bottom'
-          offset={44}
+          offset={isSmallMarker ? 16 : 44}
           closeButton={false}
           onClose={() => closePopup(popupId)}
           closeOnClick={false}
@@ -174,6 +198,10 @@ const MapMap = ({ restaurants, isShowPage }) => {
 
   const closeAllPopups = () => setOpenPopups([])
 
+  const [isSmallMarker, setIsSmallMarker] = useState(false)
+
+  console.log(isSmallMarker)
+
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
       setUserCoordinates([position.coords.longitude, position.coords.latitude])
@@ -196,8 +224,9 @@ const MapMap = ({ restaurants, isShowPage }) => {
         ]}
         fitBoundsOptions={{ padding: 60, maxZoom: 13 }}
         style={{ width: '100%', height: '100%' }}
-        mapStyle='mapbox://styles/mapbox/streets-v9'
+        mapStyle='mapbox://styles/mapbox/streets-v10'
         mapboxAccessToken={MAPBOX_TOKEN}
+        onZoom={(e) => setIsSmallMarker(e.viewState.zoom < 12.5)}
       >
         <NavigationControl position='bottom-right' />
         {restaurants.map((restaurant, parentIndex) =>
@@ -213,6 +242,7 @@ const MapMap = ({ restaurants, isShowPage }) => {
               isPopupOpen={openPopups.includes(`${parentIndex}-${index}`)}
               closeOtherPopups={closeOtherPopups}
               closeAllPopups={closeAllPopups}
+              isSmallMarker={isSmallMarker}
             />
           ))
         )}
