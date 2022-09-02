@@ -8,8 +8,13 @@ import { useCurrentUser } from 'lib/useCurrentUser'
 
 const Item = ({ label, href, icon, disabled, onClick }) => {
   const { pathname } = useRouter()
-  const isActive = pathname?.split('/')[1] === href.split('/')[0]
+  const isActive = pathname?.split('/')[1] === href.split('/')[1]
   const Icon = icon
+
+  console.log('href', href)
+  console.log(href.split('/')[0])
+
+  console.log('pathname', pathname)
 
   return (
     <Link href={href} passHref>
