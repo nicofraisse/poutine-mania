@@ -65,8 +65,8 @@ const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
               <div className='flex items-center -ml-2 xl:-ml-0 xl:pl-4 xl:mb-2 transform scale-75 xl:scale-100'>
                 <Image alt='poutine-logo' src='/poutine.png' width={1.506 * 80} height={80} />
                 <div className='text-lg font-black mt-[-8px] ml-1'>
-                  <div className='text-amber-600'>Poutine</div>
-                  <div className='mt-[-10px] text-orange-600'>Mania</div>
+                  <div className='text-amber-600'>POUTINE</div>
+                  <div className='mt-[-10px] text-orange-600'>MANIA</div>
                 </div>
               </div>
             </a>
