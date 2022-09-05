@@ -1,34 +1,39 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Social website to rate & review poutines
 
 ## Getting Started
+- Add environment variables
+- `npm i`
+- `npm run dev`
 
-First, run the development server:
+## Todo
+- [ ] Enhance mobile UI (more relevant home page content with clear CTAs, smaller text, better harmony in spacing between elements etc)
+- [ ] Test on mobile browsers including FB, IG & LinkedIn native browsers 
+- [ ] Favorite a restaurant feature & page
+- [ ] "Add towatch list"/"poutines to try" feature & page
+- [ ] Edit profile (name, profile photo, password, deactivate/delete account)
+- [ ] Follow user feature
+- [ ] About us/contact page
+- [ ] Protect login-only/admin-only endpoints in backend w/ middleware
+- [ ] Add backend validation (Joi)
+- [ ] Refetch data without refreshing when logging in, creating account, adding a review, etc.
+- [ ] Cache the current user
+- [ ] Skeleton screens instead of spinner
+- [ ] Hover 150ms transition for all color & opacity changes
+- [ ] Add filtering in restaurants page (eg. only show restaurants with ratings > 7 & dine-in category
+- [ ] Email verification for email signup
+- [ ] Email based password change
+- [ ] Upvote / downvote / report review
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+Reviews:
+- [ ] Enable adding multiple photos to a review instead of just one
+- [ ] Add takeout/dine-in pill select in review form
+- [ ] Fries (rating + comment)
+- [ ] Sauce (rating + comment)
+- [ ] Cheese (rating + comment)
+- [ ] Poutine name + Price of poutine
+More inspiration here for rating criteria http://www.routedelapoutine.com/
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Restaurants
+- [ ] Add isShutDown boolean to restaurants and adapt UI for restaurants that are shut down
+- [ ] Better looking category tag pills in restaurant card and show page
+- [ ] Add isApproved boolean to restaurants - A user can create & review a new restaurant but it will only be visible by him until admin approves it
