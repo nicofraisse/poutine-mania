@@ -7,10 +7,35 @@ import RatingPill from './RatingPill'
 import { formatDate } from 'lib/formatDate'
 import { formatName } from '../lib/formatName'
 import NextImage from 'next/image'
+import { useCurrentUser } from '../lib/useCurrentUser'
+import { useRouter } from 'next/router'
+import { useRateRestaurant } from 'components/context/RateRestaurantProvider'
 
 const ProfileReviewCard = ({ review, isIndex, userName }) => {
   const [imgModalOpen, setImgModalOpen] = useState(false)
+  const { currentUser } = useCurrentUser()
+  const { reload } = useRouter()
+  const { rateRestaurant } = useRateRestaurant()
+
   console.log(review)
+
+  const handleEdit = (review) => {
+    rateRestaurant(review.restaurants[0], review)
+  }
+
+  const handleDelete = async (id) => {
+    if (
+      window.confirm("Êtes-vous sûr(e) de vouloir supprimer l'avis? Cette action est irréversible.")
+    ) {
+      await axios
+        .delete(`/api/reviews/${id}/delete`)
+        .then(() => {
+          toast.success('Supprimé!')
+          reload(window.location.pathname)
+        })
+        .catch((e) => toast.error(e.message))
+    }
+  }
   return (
     <>
       <div className='text-gray-400 block sm:flex justify-between items-center'>
@@ -41,10 +66,10 @@ const ProfileReviewCard = ({ review, isIndex, userName }) => {
           ) : (
             <>
               <Edit3 size={20} className='mr-2 inline -mt-1' />
-              {userName}&nbsp;
+              {currentUser._id === review.userId ? 'Tu as' : `${userName} a`}&nbsp;
             </>
           )}
-          a noté
+          noté
           <Link href={`/restaurants/${review.restaurants[0]._id}`}>
             <a className='text-teal-500 ml-[6px] font-bold hover:text-teal-600'>
               {review.restaurants[0].name}
@@ -79,6 +104,23 @@ const ProfileReviewCard = ({ review, isIndex, userName }) => {
             />
           )}
         </div>
+        {(review.userId === currentUser?._id || currentUser?.isAdmin) && (
+          <div className='mt-2'>
+            <button
+              className='text-sm text-gray-400 hover:text-gray-500'
+              onClick={() => handleEdit(review)}
+            >
+              Modifier
+            </button>
+            <span className='text-sm text-gray-400 font-normal mx-1'>/</span>
+            <button
+              className='text-sm text-gray-400 hover:text-gray-500'
+              onClick={() => handleDelete(review._id)}
+            >
+              Supprimer
+            </button>
+          </div>
+        )}
       </div>
       <Modal
         classNames={{

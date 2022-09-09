@@ -51,7 +51,7 @@ const Header = ({ toggleMobileSidebar }) => {
 
         {!(isMobile && showSearchBar) && (
           <div className='-mb-2 block select-none min-w-20'>
-            <Link href='/'>
+            <Link href='/top-poutines'>
               <a>
                 <Image alt='poutine-logo' src='/poutine.png' width={1.506 * 50} height={50} />
               </a>

@@ -15,7 +15,7 @@ const SignUp = () => {
       .post('/api/auth/signup', values)
       .then((data) => {
         toast.success('Sign up successful')
-        push('/')
+        push('/top-poutines')
       })
       .catch((e) => {
         toast.error(e.response.data.message)

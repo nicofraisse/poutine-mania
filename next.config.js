@@ -1,6 +1,9 @@
 const path = require('path')
 
 module.exports = {
+  env: {
+    NODE_ENV: process.env.NODE_ENV,
+  },
   webpack: (config, options) => {
     config.resolve.alias['components'] = path.join(__dirname, 'components')
     config.resolve.alias['context'] = path.join(__dirname, 'context')
@@ -21,5 +24,14 @@ module.exports = {
   },
   env: {
     CLOUD_NAME: process.env.CLOUD_NAME,
+  },
+  async redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/top-poutines',
+        permanent: true,
+      },
+    ]
   },
 }

@@ -15,7 +15,7 @@ export const RateRestaurantProvider = ({ children }) => {
 
   const { currentUser } = useCurrentUser()
   const { openLogin } = useLoginForm()
-  const { reload } = useRouter()
+  const { reload, asPath, push } = useRouter()
 
   const rateRestaurant = (restaurant, review) => {
     if (!currentUser) {
@@ -44,7 +44,9 @@ export const RateRestaurantProvider = ({ children }) => {
           <RateRestaurant
             onSubmit={(id) => {
               setRateRestaurantOpen(false)
-              reload(`/restaurants/${id}`)
+              asPath.includes(`/restaurants/${id}`) || asPath.includes(`/users`)
+                ? reload()
+                : push(`/restaurants/${id}`)
             }}
             preselectedRestaurant={preselectedRestaurant}
             existingReview={existingReview}
