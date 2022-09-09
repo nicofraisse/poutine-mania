@@ -9,13 +9,21 @@ import { useLoginForm } from '../context/LoginFormProvider'
 const Login = ({ onSubmit }) => {
   const { openSignup, closeLogin } = useLoginForm()
 
-  const handleSubmit = (values) => {
-    signIn('credentials', values)
-      .then(() => {
-        toast.success('Connexion réussie')
-        onSubmit && onSubmit()
+  const handleSubmit = (values, formikBag) => {
+    signIn('credentials', { ...values, redirect: false })
+      .then((data) => {
+        if (data?.error) {
+          toast.error(data.error)
+        } else {
+          toast.success('Connexion réussie')
+          onSubmit && onSubmit()
+        }
+        formikBag.setSubmitting(false)
       })
-      .catch((e) => toast.error(e.message))
+      .catch((e) => {
+        toast.error(e.message)
+        formikBag.setSubmitting(false)
+      })
   }
 
   const handleSwitchForm = () => {
@@ -90,8 +98,8 @@ const Login = ({ onSubmit }) => {
             <div className='text-gray-500 px-3 text-sm'>OU</div>
             <div className='grow bg-gray-300 h-[1px]'></div>
           </div>
-          <Field name='email' />
-          <Field name='password' type='password' />
+          <Field name='email' label='Adress courriel' />
+          <Field name='password' type='password' label='Mot de passe' />
           <div className='text-sm'>
             Vous n&apos;avez pas de compte?{' '}
             <span className='font-bold cursor-pointer hover:underline' onClick={handleSwitchForm}>

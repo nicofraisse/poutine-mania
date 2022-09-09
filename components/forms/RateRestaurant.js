@@ -33,6 +33,7 @@ const RateRestaurant = ({ onSubmit, preselectedRestaurant, existingReview }) => 
     )
     return data.public_id
   }
+
   const handleSubmit = async (values) => {
     const publicId = await uploadToCloudinary(values.photos)
     const submitValues = {

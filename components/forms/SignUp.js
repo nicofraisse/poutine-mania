@@ -1,4 +1,3 @@
-import React from 'react'
 import axios from 'axios'
 import * as Yup from 'yup'
 import { useRouter } from 'next/dist/client/router'
@@ -18,7 +17,7 @@ const SignUp = ({ onSubmit }) => {
       .post('/api/auth/signup', values)
       .then(() => {
         toast.success('Inscription réussie!')
-        push('/')
+        push('/top-poutines')
         formikBag.setSubmitting(false)
         onSubmit && onSubmit()
       })
@@ -39,17 +38,19 @@ const SignUp = ({ onSubmit }) => {
       onSubmit={handleSubmit}
       validationSchema={Yup.object({
         firstName: Yup.string().min(1).required('Required'),
-        lastName: Yup.string().min(1).required('Required'),
+        lastName: Yup.string().min(1).optional(),
         email: Yup.string().min(1).required('Required'),
         password: Yup.string().min(1).required('Required'),
       })}
-      className='max-w-sm p-4'
+      className='max-w-md p-4'
     >
       {({ isSubmitting }) => (
         <>
           <Button
             type='button'
-            className='border-gray-600 border-2 bg-white text-gray-600 w-full mb-4'
+            variant='white'
+            className='w-full mb-4'
+            bgClassName='bg-white'
             onClick={() => signIn('google')}
           >
             <svg viewBox='0 0 48 48' width='32px' height='32px' className='mr-3'>
@@ -93,12 +94,22 @@ const SignUp = ({ onSubmit }) => {
             <div className='grow bg-gray-300 h-[1px]'></div>
           </div>
           <div className='flex'>
-            <Field name='firstName' className='pr-[6px]' />
-            <Field name='lastName' className='pl-[6px]' />
+            <Field
+              name='firstName'
+              className='pr-[6px]'
+              label='Prénom'
+              placeholder="Ou nom d'usager"
+            />
+            <Field
+              name='lastName'
+              label='Nom de famille'
+              placeholder='Optionnel'
+              className='pl-[6px]'
+            />
           </div>
 
-          <Field name='email' />
-          <Field name='password' type='password' />
+          <Field name='email' label='Adresse courriel' />
+          <Field name='password' type='password' label='Mot de passe' />
           <div className='text-sm'>
             Vous avez déjà un compte?{' '}
             <span className='font-bold cursor-pointer hover:underline' onClick={handleSwitchForm}>

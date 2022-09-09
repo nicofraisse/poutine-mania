@@ -22,25 +22,31 @@ export default NextAuth({
       }
       return token
     },
-    redirect: async (url, _baseUrl) => {
-      if (url === '/user') {
-        return Promise.resolve('/')
-      }
-      return Promise.resolve('/')
-    },
+    // redirect: async (url, _baseUrl) => {
+    //   return Promise.resolve('/')
+    // },
     session: async (session, user) => {
       const client = await connectToDatabase()
       const db = await client.db()
       const foundUser = await db.collection('users').findOne({ email: user.email })
-      session.user = {
-        _id: foundUser._id,
-        email: foundUser.email,
-        isAdmin: foundUser.isAdmin,
-        name: foundUser.name,
-        image: foundUser.image,
-        emailVerified: foundUser.emailVerified,
+      if (foundUser) {
+        const foundConnectedAccounts = await db
+          .collection('accounts')
+          .find({ userId: foundUser._id })
+          .toArray()
+        session.user = {
+          _id: foundUser._id,
+          email: foundUser.email,
+          isAdmin: foundUser.isAdmin,
+          name: foundUser.name,
+          image: foundUser.image,
+          emailVerified: foundUser.emailVerified,
+          connectedAccounts: foundConnectedAccounts,
+        }
+        return Promise.resolve(session)
+      } else {
+        throw new Error('No session')
       }
-      return Promise.resolve(session)
     },
   },
   providers: [
@@ -51,15 +57,16 @@ export default NextAuth({
         const user = await usersCollection.findOne({
           email: credentials.email,
         })
+
         if (!user) {
           client.close()
-          throw new Error('No user found!')
+          throw new Error('Le courriel ou mot de passe est invalide')
         }
 
         const isValid = await verifyPassword(credentials.password, user.password)
         if (!isValid) {
           client.close()
-          throw new Error('Could not log you in!')
+          throw new Error('Le courriel ou mot de passe est invalide')
         }
 
         client.close()

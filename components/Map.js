@@ -46,7 +46,6 @@ const MarkerAndPopup = ({
     theRef.current.parentNode.style.zIndex = isHovered ? 100 : 1
   }
 
-  // console.log({ isPopupOpen })
   const image = restaurant.reviews?.find((r) => r.photos?.[0])?.photos[0]
   return (
     <div>
@@ -65,7 +64,10 @@ const MarkerAndPopup = ({
               e.stopPropagation()
               togglePopup()
             }}
-            className='w-4 h-4 rounded-full border-white shadow-md border-2'
+            className={classNames(
+              'transform -translate-y-1 z-30 w-4 h-4 rounded-full border-white shadow-md border-2',
+              { 'scale-110': isHovered }
+            )}
             style={{
               backgroundColor: isHovered
                 ? '#4f46e5'
@@ -91,7 +93,7 @@ const MarkerAndPopup = ({
                 src='/poutine1.png'
                 width={26}
                 height={26}
-                className={classNames('transform -translate-y-1 z-30', { ' scale-110': isHovered })}
+                className={classNames('transform -translate-y-1 z-30', { 'scale-110': isHovered })}
                 onClick={() => {
                   togglePopup()
                 }}
