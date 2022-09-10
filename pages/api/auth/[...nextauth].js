@@ -8,6 +8,9 @@ import { verifyPassword } from '../../../lib/auth'
 import { connectToDatabase } from '../../../lib/db'
 
 export default NextAuth({
+  // pages: {
+  //   error: '/',
+  // },
   session: {
     jwt: true,
   },
