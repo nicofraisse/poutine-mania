@@ -1,11 +1,10 @@
 import NextAuth from 'next-auth'
 import Providers from 'next-auth/providers'
-import toast from 'react-hot-toast'
 import GoogleProvider from 'next-auth/providers/google'
 import FacebookProvider from 'next-auth/providers/facebook'
-
-import { verifyPassword } from '../../../lib/auth'
-import { connectToDatabase } from '../../../lib/db'
+import { capitalize } from 'lodash'
+import { verifyPassword } from 'lib/auth'
+import { connectToDatabase } from 'lib/db'
 
 export default NextAuth({
   // pages: {
@@ -55,6 +54,7 @@ export default NextAuth({
   providers: [
     Providers.Credentials({
       async authorize(credentials) {
+        console.log('ok', credentials)
         const client = await connectToDatabase()
         const usersCollection = client.db().collection('users')
         const user = await usersCollection.findOne({
@@ -64,6 +64,21 @@ export default NextAuth({
         if (!user) {
           client.close()
           throw new Error('Le courriel ou mot de passe est invalide')
+        }
+
+        const foundExistingAccount = await client
+          .db()
+          .collection('accounts')
+          .findOne({ userId: user._id })
+
+        console.log(foundExistingAccount)
+        if (foundExistingAccount) {
+          client.close()
+          throw new Error(
+            `Cliquez sur "Continuer avec ${capitalize(
+              foundExistingAccount.providerId
+            )}" pour vous connecter à ce compte.`
+          )
         }
 
         const isValid = await verifyPassword(credentials.password, user.password)
