@@ -46,23 +46,17 @@ const Edit = () => {
   }
 
   if (!currentUser) return null
-  const providerName = capitalize(currentUser.connectedAccounts[0].providerId)
+
+  let providerName
   const isCredentialAccount = currentUser.connectedAccounts?.length === 0
-  console.log(currentUser)
+  if (!isCredentialAccount) {
+    providerName = capitalize(currentUser.connectedAccounts[0].providerId)
+  }
 
   return (
     <div className='max-w-[400px] ml-8 pt-5'>
       <h1 className='font-bold text-2xl mb-5'>Modifier mes informations</h1>
-      <div className='p-3 border rounded-lg'>
-        <Info className='inline mr-2' size={20} />
-        Votre compte est lié à votre profil <span className='font-bold'>{providerName}</span> dont
-        le courriel associé est {currentUser.email}.
-        <div className='mt-3'>
-          Pour modifier votre nom, prénom, courriel ou avatar, vous devez faire les changements
-          directement sur votre compte {providerName}.
-        </div>
-      </div>
-      {isCredentialAccount && (
+      {isCredentialAccount ? (
         <div className={'p-4 border rounded-lg my-4'}>
           <h2 className='font-bold text-2xl text-center my-4'>Changer mon mot de passe</h2>
           <Form
@@ -96,6 +90,16 @@ const Edit = () => {
               </>
             )}
           </Form>
+        </div>
+      ) : (
+        <div className='p-3 border rounded-lg'>
+          <Info className='inline mr-2' size={20} />
+          Votre compte est lié à votre profil <span className='font-bold'>{providerName}</span> dont
+          le courriel associé est {currentUser.email}.
+          <div className='mt-3'>
+            Pour modifier votre nom, prénom, courriel ou avatar, vous devez faire les changements
+            directement sur votre compte {providerName}.
+          </div>
         </div>
       )}
 

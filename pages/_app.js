@@ -30,7 +30,6 @@ function MyApp({ Component, pageProps }) {
                     position='bottom-right'
                     toastOptions={{
                       // Define default options
-
                       duration: 7000,
                     }}
                   />
