@@ -10,9 +10,15 @@ async function handler(req, res) {
 
   const { email, firstName, lastName, password } = data
 
-  if (!email || !email.includes('@') || !password || password.trim().length < 7) {
+  if (!email || !email.includes('@')) {
     res.status(422).json({
-      message: 'Invalid input - password should also be at least 7 characters long.',
+      message: 'Addresse courriel invalide. Vérifiez qu\'elle contient bien le "@".',
+    })
+    return
+  }
+  if (!password || password.trim().length < 6) {
+    res.status(422).json({
+      message: 'Le mot de passe doit faire au moins 6 caractères.',
     })
     return
   }

@@ -42,14 +42,16 @@ export const RateRestaurantProvider = ({ children }) => {
           center
         >
           <RateRestaurant
-            onSubmit={(id) => {
-              setRateRestaurantOpen(false)
-              asPath.includes(`/restaurants/${id}`) || asPath.includes(`/users`)
-                ? reload()
-                : push(`/restaurants/${id}`)
-            }}
+            // onSubmit={(id) => {
+            //   setRateRestaurantOpen(false)
+            //   asPath.includes(`/restaurants/${id}`) || asPath.includes(`/users`)
+            //     ? reload()
+            //     : push(`/restaurants/${id}`)
+            // }}
             preselectedRestaurant={preselectedRestaurant}
             existingReview={existingReview}
+            setExistingReview={setExistingReview}
+            setPreselectedRestaurant={setPreselectedRestaurant}
           />
         </Modal>
       </>

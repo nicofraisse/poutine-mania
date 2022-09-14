@@ -1,7 +1,7 @@
 import axios from 'axios'
 import Link from 'next/link'
 import { useState } from 'react'
-import { ChevronLeft } from 'react-feather'
+import { ChevronLeft, Check } from 'react-feather'
 import toast from 'react-hot-toast'
 import { useGet } from '../../lib/useAxios'
 import Button from '../Button'
@@ -12,12 +12,29 @@ import Input from 'components/Input'
 import * as Yup from 'yup'
 import RatingButtons from '../controls/RatingButtons'
 import ImageUpload from '../controls/ImageUpload'
+import { useCurrentUser } from 'lib/useCurrentUser'
+import Spinner from '../Spinner'
 
-const RateRestaurant = ({ onSubmit, preselectedRestaurant, existingReview }) => {
+const RateRestaurant = ({
+  onSubmit,
+  preselectedRestaurant,
+  existingReview,
+  setExistingReview,
+  setPreselectedRestaurant,
+}) => {
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedRestaurant, setSelectedRestaurant] = useState(preselectedRestaurant || null)
   const [step, setStep] = useState(preselectedRestaurant?._id || existingReview ? 2 : 1)
-  const { data: searchResults } = useGet(`/api/restaurants?search=${searchQuery}`)
+  const { data: searchResults, loading: searchResultsLoading } = useGet(
+    `/api/restaurants?search=${searchQuery}`
+  )
+  const { currentUser } = useCurrentUser()
+  const { data: userReviews } = useGet(`/api/users/${currentUser?._id}/reviews`, {
+    skip: !currentUser,
+  })
+  // const a = 3
+
+  // console.log(userReviews)
 
   const uploadToCloudinary = async (files) => {
     if (!files || files.length === 0) return null
@@ -46,11 +63,16 @@ const RateRestaurant = ({ onSubmit, preselectedRestaurant, existingReview }) => 
     try {
       const data = await axios.post(url, submitValues)
       toast.success(toastMessage)
-      onSubmit(selectedRestaurant._id)
+      // onSubmit(selectedRestaurant._id)
+      setStep(3)
     } catch (e) {
       toast.error(e.message)
     }
   }
+
+  console.log(currentUser)
+
+  if (!userReviews) return <Spinner />
 
   if (step === 1) {
     return (
@@ -65,13 +87,23 @@ const RateRestaurant = ({ onSubmit, preselectedRestaurant, existingReview }) => 
           isSearch
         />
         <div className='overflow-y-scroll' style={{ height: 'calc(100% - 200px)' }}>
-          <SelectRestaurant
-            restaurants={searchResults}
-            onSelect={(restaurant) => {
-              setSelectedRestaurant(restaurant)
-              setStep(2)
-            }}
-          />
+          {searchResultsLoading ? (
+            <Spinner />
+          ) : (
+            <SelectRestaurant
+              restaurants={searchResults}
+              userRatedRestaurants={userReviews}
+              onSelect={(restaurant, alreadyRated) => {
+                console.log({ alreadyRated })
+                if (!!alreadyRated) {
+                  setExistingReview(alreadyRated)
+                  setPreselectedRestaurant(alreadyRated.restaurants[0])
+                }
+                setSelectedRestaurant(restaurant)
+                setStep(2)
+              }}
+            />
+          )}
         </div>
 
         <div className='text-right border-t-2 w-full bg-white h-20 p-3'>
@@ -95,7 +127,7 @@ const RateRestaurant = ({ onSubmit, preselectedRestaurant, existingReview }) => 
           comment: Yup.string().min(5),
           photos: Yup.object().nullable(),
         })}
-        className='sm:w-[560px] h-full sm:h-2/3vh flex flex-col sm:px-3 pb-3'
+        className='sm:w-[560px] h-full  flex flex-col sm:px-3 pb-3'
       >
         {({ isSubmitting, values, errors }) => (
           <>
@@ -115,7 +147,7 @@ const RateRestaurant = ({ onSubmit, preselectedRestaurant, existingReview }) => 
               />
               <Field className='sm:mb-5' name='title' label='Titre' />
               <Field className='sm:mb-5' name='comment' label='Commentaire' type='textarea' />
-              <Field name='photos' control={ImageUpload} />
+              <Field name='photos' control={ImageUpload} label='Photo' />
             </div>
 
             <div className='flex items-center justify-between mt-6'>
@@ -140,6 +172,29 @@ const RateRestaurant = ({ onSubmit, preselectedRestaurant, existingReview }) => 
           </>
         )}
       </Form>
+    )
+  }
+  if (step === 3) {
+    return (
+      <div className='sm:w-[560px] h-full flex flex-col items-center justify-center sm:px-3 pb-3 text-center'>
+        <div className='flex items-center justify-center border-4 border-green-400 w-20 h-20 rounded-full'>
+          <Check className='text-green-400 -mb-1' size={56} />
+        </div>
+        <div className='mt-4 mb-2 font-bold text-2xl'>Avis ajouté!</div>
+        <div className='text-gray-500 px-3'>
+          Merci {currentUser.firstName} d&apos;avoir noté la poutine de {selectedRestaurant.name}.
+          Votre avis compte! Chaque review que tu écris aide la communauté à trouver les meilleures
+          poutine locales.
+        </div>
+        <div className='mt-8 flex'>
+          {/* <Button variant='white' width='lg' className='mr-4'>
+            Voir l&apos;avis
+          </Button> */}
+          <Button variant='secondary' width='sm' type='button' onClick={() => setStep(1)}>
+            Noter une autre poutine
+          </Button>
+        </div>
+      </div>
     )
   }
 }

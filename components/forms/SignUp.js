@@ -17,9 +17,22 @@ const SignUp = ({ onSubmit }) => {
       .post('/api/auth/signup', values)
       .then(() => {
         toast.success('Inscription réussie!')
-        push('/top-poutines')
-        formikBag.setSubmitting(false)
-        onSubmit && onSubmit()
+        signIn('credentials', { ...values, redirect: false })
+          .then((data) => {
+            if (data?.error) {
+              toast.error(data.error)
+            } else {
+              // setTimeout(() => {
+              toast.success('Vous êtes maintenant connecté(e).')
+              formikBag.setSubmitting(false)
+              onSubmit && onSubmit()
+              // }, 500)
+            }
+          })
+          .catch((e) => {
+            toast.error(e.message)
+            formikBag.setSubmitting(false)
+          })
       })
       .catch((e) => {
         toast.error(e?.response?.data?.message || e.message)

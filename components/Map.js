@@ -60,6 +60,7 @@ const MarkerAndPopup = ({
             onMouseEnter={() => !isShowPage && setHoveredId(restaurant._id)}
             onMouseLeave={() => !isShowPage && setHoveredId(null)}
             data-pin='yes'
+            ref={theRef}
             onClick={(e) => {
               e.stopPropagation()
               togglePopup()
@@ -200,9 +201,7 @@ const MapMap = ({ restaurants, isShowPage }) => {
 
   const closeAllPopups = () => setOpenPopups([])
 
-  const [isSmallMarker, setIsSmallMarker] = useState(false)
-
-  console.log(isSmallMarker)
+  const [isSmallMarker, setIsSmallMarker] = useState(true)
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
@@ -228,7 +227,7 @@ const MapMap = ({ restaurants, isShowPage }) => {
         style={{ width: '100%', height: '100%' }}
         mapStyle='mapbox://styles/mapbox/streets-v10'
         mapboxAccessToken={MAPBOX_TOKEN}
-        onZoom={(e) => setIsSmallMarker(e.viewState.zoom < 12.5)}
+        onZoom={(e) => setIsSmallMarker(e.viewState.zoom < 12)}
       >
         <NavigationControl position='bottom-right' />
         {restaurants.map((restaurant, parentIndex) =>

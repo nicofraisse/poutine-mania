@@ -13,11 +13,10 @@ const Login = ({ onSubmit }) => {
     console.log(values)
     signIn('credentials', { ...values, redirect: false })
       .then((data) => {
-        console.log('dataa', data)
         if (data?.error) {
           toast.error(data.error)
         } else {
-          toast.success('Connexion réussie')
+          toast.success('Vous êtes maintenant connecté(e).')
           onSubmit && onSubmit()
         }
         formikBag.setSubmitting(false)

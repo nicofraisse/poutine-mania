@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React from 'react'
 import { Mail } from 'react-feather'
 import Button from '../components/Button'
@@ -13,10 +14,12 @@ const APropos = () => {
         voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
         cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
       </div>
-      <Button variant='white' className='my-12 w-[128px] mx-auto'>
-        <Mail className='mr-2' />
-        Contact
-      </Button>
+      <a href='masilto:info@nicolasfraisse.com'>
+        <Button variant='white' className='my-12 w-[128px] mx-auto'>
+          <Mail className='mr-2' />
+          Contact
+        </Button>
+      </a>
       <div className='mb-4'>© fritesfromagesauce | 2022</div>
     </div>
   )
