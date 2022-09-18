@@ -23,7 +23,8 @@ const RestaurantCard = ({ restaurant }) => {
   const lastComment = reviews[0]?.comment
   const { rateRestaurant } = useRateRestaurant()
 
-  const city = succursales[0].address?.context?.find((el) => el.id?.includes('place'))?.text
+  console.log(succursales[0].address?.context)
+  const city = succursales[0].address?.context?.find((el) => el.id?.includes('neighborhood'))?.text
 
   const image = reviews?.find((r) => r.photos?.[0])?.photos[0]
 
@@ -53,7 +54,7 @@ const RestaurantCard = ({ restaurant }) => {
         )}
       </div>
 
-      <div style={{ minWidth: '68%' }}>
+      <div style={{ minWidth: '71%' }}>
         <Link href={`/restaurants/${restaurant._id}`} passHref>
           <a rel='noopener noreferrer'>
             <div className='font-bold text-base lg:text-lg text-teal-600 hover:underline'>
@@ -83,13 +84,26 @@ const RestaurantCard = ({ restaurant }) => {
   )
 }
 
-export const TagSection = ({ priceRange, categories, city, succursales, smallText, address }) => {
+export const TagSection = ({
+  priceRange,
+  categories,
+  city,
+  succursales,
+  smallText,
+  address,
+  largeText,
+  darkBackground,
+  noAddress,
+}) => {
   return (
     <>
       <div
-        className={classNames('text-gray-500', {
+        className={classNames('text-ellipsis', {
           'text-xs': smallText,
-          'text-sm font-light': !smallText,
+          'text-sm font-light': !smallText && !largeText,
+          'text-md font-light': largeText,
+          'text-gray-500': !darkBackground,
+          'text-white': darkBackground,
         })}
       >
         <span className='bg-gray-600 px-1 rounded text-white'>
@@ -103,18 +117,23 @@ export const TagSection = ({ priceRange, categories, city, succursales, smallTex
         ))}
         <span className=''>{city}</span>
       </div>
-      <div
-        className={classNames('text-xs text-gray-400', {
-          'mt-1': smallText,
-          'mt-2': !smallText,
-        })}
-      >
-        <MapPin size={15} className='inline mt-[-2px]' />{' '}
-        {address ||
-          (succursales.length === 1
-            ? succursales[0].address.place_name.split(',')[0]
-            : `${succursales.length} adresses au Québec`)}
-      </div>
+      {!noAddress && (
+        <div
+          className={classNames('text-xs', {
+            'mt-1 text-xs': smallText,
+            'mt-2 text-xs': !smallText && !largeText,
+            'mt-2 text-sm': largeText,
+            'text-gray-400': !darkBackground,
+            'text-white': darkBackground,
+          })}
+        >
+          <MapPin size={15} className='inline mt-[-2px]' />{' '}
+          {address ||
+            (succursales.length === 1
+              ? succursales[0].address.place_name.split(', Q')[0]
+              : `${succursales.length} adresses au Québec`)}
+        </div>
+      )}
     </>
   )
 }

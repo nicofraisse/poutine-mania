@@ -77,17 +77,20 @@ const Header = ({ toggleMobileSidebar }) => {
               onClick={() => {
                 setShowSearchBar(true)
               }}
+              height='sm'
+              width='sm'
             >
               <Search />
             </Button>
             <Button
               variant='light'
               height='sm'
-              className='flex grow lg:ml-6 xs:w-48'
+              width='sm'
+              className='flex grow lg:ml-6 sm:w-52 sm:ml-2'
               onClick={() => rateRestaurant()}
             >
               <Edit3 className='xs:mr-2' /> <span className='hidden xs:block'>Noter</span>
-              <span className='hidden xs:inline'> &nbsp;une poutine</span>
+              <span className='hidden sm:inline grow shrink-0 -ml-2'> &nbsp;une poutine</span>
             </Button>
             {loading ? (
               <div className='animate-pulse flex items-center pointer-events-none'>

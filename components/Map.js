@@ -136,19 +136,17 @@ const MarkerAndPopup = ({
           onOpen={() => {
             closeOtherPopups(popupId)
           }}
+          className={classNames('relative flex flex-col z-100', {
+            'w-80': !isShowPage,
+            'w-36': isShowPage,
+          })}
         >
-          <div
-            className={classNames('relative flex flex-col z-100', {
-              'w-44': !isShowPage,
-              'w-36': isShowPage,
-            })}
-            onClick={() => !isShowPage && window.open(`/restaurants/${restaurant._id}`)}
-          >
+          <div onClick={() => !isShowPage && window.open(`/restaurants/${restaurant._id}`)}>
             {image && !isShowPage && (
               <CloudImage
                 publicId={image}
                 alt={`${restaurant.name}-photo`}
-                className='max-h-[128px] object-cover object-center rounded mb-2'
+                className='w-full h-[150px] object-cover object-center rounded mb-2'
               />
             )}
             <div className='font-bold text-base mb-1'>{restaurant.name}</div>
@@ -172,7 +170,7 @@ const MarkerAndPopup = ({
                 e.stopPropagation()
                 closePopup(popupId)
               }}
-              className='bg-gray-400 text-white w-6 h-6 rounded-full flex items-center justify-center absolute top-[-18px] right-[-18px] border-2 border-white shadow cursor-pointer hover:bg-black'
+              className='bg-gray-400 text-white w-6 h-6 rounded-full flex items-center justify-center absolute top-[-12px] right-[-12px] border-2 border-white shadow cursor-pointer hover:bg-black'
             >
               <X size={18} />
             </div>

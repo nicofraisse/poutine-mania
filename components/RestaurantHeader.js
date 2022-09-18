@@ -3,6 +3,7 @@ import RatingPill from 'components/RatingPill'
 import { Image as ImageIcon } from 'react-feather'
 import { repeat, flatten } from 'lodash'
 import { Image } from './Image'
+import { TagSection } from './RestaurantCard'
 
 const RestaurantHeader = ({ restaurant }) => {
   const city = restaurant?.succursales[0].address?.context?.find((el) =>
@@ -48,7 +49,7 @@ const RestaurantHeader = ({ restaurant }) => {
           )}{' '}
         </div>
       </div>
-      <div className='absolute top-0 left-0 w-full h-full bg-gradient-to-t from-[#000000aa] flex items-end text-center'>
+      <div className='absolute top-0 left-0 w-full h-full bg-gradient-to-t from-[#000000bb] flex items-end text-center'>
         <div className='p-2 md:p-5 w-full'>
           <div className='flex justify-between items-center text-white'>
             <h1
@@ -58,12 +59,26 @@ const RestaurantHeader = ({ restaurant }) => {
               {restaurant.name}
             </h1>
           </div>
-          <div className='lg:mt-2 text-white flex items-center text-sm md:text-base'>
-            <span className='mr-1'>
+          <div className='lg:mt-2'>
+            {/* <span className='mr-1'>
               {`${restaurant.categories[0]} à ${city} •`}{' '}
               {restaurant.priceRange && `${repeat('$', restaurant.priceRange)}	• `}
-            </span>
-            <RatingPill avgRating={restaurant.avgRating} reviewCount={restaurant.reviewCount} />
+            </span> */}
+            <div className='text-left mb-1'>
+              <TagSection
+                succursales={restaurant.succursales}
+                categories={restaurant.categories}
+                city={
+                  restaurant.succursales[0].address?.context?.find((el) =>
+                    el.id?.includes('neighborhood')
+                  )?.text
+                }
+                priceRange={restaurant.priceRange}
+                darkBackground
+                largeText
+                noAddress
+              />
+            </div>
           </div>
         </div>
       </div>

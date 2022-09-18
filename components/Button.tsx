@@ -7,6 +7,7 @@ enum VariantColor {
   secondary = 'secondary',
   light = 'light',
   white = 'white',
+  lightLink = 'lightLink',
 }
 
 const bgColorClass = {
@@ -14,6 +15,7 @@ const bgColorClass = {
   [VariantColor.secondary]: 'bg-none',
   [VariantColor.light]: 'bg-gray-100',
   [VariantColor.white]: 'bg-white',
+  [VariantColor.lightLink]: 'bg-none',
 }
 
 const bgColorHoverClass = {
@@ -21,6 +23,7 @@ const bgColorHoverClass = {
   [VariantColor.secondary]: '',
   [VariantColor.light]: 'hover:bg-gray-200',
   [VariantColor.white]: '',
+  [VariantColor.lightLink]: '',
 }
 
 const borderClass = {
@@ -28,6 +31,7 @@ const borderClass = {
   [VariantColor.secondary]: 'border-2 border-teal-600',
   [VariantColor.light]: 'border-2 border-gray-100',
   [VariantColor.white]: 'border-2 border-gray-500',
+  [VariantColor.lightLink]: '',
 }
 
 const textColorClass = {
@@ -35,6 +39,7 @@ const textColorClass = {
   [VariantColor.secondary]: 'text-teal-600',
   [VariantColor.light]: 'text-gray-500',
   [VariantColor.white]: 'text-gray-600',
+  [VariantColor.lightLink]: 'text-gray-400 hover:text-gray-500 transition duration-100',
 }
 
 const heightClass = {

@@ -31,10 +31,22 @@ export default NextAuth({
       const client = await connectToDatabase()
       const db = await client.db()
       const foundUser = await db.collection('users').findOne({ email: user.email })
+
       if (foundUser) {
         const foundConnectedAccounts = await db
           .collection('accounts')
           .find({ userId: foundUser._id })
+          .toArray()
+
+        const reviews = await db
+          .collection('reviews')
+          .aggregate([
+            {
+              $match: {
+                userId: foundUser._id,
+              },
+            },
+          ])
           .toArray()
         session.user = {
           _id: foundUser._id,
@@ -44,6 +56,7 @@ export default NextAuth({
           image: foundUser.image,
           emailVerified: foundUser.emailVerified,
           connectedAccounts: foundConnectedAccounts,
+          nbReviews: reviews.length,
         }
         return Promise.resolve(session)
       } else {

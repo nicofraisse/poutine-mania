@@ -6,12 +6,12 @@ import Button from 'components/Button'
 import axios from 'axios'
 import { useCurrentUser } from 'lib/useCurrentUser'
 import { capitalize } from 'lodash'
-import { Info } from 'react-feather'
+import { ChevronLeft, Info } from 'react-feather'
 import { useRouter } from 'next/router'
 import { signOut } from 'next-auth/client'
 
 const Edit = () => {
-  const { push } = useRouter()
+  const { push, back } = useRouter()
   const { currentUser } = useCurrentUser()
 
   const handleChangePassword = (values, formikBag) => {
@@ -55,6 +55,16 @@ const Edit = () => {
 
   return (
     <div className='max-w-[400px] ml-8 pt-5'>
+      <Button
+        size='sm'
+        variant='lightLink'
+        height='sm'
+        className='-ml-1 mb-3'
+        onClick={() => push(`/users/${currentUser._id}`)}
+      >
+        <ChevronLeft />
+        Retour à mon profil
+      </Button>
       <h1 className='font-bold text-2xl mb-5'>Modifier mes informations</h1>
       {isCredentialAccount ? (
         <div className={'p-4 border rounded-lg my-4'}>

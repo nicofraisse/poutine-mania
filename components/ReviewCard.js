@@ -10,6 +10,7 @@ import { Image } from './Image'
 import Modal from 'react-responsive-modal'
 import Link from 'next/link'
 import NextImage from 'next/image'
+import Color from 'color'
 
 const ReviewCard = ({ review, handleEdit, handleDelete }) => {
   const [imgModalOpen, setImgModalOpen] = useState(false)
@@ -17,7 +18,12 @@ const ReviewCard = ({ review, handleEdit, handleDelete }) => {
 
   return (
     <>
-      <div className='py-3 lg:py-6 border-t flex'>
+      <div
+        className='py-2 lg:py-4 my-4 rounded-lg hover:bg-gray-50 shadow flex'
+        style={{
+          backgroundColor: Color(ratingColors[round(review.rating)]).desaturate(0.3).lighten(0.2),
+        }}
+      >
         <div className='basis-1/6 flex flex-col items-center justify-centere text-gray-500'>
           <Link href={`/users/${review.user._id}`} passHref>
             <div className='pr-3 min-w-24'>
@@ -46,14 +52,19 @@ const ReviewCard = ({ review, handleEdit, handleDelete }) => {
         <div className='basis-5/6 shrink'>
           <div className='text-base font-bold inline items-center'>
             <span
-              className='py-1 px-2 bg-green-200 rounded mr-2 text-gray-700'
-              style={{ backgroundColor: ratingColors[round(review.rating)] }}
+              className='py-1 px-2 bg-green-200 rounded mr-2 text-lg text-white'
+              style={{
+                backgroundColor: Color(ratingColors[round(review.rating)])
+                  .darken(0.3)
+                  .desaturate(0.2),
+              }}
             >
-              {formatRating(review.rating)}/10
+              {formatRating(review.rating)}
+              <span className='text-white font-normal'> / 10</span>
             </span>
-            {review.title}{' '}
-            {review.title && <span className='text-gray-400 ml-1 font-normal'>•</span>}
-            <span className='text-gray-400 text-[15px] ml-1 font-normal'>
+            {/* {review.title}{' '}
+            {review.title && <span className='text-gray-400 ml-1 font-normal'>•</span>} */}
+            <span className='text-gray-700 text-[14px] font-normal'>
               {formatDate(review.createdAt, 'd MMMM yyyy')}
             </span>
             {(review.userId === currentUser?._id || currentUser?.isAdmin) && (
@@ -77,14 +88,15 @@ const ReviewCard = ({ review, handleEdit, handleDelete }) => {
             )}
           </div>
 
-          <div className='text-gray-700 break-words my-2'>{review.comment}</div>
+          <div className='text-gray-500 break-words my-4 '>{review.comment}</div>
 
           {review.photos?.[0] && (
             <Image
               publicId={review.photos?.[0]}
               alt='poutine-user-photo'
-              width={200}
-              className='border rounded-md'
+              // width={280
+              responsive
+              className='border rounded-md object-cover h-72 w-100'
               onClick={() => setImgModalOpen(true)}
             />
           )}

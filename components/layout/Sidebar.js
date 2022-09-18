@@ -6,27 +6,39 @@ import {
   Heart,
   Home,
   Info,
+  List,
   Lock,
   Map,
   Search,
   User,
   Users,
   Watch,
+  BarChart2,
+  Eye,
 } from 'react-feather'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import classNames from 'classnames'
 import { useCurrentUser } from 'lib/useCurrentUser'
+import { useLoginForm } from '../context/LoginFormProvider'
+import ConditionalWrapper from 'components/ConditionalWrapper'
 
-const Item = ({ label, href, icon, disabled, onClick }) => {
+const Item = ({ label, href, icon, disabled, onClick, requireLogin }) => {
   const { pathname } = useRouter()
   const isActive = pathname?.split('/')[1] === href.split('/')[1]
   const Icon = icon
 
   return (
-    <Link href={href} passHref>
+    <ConditionalWrapper
+      condition={!requireLogin}
+      wrapper={(children) => (
+        <Link href={href} passHref>
+          {children}
+        </Link>
+      )}
+    >
       <div
-        onClick={onClick}
+        onClick={() => onClick(requireLogin)}
         className={classNames(
           'flex items-center p-3 pl-4 text-base cursor-pointer select-none transition duration-100',
           {
@@ -41,12 +53,21 @@ const Item = ({ label, href, icon, disabled, onClick }) => {
         </span>
         {label}
       </div>
-    </Link>
+    </ConditionalWrapper>
   )
 }
 
 const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
   const { currentUser } = useCurrentUser()
+  const { openLogin } = useLoginForm()
+
+  const onClickItem = (requireLogin) => {
+    if (!currentUser && requireLogin) {
+      openLogin()
+    } else {
+      toggleMobileSidebar()
+    }
+  }
 
   return (
     <>
@@ -70,59 +91,56 @@ const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
           <div>
             <Link href='/top-poutines'>
               <a>
-                <div className='flex items-center -ml-2 transform scale-75'>
+                <div className='flex items-center -ml-4 transform scale-75'>
                   <Image alt='poutine-logo' src='/poutine.png' width={1.506 * 80} height={80} />
-                  <div className='text-lg font-black mt-[-8px] ml-1'>
-                    <div className='text-amber-600'>FRITES</div>
-                    <div className='mt-[-10px] text-orange-300'>FROMAGE</div>
+                  <div className='text-2xl font-black mt-[-8px] ml-1'>
+                    <div className='text-amber-600'>POUTINE</div>
+                    {/* <div className='mt-[-10px] text-orange-300'>MANIA</div> */}
                     <div className='mt-[-10px] text-orange-600'>
-                      SAUCE<span className='text-gray-300'>.com</span>
+                      MANIA<span className='text-gray-300'>.ca</span>
                     </div>
                   </div>
                 </div>
               </a>
             </Link>
+            <Item onClick={onClickItem} label='Top 20 poutines' icon={Award} href='/top-poutines' />
             <Item
-              onClick={toggleMobileSidebar}
-              label='Top 20 poutines'
-              icon={Award}
-              href='/top-poutines'
-            />
-            <Item
-              onClick={toggleMobileSidebar}
+              onClick={onClickItem}
               label='Toutes les poutines'
               icon={Map}
               href='/restaurants'
             />
-            {/* <Item onClick={toggleMobileSidebar} label='Derniers avis' icon={Hash} href='/' /> */}
-            {/* <Item
-            onClick={toggleMobileSidebar}
-            label='À essayer (3)'
-            icon={Watch}
-            href='watchlist'
-            disabled
-          />
+            {/* <Item onClick={onClickItem} label='Derniers avis' icon={Hash} href='/' /> */}
+            {/* 
           <Item
-            onClick={toggleMobileSidebar}
+            onClick={onClickItem}
             label='Mon top poutines'
             icon={Heart}
             href='mon-top'
             disabled
           /> */}
-            {currentUser && (
-              <Item
-                onClick={toggleMobileSidebar}
-                label='Mon Profil'
-                icon={User}
-                href={`/users/${currentUser._id}`}
-              />
-            )}
+
+            <Item
+              onClick={onClickItem}
+              label={`Mes poutines (${currentUser?.nbReviews || 0})`}
+              icon={BarChart2}
+              href={`/users/${currentUser?._id}`}
+              requireLogin={!currentUser}
+            />
+
+            {/* <Item
+              onClick={onClickItem}
+              label='À essayer (3)'
+              icon={List}
+              href='watchlist'
+              requireLogin={!currentUser}
+            /> */}
             {currentUser?.isAdmin && (
-              <Item onClick={toggleMobileSidebar} label='Admin' icon={Lock} href='/admin' />
+              <Item onClick={onClickItem} label='Admin' icon={Lock} href='/admin' />
             )}
           </div>
           <div className='mb-3'>
-            <Item onClick={toggleMobileSidebar} label='À Propos' icon={Info} href='/a-propos' />
+            <Item onClick={onClickItem} label='À Propos' icon={Info} href='/a-propos' />
           </div>
         </nav>
       </div>
