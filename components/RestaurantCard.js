@@ -6,6 +6,7 @@ import { useRestaurantCardHover } from './context/RestaurantCardHoverProvider'
 import classNames from 'classnames'
 import { Image } from './Image'
 import Link from 'next/link'
+import { useRateRestaurant } from './context/RateRestaurantProvider'
 
 const LastComment = ({ comment }) => {
   if (!comment) return null
@@ -20,6 +21,7 @@ const RestaurantCard = ({ restaurant }) => {
   const { avgRating, name, reviewCount, succursales, reviews, categories, priceRange } = restaurant
   const { setHoveredId, hoveredId } = useRestaurantCardHover()
   const lastComment = reviews[0]?.comment
+  const { rateRestaurant } = useRateRestaurant()
 
   const city = succursales[0].address?.context?.find((el) => el.id?.includes('place'))?.text
 
@@ -61,7 +63,12 @@ const RestaurantCard = ({ restaurant }) => {
         </Link>
 
         <div className='mb-2 mt-1'>
-          <RatingPill avgRating={avgRating} reviewCount={reviewCount} isNew />
+          <RatingPill
+            avgRating={avgRating}
+            reviewCount={reviewCount}
+            isNew
+            onRate={(number) => rateRestaurant(restaurant)}
+          />
         </div>
 
         <TagSection

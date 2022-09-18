@@ -4,9 +4,12 @@ import { round } from 'lodash'
 import { ratingColors } from 'data/ratingColors'
 import { Star } from 'react-feather'
 import Color from 'color'
+import { useState } from 'react'
+import { useRateRestaurant } from 'components/context/RateRestaurantProvider'
 
-const RatingPill = ({ avgRating, reviewCount, single, isStar, isNew }) => {
-  if (isNew) return <NewRatingPill avgRating={avgRating} reviewCount={reviewCount} />
+const RatingPill = ({ avgRating, reviewCount, single, isStar, isNew, onRate }) => {
+  if (isNew)
+    return <NewRatingPill avgRating={avgRating} reviewCount={reviewCount} onRate={onRate} />
   if (isStar) return <StarRating avgRating={avgRating} reviewCount={reviewCount} />
   return (
     <div
@@ -34,8 +37,9 @@ const RatingPill = ({ avgRating, reviewCount, single, isStar, isNew }) => {
   )
 }
 
-const NewRatingPill = ({ avgRating, reviewCount }) => {
+const NewRatingPill = ({ avgRating, reviewCount, onRate }) => {
   const color = Color(ratingColors[round(avgRating)])
+  const [isHoveredNumber, setIsHoveredNumber] = useState(null)
 
   return (
     <div className='flex items-center'>
@@ -44,9 +48,18 @@ const NewRatingPill = ({ avgRating, reviewCount }) => {
           return (
             <div
               key={i}
-              className='h-3 w-3 rounded-full bg-gray-300 mr-[2px]'
+              className='h-3 w-3 rounded-full bg-gray-300 mr-[2px] cursor-pointer'
+              onMouseEnter={() => setIsHoveredNumber(i + 1)}
+              onMouseLeave={() => setIsHoveredNumber(null)}
+              onClick={() => onRate(isHoveredNumber)}
               style={{
-                backgroundColor: i < avgRating ? color.darken(0.2) : 'white',
+                backgroundColor: isHoveredNumber
+                  ? i < isHoveredNumber
+                    ? Color(ratingColors[isHoveredNumber]).darken(0.2)
+                    : 'white'
+                  : i < avgRating
+                  ? color.darken(0.2)
+                  : 'white',
                 border: `1px solid ${i < avgRating ? color.darken(0.2) : '#d2d5da'}`,
               }}
             ></div>
