@@ -14,6 +14,7 @@ import RatingButtons from '../controls/RatingButtons'
 import ImageUpload from '../controls/ImageUpload'
 import { useCurrentUser } from 'lib/useCurrentUser'
 import Spinner from '../Spinner'
+import { useLoginForm } from '../context/LoginFormProvider'
 
 const RateRestaurant = ({
   onSubmit,
@@ -22,6 +23,8 @@ const RateRestaurant = ({
   setExistingReview,
   setPreselectedRestaurant,
 }) => {
+  const { openLogin } = useLoginForm()
+
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedRestaurant, setSelectedRestaurant] = useState(preselectedRestaurant || null)
   const [step, setStep] = useState(preselectedRestaurant?._id || existingReview ? 2 : 1)
@@ -72,7 +75,7 @@ const RateRestaurant = ({
 
   console.log(currentUser)
 
-  if (!userReviews) return <Spinner />
+  if (currentUser && !userReviews) return <Spinner />
 
   if (step === 1) {
     return (

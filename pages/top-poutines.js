@@ -58,7 +58,9 @@ function TopPoutines() {
         <p className='my-1'>
           Vous cherchez une poutine avec des critères plus précis? Utilisez notre{' '}
           <Link href={'/restaurants'} passHref>
-            <span className='text-teal-500 font-bold'>carte des poutines</span>
+            <span className='text-teal-500 font-bold cursor-pointer hover:text-teal-600'>
+              carte des poutines
+            </span>
           </Link>
           , où vous pourrez trouver les meilleurs restaurants en fonction du lieu, le type de
           restaurant, le nombre d&apos;avis, et bien plus.

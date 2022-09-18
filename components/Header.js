@@ -80,12 +80,17 @@ const Header = ({ toggleMobileSidebar }) => {
             >
               <Search />
             </Button>
+            <Button
+              variant='light'
+              height='sm'
+              className='flex grow lg:ml-6 xs:w-48'
+              onClick={() => rateRestaurant()}
+            >
+              <Edit3 className='xs:mr-2' /> <span className='hidden xs:block'>Noter</span>
+              <span className='hidden xs:inline'> &nbsp;une poutine</span>
+            </Button>
             {loading ? (
               <div className='animate-pulse flex items-center pointer-events-none'>
-                <Button variant='light' height='sm' className='flex grow lg:ml-6 xs:w-48'>
-                  <Edit3 className='xs:mr-2' /> <span className='hidden xs:block'>Noter</span>
-                  <span className='hidden xs:inline'> &nbsp;une poutine</span>
-                </Button>
                 <div className='relative mx-4 lg:mx-5 z-20'>
                   <div className='h-[44px] w-[44px] bg-gray-400 rounded-full cursor-pointer hover:opacity-80 flex items-center justify-center'>
                     <User className='text-white' size={30} />
@@ -93,65 +98,79 @@ const Header = ({ toggleMobileSidebar }) => {
                 </div>
               </div>
             ) : currentUser ? (
-              <>
-                <Button
-                  variant='light'
-                  height='sm'
-                  className='flex grow lg:ml-6 xs:w-48'
-                  onClick={() => rateRestaurant()}
+              <div className='relative mx-4 lg:mx-5 z-20'>
+                <div
+                  className='h-[44px] w-[44px] bg-gray-400 rounded-full cursor-pointer hover:opacity-80 flex items-center justify-center'
+                  onClick={() => setDropdownOpen(!dropdownOpen)}
+                  ref={toggleRef}
                 >
-                  <Edit3 className='xs:mr-2' /> <span className='hidden xs:block'>Noter</span>
-                  <span className='hidden xs:inline'> &nbsp;une poutine</span>
-                </Button>
-
-                <div className='relative mx-4 lg:mx-5 z-20'>
+                  {currentUser.image ? (
+                    <Image
+                      alt='user-image'
+                      src={currentUser.image}
+                      width='100%'
+                      height='100%'
+                      className='rounded-full object-cover object-center'
+                    />
+                  ) : (
+                    <User className='text-white' size={30} />
+                  )}
+                </div>
+                <Dropdown isOpen={dropdownOpen} setIsOpen={setDropdownOpen} toggleRef={toggleRef}>
                   <div
-                    className='h-[44px] w-[44px] bg-gray-400 rounded-full cursor-pointer hover:opacity-80 flex items-center justify-center'
-                    onClick={() => setDropdownOpen(!dropdownOpen)}
-                    ref={toggleRef}
+                    onClick={() => {
+                      setTimeout(() => {
+                        setDropdownOpen(false)
+                      }, 100)
+                    }}
                   >
-                    {currentUser.image ? (
-                      <Image
-                        alt='user-image'
-                        src={currentUser.image}
-                        width='100%'
-                        height='100%'
-                        className='rounded-full object-cover object-center'
-                      />
-                    ) : (
-                      <User className='text-white' size={30} />
-                    )}
-                  </div>
-                  <Dropdown isOpen={dropdownOpen} setIsOpen={setDropdownOpen} toggleRef={toggleRef}>
-                    <div
-                      onClick={() => {
-                        setTimeout(() => {
-                          setDropdownOpen(false)
-                        }, 100)
-                      }}
-                    >
-                      <div className='hover:bg-gray-100 rounded-t-lg px-3 py-2 text-gray-700 cursor-pointer'>
-                        <Link href={`/users/${currentUser._id}`}>Mon profil</Link>
-                      </div>
-                      {/* <div className='hover:bg-gray-100 px-3 py-2 text-gray-700 cursor-pointer'>
+                    <div className='hover:bg-gray-100 rounded-t-lg px-3 py-2 text-gray-700 cursor-pointer'>
+                      <Link href={`/users/${currentUser._id}`}>Mon profil</Link>
+                    </div>
+                    {/* <div className='hover:bg-gray-100 px-3 py-2 text-gray-700 cursor-pointer'>
                         <Link href='/profile'>Paramètres</Link>
                       </div> */}
 
-                      <div
-                        className='hover:bg-gray-100 px-3 py-2 rounded-b-lg text-gray-700 cursor-pointer'
-                        onClick={signOut}
-                      >
-                        Déconnexion
-                      </div>
+                    <div
+                      className='hover:bg-gray-100 px-3 py-2 rounded-b-lg text-gray-700 cursor-pointer'
+                      onClick={signOut}
+                    >
+                      Déconnexion
                     </div>
-                  </Dropdown>
-                </div>
-              </>
+                  </div>
+                </Dropdown>
+              </div>
             ) : (
-              <div className='mx-2 md:mx-4'>
-                <Button variant='secondary' width='sm' onClick={openLogin} height='sm'>
-                  Connexion
-                </Button>
+              <div className='relative mx-4 lg:mx-5 z-20'>
+                <div
+                  className='h-[44px] w-[44px] bg-gray-400 rounded-full cursor-pointer hover:opacity-80 flex items-center justify-center'
+                  onClick={() => setDropdownOpen(!dropdownOpen)}
+                  ref={toggleRef}
+                >
+                  <User className='text-white' size={30} />
+                </div>
+                <Dropdown isOpen={dropdownOpen} setIsOpen={setDropdownOpen} toggleRef={toggleRef}>
+                  <div
+                    onClick={() => {
+                      setTimeout(() => {
+                        setDropdownOpen(false)
+                      }, 100)
+                    }}
+                  >
+                    <div
+                      className='hover:bg-gray-100 px-3 py-2 rounded-b-lg text-gray-700 cursor-pointer'
+                      onClick={openLogin}
+                    >
+                      Connexion
+                    </div>
+                    <div
+                      className='hover:bg-gray-100 px-3 py-2 rounded-b-lg text-gray-700 cursor-pointer'
+                      onClick={openSignup}
+                    >
+                      Inscription
+                    </div>
+                  </div>
+                </Dropdown>
               </div>
             )}
           </div>

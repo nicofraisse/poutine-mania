@@ -12,6 +12,7 @@ import classNames from 'classnames'
 import Image from 'next/image'
 import Color from 'color'
 import { Image as CloudImage } from 'components/Image'
+import { TagSection } from './RestaurantCard'
 
 const MAPBOX_TOKEN =
   'pk.eyJ1Ijoibmljb2ZyYWlzc2UiLCJhIjoiY2thZzZtemk3MDE4NzJybXVtMjF5a2xyOSJ9.6JURdkZj5FnZ5lxMzPncOA'
@@ -66,21 +67,21 @@ const MarkerAndPopup = ({
               togglePopup()
             }}
             className={classNames(
-              'transform -translate-y-1 z-30 w-4 h-4 rounded-full border-white shadow-md border-2',
-              { 'scale-110': isHovered }
+              'transform -translate-y-1 z-30 transition dutation-150 w-4 h-4 rounded-full border-white shadow-md border-2',
+              { 'scale-150': isHovered }
             )}
             style={{
-              backgroundColor: isHovered
-                ? '#4f46e5'
-                : restaurant.reviewCount > 0
-                ? Color(ratingColors[round(restaurant.avgRating)]).darken(0.4)
-                : 'rgb(160, 160, 160)',
+              backgroundColor:
+                restaurant.reviewCount > 0
+                  ? Color(ratingColors[round(restaurant.avgRating)]).darken(0.4)
+                  : 'rgb(160, 160, 160)',
+              boxShadow: isHovered ? '0px 0px 7px rgba(0, 0, 0, 0.5)' : '',
             }}
           ></div>
         ) : (
           <>
             <div
-              className='0 w-10 h-10 absolute z-10 flex items-center justify-center'
+              className='w-10 h-10 absolute z-10 flex items-center justify-center'
               onMouseEnter={() => !isShowPage && setHoveredId(restaurant._id)}
               onMouseLeave={() => !isShowPage && setHoveredId(null)}
               data-pin='yes'
@@ -94,7 +95,9 @@ const MarkerAndPopup = ({
                 src='/poutine1.png'
                 width={26}
                 height={26}
-                className={classNames('transform -translate-y-1 z-30', { 'scale-110': isHovered })}
+                className={classNames('transform -translate-y-1 z-30', {
+                  'scale-110': isHovered,
+                })}
                 onClick={() => {
                   togglePopup()
                 }}
@@ -104,9 +107,7 @@ const MarkerAndPopup = ({
             <MapPin
               size={40}
               color={
-                isHovered
-                  ? '#4f46e5'
-                  : restaurant.reviewCount > 0
+                restaurant.reviewCount > 0
                   ? Color(ratingColors[round(restaurant.avgRating)]).darken(0.4)
                   : 'rgb(205, 205, 205)'
               }
@@ -116,7 +117,7 @@ const MarkerAndPopup = ({
                   : 'white'
               }
               className={classNames('transition duration-100', {
-                'transform scale-110': isHovered,
+                'transform scale-150': isHovered,
               })}
               ref={theRef}
             />
@@ -128,7 +129,7 @@ const MarkerAndPopup = ({
           longitude={address.center[0]}
           latitude={address.center[1]}
           anchor='bottom'
-          offset={isSmallMarker ? 16 : 44}
+          offset={isSmallMarker ? 24 : 44}
           closeButton={false}
           onClose={() => closePopup(popupId)}
           closeOnClick={false}
@@ -137,30 +138,34 @@ const MarkerAndPopup = ({
           }}
         >
           <div
-            className={classNames('relative flex flex-col items-center z-100', {
+            className={classNames('relative flex flex-col z-100', {
               'w-44': !isShowPage,
               'w-36': isShowPage,
             })}
             onClick={() => !isShowPage && window.open(`/restaurants/${restaurant._id}`)}
           >
-            <div className='font-bold text-base mb-1'>{restaurant.name}</div>
-            {!isShowPage && (
-              <RatingPill avgRating={restaurant.avgRating} reviewCount={restaurant.reviewCount} />
-            )}
             {image && !isShowPage && (
               <CloudImage
                 publicId={image}
                 alt={`${restaurant.name}-photo`}
-                className='max-h-[100px] mt-2 object-cover object-center rounded'
+                className='max-h-[128px] object-cover object-center rounded mb-2'
               />
             )}
-            <div
-              className={classNames('leading-3', {
-                'text-[11px] mt-2': !isShowPage,
-                'text-[12px]': isShowPage,
-              })}
-            >
-              {address.place_name}
+            <div className='font-bold text-base mb-1'>{restaurant.name}</div>
+            {!isShowPage && (
+              <div className='max-w-28'>
+                <RatingPill avgRating={restaurant.avgRating} reviewCount={restaurant.reviewCount} />
+              </div>
+            )}
+            <div className='mt-3'>
+              <TagSection
+                succursales={restaurant.succursales}
+                categories={restaurant.categories}
+                city={address.context?.find((el) => el.id?.includes('place'))?.text}
+                priceRange={restaurant.priceRange}
+                smallText
+                address={address.place_name}
+              />
             </div>
             <div
               onClick={(e) => {
@@ -201,7 +206,7 @@ const MapMap = ({ restaurants, isShowPage }) => {
 
   const closeAllPopups = () => setOpenPopups([])
 
-  const [isSmallMarker, setIsSmallMarker] = useState(true)
+  const [isSmallMarker, setIsSmallMarker] = useState(!isShowPage)
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
@@ -227,7 +232,9 @@ const MapMap = ({ restaurants, isShowPage }) => {
         style={{ width: '100%', height: '100%' }}
         mapStyle='mapbox://styles/mapbox/streets-v10'
         mapboxAccessToken={MAPBOX_TOKEN}
-        onZoom={(e) => setIsSmallMarker(e.viewState.zoom < 12)}
+        onZoom={(e) => {
+          if (!isShowPage) setIsSmallMarker(!e.viewState.zoom < 12)
+        }}
       >
         <NavigationControl position='bottom-right' />
         {restaurants.map((restaurant, parentIndex) =>

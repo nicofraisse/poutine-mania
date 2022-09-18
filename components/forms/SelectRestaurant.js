@@ -14,7 +14,7 @@ const SelectRestaurant = ({ restaurants, onSelect, userRatedRestaurants }) => {
   return (
     <>
       {restaurants?.map((restaurant) => {
-        const alreadyRated = userRatedRestaurants.find(
+        const alreadyRated = userRatedRestaurants?.find(
           (review) => review.restaurantId === restaurant._id
         )
         return (

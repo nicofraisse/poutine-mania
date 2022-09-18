@@ -28,7 +28,7 @@ const Item = ({ label, href, icon, disabled, onClick }) => {
       <div
         onClick={onClick}
         className={classNames(
-          'flex items-center p-3 xl:p-4 pl-4 xl:pl-9 text-base xl:text-lg cursor-pointer select-none',
+          'flex items-center p-3 pl-4 text-base cursor-pointer select-none transition duration-100',
           {
             'bg-orange-100 font-bold text-orange-600': isActive,
             'hover:bg-orange-100': !disabled,
@@ -36,7 +36,7 @@ const Item = ({ label, href, icon, disabled, onClick }) => {
           }
         )}
       >
-        <span className='mr-3 xl:mr-5'>
+        <span className='mr-3'>
           <Icon size={22} />
         </span>
         {label}
@@ -57,20 +57,20 @@ const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
         ></div>
       )}
       <div
-        className={classNames('fixed lg:static lg:block lg:min-w-[228px] xl:min-w-[280px]', {
+        className={classNames('fixed lg:static lg:block lg:min-w-[228px]', {
           hidden: !showMobileSidebar,
-          'block bg-white h-screen  z-10': showMobileSidebar,
+          'block bg-white h-screen z-10': showMobileSidebar,
         })}
       >
         <nav
           className={classNames(
-            'border-r lg:pt-2 h-screen lg:fixed lg:min-w-[228px] xl:min-w-[280px] flex flex-col justify-between'
+            'border-r lg:pt-2 h-screen lg:fixed lg:min-w-[228px] flex flex-col justify-between'
           )}
         >
           <div>
             <Link href='/top-poutines'>
               <a>
-                <div className='flex items-center -ml-2 xl:-ml-0 xl:pl-4 xl:mb-2 transform scale-75 xl:scale-100'>
+                <div className='flex items-center -ml-2 transform scale-75'>
                   <Image alt='poutine-logo' src='/poutine.png' width={1.506 * 80} height={80} />
                   <div className='text-lg font-black mt-[-8px] ml-1'>
                     <div className='text-amber-600'>FRITES</div>

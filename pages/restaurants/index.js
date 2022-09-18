@@ -53,7 +53,7 @@ const Restaurants = () => {
         <div className='grow w-screen md:w-1/2 min-h-2/3vh max-h-2/3vh md:min-h-screen-minus-navbar md:max-h-screen-minus-navbar'>
           <Map restaurants={restaurants} />
         </div>
-        <div className='pt-5 w-screen md:w-1/2 md:max-w-[560px] md:overflow-y-auto'>
+        <div className='pt-5 w-screen md:w-1/2 md:max-w-[480px] md:overflow-y-auto'>
           <div className='min-h-12'>
             <div className='lg:pl-6 lg:pr-5 px-2 m b-3 lg:mb-0 flex justify-between items-start'>
               {loading ? (
@@ -106,10 +106,10 @@ const Restaurants = () => {
             </div>
           </div>
           {restaurants?.map((r) => (
-            <div className='px-1 lg:px-4 block' key={r._id}>
+            <div className='block' key={r._id}>
               <RestaurantCard restaurant={r} />
 
-              <div className='w-full border-b'></div>
+              <div className='w-full border-b border-gray-100'></div>
             </div>
           ))}
         </div>
