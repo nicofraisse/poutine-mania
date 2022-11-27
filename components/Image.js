@@ -1,10 +1,11 @@
 import { Image as CloudinaryImage } from 'cloudinary-react'
 import NextImage from 'next/image'
+import { Image as ImageIcon, MapPin } from 'react-feather'
+import classNames from 'classnames'
 
 const Image = ({ publicId, alt, ...props }) => {
   if (!publicId) {
-    // return <NextImage src='/images/sample.png' alt='sample' {...props} />
-    return <div className='p-3 border'>No image</div>
+    return <ImageIcon className={classNames('text-gray-300', props.className)} alt='placeholder' />
   }
 
   return (

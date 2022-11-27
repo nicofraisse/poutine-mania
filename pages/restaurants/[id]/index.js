@@ -6,6 +6,7 @@ import RestaurantHeader from 'components/RestaurantHeader'
 import { ExternalLink, MapPin, Phone, PhoneCall } from 'react-feather'
 import Map from 'components/Map'
 import { useEffect, useState } from 'react'
+import { formatAddress } from 'lib/formatAddress'
 
 const Index = () => {
   const { query } = useRouter()
@@ -28,12 +29,12 @@ const Index = () => {
   return (
     <div>
       <RestaurantHeader restaurant={restaurant} />
-      <div className='flex flex-col-reverse xl:flex-row xl:h-screen'>
+      <div className='flex flex-col-reverse xl:flex-row'>
         <div className='lg:basis-2/3'>
           <RestaurantReviews restaurant={restaurant} />
         </div>
-        <div className='xl:w-1/3 xl:h-full p-4 xl:p-6 xl:pl-4'>
-          <div className='xl:sticky xl:top-8 border text-sm p-4 rounded-lg'>
+        <div className='xl:w-1/3 xl:sticky xl:top-4 xl:h-full p-4 xl:p-6 xl:pl-4'>
+          <div className='border text-sm p-4 rounded-lg'>
             {restaurant.website && (
               <div className='mb-4 flex items-center'>
                 <ExternalLink className='mr-2 inline shrink-0' size={20} />
@@ -50,11 +51,7 @@ const Index = () => {
             )}
             <div className='mb-2 flex items-center'>
               <MapPin className='mr-2 inline shrink-0' size={20} />
-              <span>
-                {restaurant.succursales.length > 1
-                  ? `${restaurant.succursales.length} addresses au Québec`
-                  : restaurant.succursales[0].address.place_name}
-              </span>
+              <span>{formatAddress(restaurant)}</span>
             </div>
             <div className='underline block xl:hidden' onClick={() => setShowMap(!showMap)}>
               {showMap ? 'Cacher' : 'Voir sur'} la carte

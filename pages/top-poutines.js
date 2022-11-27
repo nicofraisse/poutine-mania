@@ -31,7 +31,6 @@ function TopPoutines() {
   const handleScroll = (e) => {
     const { offsetHeight, scrollTop, scrollHeight } = e.target
     if (offsetHeight + scrollTop >= scrollHeight - 10) {
-      console.log('bottom')
       setPaginationSkip(allReviews.length)
     }
   }

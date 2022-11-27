@@ -10,14 +10,14 @@ import NextImage from 'next/image'
 import { useCurrentUser } from '../lib/useCurrentUser'
 import { useRouter } from 'next/router'
 import { useRateRestaurant } from 'components/context/RateRestaurantProvider'
+import axios from 'axios'
+import toast from 'react-hot-toast'
 
 const ProfileReviewCard = ({ review, isIndex, userName }) => {
   const [imgModalOpen, setImgModalOpen] = useState(false)
   const { currentUser } = useCurrentUser()
   const { reload } = useRouter()
   const { rateRestaurant } = useRateRestaurant()
-
-  console.log(review)
 
   const handleEdit = (review) => {
     rateRestaurant(review.restaurants[0], review)

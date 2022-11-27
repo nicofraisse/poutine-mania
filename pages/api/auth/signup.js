@@ -8,7 +8,7 @@ async function handler(req, res) {
 
   const data = req.body
 
-  const { email, firstName, lastName, password } = data
+  const { email, name, password } = data
 
   if (!email || !email.includes('@')) {
     res.status(422).json({
@@ -39,8 +39,7 @@ async function handler(req, res) {
 
   await db.collection('users').insertOne({
     email: email,
-    firstName: firstName,
-    lastName: lastName,
+    name: name,
     password: hashedPassword,
     createdAt: new Date(),
     updatedAt: new Date(),

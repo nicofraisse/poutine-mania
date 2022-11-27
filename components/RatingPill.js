@@ -7,9 +7,24 @@ import Color from 'color'
 import { useState } from 'react'
 import { useRateRestaurant } from 'components/context/RateRestaurantProvider'
 
-const RatingPill = ({ avgRating, reviewCount, single, isStar, isNew, onRate }) => {
+const RatingPill = ({
+  avgRating,
+  reviewCount,
+  single,
+  isStar,
+  isNew,
+  onRate,
+  isDarkBackground,
+}) => {
   if (isNew)
-    return <NewRatingPill avgRating={avgRating} reviewCount={reviewCount} onRate={onRate} />
+    return (
+      <NewRatingPill
+        avgRating={avgRating}
+        reviewCount={reviewCount}
+        onRate={onRate}
+        isDarkBackground={isDarkBackground}
+      />
+    )
   if (isStar) return <StarRating avgRating={avgRating} reviewCount={reviewCount} />
   return (
     <div
@@ -37,7 +52,7 @@ const RatingPill = ({ avgRating, reviewCount, single, isStar, isNew, onRate }) =
   )
 }
 
-const NewRatingPill = ({ avgRating, reviewCount, onRate }) => {
+const NewRatingPill = ({ avgRating, reviewCount, onRate, isDarkBackground }) => {
   const color = Color(ratingColors[round(avgRating)])
   const [isHoveredNumber, setIsHoveredNumber] = useState(null)
 
@@ -48,21 +63,26 @@ const NewRatingPill = ({ avgRating, reviewCount, onRate }) => {
           return (
             <div
               key={i}
-              className='h-3 w-3 rounded-full bg-gray-300 mr-[2px] cursor-pointer'
               onMouseEnter={() => setIsHoveredNumber(i + 1)}
               onMouseLeave={() => setIsHoveredNumber(null)}
+              className='h-[13px] pr-[2px] cursor-pointer'
               onClick={() => onRate(isHoveredNumber)}
-              style={{
-                backgroundColor: isHoveredNumber
-                  ? i < isHoveredNumber
-                    ? Color(ratingColors[isHoveredNumber]).darken(0.2)
-                    : 'white'
-                  : i < avgRating
-                  ? color.darken(0.2)
-                  : 'white',
-                border: `1px solid ${i < avgRating ? color.darken(0.2) : '#d2d5da'}`,
-              }}
-            ></div>
+            >
+              <div
+                className='h-full w-[13px] rounded-full bg-gray-300'
+                onClick={() => onRate(isHoveredNumber)}
+                style={{
+                  backgroundColor: isHoveredNumber
+                    ? i < isHoveredNumber
+                      ? Color(ratingColors[isHoveredNumber]).darken(0.2)
+                      : 'white'
+                    : i < avgRating
+                    ? color.darken(0.2)
+                    : 'white',
+                  border: `1px solid ${i < avgRating ? color.darken(0.2) : '#d2d5da'}`,
+                }}
+              ></div>
+            </div>
           )
         })}
         {/* <div
@@ -74,13 +94,41 @@ const NewRatingPill = ({ avgRating, reviewCount, onRate }) => {
         ></div> */}
       </div>
       {avgRating ? (
-        <div className='text-sm font-bold text-gray-600 mx-2 flex items-center'>
-          <div>{formatRating(avgRating)}</div>
-          <div className='font-normal text-gray-400 ml-[1px]'>/10</div>
-          <div className='font-normal text-xs text-gray-400 ml-1'>({reviewCount} avis)</div>
+        <div
+          className={classNames('text-sm font-bold mx-2 flex items-center', {
+            'text-white': isDarkBackground,
+            'text-gray-600': !isDarkBackground,
+          })}
+        >
+          <div>{isHoveredNumber || formatRating(avgRating)}</div>
+          <div
+            className={classNames('font-normal  ml-[1px]', {
+              'text-white': isDarkBackground,
+              'text-gray-400': !isDarkBackground,
+            })}
+          >
+            /10
+          </div>
+          {reviewCount && (
+            <div
+              className={classNames('font-normal text-xs ml-1', {
+                'text-white': isDarkBackground,
+                'text-gray-400': !isDarkBackground,
+              })}
+            >
+              {isHoveredNumber ? 'Votre note' : `(${reviewCount} avis)`}
+            </div>
+          )}
         </div>
       ) : (
-        <div className='font-normal text-gray-400 text-xs ml-2'>Aucun avis</div>
+        <div
+          className={classNames('font-normal text-xs ml-2', {
+            'text-white': isDarkBackground,
+            'text-gray-400': !isDarkBackground,
+          })}
+        >
+          {isHoveredNumber ? 'Votre note' : 'Aucun avis'}
+        </div>
       )}
     </div>
   )

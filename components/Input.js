@@ -7,7 +7,7 @@ const Input = ({ className, value, type, isSearch, ...props }) => {
   if (type === 'textarea') {
     return (
       <textarea
-        className='border-2 border-gray-300 rounded-md py-[8px] px-2 text-sm w-full h-[120px]'
+        className='border-2 border-gray-300 font-light rounded-md py-[8px] px-2 w-full h-[120px]'
         placeholder={placeholder}
         defaultValue={value}
         {...props}

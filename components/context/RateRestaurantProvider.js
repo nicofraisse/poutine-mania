@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from 'react'
-import { X } from 'react-feather'
+import { Info, X } from 'react-feather'
 import Modal from 'react-responsive-modal'
 import RateRestaurant from '../forms/RateRestaurant'
 import { useCurrentUser } from 'lib/useCurrentUser'
@@ -7,6 +7,15 @@ import { useLoginForm } from './LoginFormProvider'
 import { useRouter } from 'next/router'
 
 const RateRestaurantContext = createContext({})
+
+const LoginMessage = ({ restaurantName }) => (
+  <div className='px-4 sm:w-[360px] '>
+    <div className='py-2 px-3 my-2 bg-blue-100 border--200 text-gray-700 rounded borer'>
+      {/* <Info size={18} className='text-gray-700 inline mr-2' /> */}
+      <b>Connectez-vous</b> pour évaluer la poutine de {restaurantName} !
+    </div>
+  </div>
+)
 
 export const RateRestaurantProvider = ({ children }) => {
   const [rateRestaurantOpen, setRateRestaurantOpen] = useState(false)
@@ -19,7 +28,7 @@ export const RateRestaurantProvider = ({ children }) => {
 
   const rateRestaurant = (restaurant, review) => {
     if (!currentUser) {
-      openLogin()
+      openLogin(<LoginMessage restaurantName={restaurant.name} />)
     } else {
       setRateRestaurantOpen(true)
       setPreselectedRestaurant(restaurant)

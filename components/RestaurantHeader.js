@@ -50,21 +50,22 @@ const RestaurantHeader = ({ restaurant }) => {
         </div>
       </div>
       <div className='absolute top-0 left-0 w-full h-full bg-gradient-to-t from-[#000000bb] flex items-end text-center'>
-        <div className='p-2 md:p-5 w-full'>
+        <div className='p-2 md:pl-5 md:pb-3 w-full'>
           <div className='flex justify-between items-center text-white'>
             <h1
-              className='text-xl md:text-3xl font-bold text-white text-center'
+              className='text-xl md:text-3xl xl:text-5xl font-bold text-white text-center'
               style={{ textShadow: '0px 0px 6px rgba(0, 0, 0, 0.6)' }}
             >
               {restaurant.name}
             </h1>
           </div>
-          <div className='lg:mt-2'>
+          <div className='mt-1 xl:mt-2'>
             {/* <span className='mr-1'>
               {`${restaurant.categories[0]} à ${city} •`}{' '}
               {restaurant.priceRange && `${repeat('$', restaurant.priceRange)}	• `}
             </span> */}
-            <div className='text-left mb-1'>
+            <RatingPill avgRating={restaurant.avgRating} isNew isDarkBackground />
+            <div className='text-left mb-1 mt-1'>
               <TagSection
                 succursales={restaurant.succursales}
                 categories={restaurant.categories}

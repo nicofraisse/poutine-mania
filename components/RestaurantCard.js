@@ -23,7 +23,6 @@ const RestaurantCard = ({ restaurant }) => {
   const lastComment = reviews[0]?.comment
   const { rateRestaurant } = useRateRestaurant()
 
-  console.log(succursales[0].address?.context)
   const city = succursales[0].address?.context?.find((el) => el.id?.includes('neighborhood'))?.text
 
   const image = reviews?.find((r) => r.photos?.[0])?.photos[0]
@@ -110,8 +109,8 @@ export const TagSection = ({
           {priceRange && `${repeat('$', priceRange)}`}
         </span>{' '}
         •{' '}
-        {categories.map((c) => (
-          <span key={c} className=''>
+        {categories.map((c, i) => (
+          <span key={i} className=''>
             {c} •{' '}
           </span>
         ))}

@@ -25,11 +25,10 @@ const SignUp = () => {
   return (
     <div className='border max-w-sm p-10 mx-auto mt-20'>
       <Form
-        initialValues={{ firstName: '', lastName: '', email: '', password: '' }}
+        initialValues={{ name: '', email: '', password: '' }}
         onSubmit={handleSubmit}
         validationSchema={Yup.object({
-          firstName: Yup.string().min(1).required('Required'),
-          lastName: Yup.string().min(1).required('Required'),
+          name: Yup.string().min(1).required('Required'),
           email: Yup.string().min(1).required('Required'),
           password: Yup.string().min(1).required('Required'),
         })}
@@ -37,15 +36,14 @@ const SignUp = () => {
         {({ touched, errors }) => (
           <>
             <div className='flex'>
-              <Field name='firstName' className='pr-[6px]' />
-              <Field name='lastName' className='pl-[6px]' />
+              <Field name='name' className='pr-[6px]' />
             </div>
 
             <Field name='email' />
 
             <Field name='password' />
 
-            {touched.firstName && errors ? (
+            {touched.name && errors ? (
               <div className='my-2 text-sm text-red-500'>{JSON.stringify(errors)}</div>
             ) : null}
 

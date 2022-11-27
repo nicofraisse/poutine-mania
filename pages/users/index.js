@@ -12,9 +12,7 @@ const Users = () => {
       {users.map((user) => (
         <div key={user._id} className='text-blue-600 hover:text-blue-400'>
           <Link href={`/users/${user._id}`}>
-            <a>
-              {user.firstName} {user.lastName}
-            </a>
+            <a>{user.name}</a>
           </Link>
         </div>
       ))}

@@ -108,7 +108,7 @@ const MarkerAndPopup = ({
               size={40}
               color={
                 restaurant.reviewCount > 0
-                  ? Color(ratingColors[round(restaurant.avgRating)]).darken(0.4)
+                  ? Color(ratingColors[round(restaurant.avgRating)]).darken(0.4).hex()
                   : 'rgb(205, 205, 205)'
               }
               fill={
@@ -231,7 +231,7 @@ const MapMap = ({ restaurants, isShowPage }) => {
         mapStyle='mapbox://styles/mapbox/streets-v10'
         mapboxAccessToken={MAPBOX_TOKEN}
         onZoom={(e) => {
-          if (!isShowPage) setIsSmallMarker(!e.viewState.zoom < 12)
+          if (!isShowPage) setIsSmallMarker(!(e.viewState.zoom < 12))
         }}
       >
         <NavigationControl position='bottom-right' />

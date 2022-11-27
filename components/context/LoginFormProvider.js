@@ -9,9 +9,11 @@ const LoginFormContext = createContext({})
 export const LoginFormProvider = ({ children }) => {
   const [loginOpen, setLoginOpen] = useState(false)
   const [signupOpen, setSignupOpen] = useState(false)
+  const [loginMessage, setLoginMessage] = useState(null)
 
   const openLogin = (message) => {
     setLoginOpen(true)
+    setLoginMessage(message || '')
   }
 
   const closeLogin = (message) => {
@@ -40,8 +42,10 @@ export const LoginFormProvider = ({ children }) => {
           closeIcon={<X />}
           center
         >
-          <h2 className='font-black text-3xl text-center pb-3'>Connexion</h2>
-          <Login onSubmit={() => setLoginOpen(false)} />
+          <div className='flex flex-col items-center'>
+            {loginMessage || <h2 className='font-black text-3xl text-center pb-3'>Connexion</h2>}
+            <Login onSubmit={() => setLoginOpen(false)} />
+          </div>
         </Modal>
         <Modal
           classNames={{

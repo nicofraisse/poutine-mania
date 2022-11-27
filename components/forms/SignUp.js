@@ -22,11 +22,9 @@ const SignUp = ({ onSubmit }) => {
             if (data?.error) {
               toast.error(data.error)
             } else {
-              // setTimeout(() => {
               toast.success('Vous êtes maintenant connecté(e).')
               formikBag.setSubmitting(false)
               onSubmit && onSubmit()
-              // }, 500)
             }
           })
           .catch((e) => {
@@ -47,11 +45,10 @@ const SignUp = ({ onSubmit }) => {
 
   return (
     <Form
-      initialValues={{ firstName: '', lastName: '', email: '', password: '' }}
+      initialValues={{ name: '', email: '', password: '' }}
       onSubmit={handleSubmit}
       validationSchema={Yup.object({
-        firstName: Yup.string().min(1).required('Required'),
-        lastName: Yup.string().min(1).optional(),
+        name: Yup.string().min(1).required('Required'),
         email: Yup.string().min(1).required('Required'),
         password: Yup.string().min(1).required('Required'),
       })}
@@ -106,21 +103,7 @@ const SignUp = ({ onSubmit }) => {
             <div className='text-gray-500 px-3 text-sm'>OU</div>
             <div className='grow bg-gray-300 h-[1px]'></div>
           </div>
-          <div className='flex'>
-            <Field
-              name='firstName'
-              className='pr-[6px]'
-              label='Prénom'
-              placeholder="Ou nom d'usager"
-            />
-            <Field
-              name='lastName'
-              label='Nom de famille'
-              placeholder='Optionnel'
-              className='pl-[6px]'
-            />
-          </div>
-
+          <Field name='name' label='Nom' placeholder='Nom' />
           <Field name='email' label='Adresse courriel' />
           <Field name='password' type='password' label='Mot de passe' />
           <div className='text-sm'>

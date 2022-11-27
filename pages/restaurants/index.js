@@ -13,6 +13,7 @@ import { Sliders } from 'react-feather'
 import Button from 'components/Button'
 import useClickOutside from '../../lib/useClickOutside'
 import classNames from 'classnames'
+import { getUrlQueryString } from '../../lib/getUrlqueryString'
 
 const sortTypes = [
   { label: 'Nom', value: 'name' },
@@ -34,13 +35,12 @@ const Restaurants = () => {
   const [filtersOpen, setFiltersOpen] = useState(false)
   const filtersRef = useClickOutside(() => setFiltersOpen(false))
 
-  const trimmedSearchValue = searchValue?.trim()
-  const searchQuery = trimmedSearchValue ? `?search=${trimmedSearchValue}` : ''
-  const sortTypeQuery = sortType ? `?sort=${sortType}` : ''
-  const sortOrderQuery = sortOrder ? `&order=${sortOrder}` : ''
-
   const { data: restaurants, loading: restaurantsLoading } = useGet(
-    `/api/restaurants${searchQuery}${sortTypeQuery}${sortOrderQuery}`
+    `/api/restaurants${getUrlQueryString({
+      search: searchValue?.trim(),
+      sort: sortType,
+      order: sortOrder,
+    })}`
   )
 
   if (!restaurants) return <Spinner />

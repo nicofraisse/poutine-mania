@@ -22,7 +22,7 @@ const Field = ({ name, type = 'text', className, control, label, hideLabel, hidd
         return (
           <div className={classNames(className, 'mb-3', { hidden })}>
             {!hideLabel && (
-              <label htmlFor={name} className='block mb-1 font-bold text-sm'>
+              <label htmlFor={name} className='block mb-1 font-bold text-sm text-gray-800'>
                 {label || startCase(name)}
                 {asterisk}
                 {meta.touched && meta.error && (

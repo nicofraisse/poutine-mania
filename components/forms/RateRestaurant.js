@@ -15,6 +15,10 @@ import ImageUpload from '../controls/ImageUpload'
 import { useCurrentUser } from 'lib/useCurrentUser'
 import Spinner from '../Spinner'
 import { useLoginForm } from '../context/LoginFormProvider'
+import Color from 'color'
+import { ratingColors } from '../../data/ratingColors'
+import { round } from 'lodash'
+import { formatRating } from '../../lib/formatRating'
 
 const RateRestaurant = ({
   onSubmit,
@@ -35,9 +39,6 @@ const RateRestaurant = ({
   const { data: userReviews } = useGet(`/api/users/${currentUser?._id}/reviews`, {
     skip: !currentUser,
   })
-  // const a = 3
-
-  // console.log(userReviews)
 
   const uploadToCloudinary = async (files) => {
     if (!files || files.length === 0) return null
@@ -73,8 +74,6 @@ const RateRestaurant = ({
     }
   }
 
-  console.log(currentUser)
-
   if (currentUser && !userReviews) return <Spinner />
 
   if (step === 1) {
@@ -97,7 +96,6 @@ const RateRestaurant = ({
               restaurants={searchResults}
               userRatedRestaurants={userReviews}
               onSelect={(restaurant, alreadyRated) => {
-                console.log({ alreadyRated })
                 if (!!alreadyRated) {
                   setExistingReview(alreadyRated)
                   setPreselectedRestaurant(alreadyRated.restaurants[0])
@@ -110,7 +108,7 @@ const RateRestaurant = ({
         </div>
 
         <div className='text-right border-t-2 w-full bg-white h-20 p-3'>
-          Restaurant introuvable?{' '}
+          Restaurant introuvable?
           <span className='text-teal-600 hover:opacity-70'>
             <Link href='/admin/create-restaurant'>Ajouter un restaurant</Link>
           </span>
@@ -122,58 +120,121 @@ const RateRestaurant = ({
   if (step === 2) {
     return (
       <Form
-        initialValues={existingReview || { rating: null, title: '', comment: '', photos: [] }}
+        initialValues={
+          existingReview || {
+            // rating: null,
+            friesRating: null,
+            cheeseRating: null,
+            sauceRating: null,
+            serviceRating: null,
+            title: '',
+            comment: '',
+            photos: [],
+          }
+        }
         onSubmit={handleSubmit}
         validationSchema={Yup.object({
-          rating: Yup.number('Choisissez une note').min(0).max(10).required('Requis'),
+          // rating: Yup.number('Choisissez une note').min(0).max(10).required('Requis'),
+          serviceRating: Yup.number('Choisissez une note').min(0).max(10).required('Requis'),
+          friesRating: Yup.number('Choisissez une note').min(0).max(10).required('Requis'),
+          cheeseRating: Yup.number('Choisissez une note').min(0).max(10).required('Requis'),
+          sauceRating: Yup.number('Choisissez une note').min(0).max(10).required('Requis'),
           title: Yup.string().min(3),
           comment: Yup.string().min(5),
           photos: Yup.object().nullable(),
         })}
-        className='sm:w-[560px] h-full  flex flex-col sm:px-3 pb-3'
+        className='sm:px-2 pb-3 w-[600px]'
       >
-        {({ isSubmitting, values, errors }) => (
-          <>
-            <div className='font-bold text-xl mb-4 sm:mb-6'>
-              {existingReview ? 'Modifier votre ' : 'Laissez un '}
-              avis sur la poutine de{' '}
-              <span className='font-black text-orange-800'>
-                {selectedRestaurant.name || preselectedRestaurant.name}
-              </span>
-            </div>
-            <div className='overflow-y-auto h-full'>
-              <Field
-                className='sm:mb-5'
-                name='rating'
-                label='Note sur 10'
-                control={RatingButtons}
-              />
-              <Field className='sm:mb-5' name='title' label='Titre' />
+        {({ isSubmitting, values, errors }) => {
+          const nbFilledFields = [
+            values.serviceRating,
+            values.friesRating,
+            values.cheeseRating,
+            values.sauceRating,
+          ].filter((v) => v).length
+          const avgRating =
+            (values.serviceRating + values.friesRating + values.cheeseRating + values.sauceRating) /
+            nbFilledFields
+          return (
+            <>
+              <div className='font-bold text-xl mb-4 sm:mb-6'>
+                {existingReview ? 'Modifier votre ' : 'Laissez un '}
+                avis sur la poutine de{' '}
+                <span className='font-black text-orange-800'>
+                  {selectedRestaurant.name || preselectedRestaurant.name}
+                </span>
+              </div>
+              <div>
+                <Field
+                  className='sm:mb-5'
+                  name='friesRating'
+                  label='Frites'
+                  control={RatingButtons}
+                />
+                <Field
+                  className='sm:mb-5'
+                  name='cheeseRating'
+                  label='Fromage'
+                  control={RatingButtons}
+                />
+                <Field
+                  className='sm:mb-5'
+                  name='sauceRating'
+                  label='Sauce'
+                  control={RatingButtons}
+                />
+                <Field
+                  className='sm:mb-5'
+                  name='serviceRating'
+                  label='Qualité/prix et service'
+                  control={RatingButtons}
+                />
+              </div>
+
+              <div className='flex items-center text-gray-500 border-gray-300 rounded my-6'>
+                <div className='mr-2'>Votre note finale:</div>
+                <div>
+                  <span
+                    className='py-[2px] px-[8px] bg-green-200 rounded mr-2 text-xl sm:text-2xl text-white flex items-center font-bold shadow-lg'
+                    style={{
+                      backgroundColor: Color(ratingColors[round(avgRating)])
+                        .darken(0.3)
+                        .desaturate(0.3),
+                    }}
+                  >
+                    {formatRating(avgRating) || '?'}
+                    <span className='text-white font-normal text-sm sm:text-base text-opacity-80 ml-[2px] -mb-[2px]'>
+                      /10
+                    </span>
+                  </span>
+                </div>
+              </div>
+
               <Field className='sm:mb-5' name='comment' label='Commentaire' type='textarea' />
               <Field name='photos' control={ImageUpload} label='Photo' />
-            </div>
 
-            <div className='flex items-center justify-between mt-6'>
-              {existingReview ? (
-                <div></div>
-              ) : (
-                <button
-                  className='flex items-center rounded text-gray-400 hover:text-gray-700'
-                  onClick={() => {
-                    setStep(1)
-                  }}
-                >
-                  <ChevronLeft className='mr-2' size={20} />
-                  Noter un autre restaurant
-                </button>
-              )}
+              <div className='flex items-center justify-between mt-6'>
+                {existingReview ? (
+                  <div></div>
+                ) : (
+                  <button
+                    className='flex items-center rounded text-gray-400 hover:text-gray-700'
+                    onClick={() => {
+                      setStep(1)
+                    }}
+                  >
+                    <ChevronLeft className='mr-2' size={20} />
+                    Noter un autre restaurant
+                  </button>
+                )}
 
-              <Button type='submit' variant='primary' className='w-60' loading={isSubmitting}>
-                {existingReview ? 'Mettre à jour' : 'Soumettre'}
-              </Button>
-            </div>
-          </>
-        )}
+                <Button type='submit' variant='primary' className='w-60' loading={isSubmitting}>
+                  {existingReview ? 'Mettre à jour' : 'Soumettre'}
+                </Button>
+              </div>
+            </>
+          )
+        }}
       </Form>
     )
   }
@@ -185,8 +246,8 @@ const RateRestaurant = ({
         </div>
         <div className='mt-4 mb-2 font-bold text-2xl'>Avis ajouté!</div>
         <div className='text-gray-500 px-3'>
-          Merci {currentUser.firstName} d&apos;avoir noté la poutine de {selectedRestaurant.name}.
-          Votre avis compte! Chaque review que tu écris aide la communauté à trouver les meilleures
+          Merci {currentUser.name} d&apos;avoir noté la poutine de {selectedRestaurant.name}. Votre
+          avis compte! Chaque review que tu écris aide la communauté à trouver les meilleures
           poutine locales.
         </div>
         <div className='mt-8 flex'>

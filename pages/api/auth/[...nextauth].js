@@ -67,7 +67,6 @@ export default NextAuth({
   providers: [
     Providers.Credentials({
       async authorize(credentials) {
-        console.log('ok', credentials)
         const client = await connectToDatabase()
         const usersCollection = client.db().collection('users')
         const user = await usersCollection.findOne({
@@ -84,7 +83,6 @@ export default NextAuth({
           .collection('accounts')
           .findOne({ userId: user._id })
 
-        console.log(foundExistingAccount)
         if (foundExistingAccount) {
           client.close()
           throw new Error(

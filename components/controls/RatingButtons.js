@@ -1,40 +1,106 @@
 import classNames from 'classnames'
 import { useField, useFormikContext } from 'formik'
+import { useRef, useState } from 'react'
 import { ratingColors } from '../../data/ratingColors'
+import { round } from 'lodash'
+import Color from 'color'
+import { X } from 'react-feather'
+
+const ratingCaptions = [
+  'Horrible!',
+  'Dégueulasse',
+  'Mauvais',
+  'Médiocre',
+  'Moyen',
+  'Assez bon',
+  'Bon',
+  'Très bon',
+  'Excellent',
+  'Exquis!',
+]
 
 const RatingButtons = ({ ...props }) => {
   const [field] = useField(props)
   const { setFieldValue } = useFormikContext()
+  const ref = useRef()
+  const [isHoveredNumber, setIsHoveredNumber] = useState(null)
+  const [isClickedNumber, setIsClickedNumber] = useState(null)
 
-  const handleClick = (rate) => {
-    setFieldValue(field.name, rate)
+  const handleClick = (n) => {
+    setFieldValue(field.name, n)
+    setIsClickedNumber(n)
   }
+  // const color = Color(ratingColors[round(avgRating)])
+
   return (
-    <div className='flex px-2'>
-      {[...Array(11)].map((_, i) => (
-        <button
-          key={i}
-          style={{
-            width: `${(1 / 11) * 100}%`,
-            backgroundColor: i === field.value && ratingColors[field.value],
-          }}
-          className={classNames(
-            'border-gray-300 h-10 select-none flex items-center justify-center text-lg font-bold transition duration-200',
-            {
-              'text-gray-600 border-y-2': i !== field.value,
-              'rounded-l-md border-l-2': i === 0 && i !== field.value,
-              'border-r': i !== 10 && i !== field.value,
-              'rounded-r-md border-r-2': i === 10 && i !== field.value,
-              'transform scale-110 border-y-none shadow-lg border-r-none rounded-lg outline outline-gray-400 z-10':
-                i === field.value,
-            }
+    <div className='flex items-center relative mb-4 pt-1'>
+      {[...Array(10)].map((_, i) => {
+        const color = (defaultColor) =>
+          isHoveredNumber
+            ? i < isHoveredNumber
+              ? Color(ratingColors[i + 1]).darken(0.25)
+              : defaultColor
+            : isClickedNumber && i < isClickedNumber
+            ? Color(ratingColors[i + 1]).darken(0.25)
+            : defaultColor
+        return (
+          <div
+            key={i}
+            onMouseEnter={() => setIsHoveredNumber(i + 1)}
+            onMouseLeave={() => setIsHoveredNumber(null)}
+            className='h-[28px] w-[30px] cursor-pointer'
+            onClick={() => handleClick(i + 1)}
+          >
+            <div
+              className='h-full w-[28px] rounded-full bg-gray-300 flex items-center justify-center'
+              style={{
+                backgroundColor: color('white'),
+
+                border: `1px solid ${color('#ddd')}`,
+              }}
+            >
+              <span className='text-white font-bold text-lg'>
+                {isHoveredNumber
+                  ? isHoveredNumber === i + 1 && isHoveredNumber
+                  : isClickedNumber === i + 1
+                  ? isClickedNumber
+                  : ''}
+                {isHoveredNumber === null && isClickedNumber === null && (
+                  <span className='text-gray-100'>{i + 1}</span>
+                )}
+              </span>
+            </div>
+          </div>
+        )
+      })}
+      {ratingCaptions[isClickedNumber - 1] && (
+        <X
+          className='text-gray-300 hover:text-gray-500 ml-2 cursor-pointer'
+          size={22}
+          onClick={() => handleClick(null)}
+        />
+      )}
+      {/* {!!(ratingCaptions[isHoveredNumber - 1] || ratingCaptions[isClickedNumber - 1]) && (
+        <div className='flex items-center absolute -top-6 right-12'>
+          <div
+            className='text-white rounded ml-2  h-full flex items-center w-[100px] justify-center'
+            style={{
+              backgroundColor: Color(
+                ratingColors[isHoveredNumber - 1] || ratingColors[isClickedNumber - 1]
+              ).darken(0.4),
+            }}
+          >
+            {ratingCaptions[isHoveredNumber - 1] || ratingCaptions[isClickedNumber - 1]}
+          </div>
+          {ratingCaptions[isClickedNumber - 1] && (
+            <X
+              className='text-gray-300 hover:text-gray-500 ml-2 cursor-pointer'
+              size={22}
+              onClick={() => handleClick(null)}
+            />
           )}
-          onClick={() => handleClick(i)}
-          type='button'
-        >
-          {i}
-        </button>
-      ))}
+        </div>
+      )} */}
     </div>
   )
 }

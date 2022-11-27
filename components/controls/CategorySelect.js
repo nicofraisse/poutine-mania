@@ -2,7 +2,7 @@ import { useField, useFormikContext } from 'formik'
 import Select from 'react-select'
 import { isString } from 'lodash'
 
-const AddressAutocompleteSelect = ({ onChange, value, ...props }) => {
+const CategorySelect = ({ onChange, value, ...props }) => {
   const [field] = useField(props)
   const { setFieldValue } = useFormikContext()
 
@@ -37,4 +37,4 @@ const AddressAutocompleteSelect = ({ onChange, value, ...props }) => {
   )
 }
 
-export default AddressAutocompleteSelect
+export default CategorySelect

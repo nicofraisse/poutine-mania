@@ -10,7 +10,6 @@ const Login = ({ onSubmit }) => {
   const { openSignup, closeLogin } = useLoginForm()
 
   const handleSubmit = (values, formikBag) => {
-    console.log(values)
     signIn('credentials', { ...values, redirect: false })
       .then((data) => {
         if (data?.error) {
@@ -22,8 +21,6 @@ const Login = ({ onSubmit }) => {
         formikBag.setSubmitting(false)
       })
       .catch((e) => {
-        console.log('error', e.message)
-
         toast.error(e.message)
         formikBag.setSubmitting(false)
       })

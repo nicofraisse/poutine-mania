@@ -10,6 +10,7 @@ import { useRateRestaurant } from './context/RateRestaurantProvider'
 import { useLoginForm } from './context/LoginFormProvider'
 import Image from 'next/image'
 import RestaurantSearchBar from './RestaurantSearchBar'
+import { useRouter } from 'next/router'
 
 const Header = ({ toggleMobileSidebar }) => {
   const { currentUser, loading } = useCurrentUser()
@@ -17,6 +18,7 @@ const Header = ({ toggleMobileSidebar }) => {
   const toggleRef = createRef()
   const searchBarRef = useRef()
   const { rateRestaurant } = useRateRestaurant()
+  const { push } = useRouter()
   const { openLogin, openSignup } = useLoginForm()
   const [showSearchBar, setShowSearchBar] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
@@ -41,7 +43,7 @@ const Header = ({ toggleMobileSidebar }) => {
   }, [showSearchBar])
 
   return (
-    <header className='flex justify-between items-center h-[64px] max-w-screen md:w-auto bg-indigo-white pl-4 border-b sticky top-0 z-10 bg-white'>
+    <header className='flex justify-between items-center h-[64px] max-w-screen md:w-auto bg-indigo-white pl-4 border-b  z-10 bg-white'>
       <div className='flex items-center lg:hidden'>
         <Menu
           className='mr-3 min-w-12 cursor-pointer hover:opacity-70'
@@ -87,7 +89,7 @@ const Header = ({ toggleMobileSidebar }) => {
               height='sm'
               width='sm'
               className='flex grow lg:ml-6 sm:w-52 sm:ml-2'
-              onClick={() => rateRestaurant()}
+              onClick={() => push('/noter')}
             >
               <Edit3 className='xs:mr-2' /> <span className='hidden xs:block'>Noter</span>
               <span className='hidden sm:inline grow shrink-0 -ml-2'> &nbsp;une poutine</span>
@@ -162,13 +164,16 @@ const Header = ({ toggleMobileSidebar }) => {
                   >
                     <div
                       className='hover:bg-gray-100 px-3 py-2 rounded-b-lg text-gray-700 cursor-pointer'
-                      onClick={openLogin}
+                      onClick={(e) => {
+                        e.persist()
+                        openLogin()
+                      }}
                     >
                       Connexion
                     </div>
                     <div
                       className='hover:bg-gray-100 px-3 py-2 rounded-b-lg text-gray-700 cursor-pointer'
-                      onClick={openSignup}
+                      onClick={() => openSignup()}
                     >
                       Inscription
                     </div>
