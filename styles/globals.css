@@ -97,7 +97,7 @@ a {
   outline: 2px solid rgba(128, 167, 250, 1);
 }
 .mapboxgl-canvas {
-  opacity: 0.7;
+  opacity: 0.6;
 }
 
 .mapboxgl-marker {

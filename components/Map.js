@@ -1,21 +1,21 @@
-import React, { useEffect, useRef, useState } from 'react'
-import Map, { Marker, Popup, NavigationControl } from 'react-map-gl'
-import 'mapbox-gl/dist/mapbox-gl.css'
-import { X, MapPin } from 'react-feather'
-import { useRouter } from 'next/router'
-import RatingPill from 'components/RatingPill'
-import { flatten, minBy, maxBy } from 'lodash'
-import { ratingColors } from 'data/ratingColors'
-import { round } from 'lodash'
-import { useRestaurantCardHover } from './context/RestaurantCardHoverProvider'
-import classNames from 'classnames'
-import Image from 'next/image'
-import Color from 'color'
-import { Image as CloudImage } from 'components/Image'
-import { TagSection } from './RestaurantCard'
+import React, { useEffect, useRef, useState } from "react";
+import Map, { Marker, Popup, NavigationControl } from "react-map-gl";
+import "mapbox-gl/dist/mapbox-gl.css";
+import { X, MapPin } from "react-feather";
+import { useRouter } from "next/router";
+import RatingPill from "components/RatingPill";
+import { flatten, minBy, maxBy } from "lodash";
+import { ratingColors } from "data/ratingColors";
+import { round } from "lodash";
+import { useRestaurantCardHover } from "./context/RestaurantCardHoverProvider";
+import classNames from "classnames";
+import Image from "next/image";
+import Color from "color";
+import { Image as CloudImage } from "components/Image";
+import { TagSection } from "./RestaurantCard";
 
 const MAPBOX_TOKEN =
-  'pk.eyJ1Ijoibmljb2ZyYWlzc2UiLCJhIjoiY2thZzZtemk3MDE4NzJybXVtMjF5a2xyOSJ9.6JURdkZj5FnZ5lxMzPncOA'
+  "pk.eyJ1Ijoibmljb2ZyYWlzc2UiLCJhIjoiY2thZzZtemk3MDE4NzJybXVtMjF5a2xyOSJ9.6JURdkZj5FnZ5lxMzPncOA";
 
 const MarkerAndPopup = ({
   restaurant,
@@ -29,77 +29,77 @@ const MarkerAndPopup = ({
   isSmallMarker,
 }) => {
   // const [showPopup, setShowPopup] = useState(false)
-  const { hoveredId, setHoveredId } = useRestaurantCardHover()
+  const { hoveredId, setHoveredId } = useRestaurantCardHover();
 
-  const isHovered = hoveredId === restaurant._id
+  const isHovered = hoveredId === restaurant._id;
 
   const togglePopup = () => {
     if (isPopupOpen) {
-      closePopup(popupId)
+      closePopup(popupId);
     } else {
-      openPopup(popupId)
+      openPopup(popupId);
     }
-  }
+  };
 
-  const theRef = useRef()
+  const theRef = useRef();
 
   if (theRef.current) {
-    theRef.current.parentNode.style.zIndex = isHovered ? 100 : 1
+    theRef.current.parentNode.style.zIndex = isHovered ? 100 : 1;
   }
 
-  const image = restaurant.reviews?.find((r) => r.photos?.[0])?.photos[0]
+  const image = restaurant.reviews?.find((r) => r.photos?.[0])?.photos[0];
   return (
     <div>
       <Marker
         key={restaurant._id}
         longitude={address.center[0]}
         latitude={address.center[1]}
-        anchor='bottom'
+        anchor="bottom"
       >
         {isSmallMarker ? (
           <div
             onMouseEnter={() => !isShowPage && setHoveredId(restaurant._id)}
             onMouseLeave={() => !isShowPage && setHoveredId(null)}
-            data-pin='yes'
+            data-pin="yes"
             ref={theRef}
             onClick={(e) => {
-              e.stopPropagation()
-              togglePopup()
+              e.stopPropagation();
+              togglePopup();
             }}
             className={classNames(
-              'transform -translate-y-1 z-30 transition dutation-150 w-4 h-4 rounded-full border-white shadow-md border-2',
-              { 'scale-150': isHovered }
+              "transform -translate-y-1 z-30 transition dutation-150 w-4 h-4 rounded-full border-white shadow-md border-2",
+              { "scale-150": isHovered }
             )}
             style={{
               backgroundColor:
                 restaurant.reviewCount > 0
                   ? Color(ratingColors[round(restaurant.avgRating)]).darken(0.4)
-                  : 'rgb(160, 160, 160)',
-              boxShadow: isHovered ? '0px 0px 7px rgba(0, 0, 0, 0.5)' : '',
+                  : "rgb(160, 160, 160)",
+              boxShadow: isHovered ? "0px 0px 7px rgba(0, 0, 0, 0.5)" : "",
             }}
           ></div>
         ) : (
           <>
             <div
-              className='w-10 h-10 absolute z-10 flex items-center justify-center'
+              className="w-10 h-10 absolute z-10 flex items-center justify-center"
               onMouseEnter={() => !isShowPage && setHoveredId(restaurant._id)}
               onMouseLeave={() => !isShowPage && setHoveredId(null)}
-              data-pin='yes'
+              data-pin="yes"
               onClick={(e) => {
-                e.stopPropagation()
-                togglePopup()
+                e.stopPropagation();
+                togglePopup();
               }}
             >
               <Image
-                alt='poutine-logo'
-                src='/poutine1.png'
+                alt="poutine-logo"
+                src="/poutine1.png"
                 width={26}
                 height={26}
-                className={classNames('transform -translate-y-1 z-30', {
-                  'scale-110': isHovered,
+                className={classNames("transform -translate-y-1 z-30", {
+                  "scale-110": isHovered,
                 })}
                 onClick={() => {
-                  togglePopup()
+                  togglePopup();
                 }}
               />
             </div>
@@ -108,16 +108,20 @@ const MarkerAndPopup = ({
               size={40}
               color={
                 restaurant.reviewCount > 0
-                  ? Color(ratingColors[round(restaurant.avgRating)]).darken(0.4).hex()
-                  : 'rgb(205, 205, 205)'
+                  ? Color(ratingColors[round(restaurant.avgRating)])
+                      .darken(0.4)
+                      .hex()
+                  : "rgb(205, 205, 205)"
               }
               fill={
                 restaurant.reviewCount > 0
-                  ? Color(ratingColors[round(restaurant.avgRating)]).saturate(0.5)
-                  : 'white'
+                  ? Color(ratingColors[round(restaurant.avgRating)]).saturate(
+                      0.5
+                    )
+                  : "white"
               }
-              className={classNames('transition duration-100', {
-                'transform scale-150': isHovered,
+              className={classNames("transition duration-100", {
+                "transform scale-150": isHovered,
               })}
               ref={theRef}
             />
@@ -128,38 +132,47 @@ const MarkerAndPopup = ({
         <Popup
           longitude={address.center[0]}
           latitude={address.center[1]}
-          anchor='bottom'
+          anchor="bottom"
           offset={isSmallMarker ? 24 : 44}
           closeButton={false}
           onClose={() => closePopup(popupId)}
           closeOnClick={false}
           onOpen={() => {
-            closeOtherPopups(popupId)
+            closeOtherPopups(popupId);
           }}
-          className={classNames('relative flex flex-col z-100', {
-            'w-80': !isShowPage,
-            'w-36': isShowPage,
+          className={classNames("relative flex flex-col z-100", {
+            "w-80": !isShowPage,
+            "w-36": isShowPage,
           })}
         >
-          <div onClick={() => !isShowPage && window.open(`/restaurants/${restaurant._id}`)}>
+          <div
+            onClick={() =>
+              !isShowPage && window.open(`/restaurants/${restaurant._id}`)
+            }
+          >
             {image && !isShowPage && (
               <CloudImage
                 publicId={image}
                 alt={`${restaurant.name}-photo`}
-                className='w-full h-[150px] object-cover object-center rounded mb-2'
+                className="w-full h-[150px] object-cover object-center rounded mb-2"
               />
             )}
-            <div className='font-bold text-base mb-1'>{restaurant.name}</div>
+            <div className="font-bold text-base mb-1">{restaurant.name}</div>
             {!isShowPage && (
-              <div className='max-w-28'>
-                <RatingPill avgRating={restaurant.avgRating} reviewCount={restaurant.reviewCount} />
+              <div className="max-w-28">
+                <RatingPill
+                  avgRating={restaurant.avgRating}
+                  reviewCount={restaurant.reviewCount}
+                />
               </div>
             )}
-            <div className='mt-3'>
+            <div className="mt-3">
               <TagSection
                 succursales={restaurant.succursales}
                 categories={restaurant.categories}
-                city={address.context?.find((el) => el.id?.includes('place'))?.text}
+                city={
+                  address.context?.find((el) => el.id?.includes("place"))?.text
+                }
                 priceRange={restaurant.priceRange}
                 smallText
                 address={address.place_name}
@@ -167,10 +180,10 @@ const MarkerAndPopup = ({
             </div>
             <div
               onClick={(e) => {
-                e.stopPropagation()
-                closePopup(popupId)
+                e.stopPropagation();
+                closePopup(popupId);
               }}
-              className='bg-gray-400 text-white w-6 h-6 rounded-full flex items-center justify-center absolute top-[-12px] right-[-12px] border-2 border-white shadow cursor-pointer hover:bg-black'
+              className="bg-gray-400 text-white w-6 h-6 rounded-full flex items-center justify-center absolute top-[-12px] right-[-12px] border-2 border-white shadow cursor-pointer hover:bg-black"
             >
               <X size={18} />
             </div>
@@ -178,63 +191,65 @@ const MarkerAndPopup = ({
         </Popup>
       )}
     </div>
-  )
-}
+  );
+};
 
 const MapMap = ({ restaurants, isShowPage }) => {
-  const [userCoordinates, setUserCoordinates] = useState()
-  const allCoordinates = flatten(restaurants.map((r) => r.succursales.map((s) => s.address.center)))
-  const minLongitude = minBy(allCoordinates, (c) => c[0])?.[0]
-  const minLatitude = minBy(allCoordinates, (c) => c[1])?.[1]
-  const maxLongitude = maxBy(allCoordinates, (c) => c[0])?.[0]
-  const maxLatitude = maxBy(allCoordinates, (c) => c[1])?.[1]
+  const [userCoordinates, setUserCoordinates] = useState();
+  const allCoordinates = flatten(
+    restaurants.map((r) => r.succursales.map((s) => s.address.center))
+  );
+  const minLongitude = minBy(allCoordinates, (c) => c[0])?.[0];
+  const minLatitude = minBy(allCoordinates, (c) => c[1])?.[1];
+  const maxLongitude = maxBy(allCoordinates, (c) => c[0])?.[0];
+  const maxLatitude = maxBy(allCoordinates, (c) => c[1])?.[1];
 
-  const [openPopups, setOpenPopups] = useState([])
-  const [userPopupOpen, setUserPopupOpen] = useState(false)
+  const [openPopups, setOpenPopups] = useState([]);
+  const [userPopupOpen, setUserPopupOpen] = useState(false);
 
   const openPopup = (id) => {
-    setOpenPopups([...openPopups, id])
-  }
+    setOpenPopups([...openPopups, id]);
+  };
 
-  const closePopup = (id) => setOpenPopups(openPopups.filter((p) => p !== id))
+  const closePopup = (id) => setOpenPopups(openPopups.filter((p) => p !== id));
 
   const closeOtherPopups = (id) => {
-    setOpenPopups([id])
-  }
+    setOpenPopups([id]);
+  };
 
-  const closeAllPopups = () => setOpenPopups([])
+  const closeAllPopups = () => setOpenPopups([]);
 
-  const [isSmallMarker, setIsSmallMarker] = useState(!isShowPage)
+  const [isSmallMarker, setIsSmallMarker] = useState(!isShowPage);
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
-      setUserCoordinates([position.coords.longitude, position.coords.latitude])
-    })
-  }, [])
+      setUserCoordinates([position.coords.longitude, position.coords.latitude]);
+    });
+  }, []);
 
   return (
     <div
-      className='h-full'
+      className="h-full"
       onClick={(e) => {
-        if (e.target.dataset.pin !== 'yes') closeAllPopups()
+        if (e.target.dataset.pin !== "yes") closeAllPopups();
       }}
     >
       <Map
         reuseMaps
-        id='mymap'
+        id="mymap"
         bounds={[
           [minLongitude, minLatitude],
           [maxLongitude, maxLatitude],
         ]}
         fitBoundsOptions={{ padding: 60, maxZoom: 13 }}
-        style={{ width: '100%', height: '100%' }}
-        mapStyle='mapbox://styles/mapbox/streets-v10'
+        style={{ width: "100%", height: "100%" }}
+        mapStyle="mapbox://styles/mapbox/streets-v10"
         mapboxAccessToken={MAPBOX_TOKEN}
         onZoom={(e) => {
-          if (!isShowPage) setIsSmallMarker(!(e.viewState.zoom < 12))
+          if (!isShowPage) setIsSmallMarker(e.viewState.zoom < 12);
         }}
       >
-        <NavigationControl position='bottom-right' />
+        <NavigationControl position="bottom-right" />
         {restaurants.map((restaurant, parentIndex) =>
           restaurant?.succursales?.map(({ address }, index) => (
             <MarkerAndPopup
@@ -258,15 +273,15 @@ const MapMap = ({ restaurants, isShowPage }) => {
               longitude={userCoordinates[0]}
               latitude={userCoordinates[1]}
               onClick={() => {
-                setUserPopupOpen(true)
+                setUserPopupOpen(true);
                 setTimeout(() => {
-                  setUserPopupOpen(false)
-                }, 2000)
+                  setUserPopupOpen(false);
+                }, 2000);
               }}
               style={{ zIndex: 40 }}
             >
-              <div className='h-8 w-8 bg-white rounded-full shadow flex items-center justify-center z-50'>
-                <div className='h-5 w-5 bg-blue-500 transition animate-pulse scale-105 rounded-full '></div>
+              <div className="h-8 w-8 bg-white rounded-full shadow flex items-center justify-center z-50">
+                <div className="h-5 w-5 bg-blue-500 transition animate-pulse scale-105 rounded-full "></div>
               </div>
             </Marker>
             <Marker
@@ -276,10 +291,10 @@ const MapMap = ({ restaurants, isShowPage }) => {
             >
               <div
                 className={classNames(
-                  'transition bg-white shadow duration-500 mt-[-38px] px-2 rounded text-gray-600',
+                  "transition bg-white shadow duration-500 mt-[-38px] px-2 rounded text-gray-600",
                   {
-                    'opacity-100': userPopupOpen,
-                    'opacity-0': !userPopupOpen,
+                    "opacity-100": userPopupOpen,
+                    "opacity-0": !userPopupOpen,
                   }
                 )}
               >
@@ -290,7 +305,7 @@ const MapMap = ({ restaurants, isShowPage }) => {
         )}
       </Map>
     </div>
-  )
-}
+  );
+};
 
-export default MapMap
+export default MapMap;
