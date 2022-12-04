@@ -87,8 +87,6 @@ const NoterRestaurant = () => {
   };
 
   const handleSubmit = async (values) => {
-    console.log(currentUser);
-
     if (!currentUser) {
       setCookies("reviewInProgress", values);
       setCookies("reviewRestaurantInProgress", query.id);
