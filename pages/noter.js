@@ -39,12 +39,15 @@ const Noter = () => {
           >
             <div className="flex items-center mb-2">
               <CheckCircle className="text-green-400 mr-3 -mb-1" size={36} />
-              <div className="font-bold text-xl">Avis ajouté!</div>
+              <div className="font-bold text-xl">Avis publié!</div>
             </div>
             <div className="text-gray-400 px-3 text-sm">
               Merci d&apos;avoir noté cette poutine. Votre avis compte! Chaque
               note que vous donnez aide la communauté à trouver les meilleures
               poutine locales.
+            </div>
+            <div className="bg-gray-100 px-3 py-1 rounded text-gray-700 text-sm mt-2">
+              Voir l'avis
             </div>
           </div>
         )}

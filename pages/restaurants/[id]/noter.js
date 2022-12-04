@@ -105,7 +105,7 @@ const NoterRestaurant = () => {
     const url = existingReview
       ? `/api/reviews/${existingReview._id}/update`
       : "/api/reviews/create";
-    const toastMessage = existingReview ? "Modifié!" : "Avis ajouté!";
+    const toastMessage = existingReview ? "Modifié!" : "Avis publié!";
     try {
       await axios.post(url, submitValues);
       toast.success(toastMessage);
@@ -126,7 +126,11 @@ const NoterRestaurant = () => {
         values.portionRating !== null ||
         values.serviceRating !== null
       ) {
-        if (window.confirm("ok?")) {
+        if (
+          window.confirm(
+            "Êtes vous sûr(e)? Cela supprimera vos critères de notations."
+          )
+        ) {
           setFieldValue("friesRating", null);
           setFieldValue("cheeseRating", null);
           setFieldValue("sauceRating", null);
@@ -320,8 +324,8 @@ const NoterRestaurant = () => {
                   className="w-60"
                   loading={isSubmitting}
                 >
-                  <Check className="mr-2" />
-                  Terminer
+                  <Check className="mr-2" size={18} />
+                  Publier
                 </Button>
               </div>
             </>

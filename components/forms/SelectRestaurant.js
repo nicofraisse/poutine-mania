@@ -20,42 +20,46 @@ const SelectRestaurant = ({ restaurants, onSelect, userRatedRestaurants }) => {
         return (
           <Link
             key={restaurant._id}
-            href={`/restaurants/${restaurant._id}/noter`}
+            href={!!alreadyRated ? "" : `/restaurants/${restaurant._id}/noter`}
             passHref
+            shallow={!!alreadyRated}
           >
             <div
               className={classNames(
-                "border-t rounded p-3 hover:bg-gray-50 cursor-pointer flex items-center justify-between",
+                "border-t rounded p-3  cursor-pointer flex items-center justify-between",
                 {
-                  "border-gray-50": !!alreadyRated,
+                  "hover:bg-gray-50": !alreadyRated,
+                  "border-gray-50 cursor-default opacity-60": !!alreadyRated,
                 }
               )}
             >
-              <div className="flex items-center w-full">
-                <Image
-                  publicId={image}
-                  alt={`${restaurant.name}-photo`}
-                  className="h-12 min-w-12 max-w-12 object-cover object-center rounded-sm"
-                />
-                <div className="pl-3">
-                  <div
-                    className={classNames("font-bold text-sm", {
-                      "text-gray-400": !!alreadyRated,
-                    })}
-                  >
-                    {restaurant.name}
-                  </div>
-                  <div
-                    className={classNames("text-xs text-gray-400", {
-                      "text-gray-400": !!alreadyRated,
-                    })}
-                  >
-                    {formatAddress(restaurant)}
+              <div className="flex items-center justify-between w-full">
+                <div className="flex items-center w-full">
+                  <Image
+                    publicId={image}
+                    alt={`${restaurant.name}-photo`}
+                    className="h-12 min-w-12 max-w-12 object-cover object-center rounded-sm"
+                  />
+                  <div className="pl-3">
+                    <div
+                      className={classNames("font-bold text-sm", {
+                        "": !!alreadyRated,
+                      })}
+                    >
+                      {restaurant.name}
+                    </div>
+                    <div
+                      className={classNames("text-xs text-gray-400", {
+                        "": !!alreadyRated,
+                      })}
+                    >
+                      {formatAddress(restaurant)}
+                    </div>
                   </div>
                 </div>
                 {alreadyRated ? (
-                  <div className="flex text-gray-400">
-                    Déjà noté{" "}
+                  <div className="flex items-center  text-xs">
+                    <em>Déjà noté</em>
                     <div
                       className="px-1 bg-green-200 rounded mr-2 text-gray-700 text-sm font-bold flex items-center justify-center mx-2"
                       style={{
