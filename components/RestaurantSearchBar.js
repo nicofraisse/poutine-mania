@@ -26,6 +26,9 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit }, ref) => {
 
   const handleSearch = (e) => {
     e.preventDefault();
+    setTimeout(() => {
+      setShowSearchSuggestions(false);
+    }, 200);
     const trimmedSearchValue = searchValue?.trim();
     push(
       trimmedSearchValue
@@ -108,8 +111,10 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit }, ref) => {
             className="hover:bg-gray-100 cursor-pointer flex items-center text-gray-600 font-light p-4"
             onClick={handleSearch}
           >
-            <Search className="text-gray-500 mr-1" size={20} /> Voir tous les
-            résultats pour &quot;{searchValue}&quot;
+            <Search className="text-gray-500 mr-1" size={20} /> Voir tous les{" "}
+            {searchValue.length > 2
+              ? `résultats pour "${searchValue}"`
+              : "restaurants"}
           </div>
         </div>
       )}
