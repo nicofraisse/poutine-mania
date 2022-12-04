@@ -39,7 +39,7 @@ const RatingButtons = ({ ...props }) => {
   }, [field]);
 
   return (
-    <div className="flex items-center relative mb-4 pt-1">
+    <div className="flex items-center relative mb-2 pt-1">
       {[...Array(10)].map((_, i) => {
         const color = (defaultColor) =>
           isHoveredNumber
@@ -81,7 +81,7 @@ const RatingButtons = ({ ...props }) => {
       })}
       {ratingCaptions[isClickedNumber - 1] && (
         <X
-          className="text-gray-300 hover:text-gray-500 ml-2 cursor-pointer"
+          className="text-gray-300 hover:text-gray-500 ml-3 cursor-pointer"
           size={22}
           onClick={() => handleClick(null)}
         />

@@ -19,7 +19,7 @@ import {
   ChevronDown,
   ChevronUp,
   Plus,
-  Minus,
+  MinusCircle,
   Check,
 } from "react-feather";
 import classNames from "classnames";
@@ -117,15 +117,25 @@ const NoterRestaurant = () => {
     }
   };
 
-  const handleClickCriteriaButton = (setFieldValue) => {
+  const handleClickCriteriaButton = (setFieldValue, values) => {
     if (showDetailedRatings) {
-      setFieldValue("friesRating", null);
-      setFieldValue("cheeseRating", null);
-      setFieldValue("sauceRating", null);
-      setFieldValue("portionRating", null);
-      setFieldValue("serviceRating", null);
-    }
-    setShowDetailedRatings(!showDetailedRatings);
+      if (
+        values.friesRating !== null ||
+        values.cheeseRating !== null ||
+        values.sauceRating !== null ||
+        values.portionRating !== null ||
+        values.serviceRating !== null
+      ) {
+        if (window.confirm("ok?")) {
+          setFieldValue("friesRating", null);
+          setFieldValue("cheeseRating", null);
+          setFieldValue("sauceRating", null);
+          setFieldValue("portionRating", null);
+          setFieldValue("serviceRating", null);
+          setShowDetailedRatings(false);
+        }
+      } else setShowDetailedRatings(false);
+    } else setShowDetailedRatings(true);
   };
 
   if (loading || !restaurant || !cookies) return <Spinner />;
@@ -264,12 +274,12 @@ const NoterRestaurant = () => {
               </div>
 
               <button
-                onClick={() => handleClickCriteriaButton(setFieldValue)}
-                className="text-sm my-3 flex items-center justify-center text-gray-400 px-6 py-1 border-2 border-gray-300 rounded-full"
+                onClick={() => handleClickCriteriaButton(setFieldValue, values)}
+                className="text-sm my-4 flex items-center justify-center text-gray-400 px-6 py-1 border-2 border-gray-300 rounded-full"
                 type="button"
               >
                 {showDetailedRatings ? (
-                  <Minus className="mr-1" size={20} />
+                  <MinusCircle className="mr-1" size={18} />
                 ) : (
                   <Plus className="mr-1" size={20} />
                 )}

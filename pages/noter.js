@@ -32,9 +32,10 @@ const Noter = () => {
         {query.fromRateSuccess && (
           <div
             className="
-          flex
-          flex-col items-center justify-center
-          mb-5 p-3 text-center border-2 rounded-lg bg-white shadow-md "
+              flex
+              flex-col items-center justify-center
+              mb-5 p-3 text-center border-2 rounded-lg bg-white shadow-md
+            "
           >
             <div className="flex items-center mb-2">
               <CheckCircle className="text-green-400 mr-3 -mb-1" size={36} />
