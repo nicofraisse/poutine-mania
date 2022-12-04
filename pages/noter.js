@@ -16,7 +16,7 @@ const Noter = () => {
   const { query } = useRouter();
 
   const { data: searchResults, loading: searchResultsLoading } = useGet(
-    `/api/restaurants?search=${debouncedValue}`
+    `/api/restaurants?search=${debouncedValue}&limit=24`
   );
   const { currentUser } = useCurrentUser();
   const { data: userReviews } = useGet(
@@ -57,14 +57,23 @@ const Noter = () => {
           className="font-bold text-sm"
           placeholder="Quelle poutine voulez-vous noter?"
           isSearch
+          loading={searchResultsLoading}
         />
       </div>
 
-      <SelectRestaurant
-        restaurants={searchResults}
-        userRatedRestaurants={userReviews}
-        onSelect={(restaurant, alreadyRated) => {}}
-      />
+      {searchResults?.length > 0 ? (
+        <SelectRestaurant
+          restaurants={searchResults}
+          userRatedRestaurants={userReviews}
+        />
+      ) : (
+        !searchResultsLoading &&
+        debouncedValue === searchQuery && (
+          <div className="text-sm p-5 text-gray-400">
+            Aucun résultat pour &quot;{searchQuery}&quot;
+          </div>
+        )
+      )}
     </div>
   );
 };
