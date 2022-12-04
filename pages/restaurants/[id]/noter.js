@@ -111,7 +111,7 @@ const NoterRestaurant = () => {
       toast.success(toastMessage);
       removeCookies("reviewInProgress");
       removeCookies("reviewRestaurantInProgress");
-      push("/noter?fromRateSuccess=true");
+      push(`/noter?fromRateSuccess=${restaurant._id}`);
     } catch (e) {
       toast.error(e.message);
     }

@@ -46,8 +46,10 @@ const Noter = () => {
               note que vous donnez aide la communauté à trouver les meilleures
               poutine locales.
             </div>
-            <div className="bg-gray-100 px-3 py-1 rounded text-gray-700 text-sm mt-2">
-              Voir l'avis
+            <div className="bg-gray-100 px-3 py-1 rounded text-gray-700 text-sm mt-2 cursor-pointer">
+              <Link href={`/restaurants/${query.fromRateSuccess}`}>
+                Voir l&apos;avis
+              </Link>
             </div>
           </div>
         )}

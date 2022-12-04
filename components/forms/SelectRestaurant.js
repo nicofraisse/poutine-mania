@@ -41,18 +41,10 @@ const SelectRestaurant = ({ restaurants, onSelect, userRatedRestaurants }) => {
                     className="h-12 min-w-12 max-w-12 object-cover object-center rounded-sm"
                   />
                   <div className="pl-3">
-                    <div
-                      className={classNames("font-bold text-sm", {
-                        "": !!alreadyRated,
-                      })}
-                    >
+                    <div className={classNames("font-bold text-sm", {})}>
                       {restaurant.name}
                     </div>
-                    <div
-                      className={classNames("text-xs text-gray-400", {
-                        "": !!alreadyRated,
-                      })}
-                    >
+                    <div className={classNames("text-xs text-gray-400", {})}>
                       {formatAddress(restaurant)}
                     </div>
                   </div>
