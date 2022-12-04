@@ -74,6 +74,7 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit }, ref) => {
               <div
                 className="p-3 hover:bg-gray-100 cursor-pointer flex items-center border-b"
                 key={r._id}
+                onClick={() => push(`/restaurants/${r._id}`)}
               >
                 {image ? (
                   <Image
