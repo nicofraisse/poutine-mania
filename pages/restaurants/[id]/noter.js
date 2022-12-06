@@ -20,6 +20,7 @@ import { useCookies } from "react-cookie";
 
 import { useCurrentUser } from "../../../lib/useCurrentUser";
 import { useLoginForm } from "components/context/LoginFormProvider";
+import { ErrorMessage } from "formik";
 
 const AlmostThere = () => (
   <div className="text-center">
@@ -137,6 +138,8 @@ const NoterRestaurant = () => {
             photos: [],
           }
         }
+        validateOnChange={false}
+        validateOnBlur={true}
         onSubmit={handleSubmit}
         validationSchema={Yup.object({
           rating: Yup.number("Choisissez une note")
@@ -183,7 +186,7 @@ const NoterRestaurant = () => {
           photos: Yup.object().nullable(),
         })}
       >
-        {({ isSubmitting, values, errors, setFieldValue }) => {
+        {({ isSubmitting, values, errors, setFieldValue, touched }) => {
           const nbFilledFields = [
             values.rating,
             values.serviceRating,
@@ -290,6 +293,17 @@ const NoterRestaurant = () => {
                 type="textarea"
               />
               <Field name="photos" control={ImageUpload} label="Photo" />
+              {errors.rating && touched.rating && (
+                <div className="text-red-600 text-sm">
+                  Vous devez choisir au moins une note sur 10
+                </div>
+              )}
+              {errors.comment && touched.comment && (
+                <div className="text-red-600 text-sm">
+                  Le commentaire est trop court (au moins 20 caractères)
+                </div>
+              )}
+
               <div className="flex items-center justify-center pt-6 pb-3  mt-6 border-t">
                 <Button
                   type="submit"
