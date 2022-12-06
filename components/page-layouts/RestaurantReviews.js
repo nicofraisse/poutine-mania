@@ -15,7 +15,6 @@ import Color from "color";
 import { ratingColors } from "../../data/ratingColors";
 
 const ReviewStats = ({ reviews, restaurant }) => {
-  const { rateRestaurant } = useRateRestaurant();
   const { push } = useRouter();
 
   const counts = countBy(reviews, (r) => Math.floor(r.rating));
@@ -24,23 +23,18 @@ const ReviewStats = ({ reviews, restaurant }) => {
   return (
     <div>
       <div className="flex items-center justify-between mb-3">
-        <div className="flex items-center">
-          <h2 className="pl-1 text-xl mr-5 text-gray-700">
+        <div className="px-2 sm:px-0 flex w-full mb-2 pt-1 justify-between items-baseline">
+          <h2 className="px-1 pl-1 text-xl mr-5 text-gray-700">
             {reviews.length > 0 ? (
-              <>
-                <span className="font-bold">{reviews.length} avis </span> sur la
-                poutine de <span className="font-bold">{restaurant.name}</span>
-              </>
+              <>Avis ({reviews.length})</>
             ) : (
               "Soyez la première personne à laisser un avis!"
             )}
           </h2>
           {/* <ReactSelect placeholder='trier par' options={[]} /> */}
           {/* <ReactSelect placeholder='langue' options={[]} className='ml-3' /> */}
-        </div>
-        <div className="flex wrap items-center mt-1">
-          <div className="flex">
-            {/* <Button
+
+          {/* <Button
               size='sm'
               variant='secondary'
               onClick={() => rateRestaurant(restaurant)}
@@ -49,19 +43,18 @@ const ReviewStats = ({ reviews, restaurant }) => {
               <Camera size={20} className='mr-1' />
               Poster une photo
             </Button> */}
-            <Button
-              height="sm"
-              onClick={() => push(`/restaurants/${restaurant._id}/noter`)}
-              className="flex items-center px-4 h-[44px]"
-              variant="secondary"
-            >
-              <Edit3 size={20} className="mr-1" />
-              Noter leur poutine
-            </Button>
-          </div>
+          <Button
+            height="sm"
+            onClick={() => push(`/restaurants/${restaurant._id}/noter`)}
+            className="flex items-center px-4 "
+            variant="primary"
+          >
+            <Edit3 size={20} className="mr-2" />
+            Noter {restaurant.name}
+          </Button>
         </div>
       </div>
-      {1 === 0 && (
+      {reviews.length > 100 && (
         <div className="flex items-center">
           <div className="flex">
             {reviewStats.map((n, i) => {
@@ -122,8 +115,10 @@ const RestaurantReviews = ({ restaurant }) => {
   };
 
   return (
-    <div className="p-2 lg:p-5 pt-8">
-      <ReviewStats reviews={reviews} restaurant={restaurant} />
+    <div className="p-2 lg:p-5 pt-8 w-screen sm:w-auto">
+      <div className="sticky top-0 bg-white border-b pt-4 pr-4 pl-4 z-10">
+        <ReviewStats reviews={reviews} restaurant={restaurant} />
+      </div>
 
       {reviews.map((r) => (
         <ReviewCard

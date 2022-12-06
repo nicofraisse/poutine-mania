@@ -5,13 +5,11 @@ import { useRestaurantSearch } from "./context/RestaurantSearchProvider";
 import { useGet } from "../lib/useAxios";
 import { getUrlQueryString } from "../lib/getUrlqueryString";
 import { MapPin, Search } from "react-feather";
-import classNames from "classnames";
 import { Image } from "./Image";
 import { Image as ImageIcon } from "react-feather";
-import Spinner from "./Spinner";
 
 const RestaurantSearchBar = React.forwardRef(({ onSubmit }, ref) => {
-  const { push, asPath } = useRouter();
+  const { push, asPath, pathname } = useRouter();
   const { searchValue, setSearchValue } = useRestaurantSearch();
   const [showSearchSuggestions, setShowSearchSuggestions] = useState(false);
 
@@ -52,7 +50,7 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit }, ref) => {
 
   return (
     <form
-      className="w-full relative grow sm:ml-6 mr-1 lg:mx-0"
+      className="relative grow sm:ml-6 mr-1 lg:mx-0"
       onSubmit={handleSearch}
       ref={ref}
       onFocus={handleFocus}
@@ -64,7 +62,6 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit }, ref) => {
         placeholder="Rechercher une poutine"
         isSearch
         loading={restaurantsLoading}
-        value={searchValue}
         handleSearch={handleSearch}
         onChange={(e) => setSearchValue(e.target.value)}
       />

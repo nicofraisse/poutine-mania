@@ -13,6 +13,7 @@ function MyApp({ Component, pageProps }) {
     <>
       <Head>
         <title>Poutine Mania</title>
+        <meta name="referrer" content="no-referrer" />
 
         <meta
           name="viewport"

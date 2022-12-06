@@ -32,6 +32,7 @@ const Input = ({
           className="border-2 border-gray-300 rounded-md py-[8px] px-2 text-sm w-full"
           placeholder={placeholder}
           defaultValue={value}
+          value={value}
           {...props}
         />
         {loading ? (

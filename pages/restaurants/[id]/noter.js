@@ -14,14 +14,7 @@ import toast from "react-hot-toast";
 import Color from "color";
 import { round } from "lodash";
 import { formatRating } from "../../../lib/formatRating";
-import {
-  ChevronLeft,
-  ChevronDown,
-  ChevronUp,
-  Plus,
-  MinusCircle,
-  Check,
-} from "react-feather";
+import { Plus, MinusCircle, Check } from "react-feather";
 import classNames from "classnames";
 import { useCookies } from "react-cookie";
 
@@ -37,35 +30,15 @@ const AlmostThere = () => (
   </div>
 );
 
+const MIN_COMMENT_CHARACTERS = 20;
+
 const NoterRestaurant = () => {
   const [showDetailedRatings, setShowDetailedRatings] = useState(false);
-  const [existingCookieValues, setExistingCookieValues] = useState(null);
   const [cookies, setCookies, removeCookies] = useCookies();
 
-  const [cookieLoading, setCookieLoading] = useState(true);
   const { query, push } = useRouter();
   const { currentUser } = useCurrentUser();
   const { openLogin } = useLoginForm();
-
-  // cookie stuff
-  useEffect(() => {
-    // if (query.id === currentReviewRestaurant) {
-    //   setExistingCookieValues(currentReview);
-    // }
-    // setCookieLoading(false);
-    // if (
-    //   currentReview?.friesRating !== null ||
-    //   currentReview?.cheeseRating !== null ||
-    //   currentReview?.sauceRating !== null ||
-    //   currentReview?.portionRating !== null ||
-    //   currentReview?.serviceRating !== null
-    // ) {
-    //   setShowDetailedRatings(true);
-    // }
-    // setTimeout(() => {
-    //   removeCookies("reviewInProgress");
-    // }, 3000);
-  }, [query.id, cookies]);
 
   const { data: restaurant, loading } = useGet(`/api/restaurants/${query.id}`, {
     skip: !query.id,
@@ -204,8 +177,8 @@ const NoterRestaurant = () => {
             .nullable(),
           title: Yup.string().min(3),
           comment: Yup.string().min(
-            30,
-            "Dites-nous en un peu plus 😥 (au moins 30 caractères)"
+            MIN_COMMENT_CHARACTERS,
+            `Dites-nous en un peu plus 😥 (au moins ${MIN_COMMENT_CHARACTERS} caractères)`
           ),
           photos: Yup.object().nullable(),
         })}

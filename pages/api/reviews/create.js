@@ -9,6 +9,11 @@ const handler = async (req, res) => {
   if (session) {
     await db.collection("reviews").insertOne({
       rating: req.body.rating,
+      friesRating: req.body.friesRating,
+      cheeseRating: req.body.cheeseRating,
+      sauceRating: req.body.sauceRating,
+      portionRating: req.body.portionRating,
+      serviceRating: req.body.serviceRating,
       title: req.body.title,
       comment: req.body.comment,
       restaurantId: new ObjectId(req.body.restaurantId),
