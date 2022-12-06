@@ -22,7 +22,7 @@ const ReviewStats = ({ reviews, restaurant }) => {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-3">
+      <div className="flex items-center justify-between sm:mb-3">
         <div className="px-2 sm:px-0 flex w-full mb-2 pt-1 justify-between items-baseline">
           <h2 className="px-1 pl-1 text-xl mr-5 text-gray-700">
             {reviews.length > 0 ? (
@@ -116,7 +116,7 @@ const RestaurantReviews = ({ restaurant }) => {
 
   return (
     <div className="p-2 lg:p-5 pt-8 w-screen sm:w-auto">
-      <div className="sticky top-0 bg-white border-b pt-4 pr-4 pl-4 z-10">
+      <div className="sticky top-0 bg-white border-b pt-2 pr-2 pl-2 sm:pt-4 sm:pl-4 sm:pr-4 z-10">
         <ReviewStats reviews={reviews} restaurant={restaurant} />
       </div>
 
