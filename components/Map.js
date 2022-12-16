@@ -157,27 +157,38 @@ const MarkerAndPopup = ({
                 className="w-full h-[150px] object-cover object-center rounded mb-2"
               />
             )}
-            <div className="font-bold text-base mb-1">{restaurant.name}</div>
-            {!isShowPage && (
-              <div className="max-w-28">
-                <RatingPill
-                  avgRating={restaurant.avgRating}
-                  reviewCount={restaurant.reviewCount}
-                />
-              </div>
-            )}
-            <div className="mt-3">
-              <TagSection
-                succursales={restaurant.succursales}
-                categories={restaurant.categories}
-                city={
-                  address.context?.find((el) => el.id?.includes("place"))?.text
-                }
-                priceRange={restaurant.priceRange}
-                smallText
-                address={address.place_name}
-              />
+            <div
+              className={classNames("font-bold", {
+                "text-base mb-1": !isShowPage,
+                "mb-0 text-center text-sm": isShowPage,
+              })}
+            >
+              {restaurant.name}
             </div>
+            {!isShowPage && (
+              <>
+                <div className="max-w-28">
+                  <RatingPill
+                    avgRating={restaurant.avgRating}
+                    reviewCount={restaurant.reviewCount}
+                  />
+                </div>
+
+                <div className="mt-3">
+                  <TagSection
+                    succursales={restaurant.succursales}
+                    categories={restaurant.categories}
+                    city={
+                      address.context?.find((el) => el.id?.includes("place"))
+                        ?.text
+                    }
+                    priceRange={restaurant.priceRange}
+                    smallText
+                    address={address.place_name}
+                  />
+                </div>
+              </>
+            )}
             <div
               onClick={(e) => {
                 e.stopPropagation();

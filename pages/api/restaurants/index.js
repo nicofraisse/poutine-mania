@@ -1,25 +1,25 @@
-import { connectToDatabase } from '../../../lib/db'
+import { connectToDatabase } from "../../../lib/db";
 
 const handler = async (req, res) => {
-  const client = await connectToDatabase()
-  const db = await client.db()
-  let result
+  const client = await connectToDatabase();
+  const db = await client.db();
+  let result;
 
-  const { search, sort, order, limit, minReviewCount } = req.query
+  const { search, sort, order, limit, minReviewCount } = req.query;
 
   const baseAggregaor = [
     {
       $lookup: {
-        from: 'reviews',
-        localField: '_id',
-        foreignField: 'restaurantId',
-        as: 'reviews',
+        from: "reviews",
+        localField: "_id",
+        foreignField: "restaurantId",
+        as: "reviews",
       },
     },
     {
       $addFields: {
-        reviewCount: { $size: '$reviews' },
-        avgRating: { $avg: '$reviews.rating' },
+        reviewCount: { $size: "$reviews" },
+        avgRating: { $avg: "$reviews.finalRating" },
       },
     },
     {
@@ -35,17 +35,17 @@ const handler = async (req, res) => {
         [sort]: Number(order) || 1,
       },
     },
-  ]
+  ];
 
   if (search) {
     result = await db
-      .collection('restaurants')
+      .collection("restaurants")
       .aggregate([
         {
           $search: {
             autocomplete: {
               query: search,
-              path: 'name',
+              path: "name",
               fuzzy: {
                 maxEdits: 1,
               },
@@ -54,11 +54,14 @@ const handler = async (req, res) => {
         },
         ...baseAggregaor,
       ])
-      .toArray()
+      .toArray();
   } else {
-    result = await db.collection('restaurants').aggregate(baseAggregaor).toArray()
+    result = await db
+      .collection("restaurants")
+      .aggregate(baseAggregaor)
+      .toArray();
   }
-  res.status(200).json(result)
-}
+  res.status(200).json(result);
+};
 
-export default handler
+export default handler;

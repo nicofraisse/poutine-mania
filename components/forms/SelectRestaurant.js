@@ -60,10 +60,10 @@ const SelectRestaurant = ({ restaurants, onSelect, userRatedRestaurants }) => {
                       className="px-1 bg-green-200 rounded mr-2 text-gray-700 text-sm font-bold flex items-center justify-center mx-2"
                       style={{
                         backgroundColor:
-                          ratingColors[round(alreadyRated.rating)],
+                          ratingColors[round(alreadyRated.finalRating)],
                       }}
                     >
-                      {formatRating(alreadyRated.rating)}/10
+                      {formatRating(alreadyRated.finalRating)}/10
                     </div>
                   </div>
                 ) : (

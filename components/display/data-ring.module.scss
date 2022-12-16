@@ -1,0 +1,5 @@
+.ProgressRingCircle {
+  transition: 1.5s stroke-dashoffset cubic-bezier(0.2, 0, 0.1, 1);
+  transform: rotate(90deg);
+  transform-origin: 50% 50%;
+}

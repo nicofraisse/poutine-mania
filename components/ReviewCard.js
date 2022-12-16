@@ -5,19 +5,20 @@ import { formatDate } from "lib/formatDate";
 import { useCurrentUser } from "lib/useCurrentUser";
 import { ratingColors } from "../data/ratingColors";
 import { round } from "lodash";
-import { User, X } from "react-feather";
+import { Edit, Trash, User, X } from "react-feather";
 import { Image } from "./Image";
 import Modal from "react-responsive-modal";
 import Link from "next/link";
 import NextImage from "next/image";
 import Color from "color";
+import classNames from "classnames";
 
-const ReviewCard = ({ review, handleEdit, handleDelete }) => {
+const ReviewCard = ({ review, handleEdit, handleDelete, isFirst }) => {
   const [imgModalOpen, setImgModalOpen] = useState(false);
   const { currentUser } = useCurrentUser();
 
   const miniRatings = (
-    <div className="text-sm flex text-gray-600">
+    <div className="text-sm inline-flex text-gray-600 bg-slate-50 rounded px-1 mb-2 py-1 sm:p-0 sm:m-0 sm:bg-transparent">
       {review.friesRating && (
         <div className="mr-[4px]">
           Frites <span className="text-orange-500">{review.friesRating}</span>
@@ -59,10 +60,14 @@ const ReviewCard = ({ review, handleEdit, handleDelete }) => {
 
   return (
     <>
-      <div className="sm:w-auto py-2 lg:py-4 border-t sm:flex">
+      <div
+        className={classNames("sm:w-auto py-2 lg:py-4 sm:flex", {
+          "border-t": !isFirst,
+        })}
+      >
         <div className="sm:basis-1/6 flex sm:flex-col items-center justify-centere text-gray-500 justify-between">
           <Link href={`/users/${review.user._id}`} passHref>
-            <div className="sm:pr-3 sm:min-w-36">
+            <div className="sm:pr-3 min-w-20">
               <div className="py-2 px-2 sm:px-3 flex sm:flex-col items-center border-gray-100 rounded-lg hover:bg-gray-100 transition duration-150 cursor-pointer">
                 <div className="bg-gray-50 border h-10 w-10 sm:h-12 sm:w-12 rounded-full text-gray-300 flex items-center justify-center">
                   {review.user.image ? (
@@ -77,12 +82,18 @@ const ReviewCard = ({ review, handleEdit, handleDelete }) => {
                     <User />
                   )}
                 </div>
-                <div className="flex items-baseline sm:block">
-                  <div className="sm:text-center ml-3 mr-2 sm:mx-0 text-sm sm:text-sm sm:mt-2 break-words max-w-28">
-                    {review.user.name}
+                <div>
+                  <div className="flex items-baseline sm:block">
+                    <div className="sm:text-center ml-3 mr-2 sm:mx-0 text-sm sm:text-sm sm:mt-2 break-words max-w-28">
+                      {review.user.name}
+                    </div>
+
+                    <div className="text-center font-light text-xs text-gray-400">
+                      {review.user.reviews.length} avis
+                    </div>
                   </div>
-                  <div className="text-center font-light text-xs text-gray-400">
-                    {review.user.reviews.length} avis
+                  <div className="text-gray-500 visible sm:hidden font-light text-xs ml-3">
+                    {formatDate(review.createdAt, "d MMMM yyyy")}
                   </div>
                 </div>
               </div>
@@ -91,12 +102,12 @@ const ReviewCard = ({ review, handleEdit, handleDelete }) => {
           <span
             className="sm:hidden sm:py-[1px] px-[6px] bg-green-200 rounded mr-2 text-lg text-white flex items-center"
             style={{
-              backgroundColor: Color(ratingColors[round(review.rating)])
+              backgroundColor: Color(ratingColors[round(review.finalRating)])
                 .darken(0.4)
                 .desaturate(0.3),
             }}
           >
-            {formatRating(review.rating)}
+            {formatRating(review.finalRating)}
             <span className="text-white font-normal text-xs text-opacity-80 ml-[2px] -mb-[2px]">
               {" "}
               /10
@@ -104,27 +115,25 @@ const ReviewCard = ({ review, handleEdit, handleDelete }) => {
           </span>
         </div>
         <div className="sm:basis-5/6 sm:w-5/6 pt-1 sm:pt-2 px-3 sm:px-0">
-          <div className="hidden sm:flex text-base font-bold items-center mb-3">
+          <div className="hidden sm:flex text-base font-bold items-center mb-3 flex-wrap">
             <span
               className="py-[1px] px-[6px] bg-green-200 rounded mr-2 text-lg text-white flex items-center"
               style={{
-                backgroundColor: Color(ratingColors[round(review.rating)])
+                backgroundColor: Color(ratingColors[round(review.finalRating)])
                   .darken(0.4)
                   .desaturate(0.3),
               }}
             >
-              {formatRating(review.rating)}
+              {formatRating(review.finalRating)}
               <span className="text-white font-normal text-xs text-opacity-80 ml-[2px] -mb-[2px]">
                 {" "}
                 /10
               </span>
             </span>
-
             {(review.friesRating ||
               review.cheeseRating ||
               review.sauceRating ||
-              review.portionRating ||
-              review.serviceRating) && (
+              review.portionRating) && (
               <div className="mr-2">{miniRatings}</div>
             )}
 
@@ -136,12 +145,14 @@ const ReviewCard = ({ review, handleEdit, handleDelete }) => {
           {(review.friesRating ||
             review.cheeseRating ||
             review.sauceRating ||
-            review.portionRating ||
-            review.serviceRating) && (
-            <div className="visible sm:hidden mb-3">{miniRatings}</div>
+            review.portionRating) && (
+            <div className="visible sm:hidden mb-0 sm:mb-3">{miniRatings}</div>
           )}
 
-          <p className="text-gray-500 font-light break-words text-sm sm:text-md">
+          <p
+            className="text-gray-500 font-light break-words text-sm sm:text-md"
+            style={{ width: 0, minWidth: "100%" }}
+          >
             {review.comment}
           </p>
 
@@ -158,17 +169,17 @@ const ReviewCard = ({ review, handleEdit, handleDelete }) => {
           {(review.userId === currentUser?._id || currentUser?.isAdmin) && (
             <div className="mt-3 text-left text-sm text-gray-400">
               <button
-                className="hover:underline"
+                className="hover:text-blue-500"
                 onClick={() => handleEdit(review)}
               >
-                Modifier
+                <Edit size={16} />
               </button>
-              <span className="font-normal mx-1">/</span>
+              <span className="font-normal mx-1"></span>
               <button
-                className="hover:underline"
+                className="hover:text-red-600"
                 onClick={() => handleDelete(review._id)}
               >
-                Supprimer
+                <Trash size={16} />
               </button>
             </div>
           )}

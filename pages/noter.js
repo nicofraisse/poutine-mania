@@ -8,7 +8,7 @@ import { useCurrentUser } from "lib/useCurrentUser";
 import { useGet } from "../lib/useAxios";
 import { useDebounce } from "use-debounce";
 import { useRouter } from "next/router";
-import { CheckCircle } from "react-feather";
+import { CheckCircle, X } from "react-feather";
 
 const Noter = () => {
   const [searchQuery, setSearchQuery] = useState("");

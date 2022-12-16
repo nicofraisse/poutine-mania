@@ -87,7 +87,7 @@ const Header = ({ toggleMobileSidebar }) => {
         <div className="flex items-center lg:hidden">
           {!backablePage && (
             <Menu
-              className="mr-3 min-w-12 cursor-pointer hover:opacity-70"
+              className="mr-2 min-w-10 sm:mr-3 sm:min-w-12 cursor-pointer hover:opacity-70"
               onClick={() => toggleMobileSidebar()}
               size={28}
             />
@@ -116,7 +116,7 @@ const Header = ({ toggleMobileSidebar }) => {
         )}
         {isMobile && showSearchBar && (
           <X
-            className="w-16 text-gray-400"
+            className="w-8 mr-3 sm:w-16 text-gray-400"
             onClick={() => setShowSearchBar(false)}
           />
         )}

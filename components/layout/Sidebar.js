@@ -1,5 +1,5 @@
-import Link from 'next/link'
-import React, { useEffect } from 'react'
+import Link from "next/link";
+import React, { useEffect } from "react";
 import {
   Award,
   Hash,
@@ -15,18 +15,18 @@ import {
   Watch,
   BarChart2,
   Eye,
-} from 'react-feather'
-import Image from 'next/image'
-import { useRouter } from 'next/router'
-import classNames from 'classnames'
-import { useCurrentUser } from 'lib/useCurrentUser'
-import { useLoginForm } from '../context/LoginFormProvider'
-import ConditionalWrapper from 'components/ConditionalWrapper'
+} from "react-feather";
+import Image from "next/image";
+import { useRouter } from "next/router";
+import classNames from "classnames";
+import { useCurrentUser } from "lib/useCurrentUser";
+import { useLoginForm } from "../context/LoginFormProvider";
+import ConditionalWrapper from "components/ConditionalWrapper";
 
 const Item = ({ label, href, icon, disabled, onClick, requireLogin }) => {
-  const { pathname } = useRouter()
-  const isActive = pathname?.split('/')[1] === href.split('/')[1]
-  const Icon = icon
+  const { pathname } = useRouter();
+  const isActive = pathname?.split("/")[1] === href.split("/")[1];
+  const Icon = icon;
 
   return (
     <ConditionalWrapper
@@ -40,78 +40,89 @@ const Item = ({ label, href, icon, disabled, onClick, requireLogin }) => {
       <div
         onClick={() => onClick(requireLogin)}
         className={classNames(
-          'flex items-center p-3 pl-4 text-base cursor-pointer select-none transition duration-100',
+          "flex items-center p-3 pl-4 text-base cursor-pointer select-none transition duration-100",
           {
-            'bg-orange-100 font-bold text-orange-600': isActive,
-            'hover:bg-orange-100': !disabled,
-            'text-gray-300 hover:bg-white cursor-default pointer-events-none': disabled,
+            "bg-orange-100 font-bold text-orange-600": isActive,
+            "hover:bg-orange-100": !disabled,
+            "text-gray-300 hover:bg-white cursor-default pointer-events-none":
+              disabled,
           }
         )}
       >
-        <span className='mr-3'>
+        <span className="mr-3">
           <Icon size={22} />
         </span>
         {label}
       </div>
     </ConditionalWrapper>
-  )
-}
+  );
+};
 
 const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
-  const { currentUser } = useCurrentUser()
-  const { openLogin } = useLoginForm()
+  const { currentUser } = useCurrentUser();
+  const { openLogin } = useLoginForm();
 
   const onClickItem = (requireLogin) => {
     if (!currentUser && requireLogin) {
-      openLogin()
+      openLogin();
     } else {
-      toggleMobileSidebar()
+      toggleMobileSidebar();
     }
-  }
+  };
 
   return (
     <>
       {showMobileSidebar && (
         <div
-          className='bg-black fixed h-screen w-screen z-10 bg-opacity-40 block lg:hidden'
+          className="bg-black fixed h-screen w-screen z-10 bg-opacity-40 block lg:hidden"
           onClick={toggleMobileSidebar}
         ></div>
       )}
       <div
-        className={classNames('fixed lg:static lg:block lg:min-w-[228px]', {
+        className={classNames("fixed lg:static lg:block lg:min-w-[228px]", {
           hidden: !showMobileSidebar,
-          'block bg-white h-screen z-10': showMobileSidebar,
+          "block bg-white h-screen z-10": showMobileSidebar,
         })}
       >
         <nav
           className={classNames(
-            'border-r lg:pt-2 h-screen lg:fixed lg:min-w-[228px] flex flex-col justify-between'
+            "border-r lg:pt-2 h-screen lg:fixed lg:min-w-[228px] flex flex-col justify-between"
           )}
         >
-          <div>
-            <Link href='/top-poutines'>
+          <div className="select-none">
+            <Link href="/top-poutines">
               <a>
-                <div className='flex items-center -ml-4 transform scale-75'>
-                  <Image alt='poutine-logo' src='/poutine.png' width={1.506 * 80} height={80} />
-                  <div className='text-2xl font-black mt-[-8px] ml-1'>
-                    <div className='text-amber-600'>POUTINE</div>
+                <div className="flex items-center -ml-4 transform scale-75">
+                  <Image
+                    alt="poutine-logo"
+                    src="/poutine.png"
+                    width={1.506 * 80}
+                    height={80}
+                  />
+                  <div className="text-2xl font-black mt-[-8px] ml-1">
+                    <div className="text-amber-600">POUTINE</div>
                     {/* <div className='mt-[-10px] text-orange-300'>MANIA</div> */}
-                    <div className='mt-[-10px] text-orange-600'>
-                      MANIA<span className='text-gray-300'>.ca</span>
+                    <div className="mt-[-10px] text-orange-600">
+                      MANIA<span className="text-gray-300">.ca</span>
                     </div>
                   </div>
                 </div>
               </a>
             </Link>
-            <Item onClick={onClickItem} label='Top 20 poutines' icon={Award} href='/top-poutines' />
             <Item
               onClick={onClickItem}
-              label='Toutes les poutines'
+              label="Top 20 poutines"
+              icon={Award}
+              href="/top-poutines"
+            />
+            <Item
+              onClick={onClickItem}
+              label="Toutes les poutines"
               icon={Map}
-              href='/restaurants'
+              href="/restaurants"
             />
             {/* <Item onClick={onClickItem} label='Derniers avis' icon={Hash} href='/' /> */}
-            {/* 
+            {/*
           <Item
             onClick={onClickItem}
             label='Mon top poutines'
@@ -136,16 +147,26 @@ const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
               requireLogin={!currentUser}
             /> */}
             {currentUser?.isAdmin && (
-              <Item onClick={onClickItem} label='Admin' icon={Lock} href='/admin' />
+              <Item
+                onClick={onClickItem}
+                label="Admin"
+                icon={Lock}
+                href="/admin"
+              />
             )}
           </div>
-          <div className='mb-3'>
-            <Item onClick={onClickItem} label='À Propos' icon={Info} href='/a-propos' />
+          <div className="mb-3">
+            <Item
+              onClick={onClickItem}
+              label="À Propos"
+              icon={Info}
+              href="/a-propos"
+            />
           </div>
         </nav>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default Sidebar
+export default Sidebar;

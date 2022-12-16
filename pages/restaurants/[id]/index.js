@@ -8,6 +8,9 @@ import Map from "components/Map";
 import { useEffect, useState } from "react";
 import { formatAddress } from "lib/formatAddress";
 
+import { ReviewOverview } from "../../../components/ReviewOverview";
+import { RestaurantInfo } from "../../../components/RestaurantInfo";
+
 const Index = () => {
   const { query } = useRouter();
   const { data: restaurant, loading } = useGet(`/api/restaurants/${query.id}`, {
@@ -16,10 +19,10 @@ const Index = () => {
   const [showMap, setShowMap] = useState(false);
 
   useEffect(() => {
-    setShowMap(window?.innerWidth >= 1280);
+    setShowMap(window?.innerWidth >= 640);
 
     window.addEventListener("resize", () => {
-      if (window.innerWidth < 1280) {
+      if (window.innerWidth < 640) {
         setShowMap(false);
       } else {
         setShowMap(true);
@@ -29,48 +32,23 @@ const Index = () => {
 
   if (!restaurant || loading) return <Spinner />;
   return (
-    <div>
+    <div className="bg-[#fafafa] min-h-screen">
       <RestaurantHeader restaurant={restaurant} />
-      <div className="flex flex-col-reverse xl:flex-row">
-        <div className="lg:basis-2/3">
+      <div className="p-4 xl:p-6 flex flex-col-reverse lg:flex-row">
+        <div className="lg:basis-2/3 lg:max-w-2/3">
           <RestaurantReviews restaurant={restaurant} />
         </div>
-        <div className="xl:w-1/3 xl:sticky xl:top-4 xl:h-full p-4 xl:p-6 xl:pl-4">
-          <div className="border text-sm p-4 rounded-lg">
-            {restaurant.website && (
-              <div className="mb-4 flex items-center">
-                <ExternalLink className="mr-2 inline shrink-0" size={20} />
-                <a
-                  target="_blank"
-                  href={restaurant.website}
-                  className="underline"
-                  rel="noreferrer"
-                >
-                  {restaurant.website}
-                </a>
-              </div>
-            )}
-            {restaurant.phoneNumber && (
-              <div className="mb-4 flex items-center">
-                <PhoneCall className="mr-2 inline shrink-0" size={20} />
-                <span>{restaurant.phoneNumber}</span>
-              </div>
-            )}
-            <div className="mb-2 flex items-center">
-              <MapPin className="mr-2 inline shrink-0" size={20} />
-              <span>{formatAddress(restaurant)}</span>
-            </div>
-            <div
-              className="underline block xl:hidden"
-              onClick={() => setShowMap(!showMap)}
-            >
-              {showMap ? "Cacher" : "Voir sur"} la carte
-            </div>
-            {showMap && (
-              <div className="border h-[300px]">
-                <Map restaurants={[restaurant]} isShowPage />
-              </div>
-            )}
+        <div className="lg:w-1/3 lg:sticky lg:top-4 lg:h-full lg:ml-4 xl:ml-6 block sm:flex flex-row-reverse items-center lg:block">
+          <div className="bg-white shadow-md rounded-lg text-sm p-3 xl:p-5 mb-4 text-center text-gray-800 w-auto sm:w-1/2 lg:w-auto">
+            <ReviewOverview restaurant={restaurant} />
+          </div>
+
+          <div className="bg-white shadow-md rounded-lg text-xs xl:text-sm p-4 text-gray-800 w-auto sm:w-1/2 lg:w-auto sm:mr-4 lg:mr-0 mb-4 lg:mb-0">
+            <RestaurantInfo
+              showMap={showMap}
+              setShowMap={setShowMap}
+              restaurant={restaurant}
+            />
           </div>
         </div>
       </div>

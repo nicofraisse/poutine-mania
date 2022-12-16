@@ -66,13 +66,13 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit }, ref) => {
         onChange={(e) => setSearchValue(e.target.value)}
       />
       {showSearchSuggestions && (
-        <div className="absolute z-10 w-full bg-white border shadow-lg left-0 px-3 py-2">
+        <div className="absolute z-50 w-full bg-white border shadow-lg left-0 px-2 sm:px-3 py-2">
           {restaurants?.map((r, i) => {
             const image = r.reviews?.find((res) => res.photos?.[0])?.photos[0];
 
             return (
               <div
-                className="p-3 hover:bg-gray-100 cursor-pointer flex items-center border-b"
+                className="p-2 sm:p-3 hover:bg-gray-100 cursor-pointer flex items-center border-b"
                 key={r._id}
                 onClick={() => push(`/restaurants/${r._id}`)}
               >
@@ -80,10 +80,10 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit }, ref) => {
                   <Image
                     publicId={image}
                     alt={`${r.name}-photo`}
-                    className="w-12 h-10 rounded object-cover object-center"
+                    className="w-10 h-8 sm:w-12 sm:h-10 rounded object-cover object-center"
                   />
                 ) : (
-                  <div className="w-12 h-10 flex justify-center items-center">
+                  <div className="w-10 h-8 sm:w-12 sm:h-10 flex justify-center items-center">
                     <ImageIcon
                       className="text-gray-300"
                       size={32}
@@ -105,10 +105,10 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit }, ref) => {
             );
           })}
           <div
-            className="hover:bg-gray-100 cursor-pointer flex items-center text-gray-600 font-light p-4"
+            className="hover:bg-gray-100 cursor-pointer flex items-center text-gray-600 font-light p-4 text-sm sm:text-base"
             onClick={handleSearch}
           >
-            <Search className="text-gray-500 mr-1" size={20} /> Voir tous les{" "}
+            <Search className="text-gray-500 mr-2" size={20} /> Voir tous les{" "}
             {searchValue.length > 2
               ? `résultats pour "${searchValue}"`
               : "restaurants"}

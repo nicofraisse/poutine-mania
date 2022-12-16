@@ -1,14 +1,14 @@
-import { connectToDatabase } from '../../../../lib/db'
-import { getSession } from 'next-auth/client'
-import { ObjectId } from 'mongodb'
+import { connectToDatabase } from "../../../../lib/db";
+import { getSession } from "next-auth/client";
+import { ObjectId } from "mongodb";
 
 const handler = async (req, res) => {
-  const client = await connectToDatabase()
-  const db = await client.db()
-  const session = await getSession({ req })
+  const client = await connectToDatabase();
+  const db = await client.db();
+  const session = await getSession({ req });
 
   const data = await db
-    .collection('reviews')
+    .collection("reviews")
     .aggregate([
       {
         $match: {
@@ -16,29 +16,32 @@ const handler = async (req, res) => {
         },
       },
       {
+        $sort: { createdAt: -1 },
+      },
+      {
         $lookup: {
-          from: 'users',
-          localField: 'userId',
-          foreignField: '_id',
-          as: 'user',
+          from: "users",
+          localField: "userId",
+          foreignField: "_id",
+          as: "user",
           pipeline: [
             {
               $lookup: {
-                from: 'reviews',
-                localField: '_id',
-                foreignField: 'userId',
-                as: 'reviews',
+                from: "reviews",
+                localField: "_id",
+                foreignField: "userId",
+                as: "reviews",
               },
             },
           ],
         },
       },
 
-      { $unwind: '$user' },
+      { $unwind: "$user" },
     ])
-    .toArray()
+    .toArray();
 
-  res.status(200).json(data)
-}
+  res.status(200).json(data);
+};
 
-export default handler
+export default handler;

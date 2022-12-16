@@ -31,10 +31,9 @@ const AlmostThere = () => (
   </div>
 );
 
-const MIN_COMMENT_CHARACTERS = 20;
+export const MIN_COMMENT_CHARS = 20;
 
 const NoterRestaurant = () => {
-  const [showDetailedRatings, setShowDetailedRatings] = useState(false);
   const [cookies, setCookies, removeCookies] = useCookies();
 
   const { query, push } = useRouter();
@@ -61,6 +60,16 @@ const NoterRestaurant = () => {
   };
 
   const handleSubmit = async (values) => {
+    const ratingValues = [
+      values.friesRating,
+      values.cheeseRating,
+      values.sauceRating,
+      values.portionRating,
+    ].filter(Boolean);
+
+    const finalRating =
+      ratingValues.reduce((a, b) => a + b) / ratingValues.length;
+
     if (!currentUser) {
       setCookies("reviewInProgress", values);
       setCookies("reviewRestaurantInProgress", query.id);
@@ -73,9 +82,11 @@ const NoterRestaurant = () => {
     const publicId = await uploadToCloudinary(values.photos);
     const submitValues = {
       ...values,
+      finalRating,
       ...(publicId !== "skip" && { photos: publicId ? [publicId] : null }),
       restaurantId: restaurant._id,
     };
+
     const url = existingReview
       ? `/api/reviews/${existingReview._id}/update`
       : "/api/reviews/create";
@@ -91,31 +102,6 @@ const NoterRestaurant = () => {
     }
   };
 
-  const handleClickCriteriaButton = (setFieldValue, values) => {
-    if (showDetailedRatings) {
-      if (
-        values.friesRating !== null ||
-        values.cheeseRating !== null ||
-        values.sauceRating !== null ||
-        values.portionRating !== null ||
-        values.serviceRating !== null
-      ) {
-        if (
-          window.confirm(
-            "Êtes vous sûr(e)? Cela supprimera vos critères de notations."
-          )
-        ) {
-          setFieldValue("friesRating", null);
-          setFieldValue("cheeseRating", null);
-          setFieldValue("sauceRating", null);
-          setFieldValue("portionRating", null);
-          setFieldValue("serviceRating", null);
-          setShowDetailedRatings(false);
-        }
-      } else setShowDetailedRatings(false);
-    } else setShowDetailedRatings(true);
-  };
-
   if (loading || !restaurant || !cookies) return <Spinner />;
   return (
     <div className="p-4 sm:p-10 max-w-xs ">
@@ -127,27 +113,19 @@ const NoterRestaurant = () => {
         initialValues={
           (cookies.reviewRestaurantInProgress === query.id &&
             cookies.reviewInProgress) || {
-            rating: null,
             friesRating: null,
             cheeseRating: null,
             sauceRating: null,
             portionRating: null,
-            serviceRating: null,
             title: "",
             comment: "",
             photos: [],
           }
         }
-        validateOnChange={false}
-        validateOnBlur={true}
+        // validateOnChange={false}
+        // validateOnBlur={true}
         onSubmit={handleSubmit}
         validationSchema={Yup.object({
-          rating: Yup.number("Choisissez une note")
-            .transform((value) => (isNaN(value) ? null : value))
-            .typeError("Requis")
-            .min(0)
-            .max(10)
-            .required("Requis"),
           friesRating: Yup.number("Choisissez une note")
             .transform((value) => (isNaN(value) ? null : value))
             .typeError("Amount must be a number")
@@ -172,55 +150,44 @@ const NoterRestaurant = () => {
             .min(0)
             .max(10)
             .nullable(),
-          serviceRating: Yup.number("Choisissez une note")
-            .transform((value) => (isNaN(value) ? null : value))
-            .typeError("Amount must be a number")
-            .min(0)
-            .max(10)
-            .nullable(),
+
           title: Yup.string().min(3),
           comment: Yup.string().min(
-            MIN_COMMENT_CHARACTERS,
-            `Dites-nous en un peu plus 😥 (au moins ${MIN_COMMENT_CHARACTERS} caractères)`
+            MIN_COMMENT_CHARS,
+            `Dites-nous en un peu plus 😥 (au moins ${MIN_COMMENT_CHARS} caractères)`
           ),
           photos: Yup.object().nullable(),
         })}
       >
         {({ isSubmitting, values, errors, setFieldValue, touched }) => {
           const nbFilledFields = [
-            values.rating,
-            values.serviceRating,
             values.portionRating,
             values.friesRating,
             values.cheeseRating,
             values.sauceRating,
           ].filter((v) => v).length;
           const avgRating =
-            (values.serviceRating +
-              values.portionRating +
+            (values.portionRating +
               values.friesRating +
               values.cheeseRating +
-              values.sauceRating +
-              values.rating) /
+              values.sauceRating) /
             nbFilledFields;
 
           return (
             <>
-              <div className="font-bold text-xl mb-4 sm:mb-6"></div>
+              {/* <div className="mb-3">
+                <button className="py-1 px-3 border">Mode simple</button>
+                <button className="py-1 px-3 border">Mode expert</button>
+              </div> */}
 
-              <Field
+              {/* <Field
                 className="sm:mb-5"
                 name="rating"
                 label="Note globale"
                 control={RatingButtons}
-              />
+              /> */}
 
-              <div
-                className={classNames({
-                  block: showDetailedRatings,
-                  hidden: !showDetailedRatings,
-                })}
-              >
+              <div>
                 <Field
                   className="sm:mb-5"
                   name="friesRating"
@@ -245,30 +212,11 @@ const NoterRestaurant = () => {
                   label="Rapport portion/prix"
                   control={RatingButtons}
                 />
-                <Field
-                  className="sm:mb-5"
-                  name="serviceRating"
-                  label="Service"
-                  control={RatingButtons}
-                />
               </div>
 
-              <button
-                onClick={() => handleClickCriteriaButton(setFieldValue, values)}
-                className="text-sm my-4 flex items-center justify-center text-gray-400 px-6 py-1 border-2 border-gray-300 rounded-full"
-                type="button"
-              >
-                {showDetailedRatings ? (
-                  <MinusCircle className="mr-1" size={18} />
-                ) : (
-                  <Plus className="mr-1" size={20} />
-                )}
-                {showDetailedRatings ? "Enlever tous les" : "Ajouter des"}{" "}
-                critères de notation
-              </button>
               {avgRating > 0 && (
                 <div className="flex items-center text-gray-500 border-gray-300 rounded my-6 bg-gray-100 p-6 justify-center">
-                  <div className="mr-2">Votre note finale:</div>
+                  <div className="mr-2">Note moyenne:</div>
                   <div>
                     <span
                       className="py-[2px] px-[8px] bg-green-200 rounded mr-2 text-xl sm:text-2xl text-white flex items-center font-bold shadow-lg"
@@ -304,7 +252,7 @@ const NoterRestaurant = () => {
                 </div>
               )}
 
-              <div className="flex items-center justify-center pt-6 pb-3  mt-6 border-t">
+              <div className="flex items-center justify-center pt-6 pb-3 mt-6 border-t">
                 <Button
                   type="submit"
                   variant="primary"

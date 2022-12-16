@@ -8,13 +8,13 @@ const handler = async (req, res) => {
   const session = await getSession({ req });
   if (session) {
     await db.collection("reviews").insertOne({
-      rating: req.body.rating,
+      finalRating: req.body.finalRating,
       friesRating: req.body.friesRating,
       cheeseRating: req.body.cheeseRating,
       sauceRating: req.body.sauceRating,
       portionRating: req.body.portionRating,
-      serviceRating: req.body.serviceRating,
-      title: req.body.title,
+      // serviceRating: req.body.serviceRating,
+      // title: req.body.title,
       comment: req.body.comment,
       restaurantId: new ObjectId(req.body.restaurantId),
       userId: new ObjectId(session.user._id),

@@ -19,6 +19,8 @@ import Color from "color";
 import { ratingColors } from "../../data/ratingColors";
 import { round } from "lodash";
 import { formatRating } from "../../lib/formatRating";
+import { MIN_COMMENT_CHARS } from "../../pages/restaurants/[id]/noter";
+import { useRouter } from "next/router";
 
 const RateRestaurant = ({
   onSubmit,
@@ -28,6 +30,7 @@ const RateRestaurant = ({
   setPreselectedRestaurant,
 }) => {
   const { openLogin } = useLoginForm();
+  const router = useRouter();
 
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedRestaurant, setSelectedRestaurant] = useState(
@@ -63,9 +66,20 @@ const RateRestaurant = ({
   };
 
   const handleSubmit = async (values) => {
+    const ratingValues = [
+      values.friesRating,
+      values.cheeseRating,
+      values.sauceRating,
+      values.portionRating,
+    ].filter(Boolean);
+
+    const finalRating =
+      ratingValues.reduce((a, b) => a + b) / ratingValues.length;
     const publicId = await uploadToCloudinary(values.photos);
     const submitValues = {
       ...values,
+      finalRating,
+
       ...(publicId !== "skip" && { photos: publicId ? [publicId] : null }),
       restaurantId: selectedRestaurant._id,
     };
@@ -77,7 +91,13 @@ const RateRestaurant = ({
       const data = await axios.post(url, submitValues);
       toast.success(toastMessage);
       // onSubmit(selectedRestaurant._id)
-      setStep(3);
+      if (!existingReview) {
+        setStep(3);
+      } else {
+        setTimeout(() => {
+          router.reload(window.location.pathname), 1500;
+        });
+      }
     } catch (e) {
       toast.error(e.message);
     }
@@ -140,50 +160,60 @@ const RateRestaurant = ({
             friesRating: null,
             cheeseRating: null,
             sauceRating: null,
-            serviceRating: null,
-            title: "",
+            portionRating: null,
             comment: "",
             photos: [],
           }
         }
         onSubmit={handleSubmit}
         validationSchema={Yup.object({
-          // rating: Yup.number('Choisissez une note').min(0).max(10).required('Requis'),
-          serviceRating: Yup.number("Choisissez une note")
-            .min(0)
-            .max(10)
-            .required("Requis"),
           friesRating: Yup.number("Choisissez une note")
+            .transform((value) => (isNaN(value) ? null : value))
+            .typeError("Amount must be a number")
             .min(0)
             .max(10)
-            .required("Requis"),
+            .nullable(),
           cheeseRating: Yup.number("Choisissez une note")
+            .transform((value) => (isNaN(value) ? null : value))
+            .typeError("Amount must be a number")
             .min(0)
             .max(10)
-            .required("Requis"),
+            .nullable(),
           sauceRating: Yup.number("Choisissez une note")
+            .transform((value) => (isNaN(value) ? null : value))
+            .typeError("Amount must be a number")
             .min(0)
             .max(10)
-            .required("Requis"),
-          title: Yup.string().min(3),
-          comment: Yup.string().min(5),
+            .nullable(),
+          portionRating: Yup.number("Choisissez une note")
+            .transform((value) => (isNaN(value) ? null : value))
+            .typeError("Amount must be a number")
+            .min(0)
+            .max(10)
+            .nullable(),
+
+          comment: Yup.string().min(
+            MIN_COMMENT_CHARS,
+            `Dites-nous en un peu plus 😥 (au moins ${MIN_COMMENT_CHARS} caractères)`
+          ),
           photos: Yup.object().nullable(),
         })}
         className="sm:px-2 pb-3 w-[600px]"
       >
-        {({ isSubmitting, values, errors }) => {
+        {({ isSubmitting, values, errors, touched }) => {
           const nbFilledFields = [
-            values.serviceRating,
+            values.portionRating,
             values.friesRating,
             values.cheeseRating,
             values.sauceRating,
           ].filter((v) => v).length;
           const avgRating =
-            (values.serviceRating +
+            (values.portionRating +
               values.friesRating +
               values.cheeseRating +
               values.sauceRating) /
             nbFilledFields;
+
           return (
             <>
               <div className="font-bold text-xl mb-4 sm:mb-6">
@@ -214,30 +244,32 @@ const RateRestaurant = ({
                 />
                 <Field
                   className="sm:mb-5"
-                  name="serviceRating"
-                  label="Qualité/prix et service"
+                  name="portionRating"
+                  label="Rapport portion/prix"
                   control={RatingButtons}
                 />
               </div>
 
-              <div className="flex items-center text-gray-500 border-gray-300 rounded my-6">
-                <div className="mr-2">Votre note finale:</div>
-                <div>
-                  <span
-                    className="py-[2px] px-[8px] bg-green-200 rounded mr-2 text-xl sm:text-2xl text-white flex items-center font-bold shadow-lg"
-                    style={{
-                      backgroundColor: Color(ratingColors[round(avgRating)])
-                        .darken(0.3)
-                        .desaturate(0.3),
-                    }}
-                  >
-                    {formatRating(avgRating) || "?"}
-                    <span className="text-white font-normal text-sm sm:text-base text-opacity-80 ml-[2px] -mb-[2px]">
-                      /10
+              {avgRating > 0 && (
+                <div className="flex items-center text-gray-500 border-gray-300 rounded my-6 bg-gray-100 p-6 justify-center">
+                  <div className="mr-2">Note moyenne:</div>
+                  <div>
+                    <span
+                      className="py-[2px] px-[8px] bg-green-200 rounded mr-2 text-xl sm:text-2xl text-white flex items-center font-bold shadow-lg"
+                      style={{
+                        backgroundColor: Color(ratingColors[round(avgRating)])
+                          .darken(0.3)
+                          .desaturate(0.3),
+                      }}
+                    >
+                      {formatRating(avgRating) || "?"}
+                      <span className="text-white font-normal text-sm sm:text-base text-opacity-80 ml-[2px] -mb-[2px]">
+                        /10
+                      </span>
                     </span>
-                  </span>
+                  </div>
                 </div>
-              </div>
+              )}
 
               <Field
                 className="sm:mb-5"
@@ -246,6 +278,17 @@ const RateRestaurant = ({
                 type="textarea"
               />
               <Field name="photos" control={ImageUpload} label="Photo" />
+
+              {errors.rating && touched.rating && (
+                <div className="text-red-600 text-sm">
+                  Vous devez choisir au moins une note sur 10
+                </div>
+              )}
+              {errors.comment && touched.comment && (
+                <div className="text-red-600 text-sm">
+                  Le commentaire est trop court (au moins 20 caractères)
+                </div>
+              )}
 
               <div className="flex items-center justify-between mt-6">
                 {existingReview ? (
