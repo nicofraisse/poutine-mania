@@ -1,13 +1,13 @@
 import classNames from "classnames";
 import { useEffect, useRef, useState } from "react";
-import { ratingColors } from "data/ratingColors";
+import { ratingColors } from "data/ratingColors.js";
 import Color from "color";
 import { round } from "lodash";
 
 import classes from "./data-ring.module.scss";
 import Image from "next/image";
 
-export const DataRing = ({ size, icon, percent, iconStyle, unknown }) => {
+export const DataRing = ({ size, icon, percent, iconStyle, noRatings }) => {
   const ringRef = useRef(null);
   const [percentValue, setPercentValue] = useState(0);
 
@@ -38,7 +38,7 @@ export const DataRing = ({ size, icon, percent, iconStyle, unknown }) => {
         <div className="absolute top-4" style={iconStyle}>
           <Image src={icon} alt="data-ring-icon" />
           <div className="text-xs text-gray-500 absolute top-7 left-0 w-full text-center">
-            {unknown ? "?" : percentValue}%
+            {noRatings ? "?" : percentValue}%
           </div>
         </div>
         <svg width="72" height="73">

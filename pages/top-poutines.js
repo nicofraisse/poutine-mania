@@ -22,7 +22,7 @@ function TopPoutines() {
   );
 
   const { data: restaurants, loading: restaurantsLoading } = useGet(
-    `/api/restaurants?sort=avgRating&order=-1&limit=20`
+    `/api/restaurants?sort=avgRating&order=-1&limit=10`
     // `/api/restaurants?sort=avgRating&order=-1&limit=20&minReviewCount=1`
   );
 
@@ -46,14 +46,17 @@ function TopPoutines() {
       <div className="grow">
         <div className="px-2 md:px-0">
           <h1 className="text-2xl sm:text-3xl font-bold my-4">
-            Les 20 meilleures poutines du Québec
+            Les 10 meilleures poutines du Québec
           </h1>
           <p className="my-1 text-sm sm:text-md">
-            Discover the ranking of the top 20 most popular PC games below. The
-            chart ranks PC titles by MAUs (monthly active users), showing the
-            most played games right now. Découvrez le palmarès des 20 meilleures
-            poutines du Québec. Ce tableau ordonnes les restaurants à poutines
-            ayant reçu les meilleures notes par la communauté.
+            Bienvenue sur notre application de notation de poutines! Grâce à
+            notre plateforme, vous pouvez non seulement enregistrer vos propres
+            expériences de dégustation de poutines, mais aussi découvrir celles
+            des autres utilisateurs dans votre région et partout ailleurs au
+            Québec. Partagez vos avis sur les meilleures poutines que vous avez
+            goûtées et découvrez de nouvelles poutineries à essayer grâce à
+            notre communauté en ligne de passionnés de poutines. Rejoignez-nous
+            dès maintenant et trouvez votre prochaine poutine préférée!
           </p>
 
           <h2 className="mt-4 mb-3 text-lg sm:text-xl font-bold">
@@ -69,7 +72,7 @@ function TopPoutines() {
               </span>
             </Link>
             , où vous trouverez les meilleurs restaurants en fonction du lieu,
-            le type de restaurant, le nombre d&apos;avis, et bien plus.
+            le type de restaurant, la note moyenne sur 10, et bien plus.
           </p>
         </div>
         <div className="border border-gray-100 rounded-lg mb-40 mt-4">

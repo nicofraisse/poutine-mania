@@ -30,7 +30,7 @@ const SelectRestaurant = ({ restaurants, onSelect, userRatedRestaurants }) => {
           >
             <div
               className={classNames(
-                "border-t rounded p-3  cursor-pointer flex items-center justify-between",
+                "border-t rounded p-3 cursor-pointer flex items-center justify-between",
                 {
                   "hover:bg-gray-50": !alreadyRated,
                   "border-gray-50 cursor-default opacity-60": !!alreadyRated,

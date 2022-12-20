@@ -21,7 +21,7 @@ const IngredientRatingRings = ({
     <div className={"flex justify-between"}>
       <div
         className={classNames("mx-1", {
-          "opacity-40": noFries,
+          "opacity-60": noFries,
         })}
       >
         <DataRing
@@ -29,7 +29,7 @@ const IngredientRatingRings = ({
           icon={fries}
           iconStyle={{ width: 28 }}
           percent={friesRating * 10}
-          unknown={noFries}
+          noRatings={noFries}
         />
         <div className="text-sm text-center font-bold text-gray-400">
           Frites
@@ -37,7 +37,7 @@ const IngredientRatingRings = ({
       </div>
       <div
         className={classNames("mx-1", {
-          "opacity-40": noCheese,
+          "opacity-60": noCheese,
         })}
       >
         <DataRing
@@ -45,7 +45,7 @@ const IngredientRatingRings = ({
           icon={cheese1}
           iconStyle={{ width: 25 }}
           percent={cheeseRating * 10}
-          unknown={noCheese}
+          noRatings={noCheese}
         />
         <div className="text-sm text-center font-bold text-gray-400">
           Fromage
@@ -53,7 +53,7 @@ const IngredientRatingRings = ({
       </div>
       <div
         className={classNames("mx-1", {
-          "opacity-40": noSauce,
+          "opacity-60": noSauce,
         })}
       >
         <DataRing
@@ -61,7 +61,7 @@ const IngredientRatingRings = ({
           icon={sauce}
           iconStyle={{ width: 30 }}
           percent={sauceRating * 10}
-          unknown={noSauce}
+          noRatings={noSauce}
         />
         <div className="text-sm text-center font-bold text-gray-400">Sauce</div>
       </div>
@@ -80,7 +80,7 @@ export const ReviewOverview = ({ restaurant }) => {
   const noSauce = !restaurant.avgSauceRating;
   return (
     <div className="select-none">
-      <div className="py-1">
+      <div className={classNames("py-1", { "opacity-60": noReviews })}>
         <div className="mb-2">
           <span className="font-bold text-4xl">
             {noReviews ? "?" : round(restaurant.avgRating, 1)}

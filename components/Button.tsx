@@ -2,7 +2,7 @@ import classNames from "classnames";
 import React from "react";
 import Spinner from "./Spinner";
 
-enum VariantColor {
+export enum VariantColor {
   primary = "primary",
   secondary = "secondary",
   light = "light",
@@ -60,7 +60,7 @@ const Button = ({
   variant = "primary",
   size = "lg",
   loading,
-  width = undefined,
+  width = "sm",
   height = "md",
   className,
   ...props

@@ -9,6 +9,7 @@ import { useGet } from "../lib/useAxios";
 import { useDebounce } from "use-debounce";
 import { useRouter } from "next/router";
 import { CheckCircle, X } from "react-feather";
+import Button, { VariantColor } from "../components/Button";
 
 const Noter = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -16,7 +17,7 @@ const Noter = () => {
   const { query } = useRouter();
 
   const { data: searchResults, loading: searchResultsLoading } = useGet(
-    `/api/restaurants?search=${debouncedValue}&limit=24`
+    `/api/restaurants?search=${debouncedValue}&limit=10`
   );
   const { currentUser } = useCurrentUser();
   const { data: userReviews } = useGet(
@@ -27,7 +28,7 @@ const Noter = () => {
   );
 
   return (
-    <div>
+    <div className="max-w-md">
       <div className="p-4">
         {query.fromRateSuccess && (
           <div
@@ -80,6 +81,21 @@ const Noter = () => {
           </div>
         )
       )}
+      <div className="mb-20 shadow-md px-3 py-6 border rounded my-3 mx-3 flex items-center justify-between">
+        <div>
+          <div className="font-black text-lg mb-1 text-gray-900">
+            Restaurant introuvable?
+          </div>
+          <div className="text-gray-500 text-sm font-light">
+            Contribuez à la communauté en ajoutant une poutinerie.
+          </div>
+        </div>
+        <Link passHref href={`/restaurants/new`}>
+          <Button variant={VariantColor.light} size="sm" height="sm">
+            Ajouter un restaurant
+          </Button>
+        </Link>
+      </div>
     </div>
   );
 };

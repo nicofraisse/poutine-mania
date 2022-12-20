@@ -1,30 +1,36 @@
-import React, { useEffect, useState } from 'react'
-import axios from 'axios'
-import * as Yup from 'yup'
-import { useRouter } from 'next/dist/client/router'
-import toast from 'react-hot-toast'
-import Button from '../../components/Button'
-import { useGet } from 'lib/useAxios'
-import Form from 'components/Form'
-import Field from 'components/Field'
-import AutocompleteSelect from '../../components/controls/AutocompleteSelect'
-import CategorySelect from '../../components/controls/CategorySelect'
-import Spinner from '../Spinner'
-import { Plus, Trash } from 'react-feather'
-import { cloneDeep, isString } from 'lodash'
-import classNames from 'classnames'
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import * as Yup from "yup";
+import { useRouter } from "next/dist/client/router";
+import toast from "react-hot-toast";
+import Button from "../../components/Button";
+import { useGet } from "lib/useAxios";
+import Form from "components/Form";
+import Field from "components/Field";
+import AutocompleteSelect from "../../components/controls/AutocompleteSelect";
+import CategorySelect from "../../components/controls/CategorySelect";
+import Spinner from "../Spinner";
+import { Plus, Trash } from "react-feather";
+import { cloneDeep, isString } from "lodash";
+import classNames from "classnames";
+import PillSelect from "../controls/PillSelect";
+import PhoneInput from "components/controls/PhoneInput";
 
-const RestaurantForm = ({ type, onSubmit }) => {
-  const { query, push } = useRouter()
-  const [succursales, setSuccursales] = useState([{ address: '', phoneNumber: '' }])
+const RestaurantForm = ({ type, onSubmit, isAdmin }) => {
+  const { query, push } = useRouter();
+  const [succursales, setSuccursales] = useState([
+    { address: "", phoneNumber: "" },
+  ]);
 
-  const { data: restaurant, loading } = useGet(`/api/restaurants/${query.id}`, { skip: !query.id })
+  const { data: restaurant, loading } = useGet(`/api/restaurants/${query.id}`, {
+    skip: !query.id,
+  });
 
   const handleSubmit = (values, { setSubmitting }) => {
     if (succursales.find((s) => !s.address && !s.hide)) {
-      setSubmitting(false)
-      window.alert('Adresse vide!')
-      return
+      setSubmitting(false);
+      window.alert("Adresse vide!");
+      return;
     }
 
     const submitValues = {
@@ -34,58 +40,59 @@ const RestaurantForm = ({ type, onSubmit }) => {
       phoneNumber: values.phoneNumber,
       priceRange: values.priceRange,
       categories: values.categories.map((c) => (isString(c) ? c : c.value)),
-    }
+    };
 
-    if (type === 'create') {
+    if (type === "create") {
       axios
-        .post('/api/restaurants/create', submitValues)
-        .then(() => {
-          setSubmitting(false)
-          toast.success(type + ' success')
-          onSubmit && onSubmit()
-          push(`/admin/restaurants`)
+        .post("/api/restaurants/create", submitValues)
+        .then(({ data }) => {
+          setSubmitting(false);
+          toast.success("Succès");
+          onSubmit && onSubmit();
+          push(`/restaurants/${data._id}`);
+          push(`/admin/restaurants`);
         })
-        .catch((err) => toast.error(err.message))
-    } else if (type === 'update') {
+        .catch((err) => toast.error(err.message));
+    } else if (type === "update") {
       axios
         .post(`/api/restaurants/${query.id}/update`, submitValues)
         .then(() => {
-          toast.success(type + ' success')
-          push(`/admin/restaurants`)
+          toast.success("Succès");
+          push(`/admin/restaurants`);
         })
-        .catch((err) => toast.error(err.message))
+        .catch((err) => toast.error(err.message));
     }
-  }
+  };
 
   useEffect(() => {
-    if (restaurant?.succursales && succursales[0].address === '') {
-      setSuccursales(restaurant.succursales)
+    if (restaurant?.succursales && succursales[0].address === "") {
+      setSuccursales(restaurant.succursales);
     }
-  }, [restaurant, succursales])
+  }, [restaurant, succursales]);
 
   const updateSuccursaleField = (value, index, field) => {
-    const succursalesCopy = cloneDeep(succursales)
-    succursalesCopy[index][field] = value
-    setSuccursales(succursalesCopy)
-  }
+    const succursalesCopy = cloneDeep(succursales);
+    succursalesCopy[index][field] = value;
+    setSuccursales(succursalesCopy);
+  };
 
-  if (loading || (type === 'update' && !restaurant)) return <Spinner />
+  if (loading || (type === "update" && !restaurant)) return <Spinner />;
 
   const initialValues = {
-    name: type === 'update' ? restaurant.name : '',
-    website: type === 'update' ? restaurant.website : '',
-    priceRange: type === 'update' ? restaurant.priceRange : [],
-    categories: type === 'update' ? restaurant.categories : [],
-  }
+    name: type === "update" ? restaurant.name : "",
+    website: type === "update" ? restaurant.website : "",
+    priceRange: type === "update" ? restaurant.priceRange : null,
+    categories: type === "update" ? restaurant.categories : [],
+  };
 
-  if (type === 'update') {
+  if (type === "update") {
     restaurant.succursales.forEach((succursale, index) => {
       initialValues[`address-${index}`] = {
         label: succursale.address.place_name,
         value: succursale.address,
-      }
-      initialValues[`phoneNumber-${index}`] = succursale.phoneNumber
-    })
+      };
+      initialValues[`phoneNumber-${index}`] = succursale.phoneNumber;
+    });
   }
 
   return (
@@ -93,78 +100,125 @@ const RestaurantForm = ({ type, onSubmit }) => {
       initialValues={initialValues}
       onSubmit={handleSubmit}
       validationSchema={Yup.object({
-        name: Yup.string().min(1).required('Required'),
+        name: Yup.string().min(1).required("Requis"),
+        categories: Yup.array().min(1).required(),
         website: Yup.string().min(1),
-        priceRange: Yup.number().min(1).max(3),
+        "address-0": Yup.object().required(),
+        priceRange: Yup.number().nullable().required("Requis"),
       })}
     >
-      {({ isSubmitting, values, setFieldValue }) => (
+      {({ isSubmitting, values, errors, setFieldValue }) => (
         <>
-          <Field name='name' />
-          <Field name='categories' control={CategorySelect} label='Catégorie(s)' />
-          <Field name='website' label='Site internet' />
-          <Field name='priceRange' type='number' label='Gamme de prix' min={1} max={3} />
-          <div className='text-xs text-gray-500 mb-3 -mt-2'>- de 6$ / 6$-8$ / 8$ et +</div>
-          {succursales.map((succursale, index) => (
-            <div
-              key={index}
-              className={classNames('border p-4 rounded mb-3 bg-gray-50 relative', {
-                hidden: succursale.hide,
-              })}
-            >
-              {index !== 0 && (
-                <Trash
-                  className='absolute right-4 top-3 text-gray-400 hover:text-gray-600'
-                  size={18}
-                  onClick={() => {
-                    if (window.confirm('Supprimer la succursale?')) {
-                      setFieldValue(`address-${index}`, { label: '', value: '' })
-                      setFieldValue(`phoneNumber-${index}`, '')
-                      setSuccursales(
-                        succursales.map((s, i) => {
-                          if (i === index) {
-                            return { address: '', phoneNumber: '', hide: true }
-                          }
-                          return s
-                        })
-                      )
-                    }
+          {JSON.stringify(errors)}
+          {console.log(values)}
+          <Field name="name" label="Nom du restaurant" />
+          <Field
+            name="categories"
+            control={CategorySelect}
+            label="Catégorie(s)"
+          />
+          <Field
+            name="priceRange"
+            label="Prix de la poutine régulière"
+            control={PillSelect}
+            options={[
+              { label: "Moins de 7$", value: 1 },
+              { label: "Entre 7$ et 9$", value: 2 },
+              { label: "Plus de 9$", value: 3 },
+            ]}
+          />
+
+          <div className="bg-gray-50 border p-4 rounded mb-4">
+            <label className="font-bold mb-2 text-sm block">Succursales</label>
+            {succursales.map((succursale, index) => (
+              <div
+                key={index}
+                className={classNames(
+                  "bg-white p-4 rounded mb-3 bg--50 relative shadow",
+                  {
+                    hidden: succursale.hide,
+                  }
+                )}
+              >
+                {index !== 0 && (
+                  <Trash
+                    className="absolute right-4 top-3 text-gray-400 hover:text-gray-600 cursor-pointer"
+                    size={18}
+                    onClick={() => {
+                      if (window.confirm("Supprimer la succursale?")) {
+                        setFieldValue(`address-${index}`, {
+                          label: "",
+                          value: "",
+                        });
+                        setFieldValue(`phoneNumber-${index}`, "");
+                        setSuccursales(
+                          succursales.map((s, i) => {
+                            if (i === index) {
+                              return {
+                                address: "",
+                                phoneNumber: "",
+                                hide: true,
+                              };
+                            }
+                            return s;
+                          })
+                        );
+                      }
+                    }}
+                  />
+                )}
+                <Field
+                  name={`address-${index}`}
+                  onChange={(value, formikBag) => {
+                    setFieldValue(`address-${index}`, {
+                      label: value.place_name,
+                      value,
+                    });
+                    updateSuccursaleField(value, index, "address");
                   }}
+                  control={AutocompleteSelect}
+                  label="Adresse"
                 />
-              )}
-              <Field
-                name={`address-${index}`}
-                onChange={(value, formikBag) => {
-                  setFieldValue(`address-${index}`, { label: value.place_name, value })
-                  updateSuccursaleField(value, index, 'address')
-                }}
-                control={AutocompleteSelect}
-                label='Adresse'
-              />
-              <Field
-                name={`phoneNumber-${index}`}
-                label='Numéro de téléphone'
-                value={succursale.phoneNumber}
-                onChange={(e) => updateSuccursaleField(e.target.value, index, 'phoneNumber')}
-              />
-            </div>
-          ))}
-          <div className='flex items-center justify-between'>
+                <Field
+                  name={`phoneNumber-${index}`}
+                  label="Numéro de téléphone"
+                  value={succursale.phoneNumber}
+                  onChange={
+                    (e) => console.log(e)
+                    // updateSuccursaleField(e.target.value, index, "phoneNumber")
+                  }
+                  control={PhoneInput}
+                  country="US"
+                />
+              </div>
+            ))}
+
             <Button
-              type='button'
-              variant='light'
-              size='sm'
-              className=''
-              onClick={() => setSuccursales([...succursales, { address: '', phoneNumber: '' }])}
+              type="button"
+              variant="light"
+              size="sm"
+              className=""
+              height="sm"
+              style={{ marginLeft: "auto" }}
+              onClick={() =>
+                setSuccursales([
+                  ...succursales,
+                  { address: "", phoneNumber: "" },
+                ])
+              }
             >
-              <Plus size={20} className='mr-1' />
+              <Plus size={20} className="mr-1" />
               Ajouter une succursale
             </Button>
+          </div>
+          <Field name="website" label="Site internet" />
+
+          <div className="flex items-center justify-between">
             <Button
               loading={isSubmitting}
-              className='bg-gray-300 px-4 py-1 rounded-lg shadoow w-40'
-              type='submit'
-              size='sm'
+              className="bg-teal-500-300 px-4 py-1 rounded-lg shadoow w-40"
+              type="submit"
+              size="sm"
             >
               Valider
             </Button>
@@ -172,7 +226,7 @@ const RestaurantForm = ({ type, onSubmit }) => {
         </>
       )}
     </Form>
-  )
-}
+  );
+};
 
-export default RestaurantForm
+export default RestaurantForm;

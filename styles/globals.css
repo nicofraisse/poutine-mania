@@ -103,3 +103,12 @@ a {
 .mapboxgl-marker {
   cursor: pointer !important;
 }
+
+.PhoneInputInput {
+  padding: 4px 8px;
+  border-radius: 3px;
+}
+.PhoneInputInput:focus {
+  outline: none;
+  background-color: #eee;
+}

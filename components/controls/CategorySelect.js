@@ -1,18 +1,24 @@
-import { useField, useFormikContext } from 'formik'
-import Select from 'react-select'
-import { isString } from 'lodash'
+import { useField, useFormikContext } from "formik";
+import Select from "react-select";
+import { isString } from "lodash";
 
 const CategorySelect = ({ onChange, value, ...props }) => {
-  const [field] = useField(props)
-  const { setFieldValue } = useFormikContext()
+  const [field] = useField(props);
+  const { setFieldValue } = useFormikContext();
 
   const handleChange = (data) => {
-    setFieldValue(field.name, data)
-  }
+    setFieldValue(field.name, data);
+  };
 
-  const options = ['Restaurant', 'Diner', 'Bar', 'Fast-food', 'Casse-croûte'].map((o) => {
-    return { label: o, value: o }
-  })
+  const options = [
+    "Restaurant",
+    "Diner",
+    "Bar",
+    "Fast-food",
+    "Casse-croûte",
+  ].map((o) => {
+    return { label: o, value: o };
+  });
 
   const convertToOptions = (values) => {
     return values.map((v) => {
@@ -20,10 +26,10 @@ const CategorySelect = ({ onChange, value, ...props }) => {
         return {
           label: v,
           value: v,
-        }
-      return v
-    })
-  }
+        };
+      return v;
+    });
+  };
 
   return (
     <Select
@@ -31,10 +37,10 @@ const CategorySelect = ({ onChange, value, ...props }) => {
       onChange={handleChange}
       options={options}
       value={convertToOptions(value)}
-      className='text-sm'
+      className="text-sm"
       {...props}
     />
-  )
-}
+  );
+};
 
-export default CategorySelect
+export default CategorySelect;

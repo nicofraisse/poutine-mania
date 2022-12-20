@@ -6,13 +6,19 @@ import { Image } from "./Image";
 import { TagSection } from "./RestaurantCard";
 
 const RestaurantHeader = ({ restaurant }) => {
-  const city = restaurant?.succursales[0].address?.context?.find((el) =>
-    el.id?.includes("place")
-  )?.text;
+  const city =
+    restaurant.succursales[0].address?.context?.find((el) =>
+      el.id?.includes("neighborhood")
+    )?.text ||
+    restaurant.succursales[0].address?.context?.find((el) =>
+      el.id?.includes("place")
+    )?.text;
 
   const images = flatten(restaurant.reviews.map((r) => r.photos)).filter(
     Boolean
   );
+
+  console.log(restaurant.succursales[0].address?.context);
 
   return (
     <div className="relative h-1/3vw sm:h-1/4vw lg:h-1/5vw 2xl:h-1/6vw">
@@ -71,11 +77,7 @@ const RestaurantHeader = ({ restaurant }) => {
               <TagSection
                 succursales={restaurant.succursales}
                 categories={restaurant.categories}
-                city={
-                  restaurant.succursales[0].address?.context?.find((el) =>
-                    el.id?.includes("neighborhood")
-                  )?.text
-                }
+                city={city}
                 priceRange={restaurant.priceRange}
                 darkBackground
                 largeText
