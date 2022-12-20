@@ -1,10 +1,10 @@
-import { ObjectId } from 'mongodb'
-import { connectToDatabase } from '../../../../lib/db'
+import { ObjectId } from "mongodb";
+import { connectToDatabase } from "../../../../lib/db";
 
 const handler = async (req, res) => {
-  const client = await connectToDatabase()
-  const db = await client.db()
-  const updatedRestaurant = await db.collection('restaurants').updateOne(
+  const client = await connectToDatabase();
+  const db = await client.db();
+  const updatedRestaurant = await db.collection("restaurants").updateOne(
     { _id: ObjectId(req.query.id) },
     {
       $set: {
@@ -15,8 +15,8 @@ const handler = async (req, res) => {
         categories: req.body.categories,
       },
     }
-  )
-  res.status(200).json(updatedRestaurant)
-}
+  );
+  res.status(200).json(updatedRestaurant);
+};
 
-export default handler
+export default handler;

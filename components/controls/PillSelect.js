@@ -28,7 +28,6 @@ const PillSelect = ({ options, onChange, isMulti, value, ...props }) => {
     setFieldValue(field.name, selectedValues);
   }, [selectedValues]);
 
-  console.log(selectedValues);
   const handleSelect = (value) => {
     if (isMulti) {
       if (selectedValues.includes(value)) {

@@ -1,11 +1,21 @@
+import { getSession } from "next-auth/client";
 import { connectToDatabase } from "../../../lib/db";
 
 const handler = async (req, res) => {
   const client = await connectToDatabase();
   const db = await client.db();
+  const session = await getSession({ req });
+
   let result;
 
-  const { search, sort, order, limit, minReviewCount } = req.query;
+  const { search, sort, order, limit, minReviewCount, noUnapproved } =
+    req.query;
+
+  const approvedMatch = noUnapproved
+    ? {
+        approved: true,
+      }
+    : undefined;
 
   const baseAggregaor = [
     {
@@ -25,6 +35,7 @@ const handler = async (req, res) => {
     {
       $match: {
         reviewCount: { $gte: minReviewCount ? Number(minReviewCount) : 0 },
+        ...(approvedMatch && approvedMatch),
       },
     },
     {
@@ -59,6 +70,7 @@ const handler = async (req, res) => {
     result = await db
       .collection("restaurants")
       .aggregate(baseAggregaor)
+
       .toArray();
   }
   res.status(200).json(result);

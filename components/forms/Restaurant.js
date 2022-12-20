@@ -100,8 +100,13 @@ const RestaurantForm = ({ type, onSubmit, isAdmin }) => {
       initialValues={initialValues}
       onSubmit={handleSubmit}
       validationSchema={Yup.object({
-        name: Yup.string().min(1).required("Requis"),
-        categories: Yup.array().min(1).required(),
+        name: Yup.string()
+          .min(1)
+          .max(50, "Le nom doit faire au plus 50 caractères")
+          .required("Requis"),
+        categories: Yup.array()
+          .min(1, "Vous devez ajouter au moins 1 catégorie")
+          .required(),
         website: Yup.string().min(1),
         "address-0": Yup.object().required(),
         priceRange: Yup.number().nullable().required("Requis"),
@@ -109,8 +114,6 @@ const RestaurantForm = ({ type, onSubmit, isAdmin }) => {
     >
       {({ isSubmitting, values, errors, setFieldValue }) => (
         <>
-          {JSON.stringify(errors)}
-          {console.log(values)}
           <Field name="name" label="Nom du restaurant" />
           <Field
             name="categories"

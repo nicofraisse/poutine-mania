@@ -14,6 +14,7 @@ const handler = async (req, res) => {
     categories: req.body.categories,
     createdAt: new Date(),
     approved: !!session.user.isAdmin,
+    creator: session.user,
   });
 
   const data = await db.collection("restaurants").findOne({ _id: insertedId });

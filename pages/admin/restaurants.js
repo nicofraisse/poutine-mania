@@ -1,67 +1,128 @@
-import axios from 'axios'
-import { useRouter } from 'next/dist/client/router'
-import React from 'react'
-import { useState, useEffect } from 'react'
-import { Trash, Edit } from 'react-feather'
-import Link from 'next/link'
-import toast from 'react-hot-toast'
-import Spinner from '../../components/Spinner'
+import axios from "axios";
+import { useRouter } from "next/dist/client/router";
+import React from "react";
+import { useState, useEffect } from "react";
+import { Trash, Edit } from "react-feather";
+import Link from "next/link";
+import toast from "react-hot-toast";
+import Spinner from "../../components/Spinner";
+import { format } from "date-fns";
+import { getUrlQueryString } from "../../lib/getUrlqueryString";
+import { ToggleSwitch } from "../../components/controls/ToggleSwitch";
 
 const Restaurants = () => {
-  const [restaurants, setRestaurants] = useState([])
-  const [loading, setLoading] = useState(true)
+  const [restaurants, setRestaurants] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const { push, reload } = useRouter()
+  const { push, reload } = useRouter();
 
   useEffect(() => {
     axios
-      .get('/api/restaurants')
+      .get(
+        `/api/restaurants${getUrlQueryString({ sort: "createdAt", order: -1 })}`
+      )
       .then(({ data }) => {
-        setLoading(false)
-        setRestaurants(data)
+        setLoading(false);
+        setRestaurants(data);
       })
-      .catch((err) => toast.error(err.message))
-  }, [])
+      .catch((err) => toast.error(err.message));
+  }, []);
 
   const handleDelete = async ({ _id, name }) => {
     if (window.confirm(`Êtes-vous sûr(e) de vouloir supprimer "${name}?"`)) {
       await axios
         .delete(`/api/restaurants/${_id}/delete`)
         .then(() => {
-          toast.success('Supprimé!')
-          reload(window.location.pathname)
+          toast.success("Supprimé!");
+          reload(window.location.pathname);
         })
-        .catch((e) => toast.error(e.message))
+        .catch((e) => toast.error(e.message));
     }
-  }
+  };
 
-  if (loading || !restaurants) return <Spinner />
+  const handleApprove = async (id, approved) => {
+    await axios
+      .post(`/api/restaurants/${id}/approve`, { approved })
+      .then(() => {
+        console.log("Approved");
+      })
+      .catch((e) => console.log("error", e.message));
+  };
+
+  if (loading || !restaurants) return <Spinner />;
 
   return (
-    <div className='w-full min-h-screen-minus-navbar'>
-      <Link href='/admin/create-restaurant'>Créer un restaurant</Link>
+    <div className="w-full min-h-screen-minus-navbar p-6 max-w-lg">
+      <Link href="/admin/create-restaurant" passHref>
+        <button className="px-4 py-2 bg-slate-700 text-white font-black text-sm mb-3 rounded ml-auto block">
+          Créer un restaurant
+        </button>
+      </Link>
 
-      {restaurants?.map((r) => (
-        <div key={r._id} className='border rounded my-3 mx-auto p-5 flex justify-between'>
-          <div>{r.name}</div>
-          <div>
-            <button
-              className='p-1 bg-gray-200 rounded shadow hover:bg-gray-100 mx-2'
-              onClick={() => push(`/restaurants/${r._id}/edit`)}
+      <table className="border-collapse table-auto w-full text-sm">
+        <thead>
+          <tr>
+            <th className="bg-slate-100 border-b font-medium p-4 pl-8 pb-3 text-slate-500 text-left rounded-tl-lg">
+              Approved
+            </th>
+            <th className="bg-slate-100 border-b font-medium p-4 pl-8 pb-3 text-slate-500 text-left">
+              Name
+            </th>
+            <th className="bg-slate-100 border-b font-medium p-4 pl-8 pb-3 text-slate-500 text-left">
+              Creator
+            </th>
+            <th className="bg-slate-100 border-b font-medium p-4 pl-8 pb-3 text-slate-500 text-left">
+              Creation date
+            </th>
+            <th className="bg-slate-100 border-b font-medium p-4 pl-8 pb-3 text-slate-500 text-left rounded-tr-lg">
+              Actions
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {restaurants?.map((r) => (
+            <tr
+              key={r._id}
+              className="hover:bg-slate-50 tansition-colors duration-100"
+              onDoubleClick={() => push(`/restaurants/${r._id}`)}
             >
-              <Edit size={20} />
-            </button>
-            <button
-              className='p-1 bg-gray-200 rounded shadow hover:bg-gray-100 mx-2'
-              onClick={() => handleDelete(r)}
-            >
-              <Trash size={20} />
-            </button>
-          </div>
-        </div>
-      ))}
+              <td className="border-b border-slate-100 p-2 pl-8 text-slate-500">
+                <ToggleSwitch
+                  onChange={() => handleApprove(r._id, !r.approved)}
+                  checked={r.approved}
+                />
+              </td>
+              <td className="border-b border-slate-100 p-2 pl-8 text-slate-500">
+                {r.name}
+              </td>
+              <td className="border-b border-slate-100 p-2 pl-8 text-slate-500">
+                {r.creator?.email || "?"}
+              </td>
+
+              <td className="border-b border-slate-100 p-2 pl-8 text-slate-500">
+                {r.createdAt &&
+                  format(new Date(r.createdAt), "yyyy/MM/dd kk:mm")}
+              </td>
+              <td className="border-b border-slate-100 p-2 pl-8 text-slate-500">
+                <button
+                  className="p-1 bg-gray-200 rounded shadow hover:bg-gray-100 mx-2"
+                  onClick={() => push(`/restaurants/${r._id}/edit`)}
+                >
+                  <Edit size={20} />
+                </button>
+                <button
+                  className="p-1 bg-gray-200 rounded shadow hover:bg-gray-100 mx-2"
+                  onClick={() => handleDelete(r)}
+                >
+                  <Trash size={20} />
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
-  )
-}
+  );
+};
 
-export default Restaurants
+export default Restaurants;

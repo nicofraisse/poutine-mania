@@ -12,13 +12,14 @@ const RestaurantHeader = ({ restaurant }) => {
     )?.text ||
     restaurant.succursales[0].address?.context?.find((el) =>
       el.id?.includes("place")
+    )?.text ||
+    restaurant.succursales[0].address?.context?.find((el) =>
+      el.id?.includes("country")
     )?.text;
 
   const images = flatten(restaurant.reviews.map((r) => r.photos)).filter(
     Boolean
   );
-
-  console.log(restaurant.succursales[0].address?.context);
 
   return (
     <div className="relative h-1/3vw sm:h-1/4vw lg:h-1/5vw 2xl:h-1/6vw">

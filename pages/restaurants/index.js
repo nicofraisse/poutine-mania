@@ -41,6 +41,7 @@ const Restaurants = () => {
       search: searchValue?.trim(),
       sort: sortType,
       order: sortOrder,
+      noUnapproved: true,
     })}`
   );
 
@@ -83,7 +84,7 @@ const Restaurants = () => {
                   className="w-[40px]"
                   onClick={() => setFiltersOpen(!filtersOpen)}
                 >
-                  <Sliders />
+                  <Sliders className="min-w-5" />
                 </Button>
 
                 <div
