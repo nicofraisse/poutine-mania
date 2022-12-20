@@ -90,7 +90,7 @@ const Noter = () => {
             Contribuez à la communauté en ajoutant une poutinerie.
           </div>
         </div>
-        <Link passHref href={`/restaurants/new`}>
+        <Link passHref href={`/admin/create-restaurant`}>
           <Button variant={VariantColor.light} size="sm" height="sm">
             Ajouter un restaurant
           </Button>

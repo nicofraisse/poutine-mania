@@ -111,7 +111,7 @@ const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
             </Link>
             <Item
               onClick={onClickItem}
-              label="Top 20 poutines"
+              label="Top 10 poutines"
               icon={Award}
               href="/top-poutines"
             />
