@@ -83,8 +83,8 @@ const Index = () => {
           )}
           <RestaurantReviews restaurant={restaurant} />
         </div>
-        {currentUser?.isAdmin && (
-          <div className="lg:w-1/3 lg:sticky lg:top-4 lg:h-full lg:ml-4 xl:ml-6 block sm:flex flex-row-reverse items-center lg:block">
+        <div className="lg:w-1/3 lg:sticky lg:top-4 lg:h-full lg:ml-4 xl:ml-6 block sm:flex flex-row-reverse items-center lg:block">
+          {currentUser?.isAdmin && (
             <div className="bg-white shadow-md rounded-lg text-sm p-3 xl:p-5 mb-4 text-center text-gray-800 w-auto sm:w-1/2 lg:w-auto flex items-center justify-between">
               <div className="flex">
                 <ToggleSwitch
@@ -110,19 +110,19 @@ const Index = () => {
                 </button>
               </div>
             </div>
-            <div className="bg-white shadow-md rounded-lg text-sm p-3 xl:p-5 mb-4 text-center text-gray-800 w-auto sm:w-1/2 lg:w-auto">
-              <ReviewOverview restaurant={restaurant} />
-            </div>
-
-            <div className="bg-white shadow-md rounded-lg text-xs xl:text-sm p-4 text-gray-800 w-auto sm:w-1/2 lg:w-auto sm:mr-4 lg:mr-0 mb-4 lg:mb-0">
-              <RestaurantInfo
-                showMap={showMap}
-                setShowMap={setShowMap}
-                restaurant={restaurant}
-              />
-            </div>
+          )}
+          <div className="bg-white shadow-md rounded-lg text-sm p-3 xl:p-5 mb-4 text-center text-gray-800 w-auto sm:w-1/2 lg:w-auto">
+            <ReviewOverview restaurant={restaurant} />
           </div>
-        )}
+
+          <div className="bg-white shadow-md rounded-lg text-xs xl:text-sm p-4 text-gray-800 w-auto sm:w-1/2 lg:w-auto sm:mr-4 lg:mr-0 mb-4 lg:mb-0">
+            <RestaurantInfo
+              showMap={showMap}
+              setShowMap={setShowMap}
+              restaurant={restaurant}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );
