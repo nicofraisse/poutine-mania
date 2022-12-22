@@ -110,7 +110,7 @@ const NoterRestaurant = () => {
         <RestaurantCard restaurant={restaurant} />
       </div>
       <h1 className="text-lg xs:text-xl font-black mb-2">
-        <span>Qu'avez-vous pensé(e) de leur poutine?</span>
+        <span>Qu&apos;avez-vous pensé(e) de leur poutine?</span>
       </h1>
 
       <Form

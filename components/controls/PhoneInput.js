@@ -12,7 +12,7 @@ const Phone = (props) => {
 
   useEffect(() => {
     setFieldValue(field.name, value);
-  }, [value]);
+  }, [value]); //eslint-disable-line
 
   return (
     <div className="border border-gray-300 rounded pl-3 pr-1 py-1">
