@@ -168,6 +168,12 @@ const MarkerAndPopup = ({
             >
               {restaurant.name}
             </div>
+            <div
+              className="text-slate-600 mt-1"
+              style={{ fontSize: 11, lineHeight: 1.25 }}
+            >
+              {address.place_name?.replace(", Canada", "")}
+            </div>
             {!isShowPage && (
               <>
                 <div className="max-w-28">
@@ -192,6 +198,7 @@ const MarkerAndPopup = ({
                 </div>
               </>
             )}
+
             <div
               onClick={(e) => {
                 e.stopPropagation();
@@ -250,19 +257,19 @@ const MapMap = ({ restaurants, isShowPage }) => {
     >
       <Map
         reuseMaps
-        id="mymap"
+        id="mymap2"
+        style={{ width: "100%", height: "100%" }}
+        mapStyle="mapbox://styles/mapbox/streets-v10"
+        mapboxAccessToken={MAPBOX_TOKEN}
+        onZoom={(e) => {
+          if (!isShowPage) setIsSmallMarker(e.viewState.zoom < 12);
+        }}
         initialViewState={{
           bounds: [
             [minLongitude, minLatitude],
             [maxLongitude, maxLatitude],
           ],
           fitBoundsOptions: { padding: 60, maxZoom: 13 },
-        }}
-        style={{ width: "100%", height: "100%" }}
-        mapStyle="mapbox://styles/mapbox/streets-v10"
-        mapboxAccessToken={MAPBOX_TOKEN}
-        onZoom={(e) => {
-          if (!isShowPage) setIsSmallMarker(e.viewState.zoom < 12);
         }}
       >
         <NavigationControl position="bottom-right" />

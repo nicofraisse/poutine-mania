@@ -1,5 +1,5 @@
 import { ExternalLink, MapPin, Phone, PhoneCall } from "react-feather";
-import Map from "components/Map";
+import ShowPageMap from "components/ShowPageMap";
 import { formatAddress } from "lib/formatAddress";
 
 export const RestaurantInfo = ({ showMap, restaurant, setShowMap }) => {
@@ -7,7 +7,7 @@ export const RestaurantInfo = ({ showMap, restaurant, setShowMap }) => {
     <>
       {showMap && (
         <div className="border h-[200px] mb-4 ">
-          <Map restaurants={[restaurant]} isShowPage />
+          <ShowPageMap restaurants={[restaurant]} isShowPage />
         </div>
       )}
 
