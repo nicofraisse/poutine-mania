@@ -12,6 +12,7 @@ const Login = ({ onSubmit, redirect }) => {
   const { push } = useRouter();
 
   const options = {
+    redirect: false,
     callbackUrl: redirect
       ? window.location.origin + redirect
       : window.location.href,
@@ -20,9 +21,10 @@ const Login = ({ onSubmit, redirect }) => {
   const handleSubmit = (values, formikBag) => {
     signIn("credentials", {
       ...values,
-      options,
+      ...options,
     })
       .then((data) => {
+        console.log(data);
         if (data?.error) {
           toast.error(data.error);
         } else {
@@ -30,7 +32,7 @@ const Login = ({ onSubmit, redirect }) => {
           onSubmit && onSubmit();
         }
         formikBag.setSubmitting(false);
-        if (redirect) push(redirect);
+        // if (redirect) push(redirect);
       })
       .catch((e) => {
         toast.error(e.message);
