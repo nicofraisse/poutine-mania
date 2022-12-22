@@ -1,4 +1,5 @@
-import { createContext, useContext, useState } from "react";
+import { useRouter } from "next/router";
+import { createContext, useContext, useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
 
 const RestaurantSearchContext = createContext({});
@@ -6,6 +7,13 @@ const RestaurantSearchContext = createContext({});
 export const RestaurantSearchProvider = ({ children }) => {
   const [searchValue, setSearchValue] = useState("");
   const [debouncedValue] = useDebounce(searchValue, 500);
+  const { query } = useRouter();
+
+  useEffect(() => {
+    // if (query.search) {
+    setSearchValue(query?.search || "");
+    // }
+  }, [query]);
 
   return (
     <RestaurantSearchContext.Provider

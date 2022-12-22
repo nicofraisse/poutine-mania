@@ -30,7 +30,7 @@ const Field = ({
 
   return (
     <FormikField name={name}>
-      {({ field, meta }) => {
+      {({ field, meta, setTouched }) => {
         return (
           <div className={classNames(className, "mb-4", { hidden })}>
             {!hideLabel && (

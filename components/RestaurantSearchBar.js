@@ -10,7 +10,8 @@ import { Image as ImageIcon } from "react-feather";
 
 const RestaurantSearchBar = React.forwardRef(({ onSubmit }, ref) => {
   const { push, asPath, pathname } = useRouter();
-  const { searchValue, setSearchValue } = useRestaurantSearch();
+  const { searchValue, setSearchValue, nonDebouncedValue } =
+    useRestaurantSearch();
   const [showSearchSuggestions, setShowSearchSuggestions] = useState(false);
 
   const { data: restaurants, loading: restaurantsLoading } = useGet(
@@ -27,10 +28,10 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit }, ref) => {
     setTimeout(() => {
       setShowSearchSuggestions(false);
     }, 200);
-    const trimmedSearchValue = searchValue?.trim();
+    const trimmedSearchValue = nonDebouncedValue?.trim();
     push(
       trimmedSearchValue
-        ? `/restaurants?search=${trimmedSearchValue}`
+        ? `/restaurants?search=${encodeURIComponent(trimmedSearchValue)}`
         : `/restaurants`
     );
     onSubmit && onSubmit();
@@ -64,6 +65,7 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit }, ref) => {
         loading={restaurantsLoading}
         handleSearch={handleSearch}
         onChange={(e) => setSearchValue(e.target.value)}
+        value={nonDebouncedValue ?? ""}
       />
       {showSearchSuggestions && (
         <div className="absolute z-50 w-full bg-white border shadow-lg left-0 px-2 sm:px-3 py-2">

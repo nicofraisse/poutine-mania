@@ -144,7 +144,7 @@ const RateRestaurant = ({
         <div className="text-right border-t-2 w-full bg-white h-20 p-3">
           Restaurant introuvable?
           <span className="text-teal-600 hover:opacity-70">
-            <Link href="/admin/create-restaurant">Ajouter un restaurant</Link>
+            <Link href="/nouveau-restaurant">Ajouter un restaurant</Link>
           </span>
         </div>
       </div>

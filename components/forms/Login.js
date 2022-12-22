@@ -5,12 +5,23 @@ import * as Yup from "yup";
 import Form from "components/Form";
 import Field from "components/Field";
 import { useLoginForm } from "../context/LoginFormProvider";
+import { useRouter } from "next/router";
 
-const Login = ({ onSubmit }) => {
+const Login = ({ onSubmit, redirect }) => {
   const { openSignup, closeLogin } = useLoginForm();
+  const { push } = useRouter();
+
+  const options = {
+    callbackUrl: redirect
+      ? window.location.origin + redirect
+      : window.location.href,
+  };
 
   const handleSubmit = (values, formikBag) => {
-    signIn("credentials", { ...values, redirect: false })
+    signIn("credentials", {
+      ...values,
+      options,
+    })
       .then((data) => {
         if (data?.error) {
           toast.error(data.error);
@@ -19,6 +30,7 @@ const Login = ({ onSubmit }) => {
           onSubmit && onSubmit();
         }
         formikBag.setSubmitting(false);
+        if (redirect) push(redirect);
       })
       .catch((e) => {
         toast.error(e.message);
@@ -48,7 +60,7 @@ const Login = ({ onSubmit }) => {
             variant="white"
             className="w-full mb-4"
             bgClassName="bg-white"
-            onClick={() => signIn("google")}
+            onClick={() => signIn("google", options)}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -89,7 +101,7 @@ const Login = ({ onSubmit }) => {
           <Button
             type="button"
             className="bg-blue-500 px-5 w-full text-white"
-            onClick={() => signIn("facebook")}
+            onClick={() => signIn("facebook", options)}
           >
             <svg
               width="32px"

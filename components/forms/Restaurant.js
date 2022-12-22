@@ -83,6 +83,8 @@ const RestaurantForm = ({ type, onSubmit, isAdmin }) => {
     website: type === "update" ? restaurant.website : "",
     priceRange: type === "update" ? restaurant.priceRange : null,
     categories: type === "update" ? restaurant.categories : [],
+    "address-0": null,
+    "phoneNumber-0": "",
   };
 
   if (type === "update") {
@@ -108,11 +110,14 @@ const RestaurantForm = ({ type, onSubmit, isAdmin }) => {
           .min(1, "Vous devez ajouter au moins 1 catégorie")
           .required(),
         website: Yup.string().min(1),
-        "address-0": Yup.object().required(),
+        "address-0": Yup.object()
+          .typeError("Veuillez indiquer l'addresse de ce restaurant")
+          .required(),
+        "phoneNumber-0": Yup.string().optional(),
         priceRange: Yup.number().nullable().required("Requis"),
       })}
     >
-      {({ isSubmitting, values, errors, setFieldValue }) => (
+      {({ isSubmitting, values, errors, setFieldValue, touched }) => (
         <>
           <Field name="name" label="Nom du restaurant" />
           <Field
@@ -131,7 +136,7 @@ const RestaurantForm = ({ type, onSubmit, isAdmin }) => {
             ]}
           />
 
-          <div className="bg-gray-50 border p-4 rounded mb-4">
+          <div className="bg-gray-50 border p-3 sm:p-4 rounded mb-4">
             <label className="font-bold mb-2 text-sm block">Succursales</label>
             {succursales.map((succursale, index) => (
               <div
@@ -172,7 +177,7 @@ const RestaurantForm = ({ type, onSubmit, isAdmin }) => {
                 )}
                 <Field
                   name={`address-${index}`}
-                  onChange={(value, formikBag) => {
+                  onChange={(value) => {
                     setFieldValue(`address-${index}`, {
                       label: value.place_name,
                       value,
@@ -200,7 +205,7 @@ const RestaurantForm = ({ type, onSubmit, isAdmin }) => {
               type="button"
               variant="light"
               size="sm"
-              className=""
+              className="text-sm"
               height="sm"
               style={{ marginLeft: "auto" }}
               onClick={() =>
@@ -215,10 +220,15 @@ const RestaurantForm = ({ type, onSubmit, isAdmin }) => {
             </Button>
           </div>
           <Field name="website" label="Site internet" />
-
           <div className="flex items-center justify-between">
             <Button
               loading={isSubmitting}
+              onClick={(e) => {
+                if (Object.keys(errors).length > 0)
+                  toast.error(
+                    "Veuillez remplir tous les champs correctement (voir les erreurs plus haut)"
+                  );
+              }}
               className="bg-teal-500-300 px-4 py-1 rounded-lg shadoow w-40"
               type="submit"
               size="sm"

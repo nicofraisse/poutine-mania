@@ -93,11 +93,14 @@ const MarkerAndPopup = ({
               <Image
                 alt="poutine-logo"
                 src="/poutine1.png"
-                width={26}
-                height={26}
-                className={classNames("transform -translate-y-1 z-30", {
-                  "scale-110": isHovered,
-                })}
+                width={36}
+                height={36}
+                className={classNames(
+                  "transform scale-75 transition-all duration-100 -translate-y-1 z-30",
+                  {
+                    "scale-100": isHovered,
+                  }
+                )}
                 onClick={() => {
                   togglePopup();
                 }}
@@ -120,8 +123,8 @@ const MarkerAndPopup = ({
                     )
                   : "white"
               }
-              className={classNames("transition duration-100", {
-                "transform scale-150": isHovered,
+              className={classNames("transition duration-100 nocircle", {
+                "transform scale-125": isHovered,
               })}
               ref={theRef}
             />

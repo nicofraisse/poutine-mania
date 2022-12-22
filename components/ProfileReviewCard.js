@@ -38,6 +38,7 @@ const ProfileReviewCard = ({ review, isIndex, userName }) => {
         .catch((e) => toast.error(e.message));
     }
   };
+
   return (
     <>
       <div className="text-gray-400 block sm:flex justify-between items-center">
@@ -68,7 +69,9 @@ const ProfileReviewCard = ({ review, isIndex, userName }) => {
           ) : (
             <>
               <Edit3 size={20} className="mr-2 inline -mt-1" />
-              {currentUser._id === review.userId ? "Tu as" : `${userName} a`}
+              {currentUser && currentUser._id === review.userId
+                ? "Tu as"
+                : `${userName} a`}
               &nbsp;
             </>
           )}

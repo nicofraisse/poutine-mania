@@ -112,3 +112,7 @@ a {
   outline: none;
   background-color: #eee;
 }
+
+.nocircle circle {
+  display: none;
+}

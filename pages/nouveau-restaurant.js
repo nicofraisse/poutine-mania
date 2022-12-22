@@ -1,7 +1,7 @@
 import RestaurantForm from "components/forms/Restaurant";
 import { useRouter } from "next/router";
 import { useCurrentUser } from "lib/useCurrentUser";
-import Spinner from "../../components/Spinner";
+import Spinner from "../components/Spinner";
 
 const CreateRestaurant = () => {
   const { push } = useRouter();
@@ -15,8 +15,10 @@ const CreateRestaurant = () => {
     );
   }
   return (
-    <div className="w-[600px] py-10 px-16">
-      <h1 className="mt-4 mb-5 font-black text-2xl">Nouveau Restaurant</h1>
+    <div className="sm:w-[600px] py-2 px-4 sm:py-10 sm:px-16">
+      <h1 className="my-3 sm:mt-4 sm:mb-5 font-black text-xl sm:text-2xl">
+        Nouveau Restaurant
+      </h1>
       <RestaurantForm
         type="create"
         onSubmit={() => push("/admin/restaurants")}

@@ -22,8 +22,7 @@ function TopPoutines() {
   );
 
   const { data: restaurants, loading: restaurantsLoading } = useGet(
-    `/api/restaurants?sort=avgRating&order=-1&limit=10`
-    // `/api/restaurants?sort=avgRating&order=-1&limit=20&minReviewCount=1`
+    `/api/restaurants?sort=avgRating&order=-1&limit=10&noUnapproved=true`
   );
 
   useEffect(() => {

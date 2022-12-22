@@ -14,18 +14,21 @@ import Button from "components/Button";
 import useClickOutside from "../../lib/useClickOutside";
 import classNames from "classnames";
 import { getUrlQueryString } from "../../lib/getUrlqueryString";
+import { useRouter } from "next/router";
+import { VariantColor } from "../../components/Button";
+import RestaurantIntrouvable from "../../components/RestaurantIntrouvable";
 
 const sortTypes = [
+  { label: "Popularité", value: "reviewCount" },
   { label: "Nom", value: "name" },
   { label: "Note moyenne", value: "avgRating" },
   // { label: 'Date de création', value: 'createdAt' },
-  { label: "Nombre d'avis", value: "reviewCount" },
   // { label: 'Proximité', value: 'proximity' },
 ];
 
 const sortOrders = [
-  { label: "Croissant", value: 1 },
   { label: "Décroissant", value: -1 },
+  { label: "Croissant", value: 1 },
 ];
 
 const Restaurants = () => {
@@ -35,10 +38,11 @@ const Restaurants = () => {
   const [sortOrder, setSortOrder] = useState(-1);
   const [filtersOpen, setFiltersOpen] = useState(false);
   const filtersRef = useClickOutside(() => setFiltersOpen(false));
+  const { push } = useRouter();
 
   const { data: restaurants, loading: restaurantsLoading } = useGet(
     `/api/restaurants${getUrlQueryString({
-      search: searchValue?.trim(),
+      search: searchValue && encodeURIComponent(searchValue.trim()),
       sort: sortType,
       order: sortOrder,
       noUnapproved: true,
@@ -51,11 +55,11 @@ const Restaurants = () => {
 
   return (
     <RestaurantCardHoverProvider>
-      <div className="flex w-full flex-col md:flex-row-reverse h-screen-minus-navbar overflow-y-auto">
-        <div className="grow w-screen md:w-1/2 min-h-1/2vh max-h-1/2vh md:min-h-screen-minus-navbar md:max-h-screen-minus-navbar">
+      <div className="flex w-full flex-col md:flex-row-reverse h-screen-minus-navbar">
+        <div className="grow md:w-1/2 min-h-1/2vh max-h-1/2vh md:min-h-screen-minus-navbar md:max-h-screen-minus-navbar">
           <Map restaurants={restaurants} />
         </div>
-        <div className="pt-5 w-screen md:w-1/2 md:max-w-[480px] md:overflow-y-auto">
+        <div className="pt-5 md:w-1/2 md:max-w-[480px] md:overflow-y-auto">
           <div className="min-h-12">
             <div className="lg:pl-6 lg:pr-5 px-2 m b-3 lg:mb-0 flex justify-between items-start">
               {loading ? (
@@ -69,7 +73,7 @@ const Restaurants = () => {
                   {searchValue && (
                     <button
                       className="p-1 bg-gray-50 transition duration-150 hover:bg-gray-100 ml-1 rounded"
-                      onClick={() => setSearchValue(null)}
+                      onClick={() => push("/restaurants")}
                     >
                       <X size={18} />
                     </button>
@@ -104,17 +108,14 @@ const Restaurants = () => {
                     options={sortTypes}
                     className="mr-2 text-sm"
                     onChange={({ value }) => setSortType(value)}
-                    defaultValue={{
-                      label: "Nombre d'avis",
-                      value: "avgRating",
-                    }}
+                    defaultValue={sortTypes[0]}
                   />
                   <ReactSelect
                     placeholder="Ordre"
                     options={sortOrders}
                     className="text-sm"
                     onChange={({ value }) => setSortOrder(value)}
-                    defaultValue={{ label: "Décroissant", value: -1 }}
+                    defaultValue={sortOrders[0]}
                   />
                 </div>
               </div>
@@ -127,6 +128,9 @@ const Restaurants = () => {
               <div className="w-full border-b border-gray-100"></div>
             </div>
           ))}
+          <div className="p-3">
+            <RestaurantIntrouvable />
+          </div>
         </div>
       </div>
     </RestaurantCardHoverProvider>
