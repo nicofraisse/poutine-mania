@@ -17,6 +17,7 @@ import { getUrlQueryString } from "../../lib/getUrlqueryString";
 import { useRouter } from "next/router";
 import { VariantColor } from "../../components/Button";
 import RestaurantIntrouvable from "../../components/RestaurantIntrouvable";
+import { flatten } from "lodash";
 
 const sortTypes = [
   { label: "Popularité", value: "reviewCount" },
@@ -51,6 +52,7 @@ const Restaurants = () => {
 
   if (!restaurants) return <Spinner />;
 
+  const allSuccursales = flatten(restaurants.map((r) => r.succursales));
   const loading = searchValue !== nonDebouncedValue || restaurantsLoading;
 
   return (
@@ -67,8 +69,11 @@ const Restaurants = () => {
                   <Spinner />
                 </div>
               ) : (
-                <h2 className="font-bold text-gray-500 text-xl flex items-center h-12 mr-2">
-                  {restaurants.length} résultat{restaurants.length > 1 && "s"}{" "}
+                <h2 className="font-bold text-slate-500 text-lg flex items-center h-12 mr-2">
+                  {restaurants.length} poutinerie
+                  {restaurants.length > 1 && "s"} • {allSuccursales.length}{" "}
+                  addresse
+                  {allSuccursales.length > 1 && "s"}{" "}
                   {searchValue && `pour "${searchValue}"`}{" "}
                   {searchValue && (
                     <button
