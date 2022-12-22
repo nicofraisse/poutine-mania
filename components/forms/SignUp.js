@@ -8,7 +8,7 @@ import Button from "components/Button";
 import { useLoginForm } from "../context/LoginFormProvider";
 import { signIn } from "next-auth/client";
 
-const SignUp = ({ onSubmit }) => {
+const SignUp = ({ onSubmit, redirect }) => {
   const { push } = useRouter();
   const { openLogin, closeSignup } = useLoginForm();
 
