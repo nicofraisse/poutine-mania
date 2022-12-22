@@ -50,7 +50,7 @@ const Noter = () => {
             </div>
             <div className="bg-gray-100 px-3 py-1 rounded text-gray-700 text-sm mt-2 cursor-pointer">
               <Link href={`/restaurants/${query.fromRateSuccess}`}>
-                Voir l&apos;avis
+                Voir votre avis
               </Link>
             </div>
           </div>

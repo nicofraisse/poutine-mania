@@ -45,8 +45,8 @@ const RestaurantCard = ({ restaurant }) => {
           "bg-gray-50": hoveredId === restaurant._id,
         }
       )}
-      onMouseEnter={() => setHoveredId(restaurant._id)}
-      onMouseLeave={() => setHoveredId(null)}
+      onMouseEnter={setHoveredId ? () => setHoveredId(restaurant._id) : null}
+      onMouseLeave={setHoveredId ? () => setHoveredId(null) : null}
     >
       <div
         className="bg-gray-100 rounded-sm w-1/4 h-24 min-w-24 sm:h-28 sm:min-w-28 mr-2 lg:mr-3 flex items-center justify-center "

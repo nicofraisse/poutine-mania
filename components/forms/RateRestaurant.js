@@ -198,7 +198,7 @@ const RateRestaurant = ({
           ),
           photos: Yup.object().nullable(),
         })}
-        className="sm:px-2 pb-3 w-[600px]"
+        className="sm:px-2 pb-3 sm:w-[600px]"
       >
         {({ isSubmitting, values, errors, touched }) => {
           const nbFilledFields = [
@@ -216,7 +216,7 @@ const RateRestaurant = ({
 
           return (
             <>
-              <div className="font-bold text-xl mb-4 sm:mb-6">
+              <div className="font-bold text-lg xs:text-xl mb-4 sm:mb-6">
                 {existingReview ? "Modifier votre " : "Laissez un "}
                 avis sur la poutine de{" "}
                 <span className="font-black text-orange-800">
@@ -333,9 +333,6 @@ const RateRestaurant = ({
           écris aide la communauté à trouver les meilleures poutine locales.
         </div>
         <div className="mt-8 flex">
-          {/* <Button variant='white' width='lg' className='mr-4'>
-            Voir l&apos;avis
-          </Button> */}
           <Button
             variant="secondary"
             width="sm"

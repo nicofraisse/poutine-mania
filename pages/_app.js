@@ -27,7 +27,7 @@ function MyApp({ Component, pageProps }) {
             <RestaurantSearchProvider>
               <RateRestaurantProvider>
                 <Layout {...pageProps}>
-                  <>
+                  <div>
                     <Component {...pageProps} />
                     <Toaster
                       position="bottom-right"
@@ -36,7 +36,7 @@ function MyApp({ Component, pageProps }) {
                         duration: 7000,
                       }}
                     />
-                  </>
+                  </div>
                 </Layout>
               </RateRestaurantProvider>
             </RestaurantSearchProvider>

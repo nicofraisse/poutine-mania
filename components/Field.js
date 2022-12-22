@@ -32,7 +32,7 @@ const Field = ({
     <FormikField name={name}>
       {({ field, meta, setTouched }) => {
         return (
-          <div className={classNames(className, "mb-4", { hidden })}>
+          <div className={classNames(className, "mb-3 xs:mb-4", { hidden })}>
             {!hideLabel && (
               <label
                 htmlFor={name}

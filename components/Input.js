@@ -17,7 +17,7 @@ const Input = ({
   if (type === "textarea") {
     return (
       <textarea
-        className="border-2 border-gray-300 font-light rounded-md py-[8px] px-2 w-full h-[120px]"
+        className="text-sm xs:text-base border-2 border-gray-300 font-light rounded-md py-[8px] px-2 w-full h-[140px]"
         placeholder={placeholder}
         defaultValue={value}
         {...props}
