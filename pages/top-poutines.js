@@ -8,8 +8,7 @@ import classNames from "classnames";
 import RatingPill from "../components/RatingPill";
 import Link from "next/link";
 import { Image } from "../components/Image";
-import { useRateRestaurant } from "components/context/RateRestaurantProvider";
-import { TagSection } from "components/RestaurantCard";
+
 import { useRouter } from "next/router";
 
 function TopPoutines() {

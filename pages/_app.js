@@ -8,14 +8,14 @@ import { RestaurantSearchProvider } from "../components/context/RestaurantSearch
 import Head from "next/head";
 import { CookiesProvider } from "react-cookie";
 
-function MyApp({ Component, pageProps }) {
+function App({ Component, pageProps }) {
   return (
     <>
       <Head>
         <title>Poutine Mania - La communauté des fans de la poutine!</title>
         <meta
           name="description"
-          content="Découvrez les meilleures poutines du Québec grâce à notre communauté de foodies passionnés! Partagez vos notes et critiques sur les sauces, les fromages et les frites de chaque restaurant pour trouver les poutines parfaites pour votre palais. Rejoignez-nous dans notre quête de la poutine ultime!"
+          content="Découvrez les meilleures poutines du Québec grâce à notre communauté de passionnés! Partagez vos notes et critiques sur les frites, le fromage et la sauce de chaque restaurant pour trouver les poutines parfaites pour votre palais. Rejoignez-nous dans notre quête de la poutine ultime!"
         ></meta>
         <meta name="referrer" content="no-referrer" />
         <meta charSet="UTF-8" />
@@ -51,4 +51,4 @@ function MyApp({ Component, pageProps }) {
   );
 }
 
-export default MyApp;
+export default App;

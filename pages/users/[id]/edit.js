@@ -125,8 +125,12 @@ const Edit = () => {
         >
           {({ isSubmitting }) => (
             <>
-              <Field name="firstName" label="Prénom" />
-              <Field name="lastName" label="Nom" />
+              {isCredentialAccount && (
+                <>
+                  <Field name="firstName" label="Prénom" />
+                  <Field name="lastName" label="Nom" />
+                </>
+              )}
               <Field name="avatar" control={ImageUpload} roundedFull />
 
               <Button
@@ -187,8 +191,8 @@ const Edit = () => {
           <span className="font-bold">{providerName}</span> dont le courriel
           associé est {currentUser.email}.
           <div className="mt-3">
-            Pour modifier votre nom, prénom, courriel ou avatar, vous devez
-            faire les changements directement sur votre compte {providerName}.
+            Pour modifier votre nom, prénom, ou courriel, vous devez faire les
+            changements directement sur votre compte {providerName}.
           </div>
         </div>
       )}
