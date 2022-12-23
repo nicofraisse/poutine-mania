@@ -80,7 +80,7 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit }, ref) => {
               >
                 {image ? (
                   <Image
-                    publicId={image}
+                    src={image}
                     alt={`${r.name}-photo`}
                     className="w-10 h-8 sm:w-12 sm:h-10 rounded object-cover object-center"
                   />

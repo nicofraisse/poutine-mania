@@ -55,6 +55,8 @@ export default NextAuth({
           email: foundUser.email,
           isAdmin: foundUser.isAdmin,
           name: foundUser.name,
+          firstName: foundUser.firstName,
+          lastName: foundUser.lastName,
           image: foundUser.image,
           emailVerified: foundUser.emailVerified,
           connectedAccounts: foundConnectedAccounts,

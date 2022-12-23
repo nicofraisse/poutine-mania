@@ -116,7 +116,7 @@ function TopPoutines() {
                   </div>
                   {image ? (
                     <Image
-                      publicId={image}
+                      src={image}
                       alt={`${r.name}-photo`}
                       className="h-48 xs:h-32 lg:h-36 w-[80%] xs:w-auto xs:min-w-36 sm:min-w-40 lg:min-w-48 object-cover object-center rounded mr-3 sm:mr-4 lg:mr-8 mb-3 xs:mb-0"
                     />

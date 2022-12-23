@@ -107,7 +107,7 @@ const ProfileReviewCard = ({ review, isIndex, userName }) => {
         <div className="flex items-start">
           {review.photos?.[0] && (
             <Image
-              publicId={review.photos?.[0]}
+              src={review.photos?.[0]}
               alt="poutine-user-photo"
               width={1000}
               className="border rounded-md mr-3 mt-3"
@@ -145,7 +145,7 @@ const ProfileReviewCard = ({ review, isIndex, userName }) => {
       >
         <div className="border w-full ">
           <Image
-            publicId={review.photos?.[0]}
+            src={review.photos?.[0]}
             alt="poutine-user-photo"
             width={"100%"}
             className="border rounded-md"

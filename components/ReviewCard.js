@@ -158,7 +158,7 @@ const ReviewCard = ({ review, handleEdit, handleDelete, isFirst }) => {
 
           {review.photos?.[0] && (
             <Image
-              publicId={review.photos?.[0]}
+              src={review.photos?.[0]}
               alt="poutine-user-photo"
               // width={280
               responsive
@@ -197,7 +197,7 @@ const ReviewCard = ({ review, handleEdit, handleDelete, isFirst }) => {
       >
         <div className="border w-full ">
           <Image
-            publicId={review.photos?.[0]}
+            src={review.photos?.[0]}
             alt="poutine-user-photo"
             width={"100%"}
             className="border rounded-md"

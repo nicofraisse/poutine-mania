@@ -155,7 +155,7 @@ const MarkerAndPopup = ({
           >
             {image && !isShowPage && (
               <CloudImage
-                publicId={image}
+                src={image}
                 alt={`${restaurant.name}-photo`}
                 className="w-full h-[150px] object-cover object-center rounded mb-2"
               />

@@ -40,7 +40,7 @@ const SelectRestaurant = ({ restaurants, onSelect, userRatedRestaurants }) => {
               <div className="flex items-center justify-between w-full">
                 <div className="flex items-center w-full">
                   <Image
-                    publicId={image}
+                    src={image}
                     alt={`${restaurant.name}-photo`}
                     className="h-12 min-w-12 max-w-12 object-cover object-center rounded-sm"
                   />

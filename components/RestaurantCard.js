@@ -54,7 +54,7 @@ const RestaurantCard = ({ restaurant }) => {
       >
         {image ? (
           <Image
-            publicId={image}
+            src={image}
             alt={`${name}-photo`}
             className="h-24 min-w-24 sm:h-28 sm:min-w-28 object-cover object-center rounded-sm"
           />

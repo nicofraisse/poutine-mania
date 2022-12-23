@@ -69,11 +69,20 @@ const Restaurants = () => {
                   <Spinner />
                 </div>
               ) : (
-                <h2 className="font-bold text-slate-500 text-lg flex items-center h-12 mr-2">
-                  {restaurants.length} poutinerie
-                  {restaurants.length > 1 && "s"} • {allSuccursales.length}{" "}
-                  addresse
-                  {allSuccursales.length > 1 && "s"}{" "}
+                <h2
+                  className="font-bold text-slate-500 text-lg flex items-center h-12 mr-2"
+                  style={{ lineHeight: 1.3 }}
+                >
+                  {restaurants.length > 0 ? (
+                    <>
+                      {restaurants.length} poutinerie
+                      {restaurants.length > 1 && "s"} • {allSuccursales.length}{" "}
+                      addresse
+                      {allSuccursales.length > 1 && "s"}{" "}
+                    </>
+                  ) : (
+                    "0 résultats "
+                  )}
                   {searchValue && `pour "${searchValue}"`}{" "}
                   {searchValue && (
                     <button

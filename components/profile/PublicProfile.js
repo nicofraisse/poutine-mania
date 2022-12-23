@@ -6,7 +6,7 @@ import { useGet } from "../../lib/useAxios";
 import Spinner from "../Spinner";
 import ProfileReviewCard from "../ProfileReviewCard";
 import { formatName } from "../../lib/formatName";
-import Image from "next/image";
+import { Image } from "components/Image";
 
 const PublicProfile = ({ user }) => {
   const { currentUser } = useCurrentUser();
@@ -24,9 +24,7 @@ const PublicProfile = ({ user }) => {
             <Image
               alt="user-image"
               src={user.image}
-              width="100%"
-              height="100%"
-              className="rounded-full object-cover object-center"
+              className="rounded-full w-20 h-20 object-cover object-center"
             />
           ) : (
             <div className="w-28 h-28 rounded-full bg-gray-300 flex-shrink-0 flex items-center justify-center">
@@ -35,7 +33,7 @@ const PublicProfile = ({ user }) => {
           )}
           <div className="sm:pl-8 w-full">
             <div className="mb-2 mt-2 w-full items-center sm:justify-between flex flex-col sm:flex-row">
-              <div className="font-black text-3xl">{formatName(user)}</div>
+              <div className="font-black text-2xl">{formatName(user)}</div>
               {user._id === currentUser?._id ? (
                 <Link
                   className="text-base mx-3 px-4 py-1 rounded-lg text-gray-500 sm:-mb-1 hover:text-gray-700 flex"

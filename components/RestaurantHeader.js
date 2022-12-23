@@ -27,7 +27,7 @@ const RestaurantHeader = ({ restaurant }) => {
         <div className="w-1/3 bg-gray-100 flex items-center justify-center">
           {images[0] ? (
             <Image
-              publicId={images[0]}
+              src={images[0]}
               className="w-full h-full object-cover object-center"
               alt="restaurant-main-image-1"
             />
@@ -38,7 +38,7 @@ const RestaurantHeader = ({ restaurant }) => {
         <div className="w-1/3 bg-gray-100 flex items-center justify-center">
           {images[1] ? (
             <Image
-              publicId={images[1]}
+              src={images[1]}
               className="w-full h-full object-cover object-center"
               alt="restaurant-main-image-2"
             />
@@ -49,7 +49,7 @@ const RestaurantHeader = ({ restaurant }) => {
         <div className="w-1/3 bg-gray-100 flex items-center justify-center">
           {images[2] ? (
             <Image
-              publicId={images[2]}
+              src={images[2]}
               className="w-full h-full object-cover object-center"
               alt="restaurant-main-image-3"
             />

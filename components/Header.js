@@ -7,6 +7,8 @@ import { useState, createRef, useEffect, useRef } from "react";
 import Dropdown from "./Dropdown";
 import { useLoginForm } from "./context/LoginFormProvider";
 import Image from "next/image";
+import { Image as ClImage } from "components/Image";
+
 import RestaurantSearchBar from "./RestaurantSearchBar";
 import { useRouter } from "next/router";
 import { useRestaurantSearch } from "./context/RestaurantSearchProvider";
@@ -172,12 +174,10 @@ const Header = ({ toggleMobileSidebar }) => {
                   ref={toggleRef}
                 >
                   {currentUser.image ? (
-                    <Image
+                    <ClImage
                       alt="user-image"
                       src={currentUser.image}
-                      width="100%"
-                      height="100%"
-                      className="rounded-full object-cover object-center"
+                      className="rounded-full object-cover object-center h-full w-full"
                     />
                   ) : (
                     <User className="text-white" size={30} />
