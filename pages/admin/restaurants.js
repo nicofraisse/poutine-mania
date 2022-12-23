@@ -9,10 +9,12 @@ import Spinner from "../../components/Spinner";
 import { format } from "date-fns";
 import { getUrlQueryString } from "../../lib/getUrlqueryString";
 import { ToggleSwitch } from "../../components/controls/ToggleSwitch";
+import { useCurrentUser } from "../../lib/useCurrentUser";
 
 const Restaurants = () => {
   const [restaurants, setRestaurants] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { currentUser } = useCurrentUser();
 
   const { push, reload } = useRouter();
 
@@ -50,6 +52,11 @@ const Restaurants = () => {
   };
 
   if (loading || !restaurants) return <Spinner />;
+
+  if (!currentUser.isAdmin) {
+    push("/");
+    return <div></div>;
+  }
 
   return (
     <div className="w-full min-h-screen-minus-navbar p-6 max-w-lg">

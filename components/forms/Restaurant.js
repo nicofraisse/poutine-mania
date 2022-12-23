@@ -15,9 +15,12 @@ import { cloneDeep, isString } from "lodash";
 import classNames from "classnames";
 import PillSelect from "../controls/PillSelect";
 import PhoneInput from "components/controls/PhoneInput";
+import { useCurrentUser } from "../../lib/useCurrentUser";
 
 const RestaurantForm = ({ type, onSubmit, isAdmin }) => {
   const { query, push } = useRouter();
+  const { currentUser } = useCurrentUser();
+
   const [succursales, setSuccursales] = useState([
     { address: "", phoneNumber: "" },
   ]);
@@ -48,9 +51,11 @@ const RestaurantForm = ({ type, onSubmit, isAdmin }) => {
         .then(({ data }) => {
           setSubmitting(false);
           toast.success("Succès");
-          onSubmit && onSubmit();
-          push(`/restaurants/${data._id}`);
-          push(`/admin/restaurants`);
+          push(
+            currentUser.isAdmin
+              ? "/admin/restaurants"
+              : `/restaurants=${data._id}`
+          );
         })
         .catch((err) => toast.error(err.message));
     } else if (type === "update") {
@@ -58,7 +63,6 @@ const RestaurantForm = ({ type, onSubmit, isAdmin }) => {
         .post(`/api/restaurants/${query.id}/update`, submitValues)
         .then(() => {
           toast.success("Succès");
-          push(`/admin/restaurants`);
         })
         .catch((err) => toast.error(err.message));
     }

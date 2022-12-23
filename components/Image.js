@@ -4,15 +4,21 @@ import { Image as ImageIcon, MapPin } from "react-feather";
 import classNames from "classnames";
 
 const Image = ({ alt, src, ...props }) => {
-  if (src && !src.includes("http"))
+  if (src) {
+    if (!src.includes("http")) {
+      return (
+        <CloudinaryImage
+          cloudName={process.env.CLOUD_NAME}
+          publicId={src}
+          alt={alt}
+          {...props}
+        />
+      );
+    }
     return (
-      <CloudinaryImage
-        cloudName={process.env.CLOUD_NAME}
-        publicId={src}
-        alt={alt}
-        {...props}
-      />
+      <NextImage width="100%" height="100%" src={src} {...props} alt="image" />
     );
+  }
   return (
     <ImageIcon
       className={classNames("text-gray-300", props.className)}

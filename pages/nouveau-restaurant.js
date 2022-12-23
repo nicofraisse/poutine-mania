@@ -19,11 +19,7 @@ const CreateRestaurant = () => {
       <h1 className="my-3 sm:mt-4 sm:mb-5 font-black text-xl sm:text-2xl">
         Nouveau Restaurant
       </h1>
-      <RestaurantForm
-        type="create"
-        onSubmit={() => push("/admin/restaurants")}
-        isAdmin={!currentUser.isAdmin}
-      />
+      <RestaurantForm type="create" isAdmin={!currentUser.isAdmin} />
     </div>
   );
 };
