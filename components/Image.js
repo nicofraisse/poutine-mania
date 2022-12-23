@@ -4,7 +4,7 @@ import { Image as ImageIcon, MapPin } from "react-feather";
 import classNames from "classnames";
 
 const Image = ({ alt, src, ...props }) => {
-  if (!src.includes("http"))
+  if (src && !src.includes("http"))
     return (
       <CloudinaryImage
         cloudName={process.env.CLOUD_NAME}
