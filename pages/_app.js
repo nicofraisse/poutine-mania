@@ -12,7 +12,11 @@ function MyApp({ Component, pageProps }) {
   return (
     <>
       <Head>
-        <title>Poutine Mania</title>
+        <title>Poutine Mania - La communauté des fans de la poutine!</title>
+        <meta
+          name="description"
+          content="Découvrez les meilleures poutines du Québec grâce à notre communauté de foodies passionnés! Partagez vos notes et critiques sur les sauces, les fromages et les frites de chaque restaurant pour trouver les poutines parfaites pour votre palais. Rejoignez-nous dans notre quête de la poutine ultime!"
+        ></meta>
         <meta name="referrer" content="no-referrer" />
         <meta charSet="UTF-8" />
         <meta

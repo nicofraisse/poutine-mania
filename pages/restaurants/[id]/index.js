@@ -76,7 +76,10 @@ const Index = ({ SEO }) => {
     <>
       <Head>
         <title>{SEO.restaurantName} - Poutine Mania</title>
-        <meta name="description" content="ok" />
+        <meta
+          name="description"
+          content={`Trouvez toutes les informations sur le restaurant ${SEO.restaurantName} sur notre site, y compris les notes et critiques de notre communauté sur leurs poutines, et bien plus."`}
+        />
       </Head>
       <div className="bg-[#fafafa] min-h-screen-minus-navbar">
         <RestaurantHeader restaurant={restaurant} />
