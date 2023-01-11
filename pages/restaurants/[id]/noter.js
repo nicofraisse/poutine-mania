@@ -14,8 +14,7 @@ import toast from "react-hot-toast";
 import Color from "color";
 import { round } from "lodash";
 import { formatRating } from "../../../lib/formatRating";
-import { Plus, MinusCircle, Check } from "react-feather";
-import classNames from "classnames";
+import { Check } from "react-feather";
 import { useCookies } from "react-cookie";
 import RestaurantCard from "components/RestaurantCard";
 
@@ -32,7 +31,7 @@ const AlmostThere = () => (
   </div>
 );
 
-export const MIN_COMMENT_CHARS = 20;
+export const MIN_COMMENT_CHARS = 10;
 
 const NoterRestaurant = () => {
   const [cookies, setCookies, removeCookies] = useCookies();

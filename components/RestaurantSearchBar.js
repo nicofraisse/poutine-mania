@@ -51,7 +51,7 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit }, ref) => {
 
   return (
     <form
-      className="relative grow sm:ml-6 mr-1 lg:mx-0"
+      className="relative grow max-w-xs sm:ml-6 mr-1 lg:mx-0"
       onSubmit={handleSearch}
       ref={ref}
       onFocus={handleFocus}

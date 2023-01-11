@@ -9,7 +9,6 @@ import { Edit, Trash, User, X } from "react-feather";
 import { Image } from "./Image";
 import Modal from "react-responsive-modal";
 import Link from "next/link";
-import NextImage from "next/image";
 import Color from "color";
 import classNames from "classnames";
 
@@ -71,7 +70,7 @@ const ReviewCard = ({ review, handleEdit, handleDelete, isFirst }) => {
               <div className="py-2 px-2 sm:px-3 flex sm:flex-col items-center border-gray-100 rounded-lg hover:bg-gray-100 transition duration-150 cursor-pointer">
                 <div className="bg-gray-50 border h-10 w-10 sm:h-12 sm:w-12 rounded-full text-gray-300 flex items-center justify-center">
                   {review.user.image ? (
-                    <NextImage
+                    <Image
                       alt="user-image"
                       src={review.user.image}
                       width="100%"
@@ -195,7 +194,7 @@ const ReviewCard = ({ review, handleEdit, handleDelete, isFirst }) => {
         closeIcon={<X />}
         center
       >
-        <div className="border w-full ">
+        <div className="border w-full mt-6">
           <Image
             src={review.photos?.[0]}
             alt="poutine-user-photo"
