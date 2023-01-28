@@ -61,7 +61,10 @@ const MesPoutines = () => {
           ["first", ...restaurants].map((r, i) => {
             if (r === "first") {
               return (
-                <div className="flex justify-between text-stone-600 p-2">
+                <div
+                  key={i}
+                  className="flex justify-between text-stone-600 p-2"
+                >
                   {/* <div>Classement</div>
                   <div>Poutine</div>
                   <div>Note</div> */}

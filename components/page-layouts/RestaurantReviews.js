@@ -150,7 +150,7 @@ const ReviewStats = ({ reviews, restaurant }) => {
               loading={isEatenLoading}
             >
               <CheckCircle className="mr-2 sm:text-lg w-4 sm:w-5" />
-              <span>J'ai mangé</span>
+              <span>J&apos;ai mangé</span>
             </Button>
             <Button
               height="sm"
