@@ -74,16 +74,31 @@ const Button = ({
         textColorClass[variant],
         heightClass[height],
         widthClass[width],
-        "rounded-md font-bold flex items-center justify-center select-none",
+        "rounded-md font-bold select-none relative",
         {
           "opacity-80": loading,
+          "opacity-100": !loading,
         },
         className
       )}
       disabled={loading}
       {...props}
     >
-      {loading ? <Spinner color="#fff" /> : children}
+      <div
+        className={classNames("flex items-center justify-center", {
+          "opacity-0": loading,
+        })}
+      >
+        {children}
+      </div>
+      {loading && (
+        <div
+          className="absolute w-full h-full flex items-center
+         justify-center top-0 left-0"
+        >
+          <Spinner color={"#89a"} noPadding />
+        </div>
+      )}
     </button>
   );
 };

@@ -23,6 +23,52 @@ const handler = async (req, res) => {
     });
 
     const data = await db.collection("reviews").find({}).toArray();
+    const restaurant = await db
+      .collection("restaurants")
+      .find({ _id: new ObjectId(req.body.restaurantId) });
+
+    if (
+      (req.body.photos && !restaurant.mainPhotos) ||
+      restaurant?.mainPhotos?.length < 3
+    ) {
+      const updatedMainPhotos = restaurant?.mainPhotos || [];
+      req.body.photos.forEach((photo) => {
+        if (updatedMainPhotos.length < 3) {
+          updatedMainPhotos.push(photo);
+        }
+      });
+      await db.collection("restaurants").updateOne(
+        { _id: ObjectId(req.body.restaurantId) },
+        {
+          $set: {
+            mainPhotos: updatedMainPhotos,
+          },
+        }
+      );
+    }
+
+    // Create updated eatenlist
+    let updatedEatenlist = session.user.eatenlist;
+    let updatedWatchlist = session.user.watchlist
+      ? [...session.user.eatenlist]
+      : [];
+
+    updatedEatenlist.push(req.body.restaurantId);
+    // updatedWatchlist = updatedWatchlist.filter(
+    //   (r) => r !== req.body.restaurantId
+    // );
+
+    // Update user's eatenlist
+    await db.collection("users").updateOne(
+      { _id: ObjectId(session.user._id) },
+      {
+        $set: {
+          eatenlist: updatedEatenlist,
+          // watchlist: updatedWatchlist,
+        },
+      }
+    );
+
     res.status(200).json({ data });
   } else {
     res.status(403).json("unauthorized");

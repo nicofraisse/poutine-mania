@@ -24,7 +24,6 @@ const Login = ({ onSubmit, redirect }) => {
       ...options,
     })
       .then((data) => {
-        console.log(data);
         if (data?.error) {
           toast.error(data.error);
         } else {

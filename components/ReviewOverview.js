@@ -8,6 +8,9 @@ import sauce from "assets/icons/sauce.svg";
 import { useEffect, useState } from "react";
 import { round } from "lodash";
 import classNames from "classnames";
+import Button from "./Button";
+import { Edit2, Edit3 } from "react-feather";
+import { useRouter } from "next/router";
 
 const IngredientRatingRings = ({
   friesRating,
@@ -71,9 +74,12 @@ const IngredientRatingRings = ({
 
 export const ReviewOverview = ({ restaurant }) => {
   const [isLoaded, setIsLoaded] = useState(false);
+  const { push } = useRouter();
+
   useEffect(() => {
     setIsLoaded(true);
   }, []);
+
   const noReviews = restaurant.reviews.length === 0;
   const noFries = !restaurant.avgFriesRating;
   const noCheese = !restaurant.avgCheeseRating;
@@ -102,7 +108,6 @@ export const ReviewOverview = ({ restaurant }) => {
           avis
         </div>
       </div>
-
       <div className="max-w-[300px] mx-auto mt-4">
         <IngredientRatingRings
           friesRating={isLoaded ? restaurant.avgFriesRating : 0}
@@ -113,6 +118,14 @@ export const ReviewOverview = ({ restaurant }) => {
           noSauce={noSauce}
         />
       </div>
+      <Button
+        height="sm"
+        className="mx-auto mt-6 mb-2"
+        onClick={() => push(`/restaurants/${restaurant._id}/noter`)}
+      >
+        <Edit3 size={20} className="mr-2" />
+        Noter leur poutine
+      </Button>
     </div>
   );
 };

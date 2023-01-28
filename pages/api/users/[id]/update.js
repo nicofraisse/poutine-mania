@@ -11,7 +11,6 @@ const handler = async (req, res) => {
     res.status(403).json(unauthorized);
   }
 
-  console.log(req.body);
   const updatedUser = await db.collection("users").updateOne(
     { _id: ObjectId(req.query.id) },
     {

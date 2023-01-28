@@ -47,8 +47,6 @@ const Index = ({ SEO }) => {
     });
   }, []);
 
-  console.log("test", SEO);
-
   const handleApprove = async (id, approved) => {
     await axios
       .post(`/api/restaurants/${id}/approve`, { approved })

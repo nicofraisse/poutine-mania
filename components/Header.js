@@ -146,13 +146,12 @@ const Header = ({ toggleMobileSidebar }) => {
                 variant="light"
                 height="sm"
                 width="sm"
-                className="flex  lg:ml-6 sm:w-52 sm:ml-2"
+                className="lg:ml-6 sm:w-52 sm:ml-2"
                 onClick={() => push("/noter")}
               >
                 <Edit3 className="xs:mr-2" />{" "}
                 <span className="hidden xs:block">Noter</span>
                 <span className="hidden sm:inline grow shrink-0 -ml-2">
-                  {" "}
                   &nbsp;une poutine
                 </span>
               </Button>
@@ -195,13 +194,14 @@ const Header = ({ toggleMobileSidebar }) => {
                       }, 100);
                     }}
                   >
-                    <div className="hover:bg-gray-100 rounded-t-lg px-3 py-2 text-gray-700 cursor-pointer">
-                      <Link href={`/users/${currentUser._id}`}>Mon profil</Link>
-                    </div>
+                    <Link href={`/users/${currentUser._id}`} passHref>
+                      <div className="hover:bg-gray-100 rounded-t-lg px-3 py-2 text-gray-700 cursor-pointer">
+                        Mon profil
+                      </div>
+                    </Link>
                     {/* <div className='hover:bg-gray-100 px-3 py-2 text-gray-700 cursor-pointer'>
                         <Link href='/profile'>Paramètres</Link>
                       </div> */}
-
                     <div
                       className="hover:bg-gray-100 px-3 py-2 rounded-b-lg text-gray-700 cursor-pointer"
                       onClick={signOut}

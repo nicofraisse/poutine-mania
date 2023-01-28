@@ -15,6 +15,11 @@ import {
   Watch,
   BarChart2,
   Eye,
+  Bookmark,
+  ThumbsUp,
+  Star,
+  Check,
+  CheckCircle,
 } from "react-feather";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -22,6 +27,7 @@ import classNames from "classnames";
 import { useCurrentUser } from "lib/useCurrentUser";
 import { useLoginForm } from "../context/LoginFormProvider";
 import ConditionalWrapper from "components/ConditionalWrapper";
+import { useRequireLogin } from "../../lib/useRequireLogin";
 
 const Item = ({ label, href, icon, disabled, onClick, requireLogin }) => {
   const { pathname } = useRouter();
@@ -61,13 +67,12 @@ const Item = ({ label, href, icon, disabled, onClick, requireLogin }) => {
 const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
   const { currentUser } = useCurrentUser();
   const { openLogin } = useLoginForm();
+  const requireLogin = useRequireLogin();
 
-  const onClickItem = (requireLogin) => {
-    if (!currentUser && requireLogin) {
-      openLogin();
-    } else {
-      toggleMobileSidebar();
-    }
+  const onClickItem = (isLoginRequired) => {
+    if (isLoginRequired) {
+      requireLogin(toggleMobileSidebar);
+    } else toggleMobileSidebar();
   };
 
   return (
@@ -133,17 +138,32 @@ const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
 
             <Item
               onClick={onClickItem}
-              label={`Mes poutines (${currentUser?.nbReviews || 0})`}
-              icon={BarChart2}
-              href={`/users/${currentUser?._id}`}
+              icon={Star}
+              label={`À essayer (${
+                (currentUser?.watchlist?.length > 999
+                  ? "999+"
+                  : currentUser?.watchlist?.length) || 0
+              })`}
+              href="/a-essayer"
+              requireLogin={!currentUser}
+            />
+            <Item
+              onClick={onClickItem}
+              label={`Mangées (${
+                (currentUser?.eatenlist?.length > 999
+                  ? "999+"
+                  : currentUser?.eatenlist?.length) || 0
+              })`}
+              icon={CheckCircle}
+              href={`/mes-poutines`}
               requireLogin={!currentUser}
             />
 
             {/* <Item
               onClick={onClickItem}
-              label='À essayer (3)'
-              icon={List}
-              href='watchlist'
+              icon={BarChart2}
+              label="Statistiques"
+              href="watchlist"
               requireLogin={!currentUser}
             /> */}
             {currentUser?.isAdmin && (

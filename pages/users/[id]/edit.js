@@ -15,7 +15,6 @@ import ImageUpload from "../../../components/controls/ImageUpload";
 const Edit = () => {
   const { push, back, query } = useRouter();
   const { currentUser } = useCurrentUser();
-  console.log({ currentUser });
 
   const handleChangePassword = (values, formikBag) => {
     axios
@@ -105,7 +104,7 @@ const Edit = () => {
         <ChevronLeft />
         Retour à mon profil
       </Button>
-      <div className={"p-4 border rounded-lg my-4"}>
+      <div className="p-4 border rounded-lg my-4">
         <h2 className="font-bold text-2xl text-center my-4">
           Modifier mes informations
         </h2>
@@ -116,11 +115,15 @@ const Edit = () => {
             avatar: currentUser.image,
           }}
           onSubmit={handleUpdateInfo}
-          validationSchema={Yup.object({
-            firstName: Yup.string().min(1).max(20).required("Requis"),
-            lastName: Yup.string().min(1).max(20),
-            avatar: Yup.object().nullable(),
-          })}
+          validationSchema={
+            isCredentialAccount
+              ? Yup.object({
+                  firstName: Yup.string().min(1).max(20).required("Requis"),
+                  lastName: Yup.string().min(1).max(20),
+                  avatar: Yup.object().nullable(),
+                })
+              : null
+          }
           className="max-w-sm p-4"
         >
           {({ isSubmitting }) => (

@@ -27,6 +27,7 @@ export default NextAuth({
     // redirect: async (url, _baseUrl) => {
     //   return Promise.resolve('/')
     // },
+    // },
     session: async (session, user) => {
       const client = await connectToDatabase();
       const db = await client.db();
@@ -59,6 +60,8 @@ export default NextAuth({
           lastName: foundUser.lastName,
           image: foundUser.image,
           emailVerified: foundUser.emailVerified,
+          eatenlist: foundUser.eatenlist,
+          watchlist: foundUser.watchlist,
           connectedAccounts: foundConnectedAccounts,
           nbReviews: reviews.length,
         };
