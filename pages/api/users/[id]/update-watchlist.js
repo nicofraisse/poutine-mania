@@ -6,24 +6,31 @@ const handler = async (req, res) => {
   const client = await connectToDatabase();
   const db = await client.db();
   const session = await getSession({ req });
-
+  console.log("SESIOn", session);
   // Validate request
-  if (!session.user || session.user._id !== req.query.id) {
-    res.status(403).json(unauthorized);
+  if (!session || session.user._id !== req.query.id) {
+    res.status(403).json({ message: "unauthorized" });
+    return;
   }
   if (!req.body.type || !["add", "remove"].includes(req.body.type)) {
-    res.status(400).json("Missing or wrong type (add or remove)");
+    res.status(400).json({ message: "Missing or wrong type (add or remove)" });
+    return;
   }
   if (!req.body.restaurantId) {
-    res.status(400).json("Missing restaurant id");
+    res.status(400).json({ message: "Missing restaurant id" });
+    return;
   }
 
   // Create updated watchlist
+  let updatedEatenlist = session.user.eatenlist;
 
   let updatedWatchlist = session.user.watchlist
     ? [...session.user.watchlist]
     : [];
   if (req.body.type === "add") {
+    updatedEatenlist = updatedEatenlist.filter(
+      (r) => r !== req.body.restaurantId
+    );
     updatedWatchlist.push(req.body.restaurantId);
   } else if (req.body.type === "remove") {
     updatedWatchlist = updatedWatchlist.filter(
@@ -37,6 +44,7 @@ const handler = async (req, res) => {
     {
       $set: {
         watchlist: updatedWatchlist,
+        eatenlist: updatedEatenlist,
       },
     }
   );

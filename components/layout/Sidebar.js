@@ -28,6 +28,7 @@ import { useCurrentUser } from "lib/useCurrentUser";
 import { useLoginForm } from "../context/LoginFormProvider";
 import ConditionalWrapper from "components/ConditionalWrapper";
 import { useRequireLogin } from "../../lib/useRequireLogin";
+import { useSidebarData } from "../context/SidebarDataProvider";
 
 const Item = ({ label, href, icon, disabled, onClick, requireLogin }) => {
   const { pathname } = useRouter();
@@ -68,6 +69,7 @@ const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
   const { currentUser } = useCurrentUser();
   const { openLogin } = useLoginForm();
   const requireLogin = useRequireLogin();
+  const { sidebarEatenlistAmount, sidebarWatchlistAmount } = useSidebarData();
 
   const onClickItem = (isLoginRequired) => {
     if (isLoginRequired) {
@@ -139,21 +141,25 @@ const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
             <Item
               onClick={onClickItem}
               icon={Star}
-              label={`À essayer (${
-                (currentUser?.watchlist?.length > 999
-                  ? "999+"
-                  : currentUser?.watchlist?.length) || 0
-              })`}
+              label={`À essayer ${
+                sidebarWatchlistAmount === null
+                  ? ""
+                  : sidebarWatchlistAmount > 999
+                  ? "(999+)"
+                  : `(${sidebarWatchlistAmount})`
+              }`}
               href="/a-essayer"
               requireLogin={!currentUser}
             />
             <Item
               onClick={onClickItem}
-              label={`Mangées (${
-                (currentUser?.eatenlist?.length > 999
-                  ? "999+"
-                  : currentUser?.eatenlist?.length) || 0
-              })`}
+              label={`Mangées ${
+                sidebarEatenlistAmount === null
+                  ? ""
+                  : sidebarEatenlistAmount > 999
+                  ? "(999+)"
+                  : `(${sidebarEatenlistAmount})`
+              }`}
               icon={CheckCircle}
               href={`/mes-poutines`}
               requireLogin={!currentUser}

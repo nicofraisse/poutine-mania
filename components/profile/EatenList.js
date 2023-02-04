@@ -1,10 +1,9 @@
 import React from "react";
-import { getUrlQueryString } from "../lib/getUrlqueryString";
-import { useGet } from "../lib/useAxios";
-import { useCurrentUser } from "../lib/useCurrentUser";
+import { useGet } from "../../lib/useAxios";
+import { useCurrentUser } from "../../lib/useCurrentUser";
 import Spinner from "components/Spinner";
 import Link from "next/link";
-import { Image } from "../components/Image";
+import { Image } from "../../components/Image";
 import {
   Image as ImageIcon,
   Link2,
@@ -13,54 +12,33 @@ import {
   MessageCircle,
   Plus,
 } from "react-feather";
-import { TagSection } from "../components/RestaurantCard";
-import RatingPill from "../components/RatingPill";
+import { TagSection } from "../../components/RestaurantCard";
+import RatingPill from "../../components/RatingPill";
 import Color from "color";
-import { ratingColors } from "../data/ratingColors";
+import { ratingColors } from "../../data/ratingColors";
 import { round } from "lodash";
-import { formatRating } from "../lib/formatRating";
-import Button from "../components/Button";
-import { formatDate } from "../lib/formatDate";
+import { formatRating } from "../../lib/formatRating";
+import Button from "../../components/Button";
+import { formatDate } from "../../lib/formatDate";
 import { flatten } from "lodash";
 
-const MesPoutines = () => {
+const EatenList = ({ userId }) => {
   const { currentUser } = useCurrentUser();
 
   const { data: restaurants, loading: restaurantsLoading } = useGet(
-    `/api/users/${currentUser?._id}/get-eatenlist`,
+    `/api/users/${userId}/get-eatenlist`,
     {
-      skip: !currentUser,
+      skip: !userId,
     }
   );
 
   console.log({ restaurants });
 
+  const isCurrentUser = !(currentUser && currentUser._id === userId);
+
   return (
-    <div className="p-5 max-w-sm mx-auto">
-      <div className="flex flex-wrap justify-between items-start">
-        <h1 className="text-2xl font-black mb-5 inline mt-3">
-          Mes poutines mangées
-        </h1>
-      </div>
-      <Link href={"/noter"} passHref>
-        <div
-          className="mt-0s w-[220px] inline-flex mr-1 justify-center items-center py-2 px-2 bg-gray-50 border-gray-100 border-2 rounded-full text-neutral-400 cursor-pointer select-none hover:text-neutral-500 hover:border-neutral-300 transition-colors duration-200
-        "
-        >
-          <Plus className="mr-2" size={20} />
-          Ajouter des poutines
-        </div>
-      </Link>
-      <Link href={"/noter"} passHref>
-        <div
-          className="mt-0s w-[150px] inline-flex justify-center items-center py-2 px-2 bg-gray-50 border-gray-100 border-2 rounded-full text-neutral-400 cursor-pointer select-none hover:text-neutral-500 hover:border-neutral-300 transition-colors duration-200
-        "
-        >
-          <LinkIcon className="mr-2" size={20} />
-          Partager
-        </div>
-      </Link>
-      <>
+    <div className="">
+      <div className="p-4 bg-white rounded border">
         {!restaurants ? (
           <Spinner />
         ) : (
@@ -195,9 +173,9 @@ const MesPoutines = () => {
             );
           })
         )}
-      </>
+      </div>
     </div>
   );
 };
 
-export default MesPoutines;
+export { EatenList };

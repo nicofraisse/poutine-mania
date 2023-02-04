@@ -21,7 +21,7 @@ const handler = async (req, res) => {
   // Create updated eatenlist
   let updatedEatenlist = session.user.eatenlist;
   let updatedWatchlist = session.user.watchlist
-    ? [...session.user.eatenlist]
+    ? [...session.user.watchlist]
     : [];
   if (req.body.type === "add") {
     updatedEatenlist.push(req.body.restaurantId);

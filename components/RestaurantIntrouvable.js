@@ -27,7 +27,7 @@ const RestaurantIntrouvable = () => {
   };
 
   return (
-    <div className="mb-20 shadow-md py-4 px-3 xs:py-6 border rounded flex text-center xs:text-left items-center justify-between flex-col xs:flex-row">
+    <div className="mb-20 bg-white shadow-md py-4 px-3 xs:py-6 border rounded flex text-center xs:text-left items-center justify-between flex-col xs:flex-row">
       <div>
         <div className="font-black text-md mb-1 text-gray-900">
           Restaurant introuvable?

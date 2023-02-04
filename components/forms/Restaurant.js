@@ -54,7 +54,7 @@ const RestaurantForm = ({ type, onSubmit, isAdmin }) => {
           push(
             currentUser.isAdmin
               ? "/admin/restaurants"
-              : `/restaurants=${data._id}`
+              : `/restaurants/${data._id}`
           );
         })
         .catch((err) => toast.error(err.message));

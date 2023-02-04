@@ -75,7 +75,7 @@ const Header = ({ toggleMobileSidebar }) => {
   };
 
   return (
-    <header className="flex justify-between items-center h-[64px] max-w-screen md:w-auto bg-indigo-white pl-4 border-b  z-10 bg-white">
+    <header className="flex justify-between items-center h-[64px] max-w-screen md:w-auto bg-indigo-white pl-4 z-10 bg-slate-50">
       {backablePage && !showSearchBar && (
         <div
           className="flex items-center px-1 mr-4 cursor-pointer underline-offset-2 hover:underline text-gray-700 font-light hover:text-gray-900 transition duration-200"

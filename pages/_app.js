@@ -7,6 +7,7 @@ import { LoginFormProvider } from "../components/context/LoginFormProvider";
 import { RestaurantSearchProvider } from "../components/context/RestaurantSearchProvider";
 import Head from "next/head";
 import { CookiesProvider } from "react-cookie";
+import { SidebarDataProvider } from "../components/context/SidebarDataProvider";
 
 function App({ Component, pageProps }) {
   return (
@@ -28,22 +29,24 @@ function App({ Component, pageProps }) {
       <CookiesProvider>
         <Provider session={pageProps.session}>
           <LoginFormProvider>
-            <RestaurantSearchProvider>
-              <RateRestaurantProvider>
-                <Layout {...pageProps}>
-                  <div>
-                    <Component {...pageProps} />
-                    <Toaster
-                      position="bottom-right"
-                      toastOptions={{
-                        // Define default options
-                        duration: 7000,
-                      }}
-                    />
-                  </div>
-                </Layout>
-              </RateRestaurantProvider>
-            </RestaurantSearchProvider>
+            <SidebarDataProvider>
+              <RestaurantSearchProvider>
+                <RateRestaurantProvider>
+                  <Layout {...pageProps}>
+                    <div>
+                      <Component {...pageProps} />
+                      <Toaster
+                        position="bottom-right"
+                        toastOptions={{
+                          // Define default options
+                          duration: 7000,
+                        }}
+                      />
+                    </div>
+                  </Layout>
+                </RateRestaurantProvider>
+              </RestaurantSearchProvider>
+            </SidebarDataProvider>
           </LoginFormProvider>
         </Provider>
       </CookiesProvider>

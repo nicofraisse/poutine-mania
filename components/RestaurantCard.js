@@ -42,7 +42,8 @@ const RestaurantCard = ({ restaurant }) => {
       className={classNames(
         "py-3 px-2 lg:px-4 flex justify-between items-start transition duration-100",
         {
-          "bg-gray-50": hoveredId === restaurant._id,
+          "bg-white": hoveredId === restaurant._id,
+          "bg-slate-50": hoveredId !== restaurant._id,
         }
       )}
       onMouseEnter={setHoveredId ? () => setHoveredId(restaurant._id) : null}

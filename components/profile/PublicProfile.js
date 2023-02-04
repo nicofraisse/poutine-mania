@@ -10,6 +10,7 @@ import { Image } from "components/Image";
 
 const PublicProfile = ({ user }) => {
   const { currentUser } = useCurrentUser();
+
   const { data: reviews } = useGet(`/api/users/${user?._id}/reviews`, {
     skip: !user,
   });
@@ -50,13 +51,23 @@ const PublicProfile = ({ user }) => {
             </div>
             <div className="text-lg">
               {reviews.length > 0 ? (
-                <span className="text-xl">😋</span>
+                <span className="text-xl">🤓</span>
               ) : (
-                <span className="text-xl">😢</span>
+                <span className="text-xl">💤</span>
               )}{" "}
               {reviews.length} poutine
               {reviews.length > 1 && "s"} notée{reviews.length > 1 && "s"}{" "}
               {/*| 12 abonnés*/}{" "}
+            </div>
+            <div className="text-lg">
+              {user.eatenlist?.length > 0 ? (
+                <span className="text-xl">😋</span>
+              ) : (
+                <span className="text-xl">😢</span>
+              )}{" "}
+              {user.eatenlist.length} poutine
+              {user.eatenlist.length > 1 && "s"} mangée
+              {user.eatenlist.length > 1 && "s"} {/*| 12 abonnés*/}{" "}
             </div>
             {reviews.length > 0 && (
               <div className="text-lg mt-1">
@@ -68,7 +79,7 @@ const PublicProfile = ({ user }) => {
                 >
                   <a
                     target="_blank"
-                    className="text-gray-600 font-bold border border-gray-400 px-2 bg-white rounded-lg hover:text-gray-400 ml-1"
+                    className="text-gray-500 inline-block font-bold px-3 bg-indigo-100 rounded-full text-lg hover:text-gray-400 ml-2"
                   >
                     {maxBy(reviews, "finalRating")?.restaurants[0]?.name}
                   </a>

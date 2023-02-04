@@ -49,14 +49,15 @@ const handler = async (req, res) => {
 
     // Create updated eatenlist
     let updatedEatenlist = session.user.eatenlist;
-    let updatedWatchlist = session.user.watchlist
-      ? [...session.user.eatenlist]
-      : [];
+    let updatedWatchlist = session.user.watchlist;
 
-    updatedEatenlist.push(req.body.restaurantId);
-    // updatedWatchlist = updatedWatchlist.filter(
-    //   (r) => r !== req.body.restaurantId
-    // );
+    if (!updatedEatenlist.includes(req.body.restaurantId)) {
+      updatedEatenlist.push(req.body.restaurantId);
+    }
+
+    updatedWatchlist = updatedWatchlist.filter(
+      (r) => r !== req.body.restaurantId
+    );
 
     // Update user's eatenlist
     await db.collection("users").updateOne(
@@ -64,7 +65,7 @@ const handler = async (req, res) => {
       {
         $set: {
           eatenlist: updatedEatenlist,
-          // watchlist: updatedWatchlist,
+          watchlist: updatedWatchlist,
         },
       }
     );

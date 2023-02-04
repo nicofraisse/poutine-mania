@@ -14,6 +14,7 @@ import axios from "axios";
 import { useCurrentUser } from "../lib/useCurrentUser";
 import { toast } from "react-hot-toast";
 import { Image } from "./Image";
+import { useSidebarData } from "components/context/SidebarDataProvider";
 
 const RestaurantBookmark = ({ restaurant }) => {
   const [isEatenLoading, setIsEatenLoading] = useState(false);
@@ -22,6 +23,12 @@ const RestaurantBookmark = ({ restaurant }) => {
   const [disapear, setDisapear] = useState(false);
   const [vanish, setVanish] = useState(false);
   const { currentUser } = useCurrentUser();
+  const {
+    sidebarWatchlistAmount,
+    setSidebarWatchlistAmount,
+    sidebarEatenlistAmount,
+    setSidebarEatenlistAmount,
+  } = useSidebarData();
 
   useEffect(() => {
     setIsEaten(currentUser.eatenlist.includes(restaurant._id));
@@ -42,6 +49,13 @@ const RestaurantBookmark = ({ restaurant }) => {
           isEaten
             ? "Supprimé des poutines mangées!"
             : "Ajouté aux poutines mangées!"
+        );
+
+        setSidebarWatchlistAmount(
+          isEaten ? sidebarWatchlistAmount + 1 : sidebarWatchlistAmount - 1
+        );
+        setSidebarEatenlistAmount(
+          isEaten ? sidebarEatenlistAmount - 1 : sidebarEatenlistAmount + 1
         );
 
         if (!isEaten) {
@@ -76,6 +90,7 @@ const RestaurantBookmark = ({ restaurant }) => {
           setDisapear(true);
           setTimeout(() => {
             setVanish(true);
+            setSidebarWatchlistAmount(sidebarWatchlistAmount - 1);
           }, [1000]);
         })
         .catch((e) => {

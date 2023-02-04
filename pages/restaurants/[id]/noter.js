@@ -17,6 +17,7 @@ import { formatRating } from "../../../lib/formatRating";
 import { Check } from "react-feather";
 import { useCookies } from "react-cookie";
 import RestaurantCard from "components/RestaurantCard";
+import { useSidebarData } from "components/context/SidebarDataProvider";
 
 import { useCurrentUser } from "../../../lib/useCurrentUser";
 import { useLoginForm } from "components/context/LoginFormProvider";
@@ -35,6 +36,12 @@ export const MIN_COMMENT_CHARS = 10;
 
 const NoterRestaurant = () => {
   const [cookies, setCookies, removeCookies] = useCookies();
+  const {
+    sidebarWatchlistAmount,
+    setSidebarWatchlistAmount,
+    sidebarEatenlistAmount,
+    setSidebarEatenlistAmount,
+  } = useSidebarData();
 
   const { query, push } = useRouter();
   const { currentUser } = useCurrentUser();
@@ -96,6 +103,12 @@ const NoterRestaurant = () => {
       toast.success(toastMessage);
       removeCookies("reviewInProgress");
       removeCookies("reviewRestaurantInProgress");
+      if (!currentUser.eatenlist.includes(restaurant._id)) {
+        setSidebarEatenlistAmount(sidebarEatenlistAmount + 1);
+      }
+      if (currentUser.watchlist.includes(restaurant._id)) {
+        setSidebarWatchlistAmount(sidebarWatchlistAmount - 1);
+      }
       push(`/noter?fromRateSuccess=${restaurant._id}`);
     } catch (e) {
       toast.error(e.message);

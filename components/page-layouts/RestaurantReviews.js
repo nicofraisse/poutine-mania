@@ -27,6 +27,8 @@ import fries from "assets/icons/fries.svg";
 import sauce from "assets/icons/sauce.svg";
 import classNames from "classnames";
 import { useCurrentUser } from "lib/useCurrentUser";
+import { useSidebarData } from "components/context/SidebarDataProvider";
+import Modal from "react-responsive-modal";
 
 const ReviewStats = ({ reviews, restaurant }) => {
   const { push } = useRouter();
@@ -38,6 +40,12 @@ const ReviewStats = ({ reviews, restaurant }) => {
   const [isWatch, setIsWatch] = useState(false);
   const [isEatenLoading, setIsEatenLoading] = useState(true);
   const [isWatchLoading, setIsWatchLoading] = useState(true);
+  const {
+    sidebarWatchlistAmount,
+    setSidebarWatchlistAmount,
+    sidebarEatenlistAmount,
+    setSidebarEatenlistAmount,
+  } = useSidebarData();
 
   useEffect(() => {
     if (currentUser && currentUser.eatenlist) {
@@ -50,7 +58,7 @@ const ReviewStats = ({ reviews, restaurant }) => {
     setIsWatchLoading(false);
   }, [currentUser, restaurant._id]);
 
-  const handleAddToEatenlist = () => {
+  const handleToggleFromEatenlist = () => {
     setIsEatenLoading(true);
 
     axios
@@ -66,7 +74,16 @@ const ReviewStats = ({ reviews, restaurant }) => {
             ? "Supprimé des poutines mangées!"
             : "Ajouté aux poutines mangées!"
         );
+
+        if (isWatch) {
+          setSidebarWatchlistAmount(sidebarWatchlistAmount - 1);
+          setIsWatch(false);
+        }
+        setSidebarEatenlistAmount(
+          isEaten ? sidebarEatenlistAmount - 1 : sidebarEatenlistAmount + 1
+        );
       })
+
       .catch((e) => {
         toast.error("error", e.message);
         setIsEatenLoading(false);
@@ -89,6 +106,13 @@ const ReviewStats = ({ reviews, restaurant }) => {
             ? "Supprimé des poutines à essayer!"
             : "Ajouté aux poutines à essayer!"
         );
+        setSidebarWatchlistAmount(
+          isWatch ? sidebarWatchlistAmount - 1 : sidebarWatchlistAmount + 1
+        );
+        if (isEaten) {
+          setSidebarEatenlistAmount(sidebarEatenlistAmount - 1);
+          setIsEaten(false);
+        }
       })
       .catch((e) => {
         toast.error("error", e.message);
@@ -117,7 +141,7 @@ const ReviewStats = ({ reviews, restaurant }) => {
               onClick={() => push(`/restaurants/${restaurant._id}/noter`)}
               className="inline-flex mr-2 items-center px-4 shrink-0 text-sm sm:text-md h-[35px] sm:h-[40px]"
               variant="light"
-            >
+              >
               <Edit3 className="mr-2 sm:text-lg w-4 sm:w-5" />
               Noter
             </Button> */}
@@ -137,9 +161,32 @@ const ReviewStats = ({ reviews, restaurant }) => {
           <div className="">
             <Button
               height="sm"
-              onClick={handleAddToEatenlist}
+              onClick={handleAddToWatchlist}
               className={classNames(
                 "inline-flex mr-2 items-center px-4 shrink-0 text-sm sm:text-md h-[35px] sm:h-[40px]",
+                {
+                  // "bg-gray-50": !isWatch,
+                  "border-yellow-400 text-yellow-500": isWatch,
+                  "text-gray-300 bg-gray-100": isEaten,
+                }
+              )}
+              style={{ backgroundColor: "white" }}
+              variant="light"
+              loading={isWatchLoading}
+              disabled={isEaten}
+            >
+              <Star
+                className={classNames("mr-2 sm:text-lg w-4 sm:w-5", {
+                  "fill-yellow-400 text-yellow-400": isWatch,
+                })}
+              />
+              <span>À Essayer</span>
+            </Button>
+            <Button
+              height="sm"
+              onClick={handleToggleFromEatenlist}
+              className={classNames(
+                "inline-flex items-center px-4 shrink-0 text-sm sm:text-md h-[35px] sm:h-[40px]",
                 {
                   "": !isEaten,
                   "text-green-500 bg-green-50 border-green-200 hover:bg-green-50":
@@ -151,27 +198,6 @@ const ReviewStats = ({ reviews, restaurant }) => {
             >
               <CheckCircle className="mr-2 sm:text-lg w-4 sm:w-5" />
               <span>J&apos;ai mangé</span>
-            </Button>
-            <Button
-              height="sm"
-              onClick={handleAddToWatchlist}
-              className={classNames(
-                "inline-flex mr-2 items-center px-4 shrink-0 text-sm sm:text-md h-[35px] sm:h-[40px]",
-                {
-                  // "bg-gray-50": !isWatch,
-                  // "text-yellow-500  border-yellow-400 hover:bg-yellow-50 bg-white":
-                  //   isWatch,
-                }
-              )}
-              variant="light"
-              loading={isWatchLoading}
-            >
-              <Star
-                className={classNames("mr-2 sm:text-lg w-4 sm:w-5", {
-                  "fill-yellow-400 text-yellow-400": isWatch,
-                })}
-              />
-              <span>À Essayer</span>
             </Button>
           </div>
         </div>
@@ -213,6 +239,7 @@ const RestaurantReviews = ({ restaurant }) => {
 
   const { reload } = useRouter();
   const { rateRestaurant } = useRateRestaurant();
+  const [deleteReviewModalOpen, setDeleteReviewModalOpen] = useState(false);
 
   if (loading) return <Spinner />;
 
@@ -238,6 +265,15 @@ const RestaurantReviews = ({ restaurant }) => {
 
   return (
     <div className="pr-2 pb-2 pl-2 lg:pr-5 lg:pb-5 lg:pl-5 sm:w-auto bg-white shadow-md rounded-lg">
+      <Modal
+        open={deleteReviewModalOpen}
+        classNames={{
+          overlay: "customOverlay",
+          modal: "customModal",
+        }}
+      >
+        salut
+      </Modal>
       <div
         className={classNames(
           "sticky top-0 bg-white pt-3 sm:pt-4 sm:pl-4 sm:pr-4 z-10",
@@ -253,7 +289,7 @@ const RestaurantReviews = ({ restaurant }) => {
           key={r._id}
           review={r}
           handleEdit={handleEdit}
-          handleDelete={handleDelete}
+          handleDelete={() => setDeleteReviewModalOpen(true)}
           isFirst={i === 0}
         />
       ))}
