@@ -8,6 +8,7 @@ import {
   Camera,
   CheckCircle,
   Edit3,
+  Info,
   Star,
   ThumbsUp,
   User,
@@ -239,7 +240,20 @@ const RestaurantReviews = ({ restaurant }) => {
 
   const { reload } = useRouter();
   const { rateRestaurant } = useRateRestaurant();
-  const [deleteReviewModalOpen, setDeleteReviewModalOpen] = useState(false);
+  const { currentUser } = useCurrentUser();
+  const [reviewToDelete, setReviewToDelete] = useState(null);
+  const [deleteFromEatenlist, setDeleteFromEatenlist] = useState(false);
+  console.log(reviews);
+  const isOnlyReview = currentUser
+    ? reviews?.filter((r) => r.userId === currentUser._id)?.length === 1
+    : false;
+
+  console.log(isOnlyReview);
+  console.log(reviews?.find((r) => r.userId === currentUser._id));
+
+  useEffect(() => {
+    setDeleteFromEatenlist(isOnlyReview);
+  }, [isOnlyReview]);
 
   if (loading) return <Spinner />;
 
@@ -247,32 +261,72 @@ const RestaurantReviews = ({ restaurant }) => {
     rateRestaurant(restaurant, review);
   };
 
-  const handleDelete = async (id) => {
-    if (
-      window.confirm(
-        "Êtes-vous sûr(e) de vouloir supprimer l'avis? Cette action est irréversible."
+  const handleDelete = async () => {
+    await axios
+      .delete(
+        `/api/reviews/${reviewToDelete._id}/delete?deleteFromEatenlist=${deleteFromEatenlist}&userId=${reviewToDelete.userId}&restaurantId=${reviewToDelete.restaurantId}`,
+        { a: 9 }
       )
-    ) {
-      await axios
-        .delete(`/api/reviews/${id}/delete`)
-        .then(() => {
-          toast.success("Supprimé!");
-          reload(window.location.pathname);
-        })
-        .catch((e) => toast.error(e.message));
-    }
+      .then(() => {
+        toast.success("Supprimé!");
+        reload(window.location.pathname);
+      })
+      .catch((e) => toast.error(e.message));
   };
 
   return (
     <div className="pr-2 pb-2 pl-2 lg:pr-5 lg:pb-5 lg:pl-5 sm:w-auto bg-white shadow-md rounded-lg">
       <Modal
-        open={deleteReviewModalOpen}
+        open={reviewToDelete}
         classNames={{
           overlay: "customOverlay",
           modal: "customModal",
         }}
+        onClose={() => {
+          setReviewToDelete(null);
+          setDeleteFromEatenlist(true);
+        }}
       >
-        salut
+        <div className="w-xs p-2">
+          <div className="text-3xl font-black mb-3">Supprimer l&apos;avis?</div>
+          <div className="text-slate-400 mb-4 border border-slate-300 text-sm bg-slate-50 p-2 rounded my-2">
+            <Info className="inline mr-1" size={16} />
+            <span> Cette action est irréversible.</span>
+          </div>
+          {isOnlyReview && (
+            <div>
+              <input
+                type="checkbox"
+                id="deleteFromEatenlist"
+                checked={deleteFromEatenlist}
+                onChange={() => setDeleteFromEatenlist(!deleteFromEatenlist)}
+                className="mr-2"
+              />
+              <label htmlFor="deleteFromEatenlist">
+                Supprimer des poutines mangées
+              </label>
+            </div>
+          )}
+          <div className="flex justify-end mt-4">
+            <Button
+              height="sm"
+              width="sm"
+              variant="light"
+              onClick={() => setReviewToDelete(null)}
+            >
+              Annuler
+            </Button>
+            <Button
+              height="sm"
+              width="sm"
+              variant="danger"
+              className="ml-3"
+              onClick={handleDelete}
+            >
+              Supprimer
+            </Button>
+          </div>
+        </div>
       </Modal>
       <div
         className={classNames(
@@ -289,7 +343,7 @@ const RestaurantReviews = ({ restaurant }) => {
           key={r._id}
           review={r}
           handleEdit={handleEdit}
-          handleDelete={() => setDeleteReviewModalOpen(true)}
+          handleDelete={() => setReviewToDelete(r)}
           isFirst={i === 0}
         />
       ))}
