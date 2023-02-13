@@ -38,58 +38,65 @@ const RestaurantCard = ({ restaurant }) => {
   const image = reviews?.find((r) => r.photos?.[0])?.photos[0];
 
   return (
-    <div
-      className={classNames(
-        "py-3 px-2 lg:px-4 flex justify-between items-start transition duration-100",
-        {
-          "bg-white": hoveredId === restaurant._id,
-          "bg-slate-50": hoveredId !== restaurant._id,
-        }
-      )}
-      onMouseEnter={setHoveredId ? () => setHoveredId(restaurant._id) : null}
-      onMouseLeave={setHoveredId ? () => setHoveredId(null) : null}
-    >
-      <div
-        className="bg-gray-100 rounded-sm w-1/4 h-24 min-w-24 sm:h-28 sm:min-w-28 mr-2 lg:mr-3 flex items-center justify-center "
-        style={{ minWidth: "29%" }}
-      >
-        {image ? (
-          <Image
-            src={image}
-            alt={`${name}-photo`}
-            className="h-24 min-w-24 sm:h-28 sm:min-w-28 object-cover object-center rounded-sm"
-          />
-        ) : (
-          <ImageIcon className="text-gray-300" size={48} alt="placeholder" />
-        )}
-      </div>
+    <div className="my-2 mx-3">
+      <Link href={`/restaurants/${restaurant._id}`} passHref>
+        <div
+          className={classNames(
+            "group py-3 px-2 lg:px-3 flex justify-between items-start transition duration-100 rounded-md mr-2 cursor-pointer",
+            {
+              "bg-[#fefefe] shadow": hoveredId !== restaurant._id,
+              "bg-white shadow-md transform -translate-y-[2px]":
+                hoveredId === restaurant._id,
+            }
+          )}
+          onMouseEnter={
+            setHoveredId ? () => setHoveredId(restaurant._id) : null
+          }
+          onMouseLeave={setHoveredId ? () => setHoveredId(null) : null}
+        >
+          <div
+            className="bg-gray-100 rounded-md w-1/4 h-24 min-w-24 sm:h-28 sm:min-w-28 mr-2 lg:mr-3 flex items-center justify-center "
+            style={{ minWidth: "29%" }}
+          >
+            {image ? (
+              <Image
+                src={image}
+                alt={`${name}-photo`}
+                className="h-24 min-w-24 sm:h-28 sm:min-w-28 object-cover object-center rounded-md"
+              />
+            ) : (
+              <ImageIcon
+                className="text-gray-300"
+                size={48}
+                alt="placeholder"
+              />
+            )}
+          </div>
 
-      <div style={{ minWidth: "71%" }}>
-        <Link href={`/restaurants/${restaurant._id}`} passHref>
-          <a rel="noopener noreferrer">
-            <div className="font-bold text-base lg:text-lg text-teal-600 hover:underline">
+          <div style={{ minWidth: "71%" }}>
+            <div className="font-bold text-base lg:text-lg text-teal-600 group-hover:text-teal-500 transition duration-100">
               {name}
             </div>
-          </a>
-        </Link>
 
-        <div className="mb-2 mt-1">
-          <RatingPill
-            avgRating={avgRating}
-            reviewCount={reviewCount}
-            isNew
-            onRate={(number) => rateRestaurant(restaurant)}
-          />
+            <div className="mb-2 mt-1">
+              <RatingPill
+                avgRating={avgRating}
+                reviewCount={reviewCount}
+                isNew
+                onRate={(number) => rateRestaurant(restaurant)}
+              />
+            </div>
+
+            <TagSection
+              succursales={succursales}
+              categories={categories}
+              city={city}
+              priceRange={priceRange}
+            />
+            {/* <LastComment comment={lastComment} /> */}
+          </div>
         </div>
-
-        <TagSection
-          succursales={succursales}
-          categories={categories}
-          city={city}
-          priceRange={priceRange}
-        />
-        {/* <LastComment comment={lastComment} /> */}
-      </div>
+      </Link>
     </div>
   );
 };

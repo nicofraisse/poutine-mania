@@ -32,8 +32,6 @@ const EatenList = ({ userId }) => {
     }
   );
 
-  console.log({ restaurants });
-
   const isCurrentUser = !(currentUser && currentUser._id === userId);
 
   return (

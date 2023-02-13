@@ -7,6 +7,7 @@ export enum VariantColor {
   secondary = "secondary",
   light = "light",
   white = "white",
+  white2 = "white",
   lightLink = "lightLink",
   danger = "danger",
 }
@@ -16,6 +17,7 @@ const bgColorClass = {
   [VariantColor.secondary]: "bg-none",
   [VariantColor.light]: "bg-gray-100",
   [VariantColor.white]: "bg-white",
+  [VariantColor.white2]: "bg-white",
   [VariantColor.lightLink]: "bg-none",
   [VariantColor.danger]: "bg-red-500",
 };
@@ -25,6 +27,7 @@ const bgColorHoverClass = {
   [VariantColor.secondary]: "",
   [VariantColor.light]: "hover:bg-gray-200",
   [VariantColor.white]: "",
+  [VariantColor.white2]: "",
   [VariantColor.lightLink]: "bg-danger-600",
 };
 
@@ -33,6 +36,7 @@ const borderClass = {
   [VariantColor.secondary]: "border-2 border-teal-600",
   [VariantColor.light]: "border-2 border-gray-100",
   [VariantColor.white]: "border-2 border-gray-500",
+  [VariantColor.white2]: "border-2 border-gray-300",
   [VariantColor.lightLink]: "",
 };
 
@@ -41,6 +45,7 @@ const textColorClass = {
   [VariantColor.secondary]: "text-teal-600",
   [VariantColor.light]: "text-gray-500",
   [VariantColor.white]: "text-gray-600",
+  [VariantColor.white2]: "text-gray-400",
   [VariantColor.lightLink]:
     "text-gray-400 hover:text-gray-500 transition duration-100",
   [VariantColor.danger]: "text-white",
@@ -53,6 +58,7 @@ const heightClass = {
 };
 
 const widthClass = {
+  xs: "px-2",
   sm: "px-3",
   md: "px-8",
   lg: "px-12",
@@ -71,6 +77,7 @@ const Button = ({
   return (
     <button
       className={classNames(
+        className,
         bgColorClass[variant],
         bgColorHoverClass[variant],
         borderClass[variant],
@@ -81,8 +88,7 @@ const Button = ({
         {
           "opacity-80": loading,
           "opacity-100": !loading,
-        },
-        className
+        }
       )}
       disabled={loading}
       {...props}

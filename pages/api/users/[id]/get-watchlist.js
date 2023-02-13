@@ -15,8 +15,6 @@ const handler = async (req, res) => {
     .find({ _id: { $in: user.watchlist?.map((id) => new ObjectId(id)) } })
     .toArray();
 
-  console.log(restaurants);
-
   res.status(200).json(restaurants);
 };
 

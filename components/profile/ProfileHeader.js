@@ -73,15 +73,19 @@ const ProfileHeader = ({ user }) => {
           <div className="font-black text-slate-600 text-xl">
             ❤️ Poutine Pro
           </div>
-          <div className="text-sm text-slate-400">Poutine Préférée</div>
+          <div className="text-sm text-slate-400">Poutine préférée</div>
         </div>
         <div className="mt-4 mb-1">
-          <div className="font-black text-slate-700 text-2xl">✍️ 5</div>
-          <div className="text-sm text-slate-400">Poutines notées</div>
+          <div className="font-black text-slate-700 text-xl">
+            💔 Poutine Mcdo
+          </div>
+          <div className="text-sm text-slate-400">Poutine la moins aimée</div>
         </div>
         <div className="mt-4 mb-1">
-          <div className="font-black text-slate-700 text-2xl">😋 9</div>
-          <div className="text-sm text-slate-400">Poutines mangées</div>
+          <div className="font-black text-slate-700 text-xl">
+            😋 Patati Patata
+          </div>
+          <div className="text-sm text-slate-400">Dernière poutine mangée</div>
         </div>
       </div>
     </div>

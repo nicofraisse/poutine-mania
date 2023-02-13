@@ -33,8 +33,6 @@ const MesPoutines = () => {
     }
   );
 
-  console.log({ restaurants });
-
   return (
     <div className="p-5 max-w-sm mx-auto">
       <div className="flex flex-wrap justify-between items-start">

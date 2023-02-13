@@ -12,6 +12,7 @@ import { Image as ClImage } from "components/Image";
 import RestaurantSearchBar from "./RestaurantSearchBar";
 import { useRouter } from "next/router";
 import { useRestaurantSearch } from "./context/RestaurantSearchProvider";
+import { toast } from "react-hot-toast";
 
 const Header = ({ toggleMobileSidebar }) => {
   const { currentUser, loading } = useCurrentUser();
@@ -72,6 +73,12 @@ const Header = ({ toggleMobileSidebar }) => {
 
   const handleGoBack = () => {
     backablePage?.url ? push(backablePage.url) : history.back();
+  };
+
+  const handleSignout = () => {
+    signOut({ redirect: false, callbackUrl: "/top-poutines" }).then(() =>
+      toast.success("Déconnexion réussie")
+    );
   };
 
   return (
@@ -204,7 +211,7 @@ const Header = ({ toggleMobileSidebar }) => {
                       </div> */}
                     <div
                       className="hover:bg-gray-100 px-3 py-2 rounded-b-lg text-gray-700 cursor-pointer"
-                      onClick={signOut}
+                      onClick={handleSignout}
                     >
                       Déconnexion
                     </div>

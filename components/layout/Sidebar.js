@@ -45,7 +45,7 @@ const Item = ({ label, href, icon, disabled, onClick, requireLogin }) => {
       )}
     >
       <div
-        onClick={() => onClick(requireLogin)}
+        onClick={() => onClick(requireLogin, label)}
         className={classNames(
           "flex items-center p-3 pl-4 text-base cursor-pointer select-none transition duration-100",
           {
@@ -71,9 +71,18 @@ const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
   const requireLogin = useRequireLogin();
   const { sidebarEatenlistAmount, sidebarWatchlistAmount } = useSidebarData();
 
-  const onClickItem = (isLoginRequired) => {
+  const onClickItem = (isLoginRequired, label) => {
     if (isLoginRequired) {
-      requireLogin(toggleMobileSidebar);
+      requireLogin(
+        toggleMobileSidebar,
+        <div className="px-4 sm:w-[380px] ">
+          <div className="py-2 px-3 my-2 bg-blue-100 border--200 text-gray-700 rounded borer">
+            {/* <Info size={18} className='text-gray-700 inline mr-2' /> */}
+            <b>Connectez-vous</b> pour ajouter cette poutine à votre liste de
+            poutines {label.toLowerCase()}!
+          </div>
+        </div>
+      );
     } else toggleMobileSidebar();
   };
 

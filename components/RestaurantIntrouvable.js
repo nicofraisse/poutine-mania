@@ -5,7 +5,7 @@ import { useLoginForm } from "./context/LoginFormProvider";
 import { useCurrentUser } from "lib/useCurrentUser";
 
 const LoginMessage = () => (
-  <div className="px-4 sm:w-[360px] ">
+  <div className="px-4 sm:w-[380px] ">
     <div className="py-2 px-3 my-2 bg-blue-100 border--200 text-gray-700 rounded borer">
       {/* <Info size={18} className='text-gray-700 inline mr-2' /> */}
       <b>Connectez-vous</b> pour créer un restaurant.

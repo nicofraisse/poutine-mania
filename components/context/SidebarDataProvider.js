@@ -16,7 +16,6 @@ export const SidebarDataProvider = ({ children }) => {
     }
   }, [currentUser]);
 
-  console.log(currentUser);
   return (
     <SidebarDataContext.Provider
       value={{

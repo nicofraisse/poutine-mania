@@ -213,10 +213,24 @@ const MapMap = ({ restaurants, isShowPage }) => {
   const allCoordinates = flatten(
     restaurants.map((r) => r.succursales.map((s) => s.address.center))
   );
-  const minLongitude = minBy(allCoordinates, (c) => c[0])?.[0];
-  const minLatitude = minBy(allCoordinates, (c) => c[1])?.[1];
-  const maxLongitude = maxBy(allCoordinates, (c) => c[0])?.[0];
-  const maxLatitude = maxBy(allCoordinates, (c) => c[1])?.[1];
+
+  const [viewState, setViewState] = useState({
+    longitude: 40,
+    latitude: 40,
+    zoom: 9,
+  });
+
+  useEffect(() => {
+    const minLongitude = minBy(allCoordinates, (c) => c[0])?.[0];
+    const minLatitude = minBy(allCoordinates, (c) => c[1])?.[1];
+    const maxLongitude = maxBy(allCoordinates, (c) => c[0])?.[0];
+    const maxLatitude = maxBy(allCoordinates, (c) => c[1])?.[1];
+    setViewState({
+      longitude: (minLongitude + maxLongitude) / 2,
+      latitude: (minLatitude + maxLatitude) / 2,
+      zoom: 9,
+    });
+  }, [restaurants]);
 
   const [openPopups, setOpenPopups] = useState([]);
   const [userPopupOpen, setUserPopupOpen] = useState(false);
@@ -251,13 +265,15 @@ const MapMap = ({ restaurants, isShowPage }) => {
       <Map
         reuseMaps
         id="mymap"
-        initialViewState={{
-          bounds: [
-            [minLongitude, minLatitude],
-            [maxLongitude, maxLatitude],
-          ],
-          fitBoundsOptions: { padding: 60, maxZoom: 13 },
-        }}
+        onMove={(evt) => setViewState(evt.viewState)}
+        // initialViewState={{
+        //   bounds: [
+        //     [minLongitude, minLatitude],
+        //     [maxLongitude, maxLatitude],
+        //   ],
+        //   fitBoundsOptions: { padding: 60, maxZoom: 13 },
+        // }}
+        {...viewState}
         style={{ width: "100%", height: "100%" }}
         mapStyle="mapbox://styles/mapbox/streets-v10"
         mapboxAccessToken={MAPBOX_TOKEN}

@@ -52,7 +52,7 @@ const Login = ({ onSubmit, redirect }) => {
         email: Yup.string().min(1).required("Required"),
         password: Yup.string().min(1).required("Required"),
       })}
-      className="sm:w-[360px] p-4"
+      className="sm:w-[380px] p-4"
     >
       {({ isSubmitting }) => (
         <>

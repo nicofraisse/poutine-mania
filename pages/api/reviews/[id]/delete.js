@@ -17,7 +17,6 @@ const handler = async (req, res) => {
   let updatedEatenlist = user.eatenlist;
 
   if (req.query.deleteFromEatenlist === "true") {
-    console.log("in here");
     updatedEatenlist = updatedEatenlist.filter(
       (r) => r !== req.query.restaurantId
     );
@@ -31,7 +30,6 @@ const handler = async (req, res) => {
       },
     }
   );
-  // console.log("DELETED", deletedReview);
   res.status(200).json(deletedReview);
 };
 

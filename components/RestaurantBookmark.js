@@ -7,7 +7,7 @@ import {
   Trash,
   XCircle,
 } from "react-feather";
-import Button from "./Button";
+import Button, { VariantColor } from "./Button";
 import { TagSection } from "./RestaurantCard";
 import Link from "next/link";
 import axios from "axios";
@@ -103,7 +103,7 @@ const RestaurantBookmark = ({ restaurant }) => {
   return (
     <div
       className={classNames(
-        "border p-4 mr-4 mb-4 w-[300px] text-center rounded-md transition-all",
+        "border p-4 mr-4 mb-4 w-[300px] text-center rounded-md transition-all bg-white",
         {
           "shadow-md": !isEaten,
           "shadow-none": isEaten,
@@ -160,7 +160,7 @@ const RestaurantBookmark = ({ restaurant }) => {
             smallText
           />
         </div>
-        <div>
+        <div className="flex items-center justify-around">
           <Button
             height="sm"
             onClick={
@@ -180,6 +180,14 @@ const RestaurantBookmark = ({ restaurant }) => {
             {!isEaten && <CheckCircle className="mr-2 sm:text-lg w-4 sm:w-5" />}
             <span>{isEaten ? "Mangé!" : "J'ai mangé"}</span>
           </Button>
+          {/* <Button
+            height="sm"
+            variant={VariantColor.white2}
+            className="text-xs "
+          >
+            <XCircle className="mr-1 sm:text-lg w-3 sm:w-4 font-" /> Pas
+            intéressé
+          </Button> */}
           {/* <Link href={`/restaurants/${restaurant._id}/noter`} passHref>
             <Button
               height="sm"

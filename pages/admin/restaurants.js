@@ -46,7 +46,7 @@ const Restaurants = () => {
     await axios
       .post(`/api/restaurants/${id}/approve`, { approved })
       .then(() => {
-        console.log("Approved");
+        toast.success("Approved!");
       })
       .catch((e) => console.log("error", e.message));
   };

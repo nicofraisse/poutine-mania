@@ -6,7 +6,6 @@ const handler = async (req, res) => {
   const client = await connectToDatabase();
   const db = await client.db();
   const session = await getSession({ req });
-  console.log("SESIOn", session);
   // Validate request
   if (!session || session.user._id !== req.query.id) {
     res.status(403).json({ message: "unauthorized" });

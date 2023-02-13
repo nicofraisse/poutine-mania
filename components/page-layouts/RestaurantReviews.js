@@ -30,10 +30,12 @@ import classNames from "classnames";
 import { useCurrentUser } from "lib/useCurrentUser";
 import { useSidebarData } from "components/context/SidebarDataProvider";
 import Modal from "react-responsive-modal";
+import { useRequireLogin } from "../../lib/useRequireLogin";
 
 const ReviewStats = ({ reviews, restaurant }) => {
   const { push } = useRouter();
   const { currentUser } = useCurrentUser();
+  const requireLogin = useRequireLogin();
 
   const counts = countBy(reviews, (r) => Math.floor(r.finalRating));
   const reviewStats = [...Array(11)].map((_, i) => counts[i] || 0);
@@ -162,7 +164,18 @@ const ReviewStats = ({ reviews, restaurant }) => {
           <div className="">
             <Button
               height="sm"
-              onClick={handleAddToWatchlist}
+              onClick={() =>
+                requireLogin(
+                  handleAddToWatchlist,
+                  <div className="px-4 sm:w-[380px] ">
+                    <div className="py-2 px-3 my-2 bg-blue-100 border--200 text-gray-700 rounded borer">
+                      {/* <Info size={18} className='text-gray-700 inline mr-2' /> */}
+                      <b>Connectez-vous</b> pour ajouter cette poutine à votre
+                      liste à essayer!
+                    </div>
+                  </div>
+                )
+              }
               className={classNames(
                 "inline-flex mr-2 items-center px-4 shrink-0 text-sm sm:text-md h-[35px] sm:h-[40px]",
                 {
@@ -185,7 +198,18 @@ const ReviewStats = ({ reviews, restaurant }) => {
             </Button>
             <Button
               height="sm"
-              onClick={handleToggleFromEatenlist}
+              onClick={() =>
+                requireLogin(
+                  handleToggleFromEatenlist,
+                  <div className="px-4 sm:w-[380px] ">
+                    <div className="py-2 px-3 my-2 bg-blue-100 border--200 text-gray-700 rounded borer">
+                      {/* <Info size={18} className='text-gray-700 inline mr-2' /> */}
+                      <b>Connectez-vous</b> pour ajouter cette poutine à votre
+                      liste de poutines mangées!
+                    </div>
+                  </div>
+                )
+              }
               className={classNames(
                 "inline-flex items-center px-4 shrink-0 text-sm sm:text-md h-[35px] sm:h-[40px]",
                 {
@@ -243,13 +267,9 @@ const RestaurantReviews = ({ restaurant }) => {
   const { currentUser } = useCurrentUser();
   const [reviewToDelete, setReviewToDelete] = useState(null);
   const [deleteFromEatenlist, setDeleteFromEatenlist] = useState(false);
-  console.log(reviews);
   const isOnlyReview = currentUser
     ? reviews?.filter((r) => r.userId === currentUser._id)?.length === 1
     : false;
-
-  console.log(isOnlyReview);
-  console.log(reviews?.find((r) => r.userId === currentUser._id));
 
   useEffect(() => {
     setDeleteFromEatenlist(isOnlyReview);
@@ -289,9 +309,9 @@ const RestaurantReviews = ({ restaurant }) => {
       >
         <div className="w-xs p-2">
           <div className="text-3xl font-black mb-3">Supprimer l&apos;avis?</div>
-          <div className="text-slate-400 mb-4 border border-slate-300 text-sm bg-slate-50 p-2 rounded my-2">
-            <Info className="inline mr-1" size={16} />
-            <span> Cette action est irréversible.</span>
+          <div className="text-slate-400 mb-4 border border-slate-300 text-sm bg-slate-50 p-2 rounded my-2 flex items-center">
+            <Info className="inline mr-2" size={16} />
+            <span>Cette action est irréversible.</span>
           </div>
           {isOnlyReview && (
             <div>

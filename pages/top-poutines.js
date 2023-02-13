@@ -71,7 +71,7 @@ function TopPoutines() {
             le type de restaurant, la note moyenne sur 10, et bien plus.
           </p>
         </div>
-        <div className="border border-gray-100 rounded-lg mb-40 mt-4">
+        <div className="shadow-lg border-white border-4 rounded-lg mb-40 mt-4">
           {reviews &&
             restaurants?.map((r, i) => {
               const image = r.reviews?.find((res) => res.photos?.[0])
@@ -82,7 +82,8 @@ function TopPoutines() {
                   className={classNames(
                     "xs:pt-3 xs:pr-3 pt-5 pb-6 xs:pb-3 2xl:pt-3 2xl:pr-3 border-gray-200 bg-opacity-50",
                     {
-                      "bg-gray-100": i % 2 !== 0,
+                      "bg-slate-100": i % 2 === 0,
+                      "bg-white": i % 2 !== 0,
                     }
                   )}
                 >
