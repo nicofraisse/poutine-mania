@@ -14,6 +14,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 const ProfileReviewCard = ({ review, isIndex, userName }) => {
+  console.log({ userName });
   const [imgModalOpen, setImgModalOpen] = useState(false);
   const { currentUser } = useCurrentUser();
   const { reload } = useRouter();
@@ -47,7 +48,7 @@ const ProfileReviewCard = ({ review, isIndex, userName }) => {
             <>
               <div className="inline-block relative top-5 translate-y-[-15px] translate-x-[-6px]">
                 {review.user.image ? (
-                  <NextImage
+                  <Image
                     alt="user-image"
                     src={review.user.image}
                     width={24}
@@ -87,7 +88,7 @@ const ProfileReviewCard = ({ review, isIndex, userName }) => {
           {formatDate(review.createdAt, "d MMMM yyyy")}
         </span>
       </div>
-      <div className="text-gray-700 mb mt-2 mb-8 border shadow-md rounded-lg p-3 sm:p-4">
+      <div className="text-gray-700 mb mt-2 mb-8 border shadow-md rounded-md p-3 sm:p-4 bg-white">
         {/* <div className='flex items-center mb-2 pb-2'>
           <div className='px-2 w-full border-b pb-2 rounded-lg'>
 

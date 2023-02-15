@@ -1,99 +1,15 @@
 import Color from "color";
 import React from "react";
 import { ratingColors } from "../data/ratingColors";
-import { useGet } from "../lib/useAxios";
 import Spinner from "./Spinner";
 import { meanBy, round, repeat } from "lodash";
 import { MessageCircle } from "react-feather";
 import { formatCity } from "../lib/formatAddress";
 import Tooltip from "rc-tooltip";
+import Link from "next/link";
 
-const UserRanking = ({ userId }) => {
-  const restaurants = [
-    {
-      name: "Poutine Pro",
-      price: "$$",
-      category: "Diner",
-      city: "Montreal",
-      rating: 4,
-    },
-    {
-      name: "Ma Poule Mouillée",
-      price: "$",
-      category: "Restaurant",
-      city: "Montreal",
-      rating: 7,
-    },
-    {
-      name: "Poutine Pro",
-      price: "$$",
-      category: "Diner",
-      city: "Montreal",
-      rating: 4,
-    },
-    {
-      name: "Poutine Pro",
-      price: "$$",
-      category: "Diner",
-      city: "Montreal",
-      rating: 4,
-    },
-    {
-      name: "Poutine Pro",
-      price: "$$",
-      category: "Diner",
-      city: "Montreal",
-      rating: 4,
-    },
-    {
-      name: "Poutine Pro",
-      price: "$$",
-      category: "Diner",
-      city: "Montreal",
-      rating: 4,
-    },
-    {
-      name: "Poutine Pro",
-      price: "$$",
-      category: "Diner",
-      city: "Montreal",
-      rating: 4.3,
-    },
-    {
-      name: "Poutine Pro",
-      price: "$$",
-      category: "Diner",
-      city: "Montreal",
-      rating: 4,
-    },
-    {
-      name: "Poutine Pro",
-      price: "$$",
-      category: "Diner",
-      city: "Montreal",
-      rating: 4,
-    },
-    {
-      name: "Poutine Pro",
-      price: "$$",
-      category: "Diner",
-      city: "Montreal",
-      rating: 4,
-    },
-    {
-      name: "Poutine Pro",
-      price: "$$",
-      category: "Diner",
-      city: "Montreal",
-      rating: 4,
-    },
-  ];
-
-  const { data } = useGet(`/api/users/${userId}/reviews`);
-
-  if (!data) return <Spinner />;
-
-  const reviewedRestaurants = data.map((review) => {
+const UserRanking = ({ reviews }) => {
+  const reviewedRestaurants = reviews.map((review) => {
     return { ...review.restaurants[0], review };
   });
   console.log(reviewedRestaurants);
@@ -121,7 +37,7 @@ const UserRanking = ({ userId }) => {
           <tr>
             <th className="bg-slate-50 border-b font-bold text-slate-400 text-left rounded-tl-lg"></th>
             <th className="bg-slate-50 border-b font-bold p-4  pl-0 pb-3 text-slate-400 text-left">
-              Nom
+              Poutinerie
             </th>
             <th className="bg-slate-50 border-b font-bold p-4  pl-0 pb-3 text-slate-400 text-left">
               Description
@@ -132,8 +48,8 @@ const UserRanking = ({ userId }) => {
             {/* <th className="bg-slate-50 border-b font-bold p-4  pl-0 pb-3 text-slate-400 text-left">
               Prix
             </th> */}
-            <th className="bg-slate-50 border-b font-bold p-4  pl-4 pb-3 text-slate-400 text-left w-32">
-              Note
+            <th className="bg-slate-50 border-b font-bold p-4 pl-2 pb-3 text-slate-400 text-left w-32">
+              Sa note
             </th>
           </tr>
         </thead>
@@ -145,8 +61,8 @@ const UserRanking = ({ userId }) => {
                 <td className="border-b border-slate-100 p-3 pl-6 text-enter text-3xl text-stone-300 font-bold">
                   #{i + 1}
                 </td>
-                <td className="border-b border-slate-100 p-3 pl-0 text-base text-teal-600 font-bold">
-                  {r.name}
+                <td className="border-b border-slate-100 p-3 pl-0 text-base text-teal-600 hover:text-teal-500 font-bold">
+                  <Link href={`/restaurants/${r._id}`}>{r.name}</Link>
                 </td>
                 <td className="border-b border-slate-100 p-3 pl-0 text-slate-500">
                   {r.categories[0]}

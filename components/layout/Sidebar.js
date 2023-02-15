@@ -30,7 +30,15 @@ import ConditionalWrapper from "components/ConditionalWrapper";
 import { useRequireLogin } from "../../lib/useRequireLogin";
 import { useSidebarData } from "../context/SidebarDataProvider";
 
-const Item = ({ label, href, icon, disabled, onClick, requireLogin }) => {
+const Item = ({
+  label,
+  href,
+  icon,
+  disabled,
+  onClick,
+  requireLogin,
+  requireLoginMessage,
+}) => {
   const { pathname } = useRouter();
   const isActive = pathname?.split("/")[1] === href.split("/")[1];
   const Icon = icon;
@@ -45,7 +53,7 @@ const Item = ({ label, href, icon, disabled, onClick, requireLogin }) => {
       )}
     >
       <div
-        onClick={() => onClick(requireLogin, label)}
+        onClick={() => onClick(requireLogin, label, requireLoginMessage)}
         className={classNames(
           "flex items-center p-3 pl-4 text-base cursor-pointer select-none transition duration-100",
           {
@@ -71,17 +79,18 @@ const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
   const requireLogin = useRequireLogin();
   const { sidebarEatenlistAmount, sidebarWatchlistAmount } = useSidebarData();
 
-  const onClickItem = (isLoginRequired, label) => {
+  const onClickItem = (isLoginRequired, label, requireLoginMessage) => {
     if (isLoginRequired) {
       requireLogin(
         toggleMobileSidebar,
-        <div className="px-4 sm:w-[380px] ">
-          <div className="py-2 px-3 my-2 bg-blue-100 border--200 text-gray-700 rounded borer">
-            {/* <Info size={18} className='text-gray-700 inline mr-2' /> */}
-            <b>Connectez-vous</b> pour ajouter cette poutine à votre liste de
-            poutines {label.toLowerCase()}!
+        requireLoginMessage && (
+          <div className="px-4 sm:w-[380px] ">
+            <div className="py-2 px-3 my-2 bg-blue-100 border--200 text-gray-700 rounded borer">
+              {/* <Info size={18} className='text-gray-700 inline mr-2' /> */}
+              {requireLoginMessage}
+            </div>
           </div>
-        </div>
+        )
       );
     } else toggleMobileSidebar();
   };
@@ -127,6 +136,12 @@ const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
             </Link>
             <Item
               onClick={onClickItem}
+              label="Communauté"
+              icon={Hash}
+              href="/communaute"
+            />
+            <Item
+              onClick={onClickItem}
               label="Top 10 poutines"
               icon={Award}
               href="/top-poutines"
@@ -137,15 +152,20 @@ const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
               icon={Map}
               href="/restaurants"
             />
-            {/* <Item onClick={onClickItem} label='Derniers avis' icon={Hash} href='/' /> */}
-            {/*
-          <Item
-            onClick={onClickItem}
-            label='Mon top poutines'
-            icon={Heart}
-            href='mon-top'
-            disabled
-          /> */}
+            {/* <Item
+              onClick={onClickItem}
+              label="Derniers avis"
+              icon={Hash}
+              href="/"
+            /> */}
+
+            {/* <Item
+              onClick={onClickItem}
+              label="Mon top poutines"
+              icon={Heart}
+              href="mon-top"
+              disabled
+            /> */}
 
             <Item
               onClick={onClickItem}
@@ -159,6 +179,12 @@ const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
               }`}
               href="/a-essayer"
               requireLogin={!currentUser}
+              requireLoginMessage={
+                <span>
+                  <b>Connectez-vous</b> accéder à votre liste de poutines à
+                  essayer!
+                </span>
+              }
             />
             <Item
               onClick={onClickItem}
@@ -172,6 +198,20 @@ const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
               icon={CheckCircle}
               href={`/mes-poutines`}
               requireLogin={!currentUser}
+              requireLoginMessage={
+                <span>
+                  <b>Connectez-vous</b> accéder à votre liste de poutines
+                  mangées!
+                </span>
+              }
+            />
+            <Item
+              onClick={onClickItem}
+              label="Mon profil"
+              icon={User}
+              href={`/users/${currentUser?._id}`}
+              requireLogin={!currentUser}
+              requireLoginMessage=""
             />
 
             {/* <Item

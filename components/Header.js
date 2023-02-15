@@ -76,7 +76,7 @@ const Header = ({ toggleMobileSidebar }) => {
   };
 
   const handleSignout = () => {
-    signOut({ redirect: false, callbackUrl: "/top-poutines" }).then(() =>
+    signOut({ redirect: true, callbackUrl: "/top-poutines" }).then(() =>
       toast.success("Déconnexion réussie")
     );
   };

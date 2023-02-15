@@ -6,6 +6,7 @@ import ProfileHeader from "../../../components/profile/ProfileHeader";
 import ProfileStats from "../../../components/profile/ProfileStats";
 import PublicProfile from "../../../components/profile/PublicProfile";
 import Spinner from "../../../components/Spinner";
+import UserLastReviews from "../../../components/UserLastReviews";
 import UserRanking from "../../../components/UserRanking";
 import { useGet } from "../../../lib/useAxios";
 
@@ -41,10 +42,11 @@ const Tab = ({ isSelected, handleSelectTab, title, description }) => {
 
 const User = () => {
   const { query } = useRouter();
-  const { data } = useGet(`/api/users/${query.id}`, { skip: !query.id });
+  const { data: user } = useGet(`/api/users/${query.id}`, { skip: !query.id });
   const [selectedTab, handleSetSelectedTab] = useState(1);
+  const { data: reviews } = useGet(`/api/users/${query.id}/reviews`);
 
-  if (!data) return <Spinner />;
+  if (!user || !reviews) return <Spinner />;
 
   const tabs = [
     {
@@ -61,7 +63,7 @@ const User = () => {
     <div className="p-10 w-full">
       <div className="flex items-start 3xl:justify-evenly">
         <div className="max-w-md">
-          <ProfileHeader user={data} />
+          <ProfileHeader user={user} />
           <div className="flex mt-3 -mb-[1px]">
             {tabs.map((props, i) => (
               <Tab
@@ -77,9 +79,15 @@ const User = () => {
               hidden: selectedTab !== 1,
             })}
           >
-            <UserRanking userId={query.id} />
+            <UserRanking reviews={reviews} />
           </div>
-          <div className={classNames({ hidden: selectedTab !== 2 })}>bro</div>
+          <div
+            className={classNames("bg-white p-5 border rounded-b rounded-r", {
+              hidden: selectedTab !== 2,
+            })}
+          >
+            <UserLastReviews reviews={reviews} user={user} />
+          </div>
         </div>
 
         <div className="ml-12 h-screen">

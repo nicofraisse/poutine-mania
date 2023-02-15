@@ -12,30 +12,11 @@ import { Image } from "../components/Image";
 import { useRouter } from "next/router";
 
 function TopPoutines() {
-  const [paginationSkip, setPaginationSkip] = useState(0);
-  const [allReviews, setAllReviews] = useState([]);
-
   const { push } = useRouter();
-  const { data: reviews, loading } = useGet(
-    `/api/reviews?skip=${paginationSkip}`
-  );
 
   const { data: restaurants, loading: restaurantsLoading } = useGet(
     `/api/restaurants?sort=avgRating&order=-1&limit=10&noUnapproved=true`
   );
-
-  useEffect(() => {
-    if (reviews) {
-      setAllReviews((prevAllReviews) => [...prevAllReviews, ...reviews]);
-    }
-  }, [reviews]);
-
-  const handleScroll = (e) => {
-    const { offsetHeight, scrollTop, scrollHeight } = e.target;
-    if (offsetHeight + scrollTop >= scrollHeight - 10) {
-      setPaginationSkip(allReviews.length);
-    }
-  };
 
   return (
     <div className="md:pl-2 pt-2 xl:pl-5 lg:flex max-w-4xl mx-auto">
@@ -71,9 +52,9 @@ function TopPoutines() {
             le type de restaurant, la note moyenne sur 10, et bien plus.
           </p>
         </div>
-        <div className="shadow-lg border-white border-4 rounded-lg mb-40 mt-4">
-          {reviews &&
-            restaurants?.map((r, i) => {
+        <div className="shadow-lg border-white border-4 rounded-lg mb-40 mt-6">
+          {restaurants ? (
+            restaurants.map((r, i) => {
               const image = r.reviews?.find((res) => res.photos?.[0])
                 ?.photos[0];
               return (
@@ -175,7 +156,10 @@ function TopPoutines() {
                   </div>
                 </div>
               );
-            })}
+            })
+          ) : (
+            <Spinner />
+          )}
         </div>
       </div>
     </div>
