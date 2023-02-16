@@ -10,11 +10,12 @@ import { format } from "date-fns";
 import { getUrlQueryString } from "../../lib/getUrlqueryString";
 import { ToggleSwitch } from "../../components/controls/ToggleSwitch";
 import { useCurrentUser } from "../../lib/useCurrentUser";
+import { formatCity, formatCountry } from "lib/formatAddress";
 
 const Restaurants = () => {
   const [restaurants, setRestaurants] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { currentUser } = useCurrentUser();
+  const { currentUser, loading: currentUserLoading } = useCurrentUser();
 
   const { push, reload } = useRouter();
 
@@ -53,83 +54,93 @@ const Restaurants = () => {
 
   if (loading || !restaurants) return <Spinner />;
 
-  if (!currentUser.isAdmin) {
+  if (currentUser && !currentUser.isAdmin) {
     push("/");
     return <div></div>;
   }
 
-  return (
-    <div className="w-full min-h-screen-minus-navbar p-6 max-w-lg">
-      <Link href="/nouveau-restaurant" passHref>
-        <button className="px-4 py-2 bg-slate-700 text-white font-black text-sm mb-3 rounded ml-auto block">
-          Créer un restaurant
-        </button>
-      </Link>
+  if (!currentUser && !currentUserLoading) push("/404");
 
-      <table className="border-collapse table-auto w-full text-sm">
-        <thead>
-          <tr>
-            <th className="bg-slate-100 border-b font-medium p-4 pl-8 pb-3 text-slate-500 text-left rounded-tl-lg">
-              Approved
-            </th>
-            <th className="bg-slate-100 border-b font-medium p-4 pl-8 pb-3 text-slate-500 text-left">
-              Name
-            </th>
-            <th className="bg-slate-100 border-b font-medium p-4 pl-8 pb-3 text-slate-500 text-left">
-              Creator
-            </th>
-            <th className="bg-slate-100 border-b font-medium p-4 pl-8 pb-3 text-slate-500 text-left">
-              Creation date
-            </th>
-            <th className="bg-slate-100 border-b font-medium p-4 pl-8 pb-3 text-slate-500 text-left rounded-tr-lg">
-              Actions
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {restaurants?.map((r) => (
-            <tr
-              key={r._id}
-              className="hover:bg-slate-50 tansition-colors duration-100"
-              onDoubleClick={() => push(`/restaurants/${r._id}`)}
-            >
-              <td className="border-b border-slate-100 p-2 pl-8 text-slate-500">
-                <ToggleSwitch
-                  onChange={() => handleApprove(r._id, !r.approved)}
-                  checked={r.approved}
-                />
-              </td>
-              <td className="border-b border-slate-100 p-2 pl-8 text-slate-500">
-                {r.name}
-              </td>
-              <td className="border-b border-slate-100 p-2 pl-8 text-slate-500">
-                {r.creator?.email || "?"}
-              </td>
+  if (currentUser?.isAdmin)
+    return (
+      <div className="w-full min-h-screen-minus-navbar p-6 max-w-lg">
+        <Link href="/nouveau-restaurant" passHref>
+          <button className="px-4 py-2 bg-slate-700 text-white font-black text-sm mb-3 rounded ml-auto block">
+            Créer un restaurant
+          </button>
+        </Link>
 
-              <td className="border-b border-slate-100 p-2 pl-8 text-slate-500">
-                {r.createdAt &&
-                  format(new Date(r.createdAt), "yyyy/MM/dd kk:mm")}
-              </td>
-              <td className="border-b border-slate-100 p-2 pl-8 text-slate-500">
-                <button
-                  className="p-1 bg-gray-200 rounded shadow hover:bg-gray-100 mx-2"
-                  onClick={() => push(`/restaurants/${r._id}/edit`)}
-                >
-                  <Edit size={20} />
-                </button>
-                <button
-                  className="p-1 bg-gray-200 rounded shadow hover:bg-gray-100 mx-2"
-                  onClick={() => handleDelete(r)}
-                >
-                  <Trash size={20} />
-                </button>
-              </td>
+        <table className="border-collapse table-auto w-full text-sm">
+          <thead>
+            <tr>
+              <th className="bg-slate-100 border-b font-medium p-4 pl-8 pb-3 text-slate-500 text-left rounded-tl-lg">
+                Approved
+              </th>
+              <th className="bg-slate-100 border-b font-medium p-4 pl-8 pb-3 text-slate-500 text-left">
+                Name
+              </th>
+              <th className="bg-slate-100 border-b font-medium p-4 pl-8 pb-3 text-slate-500 text-left">
+                Area
+              </th>
+              <th className="bg-slate-100 border-b font-medium p-4 pl-8 pb-3 text-slate-500 text-left">
+                Creator
+              </th>
+              <th className="bg-slate-100 border-b font-medium p-4 pl-8 pb-3 text-slate-500 text-left">
+                Creation date
+              </th>
+              <th className="bg-slate-100 border-b font-medium p-4 pl-8 pb-3 text-slate-500 text-left rounded-tr-lg">
+                Actions
+              </th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
+          </thead>
+          <tbody>
+            {restaurants?.map((r) => (
+              <tr
+                key={r._id}
+                className="hover:bg-slate-50 tansition-colors duration-100"
+                onDoubleClick={() => push(`/restaurants/${r._id}`)}
+              >
+                <td className="border-b border-slate-100 p-2 pl-8 text-slate-500">
+                  <ToggleSwitch
+                    onChange={() => handleApprove(r._id, !r.approved)}
+                    checked={r.approved}
+                  />
+                </td>
+                <td className="border-b border-slate-100 p-2 pl-8 text-slate-500">
+                  {r.name}
+                </td>
+                <td className="border-b border-slate-100 p-2 pl-8 text-slate-500">
+                  {formatCity(r)}, {formatCountry(r)}
+                </td>
+                <td className="border-b border-slate-100 p-2 pl-8 text-slate-500">
+                  {r.creator?.email || "?"}
+                </td>
+
+                <td className="border-b border-slate-100 p-2 pl-8 text-slate-500">
+                  {r.createdAt &&
+                    format(new Date(r.createdAt), "yyyy/MM/dd kk:mm")}
+                </td>
+                <td className="border-b border-slate-100 p-2 pl-8 text-slate-500">
+                  <button
+                    className="p-1 bg-gray-200 rounded shadow hover:bg-gray-100 mx-2"
+                    onClick={() => push(`/restaurants/${r._id}/edit`)}
+                  >
+                    <Edit size={20} />
+                  </button>
+                  <button
+                    className="p-1 bg-gray-200 rounded shadow hover:bg-gray-100 mx-2"
+                    onClick={() => handleDelete(r)}
+                  >
+                    <Trash size={20} />
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    );
+  return <div></div>;
 };
 
 export default Restaurants;

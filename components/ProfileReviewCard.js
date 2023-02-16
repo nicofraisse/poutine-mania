@@ -40,6 +40,8 @@ const ProfileReviewCard = ({ review, isIndex, userName }) => {
     }
   };
 
+  if (!review.restaurants || review.restaurants.length === 0) return null;
+
   return (
     <>
       <div className="text-gray-400 block sm:flex justify-between items-center">

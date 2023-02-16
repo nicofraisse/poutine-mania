@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import Map, { Marker, Popup, NavigationControl } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { X, MapPin } from "react-feather";
@@ -13,6 +13,7 @@ import Image from "next/image";
 import Color from "color";
 import { Image as CloudImage } from "components/Image";
 import { TagSection } from "./RestaurantCard";
+import { useRestaurantSearch } from "components/context/RestaurantSearchProvider";
 
 const MAPBOX_TOKEN =
   "pk.eyJ1Ijoibmljb2ZyYWlzc2UiLCJhIjoiY2thZzZtemk3MDE4NzJybXVtMjF5a2xyOSJ9.6JURdkZj5FnZ5lxMzPncOA";
@@ -210,30 +211,53 @@ const MarkerAndPopup = ({
 
 const MapMap = ({ restaurants, isShowPage }) => {
   const [userCoordinates, setUserCoordinates] = useState();
-  const allCoordinates = flatten(
-    restaurants.map((r) => r.succursales.map((s) => s.address.center))
-  );
+  const { query } = useRouter();
+  const DEFAULT_COORDINATES = useMemo(() => {
+    return {
+      latitude: 45.53,
+      longitude: -73.69,
+      zoom: 9.5,
+    };
+  }, []);
+  const { searchValue, nonDebouncedValue } = useRestaurantSearch();
 
-  const [viewState, setViewState] = useState({
-    longitude: 40,
-    latitude: 40,
-    zoom: 9,
-  });
+  const [viewState, setViewState] = useState(DEFAULT_COORDINATES);
 
   useEffect(() => {
+    // if (query.search && restaurants) {
+    const allCoordinates = flatten(
+      restaurants.map((r) => r.succursales.map((s) => s.address.center))
+    );
     const minLongitude = minBy(allCoordinates, (c) => c[0])?.[0];
     const minLatitude = minBy(allCoordinates, (c) => c[1])?.[1];
     const maxLongitude = maxBy(allCoordinates, (c) => c[0])?.[0];
     const maxLatitude = maxBy(allCoordinates, (c) => c[1])?.[1];
-    setViewState({
-      longitude: (minLongitude + maxLongitude) / 2,
-      latitude: (minLatitude + maxLatitude) / 2,
-      zoom: 9,
-    });
-  }, [restaurants]);
+
+    if (query.search && query.search === searchValue) {
+      mapRef.current?.fitBounds(
+        [
+          [minLongitude, minLatitude],
+          [maxLongitude, maxLatitude],
+        ],
+        { padding: 50, duration: 1000, maxZoom: 17.5 }
+      );
+    } else {
+      mapRef.current?.flyTo({
+        center: [DEFAULT_COORDINATES.longitude, DEFAULT_COORDINATES.latitude],
+        zoom: DEFAULT_COORDINATES.zoom,
+        duration: 2000,
+      });
+    }
+
+    // }
+  }, [restaurants, query.search, searchValue, DEFAULT_COORDINATES]);
 
   const [openPopups, setOpenPopups] = useState([]);
   const [userPopupOpen, setUserPopupOpen] = useState(false);
+
+  const POUTINE_LOGO_ZOOM_THRESHOLD = 11;
+
+  const mapRef = useRef();
 
   const openPopup = (id) => {
     setOpenPopups([...openPopups, id]);
@@ -250,9 +274,23 @@ const MapMap = ({ restaurants, isShowPage }) => {
   const [isSmallMarker, setIsSmallMarker] = useState(!isShowPage);
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      setUserCoordinates([position.coords.longitude, position.coords.latitude]);
-    });
+    navigator.geolocation.getCurrentPosition(() => console.log("ok"));
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setUserCoordinates([
+          position.coords.longitude,
+          position.coords.latitude,
+        ]);
+        setViewState({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+          zoom: 12.1,
+        });
+      },
+      (err) => console.log("error bro", err),
+      { timeout: 10000, enableHighAccuracy: false }
+    );
   }, []);
 
   return (
@@ -263,9 +301,12 @@ const MapMap = ({ restaurants, isShowPage }) => {
       }}
     >
       <Map
+        ref={mapRef}
         reuseMaps
         id="mymap"
+        fadeDuration={1000}
         onMove={(evt) => setViewState(evt.viewState)}
+        maxZoom={20}
         // initialViewState={{
         //   bounds: [
         //     [minLongitude, minLatitude],
@@ -278,7 +319,8 @@ const MapMap = ({ restaurants, isShowPage }) => {
         mapStyle="mapbox://styles/mapbox/streets-v10"
         mapboxAccessToken={MAPBOX_TOKEN}
         onZoom={(e) => {
-          if (!isShowPage) setIsSmallMarker(e.viewState.zoom < 12);
+          if (!isShowPage)
+            setIsSmallMarker(e.viewState.zoom < POUTINE_LOGO_ZOOM_THRESHOLD);
         }}
       >
         <NavigationControl position="bottom-right" />

@@ -10,3 +10,10 @@ export const formatCity = (restaurant) => {
         c.id.includes("place")
       )?.text;
 };
+export const formatCountry = (restaurant) => {
+  return restaurant.succursales.length > 1
+    ? `${restaurant.succursales.length} addresses`
+    : restaurant.succursales[0].address.context.find((c) =>
+        c.id.includes("country")
+      )?.text;
+};
