@@ -42,6 +42,7 @@ const Item = ({
   const { pathname } = useRouter();
   const isActive = pathname?.split("/")[1] === href.split("/")[1];
   const Icon = icon;
+  console.log(pathname, href);
 
   return (
     <ConditionalWrapper
@@ -115,7 +116,7 @@ const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
           )}
         >
           <div className="select-none">
-            <Link href="/top-poutines">
+            <Link href="/">
               <a>
                 <div className="flex items-center -ml-4 transform scale-75">
                   <Image
@@ -134,21 +135,16 @@ const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
                 </div>
               </a>
             </Link>
-            <Item
+            {/* <Item
               onClick={onClickItem}
               label="Communauté"
               icon={Hash}
               href="/communaute"
-            />
+            /> */}
+            <Item onClick={onClickItem} label="Accueil" icon={Home} href="/" />
             <Item
               onClick={onClickItem}
-              label="Top 10 poutines"
-              icon={Award}
-              href="/top-poutines"
-            />
-            <Item
-              onClick={onClickItem}
-              label="Carte des poutines"
+              label="Poutines"
               icon={Map}
               href="/restaurants"
             />

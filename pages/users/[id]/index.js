@@ -47,7 +47,7 @@ const User = () => {
   const { data: reviews } = useGet(`/api/users/${query.id}/reviews`);
 
   if (!user || !reviews) return <Spinner />;
-
+  console.log("REVI", reviews);
   const tabs = [
     {
       title: "🏅",

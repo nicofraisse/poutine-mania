@@ -55,7 +55,6 @@ const UserRanking = ({ reviews }) => {
         </thead>
         <tbody>
           {aggr.map((r, i) => {
-            console.log(r);
             return (
               <tr key={r._id}>
                 <td className="border-b border-slate-100 p-3 pl-6 text-enter text-3xl text-stone-300 font-bold">
@@ -67,7 +66,7 @@ const UserRanking = ({ reviews }) => {
                 <td className="border-b border-slate-100 p-3 pl-0 text-slate-500">
                   {r.categories[0]}
                   {r.succursales.length > 1 ? ", " : " à "}
-                  {formatCity(r)}
+                  {r.succursales && formatCity(r)}
                 </td>
                 {/* <td className="border-b border-slate-100 p-3 pl-0 text-slate-500">
                   {r.city}

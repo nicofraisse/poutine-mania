@@ -61,7 +61,7 @@ const Restaurants = () => {
         <div className="grow md:w-1/2 min-h-1/2vh max-h-1/2vh md:min-h-screen-minus-navbar md:max-h-screen-minus-navbar">
           <Map restaurants={restaurants} />
         </div>
-        <div className="pt-5 md:w-1/2 md:max-w-[480px] md:overflow-y-auto">
+        <div className="pt-5 md:w-1/2 md:max-w-[480px] md:overflow-y-auto scrollbar-hide">
           <div className="min-h-12">
             <div className="lg:pl-6 lg:pr-5 px-2 m b-3 lg:mb-0 flex justify-between items-start">
               {loading ? (

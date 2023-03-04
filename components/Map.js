@@ -59,8 +59,8 @@ const MarkerAndPopup = ({
       >
         {isSmallMarker ? (
           <div
-            onMouseEnter={() => !isShowPage && setHoveredId(restaurant._id)}
-            onMouseLeave={() => !isShowPage && setHoveredId(null)}
+            // onMouseEnter={() => !isShowPage && setHoveredId(restaurant._id)}
+            // onMouseLeave={() => !isShowPage && setHoveredId(null)}
             data-pin="yes"
             ref={theRef}
             onClick={(e) => {
@@ -68,23 +68,30 @@ const MarkerAndPopup = ({
               togglePopup();
             }}
             className={classNames(
-              "transform -translate-y-1 z-30 transition dutation-150 w-4 h-4 rounded-full border-white shadow-md border-2",
-              { "scale-150": isHovered }
+              "transform -translate-y-1 z-30 hover:scale-150 hover:shadow-md transition dutation-150 w-4 h-4 rounded-full border-white shadow-md border-2",
+              { "scale-150 shadow-md": isHovered }
             )}
             style={{
               backgroundColor:
                 restaurant.reviewCount > 0
                   ? Color(ratingColors[round(restaurant.avgRating)]).darken(0.4)
                   : "rgb(160, 160, 160)",
-              boxShadow: isHovered ? "0px 0px 7px rgba(0, 0, 0, 0.5)" : "",
+              // boxShadow: isHovered ? "0px 0px 7px rgba(0, 0, 0, 0.5)" : "",
             }}
           ></div>
         ) : (
-          <>
+          <div
+            className={classNames(
+              "transition-transform duration-200 transform hover:scale-125",
+              {
+                "scale-125": isHovered,
+              }
+            )}
+          >
             <div
-              className="w-10 h-10 absolute z-10 flex items-center justify-center"
-              onMouseEnter={() => !isShowPage && setHoveredId(restaurant._id)}
-              onMouseLeave={() => !isShowPage && setHoveredId(null)}
+              className="w-10 h-10 absolute z-10 flex items-center justify-center "
+              // onMouseEnter={() => !isShowPage && setHoveredId(restaurant._id)}
+              // onMouseLeave={() => !isShowPage && setHoveredId(null)}
               data-pin="yes"
               onClick={(e) => {
                 e.stopPropagation();
@@ -97,10 +104,7 @@ const MarkerAndPopup = ({
                 width={36}
                 height={36}
                 className={classNames(
-                  "transform scale-75 transition-all duration-100 -translate-y-1 z-30",
-                  {
-                    "scale-100": isHovered,
-                  }
+                  "transform scale-75 transition-all duration-100 -translate-y-1 z-30"
                 )}
                 onClick={() => {
                   togglePopup();
@@ -124,12 +128,10 @@ const MarkerAndPopup = ({
                     )
                   : "white"
               }
-              className={classNames("transition duration-100 nocircle", {
-                "transform scale-125": isHovered,
-              })}
+              className={"nocircle"}
               ref={theRef}
             />
-          </>
+          </div>
         )}
       </Marker>
       {isPopupOpen && (
@@ -216,7 +218,7 @@ const MapMap = ({ restaurants, isShowPage }) => {
     return {
       latitude: 45.53,
       longitude: -73.69,
-      zoom: 9.5,
+      zoom: 10,
     };
   }, []);
   const { searchValue, nonDebouncedValue } = useRestaurantSearch();
@@ -271,7 +273,9 @@ const MapMap = ({ restaurants, isShowPage }) => {
 
   const closeAllPopups = () => setOpenPopups([]);
 
-  const [isSmallMarker, setIsSmallMarker] = useState(!isShowPage);
+  const [isSmallMarker, setIsSmallMarker] = useState(
+    viewState.zoom < POUTINE_LOGO_ZOOM_THRESHOLD
+  );
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(() => console.log("ok"));

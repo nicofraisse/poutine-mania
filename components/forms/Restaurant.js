@@ -51,18 +51,26 @@ const RestaurantForm = ({ type, onSubmit, isAdmin }) => {
         .then(({ data }) => {
           setSubmitting(false);
           toast.success("Succès");
+
           push(
             currentUser.isAdmin
               ? "/admin/restaurants"
-              : `/restaurants/${data._id}`
+              : `/restaurants/${restaurant._id}`
           );
         })
         .catch((err) => toast.error(err.message));
     } else if (type === "update") {
       axios
         .post(`/api/restaurants/${query.id}/update`, submitValues)
-        .then(() => {
+        .then((data) => {
           toast.success("Succès");
+          setSubmitting(false);
+
+          push(
+            currentUser.isAdmin
+              ? `/restaurants/${restaurant._id}/edit`
+              : `/restaurants/${restaurant._id}`
+          );
         })
         .catch((err) => toast.error(err.message));
     }
@@ -138,6 +146,7 @@ const RestaurantForm = ({ type, onSubmit, isAdmin }) => {
               { label: "Entre 7$ et 9$", value: 2 },
               { label: "Plus de 9$", value: 3 },
             ]}
+            value={values.priceRange}
           />
 
           <div className="bg-gray-50 border p-3 sm:p-4 rounded mb-4">

@@ -27,7 +27,7 @@ const Header = ({ toggleMobileSidebar }) => {
 
   const BACKABLE_PAGE_PROPS = {
     "/noter": {
-      url: "/top-poutines",
+      url: "/",
       buttonText: "Retour à l'accueil",
       hideSearch: true,
       hideRateButton: true,
@@ -76,7 +76,7 @@ const Header = ({ toggleMobileSidebar }) => {
   };
 
   const handleSignout = () => {
-    signOut({ redirect: true, callbackUrl: "/top-poutines" }).then(() =>
+    signOut({ redirect: true, callbackUrl: "/" }).then(() =>
       toast.success("Déconnexion réussie")
     );
   };
@@ -104,7 +104,7 @@ const Header = ({ toggleMobileSidebar }) => {
 
           {!(isMobile && showSearchBar) && !backablePage && (
             <div className="-mb-2 -ml-3 block select-none min-w-20">
-              <Link href="/top-poutines">
+              <Link href="/">
                 <a>
                   <Image
                     alt="poutine-logo"
@@ -222,40 +222,11 @@ const Header = ({ toggleMobileSidebar }) => {
               <div className="relative mx-4 lg:mx-5 z-20">
                 <div
                   className="h-[44px] w-[44px] bg-gray-400 rounded-full cursor-pointer hover:opacity-80 flex items-center justify-center"
-                  onClick={() => setDropdownOpen(!dropdownOpen)}
+                  onClick={() => openLogin()}
                   ref={toggleRef}
                 >
                   <User className="text-white" size={30} />
                 </div>
-                <Dropdown
-                  isOpen={dropdownOpen}
-                  setIsOpen={setDropdownOpen}
-                  toggleRef={toggleRef}
-                >
-                  <div
-                    onClick={() => {
-                      setTimeout(() => {
-                        setDropdownOpen(false);
-                      }, 100);
-                    }}
-                  >
-                    <div
-                      className="hover:bg-gray-100 px-3 py-2 rounded-b-lg text-gray-700 cursor-pointer"
-                      onClick={(e) => {
-                        e.persist();
-                        openLogin();
-                      }}
-                    >
-                      Connexion
-                    </div>
-                    <div
-                      className="hover:bg-gray-100 px-3 py-2 rounded-b-lg text-gray-700 cursor-pointer"
-                      onClick={() => openSignup()}
-                    >
-                      Inscription
-                    </div>
-                  </div>
-                </Dropdown>
               </div>
             )}
           </div>

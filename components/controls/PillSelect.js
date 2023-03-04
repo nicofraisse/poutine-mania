@@ -20,12 +20,15 @@ const Pill = ({ caption, isSelected, onClick }) => {
 };
 
 const PillSelect = ({ options, onChange, isMulti, value, ...props }) => {
-  const [selectedValues, setSelectedValues] = useState(isMulti ? [] : null);
+  const [selectedValues, setSelectedValues] = useState(
+    isMulti ? [...value].filter(Boolean) : value
+  );
   const [field] = useField(props);
   const { setFieldValue } = useFormikContext();
 
   useEffect(() => {
     setFieldValue(field.name, selectedValues);
+    console.log({ selectedValues }, field);
   }, [selectedValues]); //eslint-disable-line
 
   const handleSelect = (value) => {

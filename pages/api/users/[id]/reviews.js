@@ -1,12 +1,12 @@
-import { connectToDatabase } from '../../../../lib/db'
-import { ObjectId } from 'mongodb'
+import { connectToDatabase } from "../../../../lib/db";
+import { ObjectId } from "mongodb";
 
 const handler = async (req, res) => {
-  const client = await connectToDatabase()
-  const db = await client.db()
+  const client = await connectToDatabase();
+  const db = await client.db();
 
   const data = await db
-    .collection('reviews')
+    .collection("reviews")
     .aggregate([
       {
         $match: {
@@ -15,10 +15,10 @@ const handler = async (req, res) => {
       },
       {
         $lookup: {
-          from: 'restaurants',
-          localField: 'restaurantId',
-          foreignField: '_id',
-          as: 'restaurants',
+          from: "restaurants",
+          localField: "restaurantId",
+          foreignField: "_id",
+          as: "restaurants",
         },
       },
       {
@@ -27,9 +27,10 @@ const handler = async (req, res) => {
         },
       },
     ])
-    .toArray()
+    .toArray();
 
-  res.status(200).json(data)
-}
+  const results = data.filter((d) => d.restaurants.length !== 0);
+  res.status(200).json(results);
+};
 
-export default handler
+export default handler;

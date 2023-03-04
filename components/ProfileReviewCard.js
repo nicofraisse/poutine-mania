@@ -31,7 +31,7 @@ const ProfileReviewCard = ({ review, isIndex, userName }) => {
       )
     ) {
       await axios
-        .delete(`/api/reviews/${id}/delete`)
+        .delete(`/api/reviews/${id}/delete?userId=${review.user._id}`)
         .then(() => {
           toast.success("Supprimé!");
           reload(window.location.pathname);
