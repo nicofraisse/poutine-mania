@@ -96,6 +96,12 @@ const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
     } else toggleMobileSidebar();
   };
 
+  const getAmountString = (amount) => {
+    if (!amount) return "";
+    if (amount > 999) return " (999+)";
+    return ` (${amount})`;
+  };
+
   return (
     <>
       {showMobileSidebar && (
@@ -166,13 +172,7 @@ const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
             <Item
               onClick={onClickItem}
               icon={Star}
-              label={`À essayer ${
-                sidebarWatchlistAmount === null
-                  ? ""
-                  : sidebarWatchlistAmount > 999
-                  ? "(999+)"
-                  : `(${sidebarWatchlistAmount})`
-              }`}
+              label={`À essayer${getAmountString(sidebarWatchlistAmount)}`}
               href="/a-essayer"
               requireLogin={!currentUser}
               requireLoginMessage={
@@ -184,13 +184,7 @@ const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
             />
             <Item
               onClick={onClickItem}
-              label={`Mangées ${
-                sidebarEatenlistAmount === null
-                  ? ""
-                  : sidebarEatenlistAmount > 999
-                  ? "(999+)"
-                  : `(${sidebarEatenlistAmount})`
-              }`}
+              label={`Mangées ${getAmountString(sidebarEatenlistAmount)}`}
               icon={CheckCircle}
               href={`/mes-poutines`}
               requireLogin={!currentUser}

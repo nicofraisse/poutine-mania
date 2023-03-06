@@ -10,6 +10,18 @@ const handler = async (req, res) => {
     .collection("users")
     .findOne({ _id: new ObjectId(req.query.id) });
 
+  // Migrate
+  if (!user.watchlist) {
+    await db.collection("users").updateOne(
+      { _id: ObjectId(req.query.id) },
+      {
+        $set: {
+          watchlist: [],
+        },
+      }
+    );
+  }
+
   const restaurants = await db
     .collection("restaurants")
     .find({ _id: { $in: user.watchlist?.map((id) => new ObjectId(id)) } })
