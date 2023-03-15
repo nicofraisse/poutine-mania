@@ -9,7 +9,7 @@ import { Image } from "./Image";
 import { Image as ImageIcon } from "react-feather";
 
 const RestaurantSearchBar = React.forwardRef(({ onSubmit }, ref) => {
-  const { push, asPath, pathname } = useRouter();
+  const { push, asPath } = useRouter();
   const { searchValue, setSearchValue, nonDebouncedValue } =
     useRestaurantSearch();
   const [showSearchSuggestions, setShowSearchSuggestions] = useState(false);
@@ -69,7 +69,7 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit }, ref) => {
       />
       {showSearchSuggestions && (
         <div className="absolute z-50 w-full bg-white border shadow-lg left-0 px-2 sm:px-3 py-2">
-          {restaurants?.map((r, i) => {
+          {restaurants?.map((r) => {
             const image = r.reviews?.find((res) => res.photos?.[0])?.photos[0];
 
             return (

@@ -1,9 +1,7 @@
 import Color from "color";
 import React from "react";
 import { ratingColors } from "../data/ratingColors";
-import Spinner from "./Spinner";
-import { meanBy, round, repeat } from "lodash";
-import { MessageCircle } from "react-feather";
+import { meanBy, round } from "lodash";
 import { formatCity } from "../lib/formatAddress";
 import Tooltip from "rc-tooltip";
 import Link from "next/link";

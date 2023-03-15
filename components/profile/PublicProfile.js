@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Edit3, User } from "react-feather";
+import { User } from "react-feather";
 import { maxBy } from "lodash";
 import { useCurrentUser } from "../../lib/useCurrentUser";
 import { useGet } from "../../lib/useAxios";

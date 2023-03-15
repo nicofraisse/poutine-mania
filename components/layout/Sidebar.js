@@ -1,31 +1,10 @@
 import Link from "next/link";
-import React, { useEffect } from "react";
-import {
-  Award,
-  Hash,
-  Heart,
-  Home,
-  Info,
-  List,
-  Lock,
-  Map,
-  Search,
-  User,
-  Users,
-  Watch,
-  BarChart2,
-  Eye,
-  Bookmark,
-  ThumbsUp,
-  Star,
-  Check,
-  CheckCircle,
-} from "react-feather";
+import React from "react";
+import { Home, Info, Lock, Map, User, Star, CheckCircle } from "react-feather";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import classNames from "classnames";
 import { useCurrentUser } from "lib/useCurrentUser";
-import { useLoginForm } from "../context/LoginFormProvider";
 import ConditionalWrapper from "components/ConditionalWrapper";
 import { useRequireLogin } from "../../lib/useRequireLogin";
 import { useSidebarData } from "../context/SidebarDataProvider";
@@ -75,7 +54,6 @@ const Item = ({
 
 const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
   const { currentUser } = useCurrentUser();
-  const { openLogin } = useLoginForm();
   const requireLogin = useRequireLogin();
   const { sidebarEatenlistAmount, sidebarWatchlistAmount } = useSidebarData();
 

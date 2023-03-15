@@ -2,10 +2,7 @@ import Spinner from "components/Spinner";
 import ProfileReviewCard from "components/ProfileReviewCard";
 import { useGet } from "lib/useAxios";
 import { useEffect, useState } from "react";
-import { MapPin } from "react-feather";
 import classNames from "classnames";
-import Link from "next/link";
-import RatingPill from "../RatingPill";
 
 export function RecentActivity({ heightClass }) {
   const [paginationSkip, setPaginationSkip] = useState(0);
@@ -13,10 +10,6 @@ export function RecentActivity({ heightClass }) {
 
   const { data: reviews, loading } = useGet(
     `/api/reviews?skip=${paginationSkip}`
-  );
-
-  const { data: restaurants, loading: restaurantsLoading } = useGet(
-    `/api/restaurants?sort=avgRating&order=-1&limit=3&minReviewCount=1`
   );
 
   useEffect(() => {

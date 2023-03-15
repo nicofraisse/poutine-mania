@@ -1,7 +1,6 @@
 import RatingPill from "./RatingPill";
 import { DataRing } from "./display/DataRing";
-import Color from "color";
-import { ratingColors } from "data/ratingColors";
+
 import cheese1 from "assets/icons/cheese1.svg";
 import fries from "assets/icons/fries.svg";
 import sauce from "assets/icons/sauce.svg";
@@ -9,7 +8,7 @@ import { useEffect, useState } from "react";
 import { round } from "lodash";
 import classNames from "classnames";
 import Button from "./Button";
-import { Edit2, Edit3 } from "react-feather";
+import { Edit3 } from "react-feather";
 import { useRouter } from "next/router";
 
 const IngredientRatingRings = ({

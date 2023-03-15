@@ -3,7 +3,6 @@ import React from "react";
 import { User } from "react-feather";
 import { useCurrentUser } from "../../lib/useCurrentUser";
 import { Image } from "../Image";
-import { Link as LinkIcon } from "react-feather";
 
 const ProfileHeader = ({ user }) => {
   const { currentUser } = useCurrentUser();

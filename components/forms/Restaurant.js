@@ -17,7 +17,7 @@ import PillSelect from "../controls/PillSelect";
 import PhoneInput from "components/controls/PhoneInput";
 import { useCurrentUser } from "../../lib/useCurrentUser";
 
-const RestaurantForm = ({ type, onSubmit, isAdmin }) => {
+const RestaurantForm = ({ type }) => {
   const { query, push } = useRouter();
   const { currentUser } = useCurrentUser();
 
@@ -53,7 +53,7 @@ const RestaurantForm = ({ type, onSubmit, isAdmin }) => {
     if (type === "create") {
       axios
         .post("/api/restaurants/create", submitValues)
-        .then(({ data }) => {
+        .then(() => {
           setSubmitting(false);
           toast.success("Succès");
 
@@ -67,7 +67,7 @@ const RestaurantForm = ({ type, onSubmit, isAdmin }) => {
     } else if (type === "update") {
       axios
         .post(`/api/restaurants/${query.id}/update`, submitValues)
-        .then((data) => {
+        .then(() => {
           toast.success("Succès");
           setSubmitting(false);
 
@@ -135,7 +135,7 @@ const RestaurantForm = ({ type, onSubmit, isAdmin }) => {
         priceRange: Yup.number().nullable().required("Requis"),
       })}
     >
-      {({ isSubmitting, values, errors, setFieldValue, touched }) => (
+      {({ isSubmitting, values, errors, setFieldValue }) => (
         <>
           <Field name="name" label="Nom du restaurant" />
           <Field
@@ -210,11 +210,8 @@ const RestaurantForm = ({ type, onSubmit, isAdmin }) => {
                   name={`phoneNumber-${index}`}
                   label="Numéro de téléphone"
                   value={succursale.phoneNumber}
-                  onChange={
-                    // (e) => toast.success(JSON.stringify(e))
-                    // (e) => console.log(e)
-                    (value) =>
-                      updateSuccursaleField(value, index, "phoneNumber")
+                  onChange={(value) =>
+                    updateSuccursaleField(value, index, "phoneNumber")
                   }
                   control={PhoneInput}
                   country="US"
@@ -244,7 +241,7 @@ const RestaurantForm = ({ type, onSubmit, isAdmin }) => {
           <div className="flex items-center justify-between">
             <Button
               loading={isSubmitting}
-              onClick={(e) => {
+              onClick={() => {
                 if (Object.keys(errors).length > 0)
                   toast.error(
                     "Veuillez remplir tous les champs correctement (voir les erreurs plus haut)"

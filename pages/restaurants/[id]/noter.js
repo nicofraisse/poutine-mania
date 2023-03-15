@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import axios from "axios";
 import { useGet } from "lib/useAxios";
 import { useRouter } from "next/router";
@@ -21,7 +21,6 @@ import { useSidebarData } from "components/context/SidebarDataProvider";
 
 import { useCurrentUser } from "../../../lib/useCurrentUser";
 import { useLoginForm } from "components/context/LoginFormProvider";
-import { ErrorMessage } from "formik";
 
 const AlmostThere = () => (
   <div className="text-center">
@@ -175,7 +174,7 @@ const NoterRestaurant = () => {
           photos: Yup.object().nullable(),
         })}
       >
-        {({ isSubmitting, values, errors, setFieldValue, touched }) => {
+        {({ isSubmitting, values, errors, touched }) => {
           const nbFilledFields = [
             values.portionRating,
             values.friesRating,

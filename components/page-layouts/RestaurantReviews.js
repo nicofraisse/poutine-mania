@@ -3,29 +3,15 @@ import React, { useEffect, useState } from "react";
 import { useGet } from "../../lib/useAxios";
 import Spinner from "components/Spinner";
 import ReviewCard from "../ReviewCard";
-import {
-  Bookmark,
-  Camera,
-  CheckCircle,
-  Edit3,
-  Info,
-  Star,
-  ThumbsUp,
-  User,
-} from "react-feather";
-import ReactSelect from "react-select";
+import { CheckCircle, Info, Star } from "react-feather";
 import { useRateRestaurant } from "components/context/RateRestaurantProvider";
 import axios from "axios";
 import toast from "react-hot-toast";
 import Button from "components/Button";
-import RatingPill from "../RatingPill";
 import { countBy, sum } from "lodash";
 import Color from "color";
 import { ratingColors } from "../../data/ratingColors";
-import { DataRing } from "components/display/DataRing";
-import cheese1 from "assets/icons/cheese1.svg";
-import fries from "assets/icons/fries.svg";
-import sauce from "assets/icons/sauce.svg";
+
 import classNames from "classnames";
 import { useCurrentUser } from "lib/useCurrentUser";
 import { useSidebarData } from "components/context/SidebarDataProvider";
@@ -33,7 +19,6 @@ import Modal from "react-responsive-modal";
 import { useRequireLogin } from "../../lib/useRequireLogin";
 
 const ReviewStats = ({ reviews, restaurant }) => {
-  const { push } = useRouter();
   const { currentUser } = useCurrentUser();
   const requireLogin = useRequireLogin();
 
@@ -69,7 +54,7 @@ const ReviewStats = ({ reviews, restaurant }) => {
         type: isEaten ? "remove" : "add",
         restaurantId: restaurant._id,
       })
-      .then(({ data }) => {
+      .then(() => {
         setIsEatenLoading(false);
         setIsEaten(!isEaten);
         toast.success(
@@ -101,7 +86,7 @@ const ReviewStats = ({ reviews, restaurant }) => {
         type: isWatch ? "remove" : "add",
         restaurantId: restaurant._id,
       })
-      .then(({ data }) => {
+      .then(() => {
         setIsWatchLoading(false);
         setIsWatch(!isWatch);
         toast.success(

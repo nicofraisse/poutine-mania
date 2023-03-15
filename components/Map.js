@@ -27,7 +27,7 @@ const MarkerAndPopup = ({
   isSmallMarker,
 }) => {
   // const [showPopup, setShowPopup] = useState(false)
-  const { hoveredId, setHoveredId } = useRestaurantCardHover();
+  const { hoveredId } = useRestaurantCardHover();
 
   const isHovered = hoveredId === restaurant._id;
 
@@ -218,7 +218,7 @@ const MapMap = ({ restaurants, isShowPage }) => {
       zoom: 10,
     };
   }, []);
-  const { searchValue, nonDebouncedValue } = useRestaurantSearch();
+  const { searchValue } = useRestaurantSearch();
 
   const [viewState, setViewState] = useState(DEFAULT_COORDINATES);
 
@@ -249,14 +249,12 @@ const MapMap = ({ restaurants, isShowPage }) => {
         });
       }
     }
-
-    // }
   }, [restaurants, query.search, searchValue, DEFAULT_COORDINATES]);
 
   const [openPopups, setOpenPopups] = useState([]);
   const [userPopupOpen, setUserPopupOpen] = useState(false);
 
-  const POUTINE_LOGO_ZOOM_THRESHOLD = 11;
+  const POUTINE_LOGO_ZOOM_THRESHOLD = 12;
 
   const mapRef = useRef();
 

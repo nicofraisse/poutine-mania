@@ -9,7 +9,7 @@ const handler = async (req, res) => {
 
   // Validate request
   if (!session.user || session.user._id !== req.query.id) {
-    res.status(403).json(unauthorized);
+    res.status(403).json("unauthorized");
   }
   if (!req.body.type || !["add", "remove"].includes(req.body.type)) {
     res.status(400).json("Missing or wrong type (add or remove)");

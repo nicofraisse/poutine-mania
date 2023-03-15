@@ -1,29 +1,29 @@
-import { connectToDatabase } from '../../../lib/db'
-import { ObjectId } from 'mongodb'
+import { connectToDatabase } from "../../../lib/db";
 
 const handler = async (req, res) => {
-  const client = await connectToDatabase()
-  const db = await client.db()
+  const client = await connectToDatabase();
+  const db = await client.db();
 
-  const skip = req.query.skip && /^\d+$/.test(req.query.skip) ? Number(req.query.skip) : 0
+  const skip =
+    req.query.skip && /^\d+$/.test(req.query.skip) ? Number(req.query.skip) : 0;
 
   const data = await db
-    .collection('reviews')
+    .collection("reviews")
     .aggregate([
       {
         $lookup: {
-          from: 'restaurants',
-          localField: 'restaurantId',
-          foreignField: '_id',
-          as: 'restaurants',
+          from: "restaurants",
+          localField: "restaurantId",
+          foreignField: "_id",
+          as: "restaurants",
         },
       },
       {
         $lookup: {
-          from: 'users',
-          localField: 'userId',
-          foreignField: '_id',
-          as: 'user',
+          from: "users",
+          localField: "userId",
+          foreignField: "_id",
+          as: "user",
         },
       },
       {
@@ -39,12 +39,12 @@ const handler = async (req, res) => {
       },
 
       {
-        $unwind: '$user',
+        $unwind: "$user",
       },
     ])
-    .toArray()
+    .toArray();
 
-  res.status(200).json(data)
-}
+  res.status(200).json(data);
+};
 
-export default handler
+export default handler;

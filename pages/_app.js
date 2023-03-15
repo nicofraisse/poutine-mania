@@ -1,5 +1,5 @@
 import { Provider } from "next-auth/client";
-import toast, { Toaster } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 import { RateRestaurantProvider } from "components/context/RateRestaurantProvider";
 import Layout from "../components/layout/Layout";
 import "../styles/globals.css";

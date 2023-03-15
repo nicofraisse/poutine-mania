@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React, { useState } from "react";
-import { Edit3, X, MessageCircle, User } from "react-feather";
+import { Edit3, X, User } from "react-feather";
 import Modal from "react-responsive-modal";
 import { Image } from "./Image";
 import RatingPill from "./RatingPill";

@@ -1,9 +1,6 @@
 const path = require("path");
 
 module.exports = {
-  env: {
-    NODE_ENV: process.env.NODE_ENV,
-  },
   webpack: (config, options) => {
     config.resolve.alias["components"] = path.join(__dirname, "components");
     config.resolve.alias["context"] = path.join(__dirname, "context");
@@ -22,6 +19,7 @@ module.exports = {
     domains: ["platform-lookaside.fbsbx.com", "lh3.googleusercontent.com"],
   },
   env: {
+    NODE_ENV: process.env.NODE_ENV,
     CLOUD_NAME: process.env.CLOUD_NAME,
     MAPBOX_API_KEY: process.env.MAPBOX_API_KEY,
   },

@@ -3,7 +3,6 @@ import Input from "components/Input";
 import { Field as FormikField } from "formik";
 import { startCase } from "lodash";
 import { useContext, useMemo } from "react";
-import toast from "react-hot-toast";
 import { FormContext } from "./Form";
 import { isRequiredField } from "lib/isRequiredField";
 
@@ -30,7 +29,7 @@ const Field = ({
 
   return (
     <FormikField name={name}>
-      {({ field, meta, setTouched }) => {
+      {({ field, meta }) => {
         return (
           <div className={classNames(className, "mb-3 xs:mb-4", { hidden })}>
             {!hideLabel && (

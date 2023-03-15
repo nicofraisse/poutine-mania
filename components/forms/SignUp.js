@@ -1,6 +1,5 @@
 import axios from "axios";
 import * as Yup from "yup";
-import { useRouter } from "next/dist/client/router";
 import toast from "react-hot-toast";
 import Form from "components/Form";
 import Field from "components/Field";
@@ -9,7 +8,6 @@ import { useLoginForm } from "../context/LoginFormProvider";
 import { signIn } from "next-auth/client";
 
 const SignUp = ({ onSubmit, redirect }) => {
-  const { push } = useRouter();
   const { openLogin, closeSignup } = useLoginForm();
 
   const options = {

@@ -1,19 +1,9 @@
 import React from "react";
 import { useGet } from "../../lib/useAxios";
-import { useCurrentUser } from "../../lib/useCurrentUser";
 import Spinner from "components/Spinner";
 import Link from "next/link";
 import { Image } from "../../components/Image";
-import {
-  Image as ImageIcon,
-  Link2,
-  Link as LinkIcon,
-  MapPin,
-  MessageCircle,
-  Plus,
-} from "react-feather";
-import { TagSection } from "../../components/RestaurantCard";
-import RatingPill from "../../components/RatingPill";
+import { MessageCircle } from "react-feather";
 import Color from "color";
 import { ratingColors } from "../../data/ratingColors";
 import { round } from "lodash";
@@ -23,16 +13,9 @@ import { formatDate } from "../../lib/formatDate";
 import { flatten } from "lodash";
 
 const EatenList = ({ userId }) => {
-  const { currentUser } = useCurrentUser();
-
-  const { data: restaurants, loading: restaurantsLoading } = useGet(
-    `/api/users/${userId}/get-eatenlist`,
-    {
-      skip: !userId,
-    }
-  );
-
-  const isCurrentUser = !(currentUser && currentUser._id === userId);
+  const { data: restaurants } = useGet(`/api/users/${userId}/get-eatenlist`, {
+    skip: !userId,
+  });
 
   return (
     <div className="">

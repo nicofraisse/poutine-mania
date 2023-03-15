@@ -1,4 +1,3 @@
-import { getSession } from "next-auth/client";
 import { connectToDatabase } from "../../../../lib/db";
 import { ObjectId } from "mongodb";
 

@@ -1,7 +1,6 @@
 import React from "react";
-import RatingPill from "components/RatingPill";
 import { Image as ImageIcon } from "react-feather";
-import { repeat, flatten } from "lodash";
+import { flatten } from "lodash";
 import { Image } from "./Image";
 import { TagSection } from "./RestaurantCard";
 

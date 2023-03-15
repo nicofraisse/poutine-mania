@@ -19,7 +19,7 @@ const Pill = ({ caption, isSelected, onClick }) => {
   );
 };
 
-const PillSelect = ({ options, onChange, isMulti, value, ...props }) => {
+const PillSelect = ({ options, isMulti, value, ...props }) => {
   const [selectedValues, setSelectedValues] = useState(
     isMulti ? [...value].filter(Boolean) : value
   );

@@ -7,7 +7,7 @@ import { round } from "lodash";
 import classes from "./data-ring.module.scss";
 import Image from "next/image";
 
-export const DataRing = ({ size, icon, percent, iconStyle, noRatings }) => {
+export const DataRing = ({ icon, percent, iconStyle, noRatings }) => {
   const ringRef = useRef(null);
   const [percentValue, setPercentValue] = useState(0);
 

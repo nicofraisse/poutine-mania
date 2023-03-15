@@ -1,4 +1,4 @@
-import { ExternalLink, MapPin, Phone, PhoneCall } from "react-feather";
+import { ExternalLink, MapPin, PhoneCall } from "react-feather";
 import ShowPageMap from "components/ShowPageMap";
 import { formatAddress } from "lib/formatAddress";
 

@@ -1,7 +1,5 @@
-import axios from "axios";
-import { useState, useEffect } from "react";
-import Link from "next/link";
-import toast from "react-hot-toast";
+import { useState } from "react";
+
 import Spinner from "components/Spinner";
 import Map from "components/Map";
 import RestaurantCard from "../../components/RestaurantCard";
@@ -15,7 +13,6 @@ import useClickOutside from "../../lib/useClickOutside";
 import classNames from "classnames";
 import { getUrlQueryString } from "../../lib/getUrlqueryString";
 import { useRouter } from "next/router";
-import { VariantColor } from "../../components/Button";
 import RestaurantIntrouvable from "../../components/RestaurantIntrouvable";
 import { flatten } from "lodash";
 
@@ -33,8 +30,7 @@ const sortOrders = [
 ];
 
 const Restaurants = () => {
-  const { searchValue, setSearchValue, nonDebouncedValue } =
-    useRestaurantSearch();
+  const { searchValue, nonDebouncedValue } = useRestaurantSearch();
   const [sortType, setSortType] = useState("reviewCount");
   const [sortOrder, setSortOrder] = useState(-1);
   const [filtersOpen, setFiltersOpen] = useState(false);

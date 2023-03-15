@@ -14,7 +14,6 @@ import RatingButtons from "../controls/RatingButtons";
 import ImageUpload from "../controls/ImageUpload";
 import { useCurrentUser } from "lib/useCurrentUser";
 import Spinner from "../Spinner";
-import { useLoginForm } from "../context/LoginFormProvider";
 import Color from "color";
 import { ratingColors } from "../../data/ratingColors";
 import { round } from "lodash";
@@ -23,13 +22,11 @@ import { MIN_COMMENT_CHARS } from "../../pages/restaurants/[id]/noter";
 import { useRouter } from "next/router";
 
 const RateRestaurant = ({
-  onSubmit,
   preselectedRestaurant,
   existingReview,
   setExistingReview,
   setPreselectedRestaurant,
 }) => {
-  const { openLogin } = useLoginForm();
   const router = useRouter();
 
   const [searchQuery, setSearchQuery] = useState("");
@@ -88,7 +85,7 @@ const RateRestaurant = ({
       : "/api/reviews/create";
     const toastMessage = existingReview ? "Modifié!" : "Avis publié!";
     try {
-      const data = await axios.post(url, submitValues);
+      await axios.post(url, submitValues);
       toast.success(toastMessage);
       // onSubmit(selectedRestaurant._id)
       if (!existingReview) {
@@ -130,7 +127,7 @@ const RateRestaurant = ({
               restaurants={searchResults}
               userRatedRestaurants={userReviews}
               onSelect={(restaurant, alreadyRated) => {
-                if (!!alreadyRated) {
+                if (alreadyRated) {
                   setExistingReview(alreadyRated);
                   setPreselectedRestaurant(alreadyRated.restaurants[0]);
                 }

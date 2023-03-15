@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import Map, { Marker, Popup, NavigationControl } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { X, MapPin } from "react-feather";
-import { useRouter } from "next/router";
 import RatingPill from "components/RatingPill";
 import { flatten, minBy, maxBy } from "lodash";
 import { ratingColors } from "data/ratingColors";

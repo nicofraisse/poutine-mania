@@ -8,7 +8,7 @@ import classNames from "classnames";
 import { formatAddress } from "../../lib/formatAddress";
 import { Image } from "components/Image";
 
-const SelectRestaurant = ({ restaurants, onSelect, userRatedRestaurants }) => {
+const SelectRestaurant = ({ restaurants, userRatedRestaurants }) => {
   return (
     <>
       {restaurants?.map((restaurant) => {
@@ -21,7 +21,7 @@ const SelectRestaurant = ({ restaurants, onSelect, userRatedRestaurants }) => {
           <Link
             key={restaurant._id}
             href={
-              !!alreadyRated
+              alreadyRated
                 ? ""
                 : `/restaurants/${restaurant._id}/noter?fromList=true`
             }

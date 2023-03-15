@@ -12,7 +12,7 @@ import { useRouter } from "next/router";
 export function TopPoutines() {
   const { push } = useRouter();
 
-  const { data: restaurants, loading: restaurantsLoading } = useGet(
+  const { data: restaurants } = useGet(
     `/api/restaurants?sort=avgRating&order=-1&limit=10&noUnapproved=true`
   );
 

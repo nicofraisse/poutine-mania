@@ -4,8 +4,6 @@ import { round } from "lodash";
 import { ratingColors } from "data/ratingColors";
 import { Star } from "react-feather";
 import Color from "color";
-import { useState } from "react";
-import { useRateRestaurant } from "components/context/RateRestaurantProvider";
 
 const RatingPill = ({
   avgRating,
@@ -67,7 +65,6 @@ const RatingPill = ({
 const NewRatingPill = ({
   avgRating,
   reviewCount,
-  onRate,
   isDarkBackground,
   hideNewRatingInfo,
 }) => {
@@ -127,7 +124,7 @@ const NewRatingPill = ({
                   "text-gray-400": !isDarkBackground,
                 })}
               >
-                {1 === 0 ? "Votre note" : `(${reviewCount} avis)`}
+                {`(${reviewCount} avis)`}
               </div>
             )}
           </div>
@@ -138,7 +135,7 @@ const NewRatingPill = ({
               "text-gray-400": !isDarkBackground,
             })}
           >
-            {1 === 0 ? "Votre note" : "Aucun avis"}
+            {"Aucun avis"}
           </div>
         ))}
     </div>

@@ -1,8 +1,6 @@
-import classNames from "classnames";
 import { useField, useFormikContext } from "formik";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { ratingColors } from "../../data/ratingColors";
-import { round } from "lodash";
 import Color from "color";
 import { X } from "react-feather";
 

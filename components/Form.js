@@ -1,9 +1,15 @@
-import { Form as FormikForm, Formik } from 'formik'
-import { createContext } from 'react'
+import { Form as FormikForm, Formik } from "formik";
+import { createContext } from "react";
 
-export const FormContext = createContext()
+export const FormContext = createContext();
 
-export const Form = ({ children, className, id, validationSchema, ...props }) => {
+export const Form = ({
+  children,
+  className,
+  id,
+  validationSchema,
+  ...props
+}) => {
   return (
     <FormContext.Provider value={{ id, validationSchema }}>
       <Formik {...props} validationSchema={validationSchema}>
@@ -12,11 +18,11 @@ export const Form = ({ children, className, id, validationSchema, ...props }) =>
             <FormikForm className={className} onSubmit={handleSubmit}>
               {children(props)}
             </FormikForm>
-          )
+          );
         }}
       </Formik>
     </FormContext.Provider>
-  )
-}
+  );
+};
 
-export default Form
+export default Form;

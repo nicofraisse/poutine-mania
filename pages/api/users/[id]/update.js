@@ -8,7 +8,7 @@ const handler = async (req, res) => {
   const session = await getSession({ req });
 
   if (!(session.user.isAdmin || session.user._id === req.query.id)) {
-    res.status(403).json(unauthorized);
+    res.status(403).json("unauthorized");
   }
 
   const updatedUser = await db.collection("users").updateOne(

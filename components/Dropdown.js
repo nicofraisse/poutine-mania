@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { useState, createRef, useEffect } from "react";
+import { createRef, useEffect } from "react";
 
 const Dropdown = ({ children, isOpen, setIsOpen, toggleRef }) => {
   const ref = createRef();

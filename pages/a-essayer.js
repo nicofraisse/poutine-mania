@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useGet } from "../lib/useAxios";
 import { useCurrentUser } from "../lib/useCurrentUser";
 import Spinner from "components/Spinner";

@@ -5,18 +5,8 @@ import RestaurantReviews from "components/page-layouts/RestaurantReviews";
 import RestaurantHeader from "components/RestaurantHeader";
 import { ObjectId } from "mongodb";
 
-import {
-  Edit,
-  ExternalLink,
-  Info,
-  MapPin,
-  Phone,
-  PhoneCall,
-  Trash,
-} from "react-feather";
-import Map from "components/Map";
+import { Edit, Info, Trash } from "react-feather";
 import { useEffect, useState } from "react";
-import { formatAddress } from "lib/formatAddress";
 
 import { ReviewOverview } from "../../../components/ReviewOverview";
 import { RestaurantInfo } from "../../../components/RestaurantInfo";

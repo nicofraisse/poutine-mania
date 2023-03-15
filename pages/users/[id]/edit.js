@@ -9,17 +9,16 @@ import { capitalize } from "lodash";
 import { ChevronLeft, Info } from "react-feather";
 import { useRouter } from "next/router";
 import { signOut } from "next-auth/client";
-import { max } from "date-fns";
 import ImageUpload from "../../../components/controls/ImageUpload";
 
 const Edit = () => {
-  const { push, back, query } = useRouter();
+  const { push, query } = useRouter();
   const { currentUser } = useCurrentUser();
 
   const handleChangePassword = (values, formikBag) => {
     axios
       .patch("/api/users/change-password", values)
-      .then((data) => {
+      .then(() => {
         toast.success("Mot de passe mis à jour avec succès!");
         formikBag.setSubmitting(false);
       })
@@ -39,7 +38,7 @@ const Edit = () => {
         ...values,
         ...(publicId !== "skip" && { image: publicId }),
       })
-      .then((data) => {
+      .then(() => {
         toast.success("Informations mises à jour avec succès!");
         formikBag.setSubmitting(false);
       })
@@ -59,7 +58,7 @@ const Edit = () => {
     ) {
       axios
         .post(`/api/users/${query.id}/soft-delete`)
-        .then((data) => {
+        .then(() => {
           toast.success("Votre compte a été supprimé avec succès!");
           setTimeout(() => {
             signOut();

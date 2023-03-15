@@ -1,11 +1,7 @@
 import axios from "axios";
-import { useField, useFormikContext } from "formik";
 import { AsyncPaginate } from "react-select-async-paginate";
 
 const AddressAutocompleteSelect = ({ onChange, value, ...props }) => {
-  const [field] = useField(props);
-  const { setFieldValue } = useFormikContext();
-
   const loadOptions = async (query) => {
     const { data } = await axios.get(
       `https://api.mapbox.com/geocoding/v5/mapbox.places/${query}.json?access_token=${process.env.MAPBOX_API_KEY}&autocomplete=true&types=address`

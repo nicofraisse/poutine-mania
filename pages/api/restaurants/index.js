@@ -1,10 +1,8 @@
-import { getSession } from "next-auth/client";
 import { connectToDatabase } from "../../../lib/db";
 
 const handler = async (req, res) => {
   const client = await connectToDatabase();
   const db = await client.db();
-  const session = await getSession({ req });
 
   let result;
 

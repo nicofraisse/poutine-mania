@@ -5,11 +5,9 @@ import * as Yup from "yup";
 import Form from "components/Form";
 import Field from "components/Field";
 import { useLoginForm } from "../context/LoginFormProvider";
-import { useRouter } from "next/router";
 
 const Login = ({ onSubmit, redirect }) => {
   const { openSignup, closeLogin } = useLoginForm();
-  const { push } = useRouter();
 
   const options = {
     redirect: false,
@@ -31,7 +29,6 @@ const Login = ({ onSubmit, redirect }) => {
           onSubmit && onSubmit();
         }
         formikBag.setSubmitting(false);
-        // if (redirect) push(redirect);
       })
       .catch((e) => {
         toast.error(e.message);

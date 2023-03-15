@@ -8,8 +8,7 @@ import { useCurrentUser } from "lib/useCurrentUser";
 import { useGet } from "../lib/useAxios";
 import { useDebounce } from "use-debounce";
 import { useRouter } from "next/router";
-import { CheckCircle, X } from "react-feather";
-import Button, { VariantColor } from "../components/Button";
+import { CheckCircle } from "react-feather";
 import RestaurantIntrouvable from "../components/RestaurantIntrouvable";
 
 const Noter = () => {

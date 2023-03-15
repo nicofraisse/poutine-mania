@@ -5,7 +5,7 @@ import { useField, useFormikContext } from "formik";
 import classNames from "classnames";
 import { isArray } from "lodash";
 
-const ImageUpload = ({ onChange, roundedFull, ...props }) => {
+const ImageUpload = ({ roundedFull, ...props }) => {
   const [imageSrc, setImageSrc] = useState();
   const [field] = useField(props);
   const { setFieldValue } = useFormikContext();

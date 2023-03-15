@@ -1,5 +1,4 @@
 import RatingPill from "components/RatingPill";
-import ReadMore from "components/ReadMore";
 import { Image as ImageIcon, MapPin } from "react-feather";
 import { repeat } from "lodash";
 import { useRestaurantCardHover } from "./context/RestaurantCardHoverProvider";
@@ -7,15 +6,6 @@ import classNames from "classnames";
 import { Image } from "./Image";
 import Link from "next/link";
 import { useRateRestaurant } from "./context/RateRestaurantProvider";
-
-const LastComment = ({ comment }) => {
-  if (!comment) return null;
-  return (
-    <div className="text-ellipsis text-xs text-gray-500 mt-3">
-      <ReadMore text={comment} withQuotes />
-    </div>
-  );
-};
 
 const RestaurantCard = ({ restaurant }) => {
   const {
@@ -87,7 +77,7 @@ const RestaurantCard = ({ restaurant }) => {
                 avgRating={avgRating}
                 reviewCount={reviewCount}
                 isNew
-                onRate={(number) => rateRestaurant(restaurant)}
+                onRate={() => rateRestaurant(restaurant)}
               />
             </div>
 

@@ -1,20 +1,11 @@
 import React from "react";
-import { getUrlQueryString } from "../lib/getUrlqueryString";
 import { useGet } from "../lib/useAxios";
 import { useCurrentUser } from "../lib/useCurrentUser";
 import Spinner from "components/Spinner";
 import Link from "next/link";
 import { Image } from "../components/Image";
-import {
-  Image as ImageIcon,
-  Link2,
-  Link as LinkIcon,
-  MapPin,
-  MessageCircle,
-  Plus,
-} from "react-feather";
-import { TagSection } from "../components/RestaurantCard";
-import RatingPill from "../components/RatingPill";
+import { Link as LinkIcon, MessageCircle, Plus } from "react-feather";
+
 import Color from "color";
 import { ratingColors } from "../data/ratingColors";
 import { round } from "lodash";
@@ -26,7 +17,7 @@ import { flatten } from "lodash";
 const MesPoutines = () => {
   const { currentUser } = useCurrentUser();
 
-  const { data: restaurants, loading: restaurantsLoading } = useGet(
+  const { data: restaurants } = useGet(
     `/api/users/${currentUser?._id}/get-eatenlist`,
     {
       skip: !currentUser,

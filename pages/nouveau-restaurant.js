@@ -1,5 +1,4 @@
 import RestaurantForm from "components/forms/Restaurant";
-import { useRouter } from "next/router";
 import { useCurrentUser } from "lib/useCurrentUser";
 import Spinner from "../components/Spinner";
 

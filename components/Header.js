@@ -20,7 +20,7 @@ const Header = ({ toggleMobileSidebar }) => {
   const toggleRef = createRef();
   const searchBarRef = useRef();
   const { push, pathname, query } = useRouter();
-  const { openLogin, openSignup } = useLoginForm();
+  const { openLogin } = useLoginForm();
   const [showSearchBar, setShowSearchBar] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const { setSearchValue } = useRestaurantSearch();

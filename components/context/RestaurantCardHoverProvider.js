@@ -1,19 +1,19 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useState } from "react";
 
-const RestaurantCardHoverContext = createContext({})
+const RestaurantCardHoverContext = createContext({});
 
 export const RestaurantCardHoverProvider = ({ children }) => {
-  const [hoveredId, setHoveredId] = useState('')
+  const [hoveredId, setHoveredId] = useState("");
 
   return (
     <RestaurantCardHoverContext.Provider value={{ hoveredId, setHoveredId }}>
       {children}
     </RestaurantCardHoverContext.Provider>
-  )
-}
+  );
+};
 
 export const useRestaurantCardHover = () => {
-  return useContext(RestaurantCardHoverContext)
-}
+  return useContext(RestaurantCardHoverContext);
+};
 
-export default RestaurantCardHoverContext
+export default RestaurantCardHoverContext;

@@ -18,16 +18,16 @@ export const LoginFormProvider = ({ children }) => {
     setRedirectUrl(redirect || "");
   };
 
-  const closeLogin = (message) => {
+  const closeLogin = () => {
     setLoginOpen(false);
   };
 
-  const openSignup = (message, redirect) => {
+  const openSignup = (_, redirect) => {
     setSignupOpen(true);
     setRedirectUrl(redirect || "");
   };
 
-  const closeSignup = (message) => {
+  const closeSignup = () => {
     setSignupOpen(false);
   };
 

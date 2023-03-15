@@ -1,6 +1,6 @@
 export const restaurants = [
   {
-    name: 'Frites alors',
+    name: "Frites alors",
     addresses: [],
   },
-]
+];

@@ -1,13 +1,7 @@
 import classNames from "classnames";
 import React, { useEffect, useState } from "react";
-import {
-  CheckCircle,
-  Edit,
-  Image as ImageIcon,
-  Trash,
-  XCircle,
-} from "react-feather";
-import Button, { VariantColor } from "./Button";
+import { CheckCircle, Image as ImageIcon, XCircle } from "react-feather";
+import Button from "./Button";
 import { TagSection } from "./RestaurantCard";
 import Link from "next/link";
 import axios from "axios";
@@ -42,7 +36,7 @@ const RestaurantBookmark = ({ restaurant }) => {
         type: isEaten ? "remove" : "add",
         restaurantId: restaurant._id,
       })
-      .then(({ data }) => {
+      .then(() => {
         setIsEatenLoading(false);
         setIsEaten(!isEaten);
         toast.success(
@@ -84,7 +78,7 @@ const RestaurantBookmark = ({ restaurant }) => {
           type: "remove",
           restaurantId: restaurant._id,
         })
-        .then(({ data }) => {
+        .then(() => {
           setIsWatchDeleting(false);
           toast.success("Supprimé des poutines à essayer!");
           setDisapear(true);

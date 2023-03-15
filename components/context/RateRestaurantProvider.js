@@ -1,10 +1,9 @@
 import { createContext, useContext, useState } from "react";
-import { Info, X } from "react-feather";
+import { X } from "react-feather";
 import Modal from "react-responsive-modal";
 import RateRestaurant from "../forms/RateRestaurant";
 import { useCurrentUser } from "lib/useCurrentUser";
 import { useLoginForm } from "./LoginFormProvider";
-import { useRouter } from "next/router";
 
 const RateRestaurantContext = createContext({});
 
@@ -24,7 +23,6 @@ export const RateRestaurantProvider = ({ children }) => {
 
   const { currentUser } = useCurrentUser();
   const { openLogin } = useLoginForm();
-  const { reload, asPath, push } = useRouter();
 
   const rateRestaurant = (restaurant, review) => {
     if (!currentUser) {

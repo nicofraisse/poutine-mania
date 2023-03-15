@@ -2,7 +2,7 @@ import { useField, useFormikContext } from "formik";
 import Select from "react-select";
 import { isString } from "lodash";
 
-const CategorySelect = ({ onChange, value, ...props }) => {
+const CategorySelect = ({ value, ...props }) => {
   const [field] = useField(props);
   const { setFieldValue } = useFormikContext();
 

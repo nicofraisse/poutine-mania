@@ -15,7 +15,7 @@ function HomePage() {
     `/api/reviews?skip=${paginationSkip}`
   );
 
-  const { data: restaurants, loading: restaurantsLoading } = useGet(
+  const { data: restaurants } = useGet(
     `/api/restaurants?sort=avgRating&order=-1&limit=3&minReviewCount=1`
   );
 
@@ -51,7 +51,6 @@ function HomePage() {
                   "p-3 pr-6 2xl:p-4 2xl:pr-7 my-3 rounded-lg border-2 shadow-md bg-opacity-50",
                   {
                     "border-yellow-200 bg-yellow-50": i === 0,
-                    "border-slate-300 bg-slate-100": i === 1,
                     "border-slate-300 bg-slate-100": i === 1,
                     "border-orange-200 bg-orange-50": i === 2,
                   }
