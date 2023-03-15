@@ -49,7 +49,7 @@ const Restaurants = () => {
       .then(() => {
         toast.success("Approved!");
       })
-      .catch((e) => console.log("error", e.message));
+      .catch((e) => toast.error(e.message));
   };
 
   if (loading || !restaurants) return <Spinner />;

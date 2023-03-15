@@ -4,13 +4,12 @@ import { useCurrentUser } from "lib/useCurrentUser";
 import Spinner from "../components/Spinner";
 
 const CreateRestaurant = () => {
-  const { push } = useRouter();
   const { currentUser, loading } = useCurrentUser();
   if (loading) return <Spinner />;
   if (!currentUser) {
     return (
       <div className="p-2 text-red-500">
-        Vous devez être connecté(e) pour accéder à cette page
+        Vous devez vous connecter pour accéder à cette page
       </div>
     );
   }

@@ -22,10 +22,10 @@ import { ReviewOverview } from "../../../components/ReviewOverview";
 import { RestaurantInfo } from "../../../components/RestaurantInfo";
 import { ToggleSwitch } from "../../../components/controls/ToggleSwitch";
 import axios from "axios";
-import { toast } from "react-hot-toast";
 import { useCurrentUser } from "lib/useCurrentUser";
 import Head from "next/head";
 import { connectToDatabase } from "../../../lib/db";
+import toast from "react-hot-toast";
 
 const Index = ({ SEO }) => {
   const { query, reload, push } = useRouter();
@@ -53,7 +53,7 @@ const Index = ({ SEO }) => {
       .then(() => {
         reload(window.location.pathname);
       })
-      .catch((e) => console.log("error", e.message));
+      .catch((e) => toast.error(e.message));
   };
 
   const handleDelete = async ({ _id, name }) => {

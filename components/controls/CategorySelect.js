@@ -14,7 +14,9 @@ const CategorySelect = ({ onChange, value, ...props }) => {
     "Restaurant",
     "Diner",
     "Bar",
+    "Pub",
     "Fast-food",
+    "Auberge",
     "Casse-croûte",
   ].map((o) => {
     return { label: o, value: o };

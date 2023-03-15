@@ -1,10 +1,7 @@
 import classNames from "classnames";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-import { EatenList } from "../../../components/profile/EatenList";
 import ProfileHeader from "../../../components/profile/ProfileHeader";
-import ProfileStats from "../../../components/profile/ProfileStats";
-import PublicProfile from "../../../components/profile/PublicProfile";
 import Spinner from "../../../components/Spinner";
 import UserLastReviews from "../../../components/UserLastReviews";
 import UserRanking from "../../../components/UserRanking";
@@ -47,7 +44,7 @@ const User = () => {
   const { data: reviews } = useGet(`/api/users/${query.id}/reviews`);
 
   if (!user || !reviews) return <Spinner />;
-  console.log("REVI", reviews);
+
   const tabs = [
     {
       title: "🏅",

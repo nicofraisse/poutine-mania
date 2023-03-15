@@ -28,12 +28,16 @@ const RestaurantCard = ({ restaurant }) => {
     priceRange,
   } = restaurant;
   const { setHoveredId, hoveredId } = useRestaurantCardHover();
-  const lastComment = reviews[0]?.comment;
   const { rateRestaurant } = useRateRestaurant();
 
-  const city = succursales[0].address?.context?.find((el) =>
-    el.id?.includes("neighborhood")
-  )?.text;
+  const city =
+    succursales[0].address?.context?.find((el) =>
+      el.id?.includes(succursales.length === 1 ? "neighborhood" : "place")
+    )?.text ||
+    succursales[0].address?.context?.find((el) => el.id?.includes("region"))
+      ?.text;
+
+  console.log(restaurant.name === "Le Bidon" && succursales);
 
   const image = reviews?.find((r) => r.photos?.[0])?.photos[0];
 
@@ -129,7 +133,8 @@ export const TagSection = ({
         •{" "}
         {categories.map((c, i) => (
           <span key={i} className="">
-            {c} •{" "}
+            {c}
+            {i === categories.length - 1 ? " • " : "/"}
           </span>
         ))}
         <span className="">{city}</span>

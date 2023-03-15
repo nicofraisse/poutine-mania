@@ -29,7 +29,10 @@ const RestaurantForm = ({ type, onSubmit, isAdmin }) => {
     skip: !query.id,
   });
 
+  console.log(restaurant);
+
   const handleSubmit = (values, { setSubmitting }) => {
+    console.log({ values });
     if (succursales.find((s) => !s.address && !s.hide)) {
       setSubmitting(false);
       window.alert("Adresse vide!");
@@ -44,6 +47,8 @@ const RestaurantForm = ({ type, onSubmit, isAdmin }) => {
       priceRange: values.priceRange,
       categories: values.categories.map((c) => (isString(c) ? c : c.value)),
     };
+
+    console.log({ submitValues });
 
     if (type === "create") {
       axios
@@ -83,6 +88,7 @@ const RestaurantForm = ({ type, onSubmit, isAdmin }) => {
   }, [restaurant, succursales]);
 
   const updateSuccursaleField = (value, index, field) => {
+    console.log({ value, index, field });
     const succursalesCopy = cloneDeep(succursales);
     succursalesCopy[index][field] = value;
     setSuccursales(succursalesCopy);
@@ -205,8 +211,10 @@ const RestaurantForm = ({ type, onSubmit, isAdmin }) => {
                   label="Numéro de téléphone"
                   value={succursale.phoneNumber}
                   onChange={
-                    (e) => console.log(e)
-                    // updateSuccursaleField(e.target.value, index, "phoneNumber")
+                    // (e) => toast.success(JSON.stringify(e))
+                    // (e) => console.log(e)
+                    (value) =>
+                      updateSuccursaleField(value, index, "phoneNumber")
                   }
                   control={PhoneInput}
                   country="US"

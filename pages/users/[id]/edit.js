@@ -32,8 +32,8 @@ const Edit = () => {
       });
   };
   const handleUpdateInfo = async (values, formikBag) => {
+    formikBag.setSubmitting(true);
     const publicId = await uploadToCloudinary(values.avatar);
-
     axios
       .patch(`/api/users/${query.id}/update`, {
         ...values,
@@ -78,7 +78,7 @@ const Edit = () => {
     }
     formData.append("upload_preset", "bsmn0mmd");
     const { data } = await axios.post(
-      "https://api.cloudinary.com/v1_1/dhqv0jl8c/image/upload",
+      `https://api.cloudinary.com/v1_1/${process.env.CLOUD_NAME}/image/upload`,
       formData
     );
     return data.public_id;
@@ -110,32 +110,21 @@ const Edit = () => {
         </h2>
         <Form
           initialValues={{
-            firstName: currentUser.firstName,
-            lastName: currentUser.lastName,
+            name: currentUser.name,
             avatar: currentUser.image,
           }}
           onSubmit={handleUpdateInfo}
-          validationSchema={
-            isCredentialAccount
-              ? Yup.object({
-                  firstName: Yup.string().min(1).max(20).required("Requis"),
-                  lastName: Yup.string().min(1).max(20),
-                  avatar: Yup.object().nullable(),
-                })
-              : null
-          }
+          validationSchema={Yup.object({
+            name: Yup.string().min(1).max(20).required("Requis"),
+            avatar: Yup.object().nullable(),
+          })}
           className="max-w-sm p-4"
         >
           {({ isSubmitting }) => (
             <>
-              {isCredentialAccount && (
-                <>
-                  <Field name="firstName" label="Prénom" />
-                  <Field name="lastName" label="Nom" />
-                </>
-              )}
-              <Field name="avatar" control={ImageUpload} roundedFull />
+              <Field name="name" label="Nom d'utilisateur" />
 
+              <Field name="avatar" control={ImageUpload} roundedFull />
               <Button
                 type="submit"
                 variant="primary"
@@ -193,10 +182,6 @@ const Edit = () => {
           Votre compte est lié à votre profil{" "}
           <span className="font-bold">{providerName}</span> dont le courriel
           associé est {currentUser.email}.
-          <div className="mt-3">
-            Pour modifier votre nom, prénom, ou courriel, vous devez faire les
-            changements directement sur votre compte {providerName}.
-          </div>
         </div>
       )}
 

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { formatRating } from "../lib/formatRating";
-import { formatName } from "../lib/formatName";
 import { formatDate } from "lib/formatDate";
 import { useCurrentUser } from "lib/useCurrentUser";
 import { ratingColors } from "../data/ratingColors";

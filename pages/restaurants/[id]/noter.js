@@ -60,7 +60,7 @@ const NoterRestaurant = () => {
     }
     formData.append("upload_preset", "bsmn0mmd");
     const { data } = await axios.post(
-      "https://api.cloudinary.com/v1_1/dhqv0jl8c/image/upload",
+      `https://api.cloudinary.com/v1_1/${process.env.CLOUD_NAME}/image/upload`,
       formData
     );
     return data.public_id;

@@ -28,7 +28,6 @@ const PillSelect = ({ options, onChange, isMulti, value, ...props }) => {
 
   useEffect(() => {
     setFieldValue(field.name, selectedValues);
-    console.log({ selectedValues }, field);
   }, [selectedValues]); //eslint-disable-line
 
   const handleSelect = (value) => {

@@ -5,8 +5,7 @@ import Modal from "react-responsive-modal";
 import { Image } from "./Image";
 import RatingPill from "./RatingPill";
 import { formatDate } from "lib/formatDate";
-import { formatName } from "../lib/formatName";
-import NextImage from "next/image";
+
 import { useCurrentUser } from "../lib/useCurrentUser";
 import { useRouter } from "next/router";
 import { useRateRestaurant } from "components/context/RateRestaurantProvider";
@@ -14,7 +13,6 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 const ProfileReviewCard = ({ review, isIndex, userName }) => {
-  console.log({ userName });
   const [imgModalOpen, setImgModalOpen] = useState(false);
   const { currentUser } = useCurrentUser();
   const { reload } = useRouter();
@@ -65,7 +63,7 @@ const ProfileReviewCard = ({ review, isIndex, userName }) => {
               </div>
               <Link href={`/users/${review.user._id}`} passHref>
                 <span className="font-bold hover:text-gray-500 cursor-pointer">
-                  {formatName(review?.user)}{" "}
+                  {review?.user?.name}
                 </span>
               </Link>
             </>

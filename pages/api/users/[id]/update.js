@@ -15,8 +15,7 @@ const handler = async (req, res) => {
     { _id: ObjectId(req.query.id) },
     {
       $set: {
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
+        name: req.body.name,
         // email: req.body.email,
         image: req.body.image,
       },

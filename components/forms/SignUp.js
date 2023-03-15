@@ -130,7 +130,7 @@ const SignUp = ({ onSubmit, redirect }) => {
             <div className="text-gray-500 px-3 text-sm">OU</div>
             <div className="grow bg-gray-300 h-[1px]"></div>
           </div>
-          <Field name="name" label="Nom" placeholder="Nom" />
+          <Field name="name" label="Nom d'utilisateur" placeholder="Nom" />
           <Field name="email" label="Adresse courriel" />
           <Field name="password" type="password" label="Mot de passe" />
           <div className="text-sm">

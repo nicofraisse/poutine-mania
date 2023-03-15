@@ -51,13 +51,34 @@ export default NextAuth({
             },
           ])
           .toArray();
+
+        if (!foundUser.eatenlist) {
+          await db.collection("users").updateOne(
+            { _id: foundUser._id },
+            {
+              $set: {
+                eatenlist: [],
+              },
+            }
+          );
+        }
+
+        if (!foundUser.watchlist) {
+          await db.collection("users").updateOne(
+            { _id: foundUser._id },
+            {
+              $set: {
+                watchlist: [],
+              },
+            }
+          );
+        }
+
         session.user = {
           _id: foundUser._id,
           email: foundUser.email,
           isAdmin: foundUser.isAdmin,
           name: foundUser.name,
-          firstName: foundUser.firstName,
-          lastName: foundUser.lastName,
           image: foundUser.image,
           emailVerified: foundUser.emailVerified,
           eatenlist: foundUser.eatenlist,

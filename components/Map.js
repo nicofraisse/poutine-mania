@@ -15,9 +15,6 @@ import { Image as CloudImage } from "components/Image";
 import { TagSection } from "./RestaurantCard";
 import { useRestaurantSearch } from "components/context/RestaurantSearchProvider";
 
-const MAPBOX_TOKEN =
-  "pk.eyJ1Ijoibmljb2ZyYWlzc2UiLCJhIjoiY2thZzZtemk3MDE4NzJybXVtMjF5a2xyOSJ9.6JURdkZj5FnZ5lxMzPncOA";
-
 const MarkerAndPopup = ({
   restaurant,
   address,
@@ -235,20 +232,22 @@ const MapMap = ({ restaurants, isShowPage }) => {
     const maxLongitude = maxBy(allCoordinates, (c) => c[0])?.[0];
     const maxLatitude = maxBy(allCoordinates, (c) => c[1])?.[1];
 
-    if (query.search && query.search === searchValue) {
-      mapRef.current?.fitBounds(
-        [
-          [minLongitude, minLatitude],
-          [maxLongitude, maxLatitude],
-        ],
-        { padding: 50, duration: 1000, maxZoom: 17.5 }
-      );
-    } else {
-      mapRef.current?.flyTo({
-        center: [DEFAULT_COORDINATES.longitude, DEFAULT_COORDINATES.latitude],
-        zoom: DEFAULT_COORDINATES.zoom,
-        duration: 2000,
-      });
+    if (restaurants.length > 0) {
+      if (query.search && query.search === searchValue) {
+        mapRef.current?.fitBounds(
+          [
+            [minLongitude, minLatitude],
+            [maxLongitude, maxLatitude],
+          ],
+          { padding: 50, duration: 1000, maxZoom: 17.5 }
+        );
+      } else {
+        mapRef.current?.flyTo({
+          center: [DEFAULT_COORDINATES.longitude, DEFAULT_COORDINATES.latitude],
+          zoom: DEFAULT_COORDINATES.zoom,
+          duration: 2000,
+        });
+      }
     }
 
     // }
@@ -278,8 +277,6 @@ const MapMap = ({ restaurants, isShowPage }) => {
   );
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition(() => console.log("ok"));
-
     navigator.geolocation.getCurrentPosition(
       (position) => {
         setUserCoordinates([
@@ -292,7 +289,7 @@ const MapMap = ({ restaurants, isShowPage }) => {
           zoom: 12.1,
         });
       },
-      (err) => console.log("error bro", err),
+      (err) => console.error("position error", err),
       { timeout: 10000, enableHighAccuracy: false }
     );
   }, []);
@@ -321,7 +318,7 @@ const MapMap = ({ restaurants, isShowPage }) => {
         {...viewState}
         style={{ width: "100%", height: "100%" }}
         mapStyle="mapbox://styles/mapbox/streets-v10"
-        mapboxAccessToken={MAPBOX_TOKEN}
+        mapboxAccessToken={process.env.MAPBOX_API_KEY}
         onZoom={(e) => {
           if (!isShowPage)
             setIsSmallMarker(e.viewState.zoom < POUTINE_LOGO_ZOOM_THRESHOLD);

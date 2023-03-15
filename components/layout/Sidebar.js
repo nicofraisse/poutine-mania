@@ -42,7 +42,6 @@ const Item = ({
   const { pathname } = useRouter();
   const isActive = pathname?.split("/")[1] === href.split("/")[1];
   const Icon = icon;
-  console.log(pathname, href);
 
   return (
     <ConditionalWrapper

@@ -5,7 +5,6 @@ import { useCurrentUser } from "../../lib/useCurrentUser";
 import { useGet } from "../../lib/useAxios";
 import Spinner from "../Spinner";
 import ProfileReviewCard from "../ProfileReviewCard";
-import { formatName } from "../../lib/formatName";
 import { Image } from "components/Image";
 
 const PublicProfile = ({ user }) => {
@@ -34,7 +33,7 @@ const PublicProfile = ({ user }) => {
           )}
           <div className="sm:pl-8 w-full">
             <div className="mb-2 mt-2 w-full items-center sm:justify-between flex flex-col sm:flex-row">
-              <div className="font-black text-2xl">{formatName(user)}</div>
+              <div className="font-black text-2xl">{user.name}</div>
               {user._id === currentUser?._id ? (
                 <Link
                   className="text-base mx-3 px-4 py-1 rounded-lg text-gray-500 sm:-mb-1 hover:text-gray-700 flex"
@@ -121,7 +120,7 @@ const PublicProfile = ({ user }) => {
           <ProfileReviewCard
             review={review}
             key={review._id}
-            userName={formatName(user)}
+            userName={user.name}
           />
         ))}
 

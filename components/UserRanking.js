@@ -12,7 +12,6 @@ const UserRanking = ({ reviews }) => {
   const reviewedRestaurants = reviews.map((review) => {
     return { ...review.restaurants[0], review };
   });
-  console.log(reviewedRestaurants);
 
   const aggr = reviewedRestaurants
     .map((r1) => {
@@ -27,8 +26,6 @@ const UserRanking = ({ reviews }) => {
       };
     })
     .sort((a, b) => b.avgRating - a.avgRating);
-
-  console.log(aggr);
 
   return (
     <div>

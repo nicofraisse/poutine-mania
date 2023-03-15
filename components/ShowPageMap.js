@@ -14,9 +14,6 @@ import Color from "color";
 import { Image as CloudImage } from "components/Image";
 import { TagSection } from "./RestaurantCard";
 
-const MAPBOX_TOKEN =
-  "pk.eyJ1Ijoibmljb2ZyYWlzc2UiLCJhIjoiY2thZzZtemk3MDE4NzJybXVtMjF5a2xyOSJ9.6JURdkZj5FnZ5lxMzPncOA";
-
 const MarkerAndPopup = ({
   restaurant,
   address,
@@ -260,7 +257,7 @@ const MapMap = ({ restaurants, isShowPage }) => {
         id="mymap2"
         style={{ width: "100%", height: "100%" }}
         mapStyle="mapbox://styles/mapbox/streets-v10"
-        mapboxAccessToken={MAPBOX_TOKEN}
+        mapboxAccessToken={process.env.MAPBOX_API_KEY}
         onZoom={(e) => {
           if (!isShowPage) setIsSmallMarker(e.viewState.zoom < 12);
         }}

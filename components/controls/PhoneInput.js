@@ -22,6 +22,7 @@ const Phone = (props) => {
         onChange={setValue}
         defaultCountry="CA"
         style={{ outline: "none" }}
+        {...props}
       />
     </div>
   );

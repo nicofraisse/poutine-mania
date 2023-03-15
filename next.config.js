@@ -9,7 +9,6 @@ module.exports = {
     config.resolve.alias["context"] = path.join(__dirname, "context");
     config.resolve.alias["data"] = path.join(__dirname, "data");
     config.resolve.alias["lib"] = path.join(__dirname, "lib");
-    // config.resolve.alias['hooks'] = path.join(__dirname, 'hooks')
     config.resolve.alias["context"] = path.join(__dirname, "context");
     config.resolve.alias["styles"] = path.join(__dirname, "styles");
     config.module.rules.push({
@@ -24,14 +23,6 @@ module.exports = {
   },
   env: {
     CLOUD_NAME: process.env.CLOUD_NAME,
+    MAPBOX_API_KEY: process.env.MAPBOX_API_KEY,
   },
-  // async redirects() {
-  //   return [
-  //     {
-  //       source: '/',
-  //       destination: '/top-poutines',
-  //       permanent: true,
-  //     },
-  //   ]
-  // },
 };

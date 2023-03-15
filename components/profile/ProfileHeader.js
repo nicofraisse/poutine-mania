@@ -1,7 +1,6 @@
 import Link from "next/link";
 import React from "react";
 import { User } from "react-feather";
-import { formatName } from "../../lib/formatName";
 import { useCurrentUser } from "../../lib/useCurrentUser";
 import { Image } from "../Image";
 import { Link as LinkIcon } from "react-feather";
@@ -27,7 +26,7 @@ const ProfileHeader = ({ user }) => {
         <div>
           <div className="w-full flex items-center justify-between flex-wrap mb-5">
             <div>
-              <div className="font-black text-3xl">{formatName(user)}</div>
+              <div className="font-black text-3xl">{user.name}</div>
             </div>
             <div className="flex">
               {/* <Link href={"/noter"} passHref>
