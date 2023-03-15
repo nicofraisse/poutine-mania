@@ -19,7 +19,6 @@ module.exports = {
     domains: ["platform-lookaside.fbsbx.com", "lh3.googleusercontent.com"],
   },
   env: {
-    NODE_ENV: process.env.NODE_ENV,
     CLOUD_NAME: process.env.CLOUD_NAME,
     MAPBOX_API_KEY: process.env.MAPBOX_API_KEY,
   },

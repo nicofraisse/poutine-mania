@@ -249,7 +249,7 @@ const RateRestaurant = ({
 
               {avgRating > 0 && (
                 <div className="flex items-center text-gray-500 border-gray-300 rounded my-6 bg-gray-100 p-6 justify-center">
-                  <div className="mr-2">Note moyenne:</div>
+                  <div className="mr-2">Note finale:</div>
                   <div>
                     <span
                       className="py-[2px] px-[8px] bg-green-200 rounded mr-2 text-xl sm:text-2xl text-white flex items-center font-bold shadow-lg"
