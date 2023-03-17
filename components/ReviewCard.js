@@ -156,16 +156,21 @@ const ReviewCard = ({ review, handleEdit, handleDelete, isFirst }) => {
             )}
           </p>
 
-          {review.photos?.[0] && (
-            <Image
-              src={review.photos?.[0]}
-              alt="poutine-user-photo"
-              // width={280
-              responsive
-              className="border rounded-md object-cover sm:max-h-72 max-h-60 my-3"
-              onClick={() => setImgModalOpen(true)}
-            />
-          )}
+          <div className="flex flex-wrap">
+            {Array.isArray(review.photos) &&
+              review.photos.map((photo) => (
+                <Image
+                  key={photo}
+                  src={photo}
+                  alt="poutine-user-photo"
+                  // width={280
+                  responsive
+                  className="border rounded-md object-cover sm:max-h-72 max-h-60 my-3 mr-3"
+                  onClick={() => setImgModalOpen(true)}
+                />
+              ))}
+          </div>
+
           {(review.userId === currentUser?._id || currentUser?.isAdmin) && (
             <div className="mt-3 text-left text-sm text-slate-400">
               <button
@@ -196,13 +201,17 @@ const ReviewCard = ({ review, handleEdit, handleDelete, isFirst }) => {
         center
       >
         <div className="border w-full mt-6">
-          <Image
-            src={review.photos?.[0]}
-            alt="poutine-user-photo"
-            width={"100%"}
-            className="border rounded-md"
-            onClick={() => setImgModalOpen(true)}
-          />
+          {Array.isArray(review.photos) &&
+            review.photos.map((photo) => (
+              <Image
+                key={photo}
+                src={photo}
+                alt="poutine-user-photo"
+                width={"100%"}
+                className="border rounded-md"
+                onClick={() => setImgModalOpen(true)}
+              />
+            ))}
         </div>
       </Modal>
     </>

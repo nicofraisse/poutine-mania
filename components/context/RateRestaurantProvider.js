@@ -4,6 +4,7 @@ import Modal from "react-responsive-modal";
 import RateRestaurant from "../forms/RateRestaurant";
 import { useCurrentUser } from "lib/useCurrentUser";
 import { useLoginForm } from "./LoginFormProvider";
+import { RateRestaurantNew } from "../forms/RateRestaurantNew";
 
 const RateRestaurantContext = createContext({});
 
@@ -48,7 +49,7 @@ export const RateRestaurantProvider = ({ children }) => {
           closeIcon={<X />}
           center
         >
-          <RateRestaurant
+          <RateRestaurantNew
             // onSubmit={(id) => {
             //   setRateRestaurantOpen(false)
             //   asPath.includes(`/restaurants/${id}`) || asPath.includes(`/users`)
@@ -57,8 +58,8 @@ export const RateRestaurantProvider = ({ children }) => {
             // }}
             preselectedRestaurant={preselectedRestaurant}
             existingReview={existingReview}
-            setExistingReview={setExistingReview}
-            setPreselectedRestaurant={setPreselectedRestaurant}
+            // setExistingReview={setExistingReview}
+            // setPreselectedRestaurant={setPreselectedRestaurant}
           />
         </Modal>
       </>

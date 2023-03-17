@@ -20,6 +20,7 @@ module.exports = {
   },
   env: {
     CLOUD_NAME: process.env.CLOUD_NAME,
+    CLOUD_UPLOAD_PRESET: process.env.CLOUD_UPLOAD_PRESET,
     MAPBOX_API_KEY: process.env.MAPBOX_API_KEY,
   },
 };

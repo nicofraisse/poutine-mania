@@ -86,6 +86,7 @@ export default NextAuth({
           connectedAccounts: foundConnectedAccounts,
           nbReviews: reviews.length,
         };
+
         return Promise.resolve(session);
       } else {
         throw new Error("No session");

@@ -27,8 +27,6 @@ const RestaurantCard = ({ restaurant }) => {
     succursales[0].address?.context?.find((el) => el.id?.includes("region"))
       ?.text;
 
-  console.log(restaurant.name === "Le Bidon" && succursales);
-
   const image = reviews?.find((r) => r.photos?.[0])?.photos[0];
 
   return (

@@ -4,7 +4,7 @@ import { Image as ImageIcon } from "react-feather";
 import classNames from "classnames";
 
 const Image = ({ alt, src, ...props }) => {
-  if (src) {
+  if (typeof src === "string") {
     if (!src.includes("http")) {
       return (
         <CloudinaryImage

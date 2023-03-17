@@ -29,10 +29,7 @@ const RestaurantForm = ({ type }) => {
     skip: !query.id,
   });
 
-  console.log(restaurant);
-
   const handleSubmit = (values, { setSubmitting }) => {
-    console.log({ values });
     if (succursales.find((s) => !s.address && !s.hide)) {
       setSubmitting(false);
       window.alert("Adresse vide!");
@@ -47,8 +44,6 @@ const RestaurantForm = ({ type }) => {
       priceRange: values.priceRange,
       categories: values.categories.map((c) => (isString(c) ? c : c.value)),
     };
-
-    console.log({ submitValues });
 
     if (type === "create") {
       axios
@@ -88,7 +83,6 @@ const RestaurantForm = ({ type }) => {
   }, [restaurant, succursales]);
 
   const updateSuccursaleField = (value, index, field) => {
-    console.log({ value, index, field });
     const succursalesCopy = cloneDeep(succursales);
     succursalesCopy[index][field] = value;
     setSuccursales(succursalesCopy);
