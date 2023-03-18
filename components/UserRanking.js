@@ -75,7 +75,9 @@ const UserRanking = ({ reviews }) => {
                   <div
                     className="w-[4.5rem] h-9 my-3 flex items-center justify-center rounded shadow"
                     style={{
-                      backgroundColor: Color(ratingColors[10 - i]).lighten(0),
+                      backgroundColor: Color(
+                        ratingColors[Math.round(r.avgRating) + 1]
+                      ).lighten(0),
                     }}
                   >
                     <span className="font-black text-xl text-slate-600">
