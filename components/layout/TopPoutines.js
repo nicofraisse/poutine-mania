@@ -156,17 +156,17 @@ export default function TopPoutines({ restaurants }) {
     </div>
   );
 }
-
 export async function getStaticProps() {
   const axios = require("axios");
+  const baseURL = "https://www.poutinemania.ca";
   const response = await axios.get(
-    "/api/restaurants?sort=avgRating&order=-1&limit=10&noUnapproved=true"
+    `${baseURL}/api/restaurants?sort=avgRating&order=-1&limit=10&noUnapproved=true`
   );
   const restaurants = response.data;
   return {
     props: {
       restaurants,
     },
-    revalidate: 60 * 60,
+    revalidate: 60, // Optional: Regenerate the static data every 60 seconds
   };
 }
