@@ -4,6 +4,7 @@ import Modal from "react-responsive-modal";
 import { useCurrentUser } from "lib/useCurrentUser";
 import { useLoginForm } from "./LoginFormProvider";
 import { RateRestaurantNew } from "../forms/RateRestaurantNew";
+import { useRouter } from "next/router";
 
 const RateRestaurantContext = createContext({});
 
@@ -23,6 +24,7 @@ export const RateRestaurantProvider = ({ children }) => {
 
   const { currentUser } = useCurrentUser();
   const { openLogin } = useLoginForm();
+  const { reload } = useRouter();
 
   const rateRestaurant = (restaurant, review) => {
     if (!currentUser) {
@@ -49,16 +51,14 @@ export const RateRestaurantProvider = ({ children }) => {
           center
         >
           <RateRestaurantNew
-            // onSubmit={(id) => {
-            //   setRateRestaurantOpen(false)
-            //   asPath.includes(`/restaurants/${id}`) || asPath.includes(`/users`)
-            //     ? reload()
-            //     : push(`/restaurants/${id}`)
-            // }}
+            onSubmit={(id) => {
+              setRateRestaurantOpen(false);
+              setTimeout(() => {
+                reload();
+              }, 1200);
+            }}
             preselectedRestaurant={preselectedRestaurant}
             existingReview={existingReview}
-            // setExistingReview={setExistingReview}
-            // setPreselectedRestaurant={setPreselectedRestaurant}
           />
         </Modal>
       </>

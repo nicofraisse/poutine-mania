@@ -166,6 +166,7 @@ export const RateRestaurantNew = ({
       initialValues={initialValues}
       onSubmit={handleSubmit}
       validationSchema={validationSchema}
+      className="sm:w-[460px]"
     >
       {({ isSubmitting, values, errors, touched }) => {
         const nbFilledFields = ratingFields
@@ -178,6 +179,11 @@ export const RateRestaurantNew = ({
 
         return (
           <>
+            {existingReview && (
+              <h2 className="font-black text-2xl mb-5 text-center">
+                Modifier votre avis
+              </h2>
+            )}
             {ratingFields.map((field) => (
               <Field
                 key={field.name}

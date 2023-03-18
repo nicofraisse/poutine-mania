@@ -9,6 +9,7 @@ export const ratingColors = [
   "#d9f3b6", //7 - 8
   "#cbf3b4", //8 - 9
   "#bcf3b1", //9 - 10
+  "#bcf3b1", //+10
 ];
 
 export const getRatingColor = (decimalValue) => {

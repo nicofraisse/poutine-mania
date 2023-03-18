@@ -1,6 +1,5 @@
 import classNames from "classnames";
 import { formatRating } from "../lib/formatRating";
-import { round } from "lodash";
 import { ratingColors } from "data/ratingColors";
 import { Star } from "react-feather";
 import Color from "color";
