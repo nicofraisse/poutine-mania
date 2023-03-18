@@ -9,8 +9,12 @@ import { Image } from "components/Image";
 
 import { useRouter } from "next/router";
 
-export default function TopPoutines({ restaurants }) {
+export function TopPoutines() {
   const { push } = useRouter();
+
+  const { data: restaurants } = useGet(
+    `/api/restaurants?sort=avgRating&order=-1&limit=10&noUnapproved=true`
+  );
 
   return (
     <div className="max-w-4xl">
@@ -155,18 +159,4 @@ export default function TopPoutines({ restaurants }) {
       </div>
     </div>
   );
-}
-export async function getStaticProps() {
-  const axios = require("axios");
-  const baseURL = "https://www.poutinemania.ca";
-  const response = await axios.get(
-    `${baseURL}/api/restaurants?sort=avgRating&order=-1&limit=10&noUnapproved=true`
-  );
-  const restaurants = response.data;
-  return {
-    props: {
-      restaurants,
-    },
-    revalidate: 60, // Optional: Regenerate the static data every 60 seconds
-  };
 }
