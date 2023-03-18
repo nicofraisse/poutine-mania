@@ -225,7 +225,10 @@ const MapMap = ({ restaurants, isShowPage }) => {
   const [viewState, setViewState] = useState(DEFAULT_COORDINATES);
 
   useEffect(() => {
-    // if (query.search && restaurants) {
+    console.log(viewState);
+  }, [viewState]);
+
+  useEffect(() => {
     const allCoordinates = flatten(
       restaurants.map((r) => r.succursales.map((s) => s.address.center))
     );
@@ -283,16 +286,46 @@ const MapMap = ({ restaurants, isShowPage }) => {
           position.coords.longitude,
           position.coords.latitude,
         ]);
-        setViewState({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-          zoom: 12.1,
-        });
+        // setViewState({
+        //   latitude: position.coords.latitude,
+        //   longitude: position.coords.longitude,
+        //   zoom: 12.1,
+        // });
       },
       (err) => console.error("position error", err),
       { timeout: 10000, enableHighAccuracy: false }
     );
   }, []);
+
+  const handleLocationButtonClick = (location) => {
+    const locations = {
+      Montreal: {
+        latitude: 45.53,
+        longitude: -73.69,
+        zoom: 10,
+      },
+      QuebecCity: {
+        longitude: -71.21225932890741,
+        latitude: 46.857649627704205,
+        zoom: 9.997052251475678,
+      },
+      QuebecRegion: {
+        longitude: -71.13625096725893,
+        latitude: 49.42899423624456,
+        zoom: 5.254900910397835,
+      },
+    };
+
+    const locationCoordinates = locations[location];
+
+    if (mapRef.current) {
+      mapRef.current.getMap().flyTo({
+        center: [locationCoordinates.longitude, locationCoordinates.latitude],
+        zoom: locationCoordinates.zoom,
+        duration: 2000,
+      });
+    }
+  };
 
   return (
     <div
@@ -324,6 +357,27 @@ const MapMap = ({ restaurants, isShowPage }) => {
             setIsSmallMarker(e.viewState.zoom < POUTINE_LOGO_ZOOM_THRESHOLD);
         }}
       >
+        <div className="absolute top-0 left-0 m-4 z-50">
+          <button
+            className="bg-teal-500 hover:bg-teal-700 mr-1 text-white font-bold py-2 px-4 rounded mb-2"
+            onClick={() => handleLocationButtonClick("Montreal")}
+          >
+            Montreal
+          </button>
+          <button
+            className="bg-cyan-500 hover:bg-cyan-700 mr-1 text-white font-bold py-2 px-4 rounded mb-2"
+            onClick={() => handleLocationButtonClick("QuebecCity")}
+          >
+            Quebec City
+          </button>
+          <button
+            className="bg-stone-500 hover:bg-stone-700 mr-1 text-white font-bold py-2 px-4 rounded"
+            onClick={() => handleLocationButtonClick("QuebecRegion")}
+          >
+            Quebec Region
+          </button>
+        </div>
+
         <NavigationControl position="bottom-right" />
         {restaurants.map((restaurant, parentIndex) =>
           restaurant?.succursales?.map(({ address }, index) => (
