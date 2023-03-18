@@ -118,9 +118,7 @@ export const RateRestaurantNew = ({
     for (const key in submitValues) {
       if (key === "photos" && submitValues[key]) {
         for (const [index, file] of submitValues[key].entries()) {
-          console.log({ index, file });
           formData.append(`photos[${index}]`, file);
-          console.log(`appended photos[${index}]`);
         }
       } else {
         formData.append(key, submitValues[key]);

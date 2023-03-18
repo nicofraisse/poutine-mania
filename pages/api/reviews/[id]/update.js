@@ -25,12 +25,10 @@ const handler = async (req, res) => {
       const db = await client.db();
 
       // Check if new photos are provided
-      console.log(fields);
+
       const photos = [];
       for (const key in files) {
-        console.log({ key });
         if (key.startsWith("photos[")) {
-          console.log("pushing", key);
           photos.push(files[key]);
         }
       }
@@ -41,8 +39,6 @@ const handler = async (req, res) => {
       ).filter(Boolean);
 
       const newPublicIds = await uploadToCloudinary(photos);
-
-      console.log("new", newPublicIds);
 
       // ... Rest of the handler code
       const updatedReview = await db.collection("reviews").updateOne(

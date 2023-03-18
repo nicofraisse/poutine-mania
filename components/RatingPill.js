@@ -4,6 +4,7 @@ import { round } from "lodash";
 import { ratingColors } from "data/ratingColors";
 import { Star } from "react-feather";
 import Color from "color";
+import { getRatingColor } from "../data/ratingColors";
 
 const RatingPill = ({
   avgRating,
@@ -40,7 +41,7 @@ const RatingPill = ({
         }
       )}
       style={{
-        backgroundColor: avgRating ? ratingColors[round(avgRating)] : "#eee",
+        backgroundColor: avgRating ? getRatingColor(avgRating) : "#eee",
       }}
     >
       {reviewCount > 0 ? (

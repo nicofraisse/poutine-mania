@@ -31,7 +31,6 @@ const ImageUpload = ({ roundedFull, maxImages = 5, ...props }) => {
       };
 
       reader.readAsDataURL(compressedFile);
-      console.log("OK");
     }
   };
 

@@ -1,6 +1,6 @@
 import { useField, useFormikContext } from "formik";
 import { useEffect, useState } from "react";
-import { ratingColors } from "../../data/ratingColors";
+import { getRatingColor, ratingColors } from "../../data/ratingColors";
 import Color from "color";
 import { X } from "react-feather";
 
@@ -42,10 +42,10 @@ const RatingButtons = ({ ...props }) => {
         const color = (defaultColor) =>
           isHoveredNumber
             ? i < isHoveredNumber
-              ? Color(ratingColors[i + 1]).darken(0.25)
+              ? Color(getRatingColor(isHoveredNumber - 1)).darken(0.25)
               : defaultColor
             : isClickedNumber && i < isClickedNumber
-            ? Color(ratingColors[i + 1]).darken(0.25)
+            ? Color(getRatingColor(isClickedNumber - 1)).darken(0.25)
             : defaultColor;
         return (
           <div
