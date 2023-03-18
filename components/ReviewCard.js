@@ -100,7 +100,9 @@ const ReviewCard = ({ review, handleEdit, handleDelete, isFirst }) => {
           <span
             className="sm:hidden sm:py-[1px] px-[6px] bg-green-200 rounded mr-2 text-lg text-white flex items-center"
             style={{
-              backgroundColor: Color(ratingColors[round(review.finalRating)])
+              backgroundColor: Color(
+                ratingColors[Math.floor(review.finalRating)]
+              )
                 .darken(0.4)
                 .desaturate(0.3),
             }}
@@ -117,7 +119,9 @@ const ReviewCard = ({ review, handleEdit, handleDelete, isFirst }) => {
             <span
               className="py-[1px] px-[6px] bg-green-200 rounded mr-2 text-lg text-white flex items-center"
               style={{
-                backgroundColor: Color(ratingColors[round(review.finalRating)])
+                backgroundColor: Color(
+                  ratingColors[Math.floor(review.finalRating)]
+                )
                   .darken(0.4)
                   .desaturate(0.3),
               }}

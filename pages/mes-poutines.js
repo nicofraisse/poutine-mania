@@ -101,7 +101,7 @@ const MesPoutines = () => {
                         <span
                           className="py-[0px] px-[12px] rounded text-xl text-white flex items-center"
                           style={{
-                            backgroundColor: Color(ratingColors[round(7)])
+                            backgroundColor: Color(ratingColors[Math.floor(7)])
                               .darken(0.4)
                               .desaturate(0.3),
                           }}

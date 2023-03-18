@@ -56,7 +56,7 @@ const FinalRating = ({ avgRating }) =>
         <span
           className="py-[2px] px-[8px] bg-green-200 rounded mr-2 text-xl sm:text-2xl text-white flex items-center font-bold shadow-lg"
           style={{
-            backgroundColor: Color(ratingColors[round(avgRating)])
+            backgroundColor: Color(ratingColors[Math.floor(avgRating)])
               .darken(0.3)
               .desaturate(0.3),
           }}

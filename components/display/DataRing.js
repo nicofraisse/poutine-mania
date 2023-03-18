@@ -45,7 +45,9 @@ export const DataRing = ({ icon, percent, iconStyle, noRatings }) => {
           <circle
             className={classNames(classes.ProgressRingCircle, "opacity-0")}
             ref={ringRef}
-            stroke={Color(ratingColors[round(percentValue / 10)]).darken(0.4)}
+            stroke={Color(ratingColors[Math.floor(percentValue / 10)]).darken(
+              0.4
+            )}
             strokeWidth="5"
             fill="transparent"
             r="30"

@@ -71,7 +71,9 @@ const MarkerAndPopup = ({
             style={{
               backgroundColor:
                 restaurant.reviewCount > 0
-                  ? Color(ratingColors[round(restaurant.avgRating)]).darken(0.4)
+                  ? Color(
+                      ratingColors[Math.floor(restaurant.avgRating)]
+                    ).darken(0.4)
                   : "rgb(160, 160, 160)",
               // boxShadow: isHovered ? "0px 0px 7px rgba(0, 0, 0, 0.5)" : "",
             }}
@@ -113,16 +115,16 @@ const MarkerAndPopup = ({
               size={40}
               color={
                 restaurant.reviewCount > 0
-                  ? Color(ratingColors[round(restaurant.avgRating)])
+                  ? Color(ratingColors[Math.floor(restaurant.avgRating)])
                       .darken(0.4)
                       .hex()
                   : "rgb(205, 205, 205)"
               }
               fill={
                 restaurant.reviewCount > 0
-                  ? Color(ratingColors[round(restaurant.avgRating)]).saturate(
-                      0.5
-                    )
+                  ? Color(
+                      ratingColors[Math.floor(restaurant.avgRating)]
+                    ).saturate(0.5)
                   : "white"
               }
               className={"nocircle"}

@@ -1,6 +1,6 @@
 import Color from "color";
 import React from "react";
-import { ratingColors } from "../data/ratingColors";
+import { getRatingColor, ratingColors } from "../data/ratingColors";
 import { meanBy, round } from "lodash";
 import { formatCity } from "../lib/formatAddress";
 import Tooltip from "rc-tooltip";
@@ -76,7 +76,7 @@ const UserRanking = ({ reviews }) => {
                     className="w-[4.5rem] h-9 my-3 flex items-center justify-center rounded shadow"
                     style={{
                       backgroundColor: Color(
-                        ratingColors[Math.round(r.avgRating) + 1]
+                        getRatingColor(r.avgRating)
                       ).lighten(0),
                     }}
                   >
