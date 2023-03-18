@@ -1,5 +1,5 @@
 import { RecentActivity } from "../components/layout/RecentActivity";
-import { TopPoutines } from "../components/layout/TopPoutines";
+import TopPoutines from "../components/layout/TopPoutines";
 
 function HomePage() {
   return (

@@ -9,12 +9,8 @@ import { Image } from "components/Image";
 
 import { useRouter } from "next/router";
 
-export function TopPoutines() {
+export default function TopPoutines({ restaurants }) {
   const { push } = useRouter();
-
-  const { data: restaurants } = useGet(
-    `/api/restaurants?sort=avgRating&order=-1&limit=10&noUnapproved=true`
-  );
 
   return (
     <div className="max-w-4xl">
@@ -159,4 +155,18 @@ export function TopPoutines() {
       </div>
     </div>
   );
+}
+
+export async function getStaticProps() {
+  const axios = require("axios");
+  const response = await axios.get(
+    "/api/restaurants?sort=avgRating&order=-1&limit=10&noUnapproved=true"
+  );
+  const restaurants = response.data;
+  return {
+    props: {
+      restaurants,
+    },
+    revalidate: 60 * 60,
+  };
 }
