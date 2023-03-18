@@ -1,7 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import { X } from "react-feather";
 import Modal from "react-responsive-modal";
-import RateRestaurant from "../forms/RateRestaurant";
 import { useCurrentUser } from "lib/useCurrentUser";
 import { useLoginForm } from "./LoginFormProvider";
 import { RateRestaurantNew } from "../forms/RateRestaurantNew";

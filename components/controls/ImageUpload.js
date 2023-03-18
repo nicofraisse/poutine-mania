@@ -4,37 +4,35 @@ import { Camera, Trash } from "react-feather";
 import { useField, useFormikContext } from "formik";
 import classNames from "classnames";
 import { isString } from "lodash";
+import { compressImage } from "lib/compressImage";
+
 const ImageUpload = ({ roundedFull, maxImages = 5, ...props }) => {
   const [imageSrcs, setImageSrcs] = useState([]);
   const [field] = useField(props);
   const { setFieldValue } = useFormikContext();
 
   useEffect(() => {
-    // console.log("val", field.value);
-    // console.log("srcs", imageSrcs);
-    const everything = [field.value, imageSrcs];
-
-    console.log(everything);
-
     setImageSrcs(field.value.filter((v) => isString(v)));
   }, []);
 
-  const handleChange = (changeEvent) => {
+  const handleChange = async (changeEvent) => {
     const files = Array.from(changeEvent.target.files);
     const newImageSrcs = [...imageSrcs];
 
-    files.forEach((file) => {
+    for (const file of files) {
+      const compressedFile = await compressImage(file);
       const reader = new FileReader();
 
       reader.onload = function (onLoadEvent) {
         newImageSrcs.push(onLoadEvent.target.result);
 
         setImageSrcs(newImageSrcs);
-        setFieldValue(field.name, [...field.value, ...files]);
+        setFieldValue(field.name, [...field.value, compressedFile]);
       };
 
-      reader.readAsDataURL(file);
-    });
+      reader.readAsDataURL(compressedFile);
+      console.log("OK");
+    }
   };
 
   const inputRef = useRef();

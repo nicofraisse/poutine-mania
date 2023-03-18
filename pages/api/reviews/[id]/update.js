@@ -1,32 +1,7 @@
 import { ObjectId } from "mongodb";
 import { connectToDatabase } from "../../../../lib/db";
 import formidable from "formidable";
-import fs from "fs";
-import FormData from "form-data";
-import axios from "axios";
-
-const uploadToCloudinary = async (files) => {
-  if (!files) return null;
-
-  const publicIds = [];
-
-  for (const file of files) {
-    const formData = new FormData();
-    const fileStream = fs.createReadStream(file.filepath);
-    formData.append("file", fileStream);
-    formData.append("upload_preset", process.env.CLOUD_UPLOAD_PRESET);
-    const { data } = await axios.post(
-      `https://api.cloudinary.com/v1_1/${process.env.CLOUD_NAME}/image/upload`,
-      formData,
-      {
-        headers: formData.getHeaders(),
-      }
-    );
-    publicIds.push(data.public_id);
-  }
-
-  return publicIds;
-};
+import { uploadToCloudinary } from "../../../../lib/uploadToCloudinary";
 
 const handler = async (req, res) => {
   if (req.method === "POST") {
@@ -60,13 +35,10 @@ const handler = async (req, res) => {
         }
       }
 
-      const alreadyUploadedPublicIds = [
-        fields["photos[0]"],
-        fields["photos[1]"],
-        fields["photos[2]"],
-        fields["photos[3]"],
-        fields["photos[4]"],
-      ].filter(Boolean);
+      const alreadyUploadedPublicIds = Array.from(
+        { length: 5 },
+        (_, i) => fields[`photos[${i}]`]
+      ).filter(Boolean);
 
       const newPublicIds = await uploadToCloudinary(photos);
 

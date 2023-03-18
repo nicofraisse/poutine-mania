@@ -11,6 +11,7 @@ const Image = ({ alt, src, ...props }) => {
           cloudName={process.env.CLOUD_NAME}
           publicId={src}
           alt={alt}
+          quality={60}
           {...props}
         />
       );

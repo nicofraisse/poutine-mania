@@ -76,6 +76,9 @@ const Edit = () => {
       formData.append("file", file);
     }
     formData.append("upload_preset", process.env.CLOUD_UPLOAD_PRESET);
+    formData.append("quality", "60"); // Set the image quality to 60
+    formData.append("max_bytes", "200000"); // Set the maximum file size to 200kb
+
     const { data } = await axios.post(
       `https://api.cloudinary.com/v1_1/${process.env.CLOUD_NAME}/image/upload`,
       formData

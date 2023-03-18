@@ -95,7 +95,7 @@ export const ReviewOverview = ({ restaurant }) => {
         <div className="flex justify-center mb-2">
           <RatingPill
             isNew
-            avgRating={round(restaurant.avgRating, 0)}
+            avgRating={restaurant.avgRating}
             reviewCount={restaurant.reviewCount}
             hideNewRatingInfo
           />

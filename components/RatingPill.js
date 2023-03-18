@@ -68,16 +68,20 @@ const NewRatingPill = ({
   isDarkBackground,
   hideNewRatingInfo,
 }) => {
-  const color = Color(ratingColors[round(avgRating)]);
+  const color = Color(ratingColors[Math.round(avgRating)]);
 
   return (
     <div className="flex items-center">
       <div className="flex items-center">
         {[...Array(10)].map((_, i) => {
+          const isPartialFill =
+            Math.floor(avgRating) === i && avgRating % 1 !== 0;
+          const partialFillPercentage = (avgRating % 1) * 100;
+
           return (
-            <div key={i} className="h-[13px] pr-[2px]">
+            <div key={i} className="h-[13px] pr-[2px] ">
               <div
-                className="h-full w-[13px] rounded-full bg-gray-300"
+                className="h-full w-[13px] rounded-full bg-gray-300 "
                 style={{
                   backgroundColor: i < avgRating ? color.darken(0.2) : "white",
                   border: `1px solid ${
@@ -89,16 +93,26 @@ const NewRatingPill = ({
                   }`,
                 }}
               ></div>
+              {isPartialFill && (
+                <div
+                  className="h-full w-[13px] rounded-full -mt-[13px]"
+                  style={{
+                    background: `linear-gradient(90deg, ${color.darken(
+                      0.2
+                    )} ${partialFillPercentage}%, white ${partialFillPercentage}%)`,
+                    border: `1px solid ${
+                      reviewCount === 0
+                        ? "#ddd"
+                        : i < avgRating
+                        ? color.darken(0.2)
+                        : color.darken(0.2)
+                    }`,
+                  }}
+                ></div>
+              )}
             </div>
           );
         })}
-        {/* <div
-          className='h-full rounded-l-full'
-          style={{
-            backgroundColor: avgRating ? color.darken(0.15) : '#eee',
-            width: avgRating ? `${avgRating * 10}%` : 0,
-          }}
-        ></div> */}
       </div>
       {!hideNewRatingInfo &&
         (avgRating ? (
