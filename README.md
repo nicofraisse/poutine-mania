@@ -9,7 +9,7 @@ Social website to rate & review poutines
 - [ ] Enhance mobile UI (more relevant home page content with clear CTAs, smaller text, better harmony in spacing between elements etc)
 - [ ] Test on mobile browsers including FB, IG & LinkedIn native browsers 
 - [ ] Favorite a restaurant feature & page
-- [ ] "Add towatch list"/"poutines to try" feature & page
+- [X] "Add towatch list"/"poutines to try" feature & page
 - [ ] Edit profile (name, profile photo, password, deactivate/delete account)
 - [ ] Follow user feature
 - [ ] About us/contact page
@@ -36,4 +36,4 @@ More inspiration here for rating criteria http://www.routedelapoutine.com/
 Restaurants
 - [ ] Add isShutDown boolean to restaurants and adapt UI for restaurants that are shut down
 - [ ] Better looking category tag pills in restaurant card and show page
-- [ ] Add isApproved boolean to restaurants - A user can create & review a new restaurant but it will only be visible by him until admin approves it
+- [X] Add isApproved boolean to restaurants - A user can create & review a new restaurant but it will only be visible by him until admin approves it
