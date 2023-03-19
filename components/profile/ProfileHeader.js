@@ -59,10 +59,9 @@ const ProfileHeader = ({ user }) => {
             </div>
           </div>
           <p className="text-sm text-slate-500">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laboriosam
-            nam molestias provident libero velit vero, magni in sunt mollitia
-            earum natus reprehenderit? Dolorem quidem quasi aliquid doloribus,
-            autem sunt laborum?
+            Et ainsi, je me suis tourné vers le Seigneur et j&apos;ai prié pour
+            trouver un sens à ma vie. Et la poutine fut ma réponse divine, la
+            bénédiction culinaire qui me guide sur ce chemin sacré.
           </p>
         </div>
       </div>
