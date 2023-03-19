@@ -1,27 +1,75 @@
-import { ObjectId } from "mongodb";
+// /api/users/[id]/update
+
+import formidable from "formidable";
 import { getSession } from "next-auth/client";
 import { connectToDatabase } from "../../../../lib/db";
+import { uploadToCloudinary } from "../../../../lib/uploadToCloudinary";
+import { ObjectId } from "mongodb";
 
-const handler = async (req, res) => {
-  const client = await connectToDatabase();
-  const db = await client.db();
-  const session = await getSession({ req });
-
-  if (!(session.user.isAdmin || session.user._id === req.query.id)) {
-    res.status(403).json("unauthorized");
+async function handler(req, res) {
+  if (req.method !== "PATCH") {
+    res.status(405).json({ message: "Method not allowed" });
+    return;
   }
 
-  const updatedUser = await db.collection("users").updateOne(
-    { _id: ObjectId(req.query.id) },
-    {
-      $set: {
-        name: req.body.name,
-        // email: req.body.email,
-        image: req.body.image,
-      },
+  const session = await getSession({ req });
+
+  if (!session) {
+    res.status(401).json({ message: "Not authenticated" });
+    return;
+  }
+
+  const userId = ObjectId(req.query.id);
+
+  const form = new formidable.IncomingForm();
+  form.parse(req, async (err, fields, files) => {
+    if (err) {
+      res.status(500).json({ message: "Failed to parse form data" });
+      return;
     }
-  );
-  res.status(200).json(updatedUser);
+
+    const { name } = fields;
+
+    const photos = [];
+    for (const key in files) {
+      if (key.startsWith("avatar")) {
+        photos.push(files[key]);
+      }
+    }
+
+    let newPublicIds = [];
+    if (photos.length > 0) {
+      newPublicIds = await uploadToCloudinary(photos);
+    }
+
+    const client = await connectToDatabase();
+    const usersCollection = client.db().collection("users");
+
+    try {
+      await usersCollection.updateOne(
+        { _id: userId },
+        {
+          $set: {
+            name: name,
+            image: newPublicIds[0],
+          },
+        }
+      );
+
+      res.status(200).json({ message: "User updated successfully" });
+    } catch (error) {
+      res.status(500).json({ message: "Error updating the user" });
+    } finally {
+      // Close the database connection
+      client.close();
+    }
+  });
+}
+
+export const config = {
+  api: {
+    bodyParser: false,
+  },
 };
 
 export default handler;

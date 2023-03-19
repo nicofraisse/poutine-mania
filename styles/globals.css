@@ -25,6 +25,11 @@ a {
   text-decoration: none;
   cursor: pointer;
 }
+.mapboxgl-ctrl-bottom-left .mapboxgl-ctrl-logo,
+.mapboxgl-ctrl-attrib-inner,
+.mapboxgl-compact {
+  display: none !important;
+}
 
 * {
   box-sizing: border-box;

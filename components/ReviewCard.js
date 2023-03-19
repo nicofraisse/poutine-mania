@@ -74,7 +74,7 @@ const ReviewCard = ({ review, handleEdit, handleDelete, isFirst }) => {
                       src={review.user.image}
                       width="100%"
                       height="100%"
-                      className="rounded-full object-cover object-center"
+                      className="rounded-full h-full w-full object-cover object-center"
                     />
                   ) : (
                     <User />
@@ -167,7 +167,7 @@ const ReviewCard = ({ review, handleEdit, handleDelete, isFirst }) => {
                   key={photo}
                   src={photo}
                   alt="poutine-user-photo"
-                  // width={280
+                  // width={280}
                   responsive
                   className="border rounded-md object-cover sm:max-h-72 max-h-60 my-3 mr-3"
                   onClick={() => setImgModalOpen(true)}

@@ -9,7 +9,7 @@ import { Image } from "components/Image";
 
 import { useRouter } from "next/router";
 
-export function TopPoutines() {
+const TopPoutines = () => {
   const { push } = useRouter();
 
   const { data: restaurants } = useGet(
@@ -159,4 +159,6 @@ export function TopPoutines() {
       </div>
     </div>
   );
-}
+};
+
+export default TopPoutines;

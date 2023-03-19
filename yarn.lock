@@ -2161,6 +2161,18 @@
     "combined-stream" "^1.0.8"
     "mime-types" "^2.1.12"
 
+"formidable-serverless@^1.1.1":
+  "integrity" "sha512-IUVI2m7d46YnWRZ9RG+wvmLoX0tTrk9P6oFc53QVjM9k0XhqzeyjwDi05PLvpGNKbyLvB3gfsAc+Lk6efM3FGQ=="
+  "resolved" "https://registry.npmjs.org/formidable-serverless/-/formidable-serverless-1.1.1.tgz"
+  "version" "1.1.1"
+  dependencies:
+    "formidable" "^1.2.2"
+
+"formidable@^1.2.2":
+  "integrity" "sha512-KcpbcpuLNOwrEjnbpMC0gS+X8ciDoZE1kkqzat4a8vrprf+s9pKNQ/QIwWfbfs4ltgmFl3MD177SNTkve3BwGQ=="
+  "resolved" "https://registry.npmjs.org/formidable/-/formidable-1.2.6.tgz"
+  "version" "1.2.6"
+
 "formidable@^2.1.1":
   "integrity" "sha512-0EcS9wCFEzLvfiks7omJ+SiYJAiD+TzK4Pcw1UlUoGnhUxDcMKjt0P7x8wEb0u6OHu8Nb98WG3nxtlF5C7bvUQ=="
   "resolved" "https://registry.npmjs.org/formidable/-/formidable-2.1.1.tgz"

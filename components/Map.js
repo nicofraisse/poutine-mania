@@ -225,10 +225,6 @@ const MapMap = ({ restaurants, isShowPage }) => {
   const [viewState, setViewState] = useState(DEFAULT_COORDINATES);
 
   useEffect(() => {
-    console.log(viewState);
-  }, [viewState]);
-
-  useEffect(() => {
     const allCoordinates = flatten(
       restaurants.map((r) => r.succursales.map((s) => s.address.center))
     );

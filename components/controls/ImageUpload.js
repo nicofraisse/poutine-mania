@@ -6,18 +6,24 @@ import classNames from "classnames";
 import { isString } from "lodash";
 import { compressImage } from "lib/compressImage";
 
-const ImageUpload = ({ roundedFull, maxImages = 5, ...props }) => {
+const ImageUpload = ({
+  roundedFull,
+  maxImages = 5,
+  isMulti = false,
+  ...props
+}) => {
   const [imageSrcs, setImageSrcs] = useState([]);
   const [field] = useField(props);
   const { setFieldValue } = useFormikContext();
 
   useEffect(() => {
-    setImageSrcs(field.value.filter((v) => isString(v)));
+    const values = Array.isArray(field.value) ? field.value : [field.value];
+    setImageSrcs(values.filter((v) => isString(v)));
   }, []);
 
   const handleChange = async (changeEvent) => {
     const files = Array.from(changeEvent.target.files);
-    const newImageSrcs = [...imageSrcs];
+    const newImageSrcs = isMulti ? [...imageSrcs] : [];
 
     for (const file of files) {
       const compressedFile = await compressImage(file);
@@ -27,7 +33,10 @@ const ImageUpload = ({ roundedFull, maxImages = 5, ...props }) => {
         newImageSrcs.push(onLoadEvent.target.result);
 
         setImageSrcs(newImageSrcs);
-        setFieldValue(field.name, [...field.value, compressedFile]);
+        setFieldValue(
+          field.name,
+          isMulti ? [...field.value, compressedFile] : [compressedFile]
+        );
       };
 
       reader.readAsDataURL(compressedFile);
@@ -47,49 +56,49 @@ const ImageUpload = ({ roundedFull, maxImages = 5, ...props }) => {
   };
 
   return (
-    <div className="flex flex-wrap">
+    <div className="flex flex-wrap items-start">
       {imageSrcs.map((src, index) => (
         <div
           key={index}
           className={classNames("relative inline-flex m-2", {
-            "border h-40": !roundedFull,
+            "": !roundedFull,
           })}
         >
           {src.includes("data") ? (
             <img
               src={src}
               alt="upload"
-              className={classNames(
-                "h-full relative flex items-center justify-center",
-                {
-                  "w-32 h-32 rounded-full object-cover object-center":
-                    roundedFull,
-                }
-              )}
+              className={classNames("w-32 h-32", {
+                "rounded-full object-cover object-center": roundedFull,
+                "rounded-lg": !roundedFull,
+              })}
             ></img>
           ) : (
             <Image
               src={src}
               alt="upload"
-              className={classNames(
-                "h-full relative flex items-center justify-center",
-                {
-                  "w-32 h-32 rounded-full object-cover object-center":
-                    roundedFull,
-                }
-              )}
+              className={classNames("w-32 h-32", {
+                "rounded-full object-cover object-center": roundedFull,
+                "rounded-lg": !roundedFull,
+              })}
             ></Image>
           )}
           <button
             type="button"
             onClick={() => handleDelete(index)}
-            className="absolute top-[-10px] right-[-10px] border bg-white h-8 w-8 rounded-full hover:shadow flex items-center justify-center"
+            className={classNames(
+              "absolute border bg-white h-8 w-8 rounded-full hover:shadow flex items-center justify-center",
+              {
+                "top-[-10px] right-[-10px]": !roundedFull,
+                "top-[-0px] right-[-8px]": roundedFull,
+              }
+            )}
           >
             <Trash className="text-red-500" size={20} />
           </button>
         </div>
       ))}
-      {imageSrcs.length < maxImages && (
+      {(isMulti ? imageSrcs.length < maxImages : imageSrcs.length === 0) && (
         <div className="m-2">
           <input
             type="file"
@@ -97,7 +106,7 @@ const ImageUpload = ({ roundedFull, maxImages = 5, ...props }) => {
             onChange={handleChange}
             hidden
             ref={inputRef}
-            multiple
+            multiple={isMulti}
           />
           <button type="button">
             <div

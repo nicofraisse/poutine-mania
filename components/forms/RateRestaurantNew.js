@@ -202,7 +202,12 @@ export const RateRestaurantNew = ({
               label="Commentaire"
               type="textarea"
             />
-            <Field name="photos" control={ImageUpload} label="Photos" />
+            <Field
+              name="photos"
+              control={ImageUpload}
+              isMulti={true}
+              label="Photos"
+            />
 
             <ErrorMessage
               condition={errors.rating && touched.rating}

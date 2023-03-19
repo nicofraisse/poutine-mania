@@ -13,7 +13,7 @@ import ImageUpload from "../../../components/controls/ImageUpload";
 
 const Edit = () => {
   const { push, query } = useRouter();
-  const { currentUser } = useCurrentUser();
+  const { currentUser, refetchUser } = useCurrentUser();
 
   const handleChangePassword = (values, formikBag) => {
     axios
@@ -32,24 +32,36 @@ const Edit = () => {
   };
   const handleUpdateInfo = async (values, formikBag) => {
     formikBag.setSubmitting(true);
-    const publicId = await uploadToCloudinary(values.avatar);
-    axios
-      .patch(`/api/users/${query.id}/update`, {
-        ...values,
-        ...(publicId !== "skip" && { image: publicId }),
-      })
-      .then(() => {
-        toast.success("Informations mises à jour avec succès!");
-        formikBag.setSubmitting(false);
-      })
-      .catch((e) => {
-        toast.error(
-          e?.response?.data?.message ||
-            "Une erreur est survenue. Veuillez réessayer"
-        );
-        formikBag.setSubmitting(false);
+    const formData = new FormData();
+    for (const key in values) {
+      if (key === "avatar" && values[key]) {
+        for (const [, file] of values[key].entries()) {
+          formData.append(`avatar`, file);
+        }
+      } else {
+        formData.append(key, values[key]);
+      }
+    }
+
+    try {
+      await axios.patch(`/api/users/${query.id}/update`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       });
+
+      toast.success("Informations mises à jour avec succès!");
+      formikBag.setSubmitting(false);
+      refetchUser();
+    } catch (e) {
+      toast.error(
+        e?.response?.data?.message ||
+          "Une erreur est survenue. Veuillez réessayer"
+      );
+      formikBag.setSubmitting(false);
+    }
   };
+
   const handleDeleteAccount = () => {
     if (
       window.confirm(
@@ -67,23 +79,6 @@ const Edit = () => {
         })
         .catch(() => toast.error("Une erreur est survenue."));
     }
-  };
-  const uploadToCloudinary = async (files) => {
-    if (!files || files.length === 0) return null;
-    if (typeof files?.[0] === "string") return "skip";
-    const formData = new FormData();
-    for (const file of files) {
-      formData.append("file", file);
-    }
-    formData.append("upload_preset", process.env.CLOUD_UPLOAD_PRESET);
-    formData.append("quality", "60"); // Set the image quality to 60
-    formData.append("max_bytes", "200000"); // Set the maximum file size to 200kb
-
-    const { data } = await axios.post(
-      `https://api.cloudinary.com/v1_1/${process.env.CLOUD_NAME}/image/upload`,
-      formData
-    );
-    return data.public_id;
   };
 
   if (!currentUser) return null;
@@ -122,8 +117,9 @@ const Edit = () => {
           })}
           className="max-w-sm p-4"
         >
-          {({ isSubmitting }) => (
+          {({ isSubmitting, errors }) => (
             <>
+              {JSON.stringify(errors)}
               <Field name="name" label="Nom d'utilisateur" />
 
               <Field name="avatar" control={ImageUpload} roundedFull />

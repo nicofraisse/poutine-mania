@@ -14,10 +14,10 @@ const ProfileHeader = ({ user }) => {
             <Image
               alt="user-image"
               src={user.image}
-              className="rounded-full min-w-32 h-32 object-cover flex-shrink-0 object-center"
+              className="rounded-full w-28 h-28 sm:w-36 sm:h-36 object-cover flex-shrink-0 object-center"
             />
           ) : (
-            <div className="w-28 h-28 rounded-full bg-gray-300 flex items-center flex-shrink-0 justify-center">
+            <div className="w-28 h-28 sm:w-36 sm:h-36 rounded-full bg-gray-300 flex items-center flex-shrink-0 justify-center">
               <User className="text-white" size={64} />
             </div>
           )}
@@ -68,14 +68,12 @@ const ProfileHeader = ({ user }) => {
       </div>
       <div className="text-center flex w-full justify-between px-6 mt-8 pt-4 border-t border-slate-100">
         <div className="mt-4 mb-1">
-          <div className="font-black text-slate-600 text-xl">
-            ❤️ Poutine Pro
-          </div>
+          <div className="font-black text-slate-600 text-xl">❤️ Greenspot</div>
           <div className="text-sm text-slate-400">Poutine préférée</div>
         </div>
         <div className="mt-4 mb-1">
           <div className="font-black text-slate-700 text-xl">
-            💔 Poutine Mcdo
+            💔 Harvey&apos;s
           </div>
           <div className="text-sm text-slate-400">Poutine la moins aimée</div>
         </div>
