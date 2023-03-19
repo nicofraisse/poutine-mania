@@ -37,10 +37,7 @@ function App({ Component, pageProps }) {
                       <Component {...pageProps} />
                       <Toaster
                         position="bottom-right"
-                        toastOptions={{
-                          // Define default options
-                          duration: 7000,
-                        }}
+                        toastOptions={{ duration: 7000 }}
                       />
                     </div>
                   </Layout>

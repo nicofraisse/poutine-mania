@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { signOut } from "next-auth/client";
+import { signOut, useSession } from "next-auth/client";
 import { useCurrentUser } from "lib/useCurrentUser";
 import Button from "./Button";
 import { ArrowLeft, Edit3, Menu, Search, User, X } from "react-feather";
@@ -15,7 +15,8 @@ import { useRestaurantSearch } from "./context/RestaurantSearchProvider";
 import { toast } from "react-hot-toast";
 
 const Header = ({ toggleMobileSidebar }) => {
-  const { currentUser, loading } = useCurrentUser();
+  // const { currentUser, loading } = useCurrentUser();
+  const [session, loading] = useSession();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const toggleRef = createRef();
   const searchBarRef = useRef();
@@ -24,6 +25,7 @@ const Header = ({ toggleMobileSidebar }) => {
   const [showSearchBar, setShowSearchBar] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const { setSearchValue } = useRestaurantSearch();
+  const currentUser = session?.user;
 
   const BACKABLE_PAGE_PROPS = {
     "/noter": {
@@ -55,6 +57,8 @@ const Header = ({ toggleMobileSidebar }) => {
       setIsMobile(window.innerWidth < 640);
     });
   }, []);
+
+  console.log({ loading, currentUser });
 
   useEffect(() => {
     if (showSearchBar) {
@@ -164,7 +168,7 @@ const Header = ({ toggleMobileSidebar }) => {
               </Button>
             )}
 
-            {loading ? (
+            {loading && !currentUser ? (
               <div className="animate-pulse flex items-center pointer-events-none">
                 <div className="relative mx-4 lg:mx-5 z-20">
                   <div className="h-[44px] w-[44px] bg-gray-400 rounded-full cursor-pointer hover:opacity-80 flex items-center justify-center">

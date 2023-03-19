@@ -7,6 +7,7 @@ import Button from "components/Button";
 import { useLoginForm } from "../context/LoginFormProvider";
 import { signIn } from "next-auth/client";
 import { VariantColor } from "../Button";
+import { useState } from "react";
 
 const SignUp = ({ onSubmit, redirect }) => {
   const { openLogin, closeSignup } = useLoginForm();
@@ -23,24 +24,25 @@ const SignUp = ({ onSubmit, redirect }) => {
       .post("/api/auth/signup", values)
       .then(() => {
         toast.success("Inscription réussie!");
-        signIn("credentials", {
-          ...values,
-          ...options,
-        })
-          .then((data) => {
-            if (data?.error) {
-              toast.error(data.error);
-            } else {
-              toast.success("Vous êtes maintenant connecté(e).");
-              formikBag.setSubmitting(false);
-              onSubmit && onSubmit();
-            }
-          })
-          .catch((e) => {
-            toast.error(e.message);
-            formikBag.setSubmitting(false);
-          });
+        // onSubmit && onSubmit(values.email);
       })
+      //   signIn("credentials", {
+      //     ...values,
+      //     ...options,
+      //   })
+      //     .then((data) => {
+      //       if (data?.error) {
+      //         toast.error(data.error);
+      //       } else {
+      //         toast.success("Vous êtes maintenant connecté(e).");
+      //         formikBag.setSubmitting(false);
+      //       }
+      //     })
+      //     .catch((e) => {
+      //       toast.error(e.message);
+      //       formikBag.setSubmitting(false);
+      //     });
+      // })
       .catch((e) => {
         toast.error(e?.response?.data?.message || e.message);
         formikBag.setSubmitting(false);

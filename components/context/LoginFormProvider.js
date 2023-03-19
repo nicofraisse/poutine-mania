@@ -1,6 +1,8 @@
 import { createContext, useContext, useState } from "react";
-import { X } from "react-feather";
+import { Info, Mail, X } from "react-feather";
 import Modal from "react-responsive-modal";
+import { BrandLogo } from "../BrandLogo";
+import Button from "../Button";
 import Login from "../forms/Login";
 import SignUp from "../forms/SignUp";
 
@@ -11,6 +13,9 @@ export const LoginFormProvider = ({ children }) => {
   const [signupOpen, setSignupOpen] = useState(false);
   const [loginMessage, setLoginMessage] = useState(null);
   const [redirectUrl, setRedirectUrl] = useState("");
+  const [showEmailConfirmation, setShowEmailConfirmation] = useState(
+    "ok@showEmailConfirmation.com"
+  );
 
   const openLogin = (message, redirect) => {
     setLoginOpen(true);
@@ -30,6 +35,8 @@ export const LoginFormProvider = ({ children }) => {
   const closeSignup = () => {
     setSignupOpen(false);
   };
+
+  const handleShowConfirmation = (v) => setShowEmailConfirmation(v);
 
   return (
     <LoginFormContext.Provider
@@ -69,13 +76,34 @@ export const LoginFormProvider = ({ children }) => {
           closeIcon={<X />}
           center
         >
-          <h2 className="font-black text-3xl text-center pb-3 pt-5">
-            Créer mon compte
-          </h2>
-          <SignUp
-            onSubmit={() => setSignupOpen(false)}
-            redirect={redirectUrl}
-          />
+          {showEmailConfirmation ? (
+            <div className="sm:p-5 flex flex-col items-center justify-center max-w-2xs">
+              <div className="mb-6 rounded-full w-24 h-24 border-4 border-teal-400 flex items-center justify-center">
+                <Mail size={48} className="text-teal-400" />
+              </div>
+              <div className="bg-slate-50 border rounded border-slate-200 px-5 py-6">
+                <h2 className="font-black text-2xl text-center mb-3 text-slate-500">
+                  Vous y êtes presque!
+                </h2>
+
+                <div className="max-w-2xs text-md text-slate-500 text-center">
+                  Veuillez consulter votre boîte de réception à l&apos;adresse
+                  fournie et cliquer sur le lien de confirmation que nous venons
+                  de vous envoyer.
+                </div>
+              </div>
+            </div>
+          ) : (
+            <>
+              <h2 className="font-black text-3xl text-center pb-3 pt-5">
+                Créer mon compte
+              </h2>
+              <SignUp
+                onSubmit={handleShowConfirmation}
+                redirect={redirectUrl}
+              />
+            </>
+          )}
         </Modal>
       </>
     </LoginFormContext.Provider>
