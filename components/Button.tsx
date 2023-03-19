@@ -10,10 +10,12 @@ export enum VariantColor {
   white2 = "white",
   lightLink = "lightLink",
   danger = "danger",
+  blue = "blue",
 }
 
 const bgColorClass = {
   [VariantColor.primary]: "bg-teal-600",
+  [VariantColor.blue]: "bg-blue-500",
   [VariantColor.secondary]: "bg-none",
   [VariantColor.light]: "bg-gray-100",
   [VariantColor.white]: "bg-white",
@@ -24,6 +26,7 @@ const bgColorClass = {
 
 const bgColorHoverClass = {
   [VariantColor.primary]: "",
+  [VariantColor.blue]: "",
   [VariantColor.secondary]: "",
   [VariantColor.light]: "hover:bg-gray-200",
   [VariantColor.white]: "",
@@ -33,6 +36,7 @@ const bgColorHoverClass = {
 
 const borderClass = {
   [VariantColor.primary]: "",
+  [VariantColor.blue]: "",
   [VariantColor.secondary]: "border-2 border-teal-600",
   [VariantColor.light]: "border-2 border-gray-100",
   [VariantColor.white]: "border-2 border-gray-500",
@@ -42,6 +46,7 @@ const borderClass = {
 
 const textColorClass = {
   [VariantColor.primary]: "text-white",
+  [VariantColor.blue]: "text-white",
   [VariantColor.secondary]: "text-teal-600",
   [VariantColor.light]: "text-gray-500",
   [VariantColor.white]: "text-gray-600",
@@ -77,7 +82,6 @@ const Button = ({
   return (
     <button
       className={classNames(
-        className,
         bgColorClass[variant],
         bgColorHoverClass[variant],
         borderClass[variant],
@@ -88,7 +92,8 @@ const Button = ({
         {
           "opacity-80": loading,
           "opacity-100": !loading,
-        }
+        },
+        className
       )}
       disabled={loading}
       {...props}

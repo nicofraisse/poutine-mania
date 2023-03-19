@@ -5,6 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "start": "next start",
+    "prod": "cross-env MONGO_URI=$(grep MONGO_URI .env.production | cut -d '=' -f 2-) next dev",
     "lint": "next lint",
     "lint:fix": "eslint . --fix"
   },
@@ -57,6 +59,7 @@
     "@types/node": "18.11.10",
     "@types/react": "18.0.26",
     "autoprefixer": "^10.4.7",
+    "cross-env": "^7.0.3",
     "dotenv-cli": "^7.1.0",
     "eslint-config-next": "11.0.1",
     "postcss": "^8.4.13",
