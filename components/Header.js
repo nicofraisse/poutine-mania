@@ -58,8 +58,6 @@ const Header = ({ toggleMobileSidebar }) => {
     });
   }, []);
 
-  console.log({ loading, currentUser });
-
   useEffect(() => {
     if (showSearchBar) {
       searchBarRef.current.querySelector("input").focus();

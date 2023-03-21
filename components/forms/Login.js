@@ -6,7 +6,7 @@ import Form from "components/Form";
 import Field from "components/Field";
 import { useLoginForm } from "../context/LoginFormProvider";
 
-const Login = ({ onSubmit, redirect }) => {
+const Login = ({ onSubmit, redirect, setEmailToConfirm }) => {
   const { openSignup, closeLogin } = useLoginForm();
 
   const options = {
@@ -22,8 +22,15 @@ const Login = ({ onSubmit, redirect }) => {
       ...options,
     })
       .then((data) => {
-        if (data?.error) {
-          toast.error(data.error);
+        if (data.error) {
+          const error = JSON.parse(data.error);
+
+          if (error?.code === "EMAIL_NOT_VALIDATED") {
+            setEmailToConfirm(values.email);
+          } else {
+            console.log("err", error);
+            toast.error(error?.message);
+          }
         } else {
           toast.success("Vous êtes maintenant connecté(e).");
           onSubmit && onSubmit();
@@ -31,7 +38,9 @@ const Login = ({ onSubmit, redirect }) => {
         formikBag.setSubmitting(false);
       })
       .catch((e) => {
-        toast.error(e.message);
+        const error = JSON.parse(e.message);
+        console.log("BRO AN ERR", error);
+        toast.error(error);
         formikBag.setSubmitting(false);
       });
   };

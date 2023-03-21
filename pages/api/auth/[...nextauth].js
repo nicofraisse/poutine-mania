@@ -24,10 +24,19 @@ export default NextAuth({
       }
       return token;
     },
-    // redirect: async (url, _baseUrl) => {
-    //   return Promise.resolve('/')
-    // },
-    // },
+
+    async signIn(user) {
+      if (!user.emailVerified) {
+        const error = JSON.stringify({
+          code: "EMAIL_NOT_VALIDATED",
+          message:
+            "Votre compte n'est pas encore activé, veuillez cliquer sur le lien que nous vous avons envoyé par courriel.",
+        });
+        throw new Error(error);
+      }
+      return true;
+    },
+
     session: async (session, user) => {
       const client = await connectToDatabase();
       const db = await client.db();
@@ -114,10 +123,13 @@ export default NextAuth({
 
         if (foundExistingAccount) {
           client.close();
+
           throw new Error(
-            `Cliquez sur "Continuer avec ${capitalize(
-              foundExistingAccount.providerId
-            )}" pour vous connecter à ce compte.`
+            JSON.stringify({
+              message: `Cliquez sur "Continuer avec ${capitalize(
+                foundExistingAccount.providerId
+              )}" pour vous connecter à ce compte.`,
+            })
           );
         }
 

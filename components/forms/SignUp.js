@@ -7,42 +7,16 @@ import Button from "components/Button";
 import { useLoginForm } from "../context/LoginFormProvider";
 import { signIn } from "next-auth/client";
 import { VariantColor } from "../Button";
-import { useState } from "react";
 
-const SignUp = ({ onSubmit, redirect }) => {
+const SignUp = ({ onSubmit }) => {
   const { openLogin, closeSignup } = useLoginForm();
-
-  const options = {
-    redirect: false,
-    callbackUrl: redirect
-      ? window.location.origin + redirect
-      : window.location.href,
-  };
 
   const handleSubmit = (values, formikBag) => {
     axios
       .post("/api/auth/signup", values)
       .then(() => {
-        toast.success("Inscription réussie!");
-        // onSubmit && onSubmit(values.email);
+        onSubmit(values.email);
       })
-      //   signIn("credentials", {
-      //     ...values,
-      //     ...options,
-      //   })
-      //     .then((data) => {
-      //       if (data?.error) {
-      //         toast.error(data.error);
-      //       } else {
-      //         toast.success("Vous êtes maintenant connecté(e).");
-      //         formikBag.setSubmitting(false);
-      //       }
-      //     })
-      //     .catch((e) => {
-      //       toast.error(e.message);
-      //       formikBag.setSubmitting(false);
-      //     });
-      // })
       .catch((e) => {
         toast.error(e?.response?.data?.message || e.message);
         formikBag.setSubmitting(false);
