@@ -2,7 +2,6 @@ import classNames from "classnames";
 import { useEffect, useRef, useState } from "react";
 import { ratingColors } from "data/ratingColors.js";
 import Color from "color";
-import { round } from "lodash";
 
 import classes from "./data-ring.module.scss";
 import Image from "next/image";

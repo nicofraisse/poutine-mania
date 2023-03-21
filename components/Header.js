@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/client";
-import { useCurrentUser } from "lib/useCurrentUser";
 import Button from "./Button";
 import { ArrowLeft, Edit3, Menu, Search, User, X } from "react-feather";
 import { useState, createRef, useEffect, useRef } from "react";
@@ -57,8 +56,6 @@ const Header = ({ toggleMobileSidebar }) => {
       setIsMobile(window.innerWidth < 640);
     });
   }, []);
-
-  console.log({ loading, currentUser });
 
   useEffect(() => {
     if (showSearchBar) {

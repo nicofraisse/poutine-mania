@@ -51,7 +51,7 @@ export const RateRestaurantProvider = ({ children }) => {
           center
         >
           <RateRestaurantNew
-            onSubmit={(id) => {
+            onSubmit={() => {
               setRateRestaurantOpen(false);
               setTimeout(() => {
                 reload();
