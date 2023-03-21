@@ -6,7 +6,6 @@ import { useRouter } from "next/router";
 import RatingPill from "components/RatingPill";
 import { flatten, minBy, maxBy } from "lodash";
 import { ratingColors } from "data/ratingColors";
-import { round } from "lodash";
 import { useRestaurantCardHover } from "./context/RestaurantCardHoverProvider";
 import classNames from "classnames";
 import Image from "next/image";

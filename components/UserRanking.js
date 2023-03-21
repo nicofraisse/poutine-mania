@@ -1,6 +1,6 @@
 import Color from "color";
 import React from "react";
-import { getRatingColor, ratingColors } from "../data/ratingColors";
+import { getRatingColor } from "../data/ratingColors";
 import { meanBy, round } from "lodash";
 import { formatCity } from "../lib/formatAddress";
 import Tooltip from "rc-tooltip";
