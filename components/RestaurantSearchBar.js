@@ -7,8 +7,10 @@ import { getUrlQueryString } from "../lib/getUrlqueryString";
 import { MapPin, Search } from "react-feather";
 import { Image } from "./Image";
 import { Image as ImageIcon } from "react-feather";
+import classNames from "classnames";
+import Spinner from "./Spinner";
 
-const RestaurantSearchBar = React.forwardRef(({ onSubmit }, ref) => {
+const RestaurantSearchBar = React.forwardRef(({ onSubmit, isBanner }, ref) => {
   const { push, asPath } = useRouter();
   const { searchValue, setSearchValue, nonDebouncedValue } =
     useRestaurantSearch();
@@ -57,18 +59,37 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit }, ref) => {
       onFocus={handleFocus}
       onBlur={handleBlur}
     >
-      <Input
-        type="text"
-        className="font-bold text-sm"
-        placeholder="Rechercher une poutine"
-        isSearch
-        loading={restaurantsLoading}
-        handleSearch={handleSearch}
-        onChange={(e) => setSearchValue(e.target.value)}
-        value={nonDebouncedValue ?? ""}
-      />
+      <div className={"relative"}>
+        <input
+          className={classNames("w-full", {
+            "border-2 border-gray-300 rounded-md py-[8px] px-2 text-sm font-bold":
+              !isBanner,
+            "py-3 pl-12 pr-4 rounded-full border-slate-300 shadow-md": isBanner,
+          })}
+          placeholder="Rechercher une poutinerie"
+          defaultValue={nonDebouncedValue ?? ""}
+          value={nonDebouncedValue ?? ""}
+          onChange={(e) => setSearchValue(e.target.value)}
+        />
+
+        <Search
+          className={classNames({
+            "absolute top-2 right-2 text-gray-400 cursor-pointer hover:text-gray-500 transition duration-300":
+              !isBanner,
+            "absolute top-3 left-4 text-slate-500": isBanner,
+          })}
+          onClick={handleSearch}
+        />
+      </div>
       {showSearchSuggestions && (
-        <div className="absolute z-50 w-full bg-white border shadow-lg left-0 px-2 sm:px-3 py-2">
+        <div
+          className={classNames(
+            "absolute z-50 w-full bg-white border shadow-lg left-0 px-2 sm:px-3 py-2",
+            {
+              "rounded-xl": isBanner,
+            }
+          )}
+        >
           {restaurants?.map((r) => {
             const image = r.reviews?.find((res) => res.photos?.[0])?.photos[0];
 
@@ -76,7 +97,10 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit }, ref) => {
               <div
                 className="p-2 sm:p-3 hover:bg-gray-100 cursor-pointer flex items-center border-b"
                 key={r._id}
-                onClick={() => push(`/restaurants/${r._id}`)}
+                onClick={() => {
+                  console.log("bro i be pushing");
+                  push(`/restaurants/${r._id}`);
+                }}
               >
                 {image ? (
                   <Image

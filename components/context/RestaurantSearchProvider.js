@@ -6,7 +6,7 @@ const RestaurantSearchContext = createContext({});
 
 export const RestaurantSearchProvider = ({ children }) => {
   const [searchValue, setSearchValue] = useState("");
-  const [debouncedValue] = useDebounce(searchValue, 500);
+  const [debouncedValue] = useDebounce(searchValue, 250);
   const { query } = useRouter();
 
   useEffect(() => {

@@ -13,7 +13,7 @@ import RestaurantIntrouvable from "../components/RestaurantIntrouvable";
 
 const Noter = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [debouncedValue] = useDebounce(searchQuery, 300);
+  const [debouncedValue] = useDebounce(searchQuery, 250);
   const { query } = useRouter();
 
   const { data: searchResults, loading: searchResultsLoading } = useGet(

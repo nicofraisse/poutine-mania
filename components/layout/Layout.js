@@ -21,7 +21,7 @@ const Layout = (props) => {
         showMobileSidebar={showMobileSidebar}
         toggleMobileSidebar={toggleMobileSidebar}
       />
-      <div className="grow bg-slate-50 min-h-screen">
+      <div className="grow bg-neutral-50 min-h-screen">
         <Header toggleMobileSidebar={toggleMobileSidebar} />
         <main className="min-h-screen-minus-nav">{props.children}</main>
       </div>

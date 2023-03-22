@@ -58,6 +58,7 @@ const textColorClass = {
 
 const heightClass = {
   sm: "h-[40px]",
+  smd: "h-[48px]",
   md: "h-[56px]",
   lg: "h-[56px]",
 };
@@ -65,6 +66,7 @@ const heightClass = {
 const widthClass = {
   xs: "px-2",
   sm: "px-3",
+  smd: "px-4",
   md: "px-8",
   lg: "px-12",
 };

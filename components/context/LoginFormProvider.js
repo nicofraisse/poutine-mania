@@ -21,7 +21,9 @@ export const LoginFormProvider = ({ children }) => {
 
   const toggleLogin = (open, message = "", redirect = "") => {
     setLoginOpen(open);
-    setLoginMessage(message);
+    setTimeout(() => {
+      setLoginMessage(message);
+    }, [!open ? 500 : 0]);
     setRedirectUrl(redirect);
   };
 
