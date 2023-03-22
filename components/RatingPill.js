@@ -32,7 +32,7 @@ const RatingPill = ({
   return (
     <div
       className={classNames(
-        "text-xs lg:text-sm text-gray-800 rounded flex items-center justify-center",
+        "text-xs lg:text-sm text-slate-700 rounded flex items-center justify-center",
         {
           "h-6 min-w-20": reviewCount === 0 && !single,
           "h-8 min-w-24": reviewCount !== 0 && !single,
@@ -165,7 +165,7 @@ const StarRating = ({ avgRating, reviewCount }) => {
         size={22}
       />
       {reviewCount > 0 && (
-        <span className="font-bold text-lg text-gray-700 ml-1">
+        <span className="font-bold text-lg text-slate-700 ml-1">
           {formatRating(avgRating)}
         </span>
       )}

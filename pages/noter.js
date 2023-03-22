@@ -28,7 +28,7 @@ const Noter = () => {
   );
 
   return (
-    <div className="max-w-md">
+    <div className="max-w-md mx-auto">
       <div className="p-4">
         {query.fromRateSuccess && (
           <div
@@ -63,7 +63,6 @@ const Noter = () => {
           type="text"
           className="font-bold text-sm"
           placeholder="Quelle poutine voulez-vous noter?"
-          isSearch
           loading={searchResultsLoading}
         />
       </div>

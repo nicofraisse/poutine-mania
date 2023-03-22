@@ -16,7 +16,7 @@ const Layout = (props) => {
     });
   }, []);
   return (
-    <div className="flex">
+    <div className="flex text-slate-700">
       <Sidebar
         showMobileSidebar={showMobileSidebar}
         toggleMobileSidebar={toggleMobileSidebar}

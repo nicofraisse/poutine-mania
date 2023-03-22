@@ -14,10 +14,10 @@ const ProfileHeader = ({ user }) => {
             <Image
               alt="user-image"
               src={user.image}
-              className="rounded-full w-28 h-28 sm:w-36 sm:h-36 object-cover flex-shrink-0 object-center"
+              className="rounded-full min-w-28 h-28 sm:min-w-36 sm:h-36 object-cover flex-shrink-0 object-center"
             />
           ) : (
-            <div className="w-28 h-28 sm:w-36 sm:h-36 rounded-full bg-gray-300 flex items-center flex-shrink-0 justify-center">
+            <div className="min-w-28 h-28 sm:min-w-36 sm:h-36 rounded-full bg-gray-300 flex items-center flex-shrink-0 justify-center">
               <User className="text-white" size={64} />
             </div>
           )}
@@ -28,15 +28,6 @@ const ProfileHeader = ({ user }) => {
               <div className="font-black text-3xl">{user.name}</div>
             </div>
             <div className="flex">
-              {/* <Link href={"/noter"} passHref>
-                <div
-                  className="inline-flex justify-center items-center py-2 px-6  mr-2 border-gray-100 border-1 rounded-full text-neutral-400 cursor-pointer select-none hover:text-neutral-500 hover:border-neutral-300 transition-colors duration-200
-          "
-                >
-                  <LinkIcon className="mr-2" size={20} />
-                  Partager
-                </div>
-              </Link> */}
               {user._id === currentUser?._id ? (
                 <Link href={`/users/${user._id}/edit`} passHref>
                   <button className="text-base font-bold bg-blue-400 px-6 py-2 rounded-full text-white inline-block">

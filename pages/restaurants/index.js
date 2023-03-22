@@ -132,7 +132,7 @@ const Restaurants = () => {
             </div>
           </div>
           {restaurants?.map((r) => (
-            <div className="block" key={r._id}>
+            <div className="block my-2 mx-3" key={r._id}>
               <RestaurantCard restaurant={r} />
 
               <div className="w-full border-b border-gray-100"></div>

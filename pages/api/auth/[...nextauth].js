@@ -7,9 +7,6 @@ import { verifyPassword } from "lib/auth";
 import { connectToDatabase } from "lib/db";
 
 export default NextAuth({
-  // pages: {
-  //   error: "/",
-  // },
   session: {
     jwt: true,
   },
@@ -25,7 +22,20 @@ export default NextAuth({
       return token;
     },
 
-    async signIn(user) {
+    async signIn(user, account) {
+      if (account.provider === "google" || account.provider === "facebook") {
+        const client = await connectToDatabase();
+        const db = client.db();
+        const usersCollection = db.collection("users");
+
+        user.emailVerified = true;
+        // Update the emailVerified status in the MongoDB database
+        await usersCollection.updateOne(
+          { email: user.email },
+          { $set: { emailVerified: true } }
+        );
+        client.close();
+      }
       if (!user.emailVerified) {
         const error = JSON.stringify({
           code: "EMAIL_NOT_VALIDATED",

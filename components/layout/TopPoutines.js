@@ -20,33 +20,30 @@ const TopPoutines = () => {
     <div className="max-w-4xl">
       <div className="px-2 md:px-0">
         <h1 className="text-2xl sm:text-3xl font-bold my-4">
-          Les 10 meilleures poutines du Québec
+          Top 10 poutines du Québec à savourer 🍟🧀🍯
         </h1>
         <p className="my-1 text-sm sm:text-md">
-          Bienvenue sur notre application de notation de poutines! Grâce à notre
-          plateforme, vous pouvez non seulement enregistrer vos propres
-          expériences de dégustation de poutines, mais aussi découvrir celles
-          des autres utilisateurs dans votre région et partout ailleurs au
-          Québec. Partagez vos avis sur les meilleures poutines que vous avez
-          goûtées et découvrez de nouvelles poutineries à essayer grâce à notre
-          communauté en ligne de passionnés de poutines. Rejoignez-nous dès
-          maintenant et trouvez votre prochaine poutine préférée!
+          Hey, fan de poutine! Viens t'éclater avec notre appli pour classer tes
+          poutines favorites! 🌟 Partage tes aventures gourmandes, explore
+          celles des autres et découvre des spots incroyables près de chez toi
+          ou ailleurs au Québec. Rejoins la bande des poutine-lovers et trouve
+          ta prochaine poutine coup de cœur! 💗
         </p>
 
         <h2 className="mt-4 mb-3 text-lg sm:text-xl font-bold">
-          Vous cherchez une poutine proche de chez vous?
+          À la recherche d'une poutine près de toi ou selon tes envies? 🕵️‍♀️{" "}
         </h2>
 
         <p className="my-1 text-sm sm:text-md">
-          Vous cherchez une poutine avec des critères plus précis? Utilisez
-          notre{" "}
+          Rends-toi sur notre{" "}
           <Link href={"/restaurants"} passHref>
             <span className="text-teal-500 font-bold cursor-pointer hover:text-teal-600">
               Carte des poutines
             </span>
           </Link>
-          , où vous trouverez les meilleurs restaurants en fonction du lieu, le
-          type de restaurant, la note moyenne sur 10, et bien plus.
+          ! 🗺️ Choisis parmi les restos les mieux notés, selon le type
+          d'établissement, la note sur 10 et bien d'autres critères. En avant, à
+          la découverte de la poutine parfaite! 🚀
         </p>
       </div>
       <div className="shadow-lg border-white border-4 rounded-lg mb-16 xl:mb-40 mt-6">

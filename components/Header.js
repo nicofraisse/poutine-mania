@@ -13,6 +13,7 @@ import { useRouter } from "next/router";
 import { useRestaurantSearch } from "./context/RestaurantSearchProvider";
 import { toast } from "react-hot-toast";
 import classNames from "classnames";
+import { BrandLogo } from "./BrandLogo";
 
 const Header = ({ toggleMobileSidebar }) => {
   // const { currentUser, loading } = useCurrentUser();
@@ -255,7 +256,7 @@ const Header = ({ toggleMobileSidebar }) => {
       </div>
       {isHomepage && (
         <div
-          className="w-full max-h-[440px] flex items-center justify-center bg-cover bg-center py-40 px-24 mb-6"
+          className="w-full h-screen sm:max-h-[440px] flex items-center justify-center bg-cover bg-center py-40 px-4 mb-6"
           style={{
             background: `
       linear-gradient(
@@ -269,14 +270,23 @@ const Header = ({ toggleMobileSidebar }) => {
             backgroundPosition: "center center",
           }}
         >
-          <div>
+          <div className="flex flex-col items-center">
             <h1
-              className="text-center text-3xl sm:text-4xl lg:text-5xl font-black text-white"
+              className="text-center text-3xl lg:text-4xl 2xl:text-5xl font-black text-white"
               style={{ textShadow: "0px 0px 4px rgba(0, 0, 0, 0.6)" }}
             >
+              {/* <div
+                className="rounded mb-4 inline-block relative"
+                style={{ textShadow: "0px 0px 4px rgba(0, 0, 0, 0.5)" }}
+              >
+                <div className="text-3xl font-black">
+                  <span className="text-amber-400">POUTINE</span>
+                  <span className="text-orange-400">MANIA</span>
+                </div>
+              </div>,  */}
               La quête de la poutine ultime.
             </h1>
-            <div className="relative mt-7 mb-5 lg:w-[800px] mx-auto">
+            <div className="relative mt-7 mb-5 w-full sm:w-[500px] md:w-[600px] xl:w-[800px] mx-auto">
               <RestaurantSearchBar isBanner />
               {/* <Search className="absolute top-3 left-4 text-slate-500" /> */}
             </div>

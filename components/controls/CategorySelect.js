@@ -40,7 +40,6 @@ const CategorySelect = ({ value, ...props }) => {
       options={options}
       value={convertToOptions(value)}
       className="text-sm"
-      {...props}
     />
   );
 };

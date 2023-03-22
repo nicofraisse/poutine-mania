@@ -59,7 +59,7 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit, isBanner }, ref) => {
       onFocus={handleFocus}
       onBlur={handleBlur}
     >
-      <div className={"relative"}>
+      <div className={"relative "}>
         <input
           className={classNames("w-full", {
             "border-2 border-gray-300 rounded-md py-[8px] px-2 text-sm font-bold":

@@ -30,7 +30,7 @@ const RestaurantCard = ({ restaurant }) => {
   const image = reviews?.find((r) => r.photos?.[0])?.photos[0];
 
   return (
-    <div className="my-2 mx-3">
+    <div>
       <Link href={`/restaurants/${restaurant._id}`} passHref>
         <div
           className={classNames(
