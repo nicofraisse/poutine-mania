@@ -15,6 +15,7 @@ import { getUrlQueryString } from "../../lib/getUrlqueryString";
 import { useRouter } from "next/router";
 import RestaurantIntrouvable from "../../components/RestaurantIntrouvable";
 import { flatten } from "lodash";
+import Skeleton from "react-loading-skeleton";
 
 const sortTypes = [
   { label: "Popularité", value: "reviewCount" },
@@ -46,10 +47,10 @@ const Restaurants = () => {
     })}`
   );
 
-  if (!restaurants) return <Spinner />;
+  // if (!restaurants) return <Spinner />;
 
-  const allSuccursales = flatten(restaurants.map((r) => r.succursales));
-  const loading = searchValue !== nonDebouncedValue || restaurantsLoading;
+  // const allSuccursales = flatten(restaurants.map((r) => r.succursales));
+  // const loading = searchValue !== nonDebouncedValue || restaurantsLoading;
 
   return (
     <RestaurantCardHoverProvider>
@@ -60,7 +61,7 @@ const Restaurants = () => {
         <div className="pt-5 md:w-1/2 md:max-w-[480px] md:overflow-y-auto scrollbar-hide min-h-full">
           <div className="">
             <div className="lg:pl-6 lg:pr-5 px-2 mb-3 lg:mb-0 flex justify-between items-start">
-              {loading ? (
+              {/* {loading ? (
                 <div className="h-12 flex items-center ">
                   <Spinner />
                 </div>
@@ -89,7 +90,7 @@ const Restaurants = () => {
                     </button>
                   )}
                 </h2>
-              )}
+              )} */}
 
               <div className="relative" ref={filtersRef}>
                 <Button
@@ -131,17 +132,19 @@ const Restaurants = () => {
               </div>
             </div>
           </div>
-          {restaurants?.map((r) => (
-            <div className="block my-2 mx-3" key={r._id}>
-              <RestaurantCard restaurant={r} />
 
+          {(restaurants || [{}, {}, {}, {}, {}]).map((r, i) => (
+            <div className="block my-2 mx-3" key={i}>
+              <RestaurantCard restaurant={r} />
               <div className="w-full border-b border-gray-100"></div>
             </div>
           ))}
           <div className="h-5"></div>
-          <div className="sticky bottom-0">
-            <RestaurantIntrouvable />
-          </div>
+          {!restaurantsLoading && (
+            <div className="sticky bottom-0">
+              <RestaurantIntrouvable />
+            </div>
+          )}
         </div>
       </div>
     </RestaurantCardHoverProvider>

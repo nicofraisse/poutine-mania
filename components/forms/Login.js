@@ -55,8 +55,8 @@ const Login = ({ onSubmit, redirect, setEmailToConfirm }) => {
       initialValues={{ email: "", password: "" }}
       onSubmit={handleSubmit}
       validationSchema={Yup.object({
-        email: Yup.string().min(1).required("Required"),
-        password: Yup.string().min(1).required("Required"),
+        email: Yup.string().min(1).required("Requis"),
+        password: Yup.string().min(1).required("Requis"),
       })}
       className="sm:w-[380px] p-4"
     >

@@ -13,6 +13,7 @@ import Color from "color";
 import { Image as CloudImage } from "components/Image";
 import { TagSection } from "./RestaurantCard";
 import { useRestaurantSearch } from "components/context/RestaurantSearchProvider";
+import Skeleton from "react-loading-skeleton";
 
 const MarkerAndPopup = ({
   restaurant,
@@ -224,29 +225,34 @@ const MapMap = ({ restaurants, isShowPage }) => {
   const [viewState, setViewState] = useState(DEFAULT_COORDINATES);
 
   useEffect(() => {
-    const allCoordinates = flatten(
-      restaurants.map((r) => r.succursales.map((s) => s.address.center))
-    );
-    const minLongitude = minBy(allCoordinates, (c) => c[0])?.[0];
-    const minLatitude = minBy(allCoordinates, (c) => c[1])?.[1];
-    const maxLongitude = maxBy(allCoordinates, (c) => c[0])?.[0];
-    const maxLatitude = maxBy(allCoordinates, (c) => c[1])?.[1];
+    if (restaurants) {
+      const allCoordinates = flatten(
+        restaurants.map((r) => r.succursales.map((s) => s.address.center))
+      );
+      const minLongitude = minBy(allCoordinates, (c) => c[0])?.[0];
+      const minLatitude = minBy(allCoordinates, (c) => c[1])?.[1];
+      const maxLongitude = maxBy(allCoordinates, (c) => c[0])?.[0];
+      const maxLatitude = maxBy(allCoordinates, (c) => c[1])?.[1];
 
-    if (restaurants.length > 0) {
-      if (query.search && query.search === searchValue) {
-        mapRef.current?.fitBounds(
-          [
-            [minLongitude, minLatitude],
-            [maxLongitude, maxLatitude],
-          ],
-          { padding: 50, duration: 1000, maxZoom: 17.5 }
-        );
-      } else {
-        mapRef.current?.flyTo({
-          center: [DEFAULT_COORDINATES.longitude, DEFAULT_COORDINATES.latitude],
-          zoom: DEFAULT_COORDINATES.zoom,
-          duration: 2000,
-        });
+      if (restaurants.length > 0) {
+        if (query.search && query.search === searchValue) {
+          mapRef.current?.fitBounds(
+            [
+              [minLongitude, minLatitude],
+              [maxLongitude, maxLatitude],
+            ],
+            { padding: 50, duration: 1000, maxZoom: 17.5 }
+          );
+        } else {
+          mapRef.current?.flyTo({
+            center: [
+              DEFAULT_COORDINATES.longitude,
+              DEFAULT_COORDINATES.latitude,
+            ],
+            zoom: DEFAULT_COORDINATES.zoom,
+            duration: 2000,
+          });
+        }
       }
     }
   }, [restaurants, query.search, searchValue, DEFAULT_COORDINATES]);
@@ -324,7 +330,9 @@ const MapMap = ({ restaurants, isShowPage }) => {
 
   return (
     <div
-      className="h-full"
+      className={classNames("h-full", {
+        "animate-pulse": !restaurants,
+      })}
       onClick={(e) => {
         if (e.target.dataset.pin !== "yes") closeAllPopups();
       }}
@@ -352,7 +360,7 @@ const MapMap = ({ restaurants, isShowPage }) => {
             setIsSmallMarker(e.viewState.zoom < POUTINE_LOGO_ZOOM_THRESHOLD);
         }}
       >
-        <div className="absolute top-0 left-0 m-4 z-50">
+        <div className="absolute top-0 left-0 m-4 z-40">
           <button
             className="bg-teal-500 hover:bg-teal-700 mr-1 text-white font-bold py-2 px-4 rounded mb-2"
             onClick={() => handleLocationButtonClick("Montreal")}
@@ -369,12 +377,12 @@ const MapMap = ({ restaurants, isShowPage }) => {
             className="bg-stone-500 hover:bg-stone-700 mr-1 text-white font-bold py-2 px-4 rounded"
             onClick={() => handleLocationButtonClick("QuebecRegion")}
           >
-            Quebec Region
+            Quebec Région
           </button>
         </div>
 
         <NavigationControl position="bottom-right" />
-        {restaurants.map((restaurant, parentIndex) =>
+        {restaurants?.map((restaurant, parentIndex) =>
           restaurant?.succursales?.map(({ address }, index) => (
             <MarkerAndPopup
               key={`${restaurant._id}-${address.place_name}`}

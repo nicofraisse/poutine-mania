@@ -144,8 +144,8 @@ const Edit = () => {
             initialValues={{ oldPassword: "", newPassword: "" }}
             onSubmit={handleChangePassword}
             validationSchema={Yup.object({
-              oldPassword: Yup.string().min(1).required("Required"),
-              newPassword: Yup.string().min(1).required("Required"),
+              oldPassword: Yup.string().min(1).required("Requis"),
+              newPassword: Yup.string().min(1).required("Requis"),
             })}
             className="max-w-sm p-4"
           >

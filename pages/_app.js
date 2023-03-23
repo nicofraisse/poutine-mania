@@ -3,6 +3,7 @@ import { Toaster } from "react-hot-toast";
 import { RateRestaurantProvider } from "components/context/RateRestaurantProvider";
 import Layout from "../components/layout/Layout";
 import "../styles/globals.css";
+import "react-loading-skeleton/dist/skeleton.css";
 import { LoginFormProvider } from "../components/context/LoginFormProvider";
 import { RestaurantSearchProvider } from "../components/context/RestaurantSearchProvider";
 import Head from "next/head";

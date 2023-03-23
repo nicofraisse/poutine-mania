@@ -120,11 +120,11 @@ const RestaurantForm = ({ type }) => {
           .required("Requis"),
         categories: Yup.array()
           .min(1, "Vous devez ajouter au moins 1 catégorie")
-          .required(),
+          .required("Requis"),
         website: Yup.string().min(1),
         "address-0": Yup.object()
           .typeError("Veuillez indiquer l'addresse de ce restaurant")
-          .required(),
+          .required("Requis"),
         "phoneNumber-0": Yup.string().optional(),
         priceRange: Yup.number().nullable().required("Requis"),
       })}
