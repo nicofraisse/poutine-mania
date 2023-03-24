@@ -157,7 +157,7 @@ const Header = ({ toggleMobileSidebar }) => {
         {!(isMobile && showSearchBar) && (
           <nav>
             <div className="flex items-center">
-              {!backablePage?.hideSearch && (
+              {!backablePage?.hideSearch && !isHomepage && (
                 <Button
                   variant="light"
                   size="sm"

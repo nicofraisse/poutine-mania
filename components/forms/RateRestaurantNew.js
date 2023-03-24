@@ -101,7 +101,9 @@ export const RateRestaurantNew = ({
 
     const ratingValues = filterBlankRatings(values);
     const finalRating =
-      ratingValues.reduce((a, b) => a + b) / ratingValues.length;
+      ratingValues.length > 0
+        ? ratingValues.reduce((a, b) => a + b) / ratingValues.length
+        : undefined;
 
     const submitValues = {
       ...values,
@@ -173,9 +175,14 @@ export const RateRestaurantNew = ({
           .map((field) => values[field.name])
           .filter((v) => v).length;
         const avgRating =
-          ratingFields
-            .map((field) => values[field.name])
-            .reduce((a, b) => a + b, 0) / nbFilledFields;
+          nbFilledFields > 0
+            ? ratingFields
+                .map((field) => values[field.name])
+                .reduce((a, b) => a + b, 0) / nbFilledFields
+            : null;
+
+        const disableSubmitBtn =
+          nbFilledFields === 0 && values.comment.trim().length === 0;
 
         return (
           <>
@@ -217,6 +224,10 @@ export const RateRestaurantNew = ({
               condition={errors.comment && touched.comment}
               message={`Le commentaire est trop court (au moins ${MIN_COMMENT_CHARS} caractères)`}
             />
+            <ErrorMessage
+              condition={disableSubmitBtn && touched.comment}
+              message={`Veuillez noter la poutine ou ajouter un commentaire pour publier l'avis.`}
+            />
 
             <div className="flex items-center justify-center pt-6 pb-3 mt-6 border-t">
               <Button
@@ -224,6 +235,7 @@ export const RateRestaurantNew = ({
                 variant="primary"
                 className="w-60"
                 loading={isSubmitting}
+                disabled={disableSubmitBtn}
               >
                 <Check className="mr-2" size={18} />
                 Publier

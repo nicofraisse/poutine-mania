@@ -51,8 +51,7 @@ const textColorClass = {
   [VariantColor.light]: "text-gray-500",
   [VariantColor.white]: "text-gray-600",
   [VariantColor.white2]: "text-gray-400",
-  [VariantColor.lightLink]:
-    "text-gray-400 hover:text-gray-500 transition duration-100",
+  [VariantColor.lightLink]: "text-gray-400 hover:text-gray-500",
   [VariantColor.danger]: "text-white",
 };
 
@@ -79,6 +78,7 @@ const Button = ({
   width = "sm",
   height = "md",
   className,
+  disabled,
   ...props
 }) => {
   return (
@@ -90,14 +90,15 @@ const Button = ({
         textColorClass[variant],
         heightClass[height],
         widthClass[width],
-        "rounded-md font-bold select-none relative",
+        "rounded-md font-bold select-none relative transition-colors duration-150",
         {
+          "opacity-50 cursor-not-allowed": disabled,
           "opacity-80": loading,
           "opacity-100": !loading,
         },
         className
       )}
-      disabled={loading}
+      disabled={disabled || loading}
       {...props}
     >
       <div

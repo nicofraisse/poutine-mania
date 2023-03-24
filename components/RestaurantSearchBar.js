@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import { useRestaurantSearch } from "./context/RestaurantSearchProvider";
 import { useGet } from "../lib/useAxios";
@@ -8,6 +8,7 @@ import { Image } from "./Image";
 import { Image as ImageIcon } from "react-feather";
 import classNames from "classnames";
 import Button from "./Button";
+import { isMobile } from "react-device-detect";
 
 const RestaurantSearchBar = React.forwardRef(({ onSubmit, isBanner }, ref) => {
   const { push, asPath } = useRouter();
@@ -38,6 +39,16 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit, isBanner }, ref) => {
     );
     onSubmit && onSubmit();
   };
+  useEffect(() => {
+    if (isMobile) {
+      const inputElement = inputRef.current;
+      inputElement.addEventListener("touchstart", handleFocus);
+
+      return () => {
+        inputElement.removeEventListener("touchstart", handleFocus);
+      };
+    }
+  }, []);
 
   const handleBlur = () => {
     setTimeout(() => {
@@ -45,8 +56,23 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit, isBanner }, ref) => {
     }, 50);
   };
 
-  const handleFocus = () => {
+  const handleFocus = (e) => {
     setShowSearchSuggestions(true);
+
+    if (isBanner && isMobile) {
+      e.preventDefault();
+      const inputElement = inputRef.current;
+
+      const inputTopPosition =
+        inputElement.getBoundingClientRect().top + window.scrollY;
+      window.scrollTo({
+        top: inputTopPosition - 136,
+        behavior: "smooth",
+      });
+      setTimeout(() => {
+        inputElement.focus();
+      }, 500);
+    }
   };
   const urlArray = asPath.split("/");
   const isRestaurantsPath =
@@ -102,6 +128,7 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit, isBanner }, ref) => {
       </div>
       {!isRestaurantsPath &&
         showSearchSuggestions &&
+        restaurants &&
         (!isBanner || (isBanner && restaurants.length > 0)) && (
           <div
             className={classNames(

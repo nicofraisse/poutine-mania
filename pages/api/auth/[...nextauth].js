@@ -36,6 +36,7 @@ export default NextAuth({
         );
         client.close();
       }
+      console.log(user);
       if (!user.emailVerified) {
         const error = JSON.stringify({
           code: "EMAIL_NOT_VALIDATED",
@@ -153,7 +154,15 @@ export default NextAuth({
         }
 
         client.close();
-        return { email: user.email, id: user._id };
+
+        return {
+          id: user._id,
+          email: user.email,
+          isAdmin: user.isAdmin,
+          name: user.name,
+          image: user.image,
+          emailVerified: user.emailVerified,
+        };
       },
     }),
     GoogleProvider({

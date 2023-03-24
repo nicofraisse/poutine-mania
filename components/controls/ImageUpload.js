@@ -22,8 +22,12 @@ const ImageUpload = ({
   }, []);
 
   const handleChange = async (changeEvent) => {
+    console.log("SOMETHIGN");
     const files = Array.from(changeEvent.target.files);
     const newImageSrcs = isMulti ? [...imageSrcs] : [];
+
+    console.log(files);
+    console.log(newImageSrcs);
 
     for (const file of files) {
       const compressedFile = await compressImage(file);
@@ -46,6 +50,8 @@ const ImageUpload = ({
   const inputRef = useRef();
 
   const handleDelete = (index) => {
+    inputRef.current.value = "";
+
     const newImageSrcs = [...imageSrcs];
     newImageSrcs.splice(index, 1);
     setImageSrcs(newImageSrcs);
@@ -68,8 +74,8 @@ const ImageUpload = ({
             <img
               src={src}
               alt="upload"
-              className={classNames("w-32 h-32", {
-                "rounded-full object-cover object-center": roundedFull,
+              className={classNames("w-32 h-32 object-cover object-center", {
+                "rounded-full": roundedFull,
                 "rounded-lg": !roundedFull,
               })}
             ></img>
@@ -77,8 +83,8 @@ const ImageUpload = ({
             <Image
               src={src}
               alt="upload"
-              className={classNames("w-32 h-32", {
-                "rounded-full object-cover object-center": roundedFull,
+              className={classNames("w-32 h-32 object-cover object-center", {
+                "rounded-full": roundedFull,
                 "rounded-lg": !roundedFull,
               })}
             ></Image>

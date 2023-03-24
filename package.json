@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "dev2": "next dev -H 192.168.1.90",
     "build": "next build",
     "start": "next start",
     "prod": "cross-env MONGO_URI=$(grep MONGO_URI .env.production | cut -d '=' -f 2-) next dev",
@@ -41,6 +42,7 @@
     "rc-tooltip": "^6.0.1",
     "react": "17.0.2",
     "react-cookie": "^4.1.1",
+    "react-device-detect": "^2.2.3",
     "react-dom": "17.0.2",
     "react-feather": "^2.0.9",
     "react-hot-toast": "^2.2.0",
