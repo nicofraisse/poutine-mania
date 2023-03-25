@@ -9,12 +9,8 @@ import { Image } from "components/Image";
 
 import { useRouter } from "next/router";
 
-const TopPoutines = () => {
+const TopPoutines = ({ restaurants }) => {
   const { push } = useRouter();
-
-  const { data: restaurants } = useGet(
-    `/api/restaurants?sort=avgRating&order=-1&limit=10&noUnapproved=true`
-  );
 
   return (
     <div className="max-w-4xl">

@@ -74,4 +74,44 @@ const handler = async (req, res) => {
   res.status(200).json(result);
 };
 
+// pages/api/restaurants.js
+
 export default handler;
+
+export const fetchTopRestaurants = async () => {
+  const client = await connectToDatabase();
+  const db = await client.db();
+
+  const baseAggregaor = [
+    {
+      $lookup: {
+        from: "reviews",
+        localField: "_id",
+        foreignField: "restaurantId",
+        as: "reviews",
+      },
+    },
+    {
+      $addFields: {
+        reviewCount: { $size: "$reviews" },
+        avgRating: { $avg: "$reviews.finalRating" },
+      },
+    },
+    {
+      $match: {
+        reviewCount: { $gte: 0 },
+        approved: true,
+      },
+    },
+    {
+      $limit: 10,
+    },
+    {
+      $sort: {
+        avgRating: -1,
+      },
+    },
+  ];
+
+  return db.collection("restaurants").aggregate(baseAggregaor).toArray();
+};
