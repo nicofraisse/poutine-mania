@@ -12,6 +12,8 @@ export function RecentActivity({ heightClass }) {
     `/api/reviews?skip=${paginationSkip}`
   );
 
+  console.log(reviews);
+
   useEffect(() => {
     if (reviews) {
       setAllReviews((prevAllReviews) => [...prevAllReviews, ...reviews]);

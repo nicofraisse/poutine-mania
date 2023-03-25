@@ -3,7 +3,6 @@ import { formatRating } from "../lib/formatRating";
 import { formatDate } from "lib/formatDate";
 import { useCurrentUser } from "lib/useCurrentUser";
 import { ratingColors } from "../data/ratingColors";
-import { round } from "lodash";
 import { Edit, Trash, User, X } from "react-feather";
 import { Image } from "./Image";
 import Modal from "react-responsive-modal";
@@ -11,10 +10,7 @@ import Link from "next/link";
 import Color from "color";
 import classNames from "classnames";
 
-const ReviewCard = ({ review, handleEdit, handleDelete, isFirst }) => {
-  const [imgModalOpen, setImgModalOpen] = useState(false);
-  const { currentUser } = useCurrentUser();
-
+export const RatingSection = ({ review, showDate = true }) => {
   const miniRatings = (
     <div className="text-sm inline-flex text-slate-500 bg-slate-50 rounded px-1 mb-2 py-1 sm:p-0 sm:m-0 sm:bg-transparent">
       {review.friesRating && (
@@ -55,6 +51,54 @@ const ReviewCard = ({ review, handleEdit, handleDelete, isFirst }) => {
       )}
     </div>
   );
+
+  return (
+    <>
+      <div className="hidden sm:flex flex-wrap justify-between text-base items-center mb-3">
+        <div className="sm:flex flex-wrap">
+          <span
+            className="py-[1px] px-[6px] bg-green-200 rounded mr-2 text-lg text-white flex items-center"
+            style={{
+              backgroundColor: Color(
+                ratingColors[Math.floor(review.finalRating)]
+              )
+                .darken(0.4)
+                .desaturate(0.3),
+            }}
+          >
+            {formatRating(review.finalRating)}
+            <span className="text-white font-normal text-xs text-opacity-80 ml-[2px] -mb-[2px]">
+              {" "}
+              /10
+            </span>
+          </span>
+          {(review.friesRating ||
+            review.cheeseRating ||
+            review.sauceRating ||
+            review.portionRating) && (
+            <div className="mr-2 flex items-center">{miniRatings}</div>
+          )}
+        </div>
+
+        {showDate && (
+          <span className="text-slate-400 text-[14px] font-normal mr-4">
+            {formatDate(review.createdAt, "d MMMM yyyy", true)}
+          </span>
+        )}
+      </div>
+      {(review.friesRating ||
+        review.cheeseRating ||
+        review.sauceRating ||
+        review.portionRating) && (
+        <div className="visible sm:hidden mb-0 sm:mb-3">{miniRatings}</div>
+      )}
+    </>
+  );
+};
+
+export const ReviewCard = ({ review, handleEdit, handleDelete, isFirst }) => {
+  const [imgModalOpen, setImgModalOpen] = useState(false);
+  const { currentUser } = useCurrentUser();
 
   return (
     <>
@@ -115,42 +159,7 @@ const ReviewCard = ({ review, handleEdit, handleDelete, isFirst }) => {
           </span>
         </div>
         <div className="sm:basis-5/6 sm:w-5/6 pt-1 sm:pt-2 px-3 sm:px-0">
-          <div className="hidden sm:flex text-base items-center mb-3 flex-wrap">
-            <span
-              className="py-[1px] px-[6px] bg-green-200 rounded mr-2 text-lg text-white flex items-center"
-              style={{
-                backgroundColor: Color(
-                  ratingColors[Math.floor(review.finalRating)]
-                )
-                  .darken(0.4)
-                  .desaturate(0.3),
-              }}
-            >
-              {formatRating(review.finalRating)}
-              <span className="text-white font-normal text-xs text-opacity-80 ml-[2px] -mb-[2px]">
-                {" "}
-                /10
-              </span>
-            </span>
-            {(review.friesRating ||
-              review.cheeseRating ||
-              review.sauceRating ||
-              review.portionRating) && (
-              <div className="mr-2">{miniRatings}</div>
-            )}
-
-            <span className="text-slate-400 text-[14px] font-normal">
-              le {formatDate(review.createdAt, "d MMMM yyyy")}
-            </span>
-          </div>
-
-          {(review.friesRating ||
-            review.cheeseRating ||
-            review.sauceRating ||
-            review.portionRating) && (
-            <div className="visible sm:hidden mb-0 sm:mb-3">{miniRatings}</div>
-          )}
-
+          <RatingSection review={review} />
           <p
             className="text-slate-500 font-light break-words text-sm sm:text-md"
             style={{ width: 0, minWidth: "100%" }}
@@ -159,7 +168,6 @@ const ReviewCard = ({ review, handleEdit, handleDelete, isFirst }) => {
               <span className="text-slate-300">Aucun commentaire</span>
             )}
           </p>
-
           <div className="flex flex-wrap">
             {Array.isArray(review.photos) &&
               review.photos.map((photo) => (

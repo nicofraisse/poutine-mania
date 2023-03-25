@@ -14,11 +14,11 @@ const TopPoutines = ({ restaurants }) => {
 
   return (
     <div className="max-w-4xl">
-      <div className="px-2 md:px-0">
-        <h1 className="text-2xl sm:text-3xl font-bold my-4">
+      <div className="px-4 md:px-6">
+        <h1 className="text-2xl sm:text-3xl font-extrabold my-4">
           Top 10 poutines du Québec à savourer 🍟🧀🍯
         </h1>
-        <p className="my-1 text-sm sm:text-md">
+        <p className="my-1 text-sm sm:text-md leading-relaxed">
           Hey, fan de poutine! Viens t'éclater avec notre appli pour classer tes
           poutines favorites! 🌟 Partage tes aventures gourmandes, explore
           celles des autres et découvre des spots incroyables près de chez toi
@@ -26,11 +26,11 @@ const TopPoutines = ({ restaurants }) => {
           ta prochaine poutine coup de cœur! 💗
         </p>
 
-        <h2 className="mt-4 mb-3 text-lg sm:text-xl font-bold">
-          À la recherche d'une poutine près de toi ou selon tes envies? 🕵️‍♀️{" "}
+        <h2 className="mt-4 mb-3 text-lg sm:text-xl font-semibold">
+          À la recherche d'une poutine près de toi ou selon tes envies? 🕵️‍♀️
         </h2>
 
-        <p className="my-1 text-sm sm:text-md">
+        <p className="my-1 text-sm sm:text-md leading-relaxed">
           Rends-toi sur notre{" "}
           <Link href={"/restaurants"} passHref>
             <span className="text-teal-500 font-bold cursor-pointer hover:text-teal-600">
@@ -42,6 +42,7 @@ const TopPoutines = ({ restaurants }) => {
           la découverte de la poutine parfaite! 🚀
         </p>
       </div>
+
       <div className="shadow-lg border-white border-4 rounded-lg mb-16 xl:mb-40 mt-6">
         {restaurants ? (
           restaurants.map((r, i) => {

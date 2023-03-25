@@ -11,6 +11,8 @@ import { useRouter } from "next/router";
 import { useRateRestaurant } from "components/context/RateRestaurantProvider";
 import axios from "axios";
 import toast from "react-hot-toast";
+import classNames from "classnames";
+import { RatingSection } from "./ReviewCard";
 
 const ProfileReviewCard = ({ review, isIndex, userName }) => {
   const [imgModalOpen, setImgModalOpen] = useState(false);
@@ -82,42 +84,60 @@ const ProfileReviewCard = ({ review, isIndex, userName }) => {
             </a>
           </Link>
         </span>
-        <span className="text-slate-300 text-xs ml-1 font-normal relative top-[4px]">
+        <span className="text-slate-400 text-xs ml-1 font-normal relative top-[4px]">
           <span className="inline sm:hidden">- le</span>{" "}
-          {formatDate(review.createdAt, "d MMMM yyyy")}
+          {formatDate(review.createdAt, "d MMMM yyyy", true)}
         </span>
       </div>
       <div className="text-slate-700 mb mt-2 mb-8 border shadow-md rounded-md p-3 sm:p-4 bg-white">
-        <div className="flex mb-2 ">
-          <RatingPill
-            avgRating={review.finalRating}
-            reviewCount={1}
-            single
-            className="inline"
-          />
-          <span className="font-bold ml-2">{review.title}</span>
-        </div>
-        <p className="rounded-lg p-1 w-full ">{review.comment}</p>
-        <div className="flex items-start">
-          {review.photos?.[0] && (
-            <Image
-              src={review.photos?.[0]}
-              alt="poutine-user-photo"
-              width={1000}
-              className="border rounded-md mr-3 mt-3"
-              onClick={() => setImgModalOpen(true)}
-            />
-          )}
-        </div>
+        <RatingSection review={review} showDate={false} />
+        {review.comment && (
+          <p className="rounded-lg px-1 w-full text-slate-600">
+            {review.comment}
+          </p>
+        )}
+        {review.photos?.length > 0 && (
+          <div className="mt-3 flex flex-wrap">
+            {review.photos?.map((photo, index) => {
+              const isFirstImage = index === 0;
+              const isEvenLength = review.photos.length % 2 === 0;
+
+              const imageContainerClass = classNames(
+                "border-2 border-white",
+                "rounded-md",
+                "cursor-pointer",
+                "overflow-hidden",
+                "relative",
+                {
+                  "w-full pb-[66.666%]": isFirstImage && !isEvenLength,
+                  "w-1/2 pb-[66.666%]": !(isFirstImage && !isEvenLength),
+                }
+              );
+
+              return (
+                <div
+                  key={photo}
+                  className={imageContainerClass}
+                  onClick={() => setImgModalOpen(true)}
+                >
+                  <Image
+                    src={photo}
+                    alt="poutine-user-photo"
+                    className="object-cover object-center absolute top-0 left-0 w-full h-full"
+                  />
+                </div>
+              );
+            })}
+          </div>
+        )}
         {(review.userId === currentUser?._id || currentUser?.isAdmin) && (
-          <div className="mt-2">
+          <div className="mt-3 flex space-x-4">
             <button
               className="text-sm text-slate-400 hover:text-slate-500"
               onClick={() => handleEdit(review)}
             >
               Modifier
             </button>
-            <span className="text-sm text-slate-400 font-normal mx-1">/</span>
             <button
               className="text-sm text-slate-400 hover:text-slate-500"
               onClick={() => handleDelete(review._id)}

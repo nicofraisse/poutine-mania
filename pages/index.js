@@ -11,7 +11,7 @@ const HomePage = ({ restaurants }) => {
       </div>
       <div className="xl:w-5/12 2xl:w-1/3 3xl:w-auto text h-screen sticky top-0 overflow-hidden">
         <h2 className="text-2xl font-bold my-5 text-center">
-          Dernière activité
+          Activité récente
         </h2>
         <RecentActivity heightClass="h-[calc(100vh-136px)] " />
       </div>
@@ -26,7 +26,7 @@ export async function getStaticProps() {
     props: {
       restaurants: serializedRestaurants,
     },
-    revalidate: 60, // Regenerate the page every 60 seconds (optional, adjust as needed)
+    revalidate: 60,
   };
 }
 
