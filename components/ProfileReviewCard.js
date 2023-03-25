@@ -92,7 +92,7 @@ const ProfileReviewCard = ({ review, isIndex, userName }) => {
       <div className="text-slate-700 mb mt-2 mb-8 border shadow-md rounded-md p-3 sm:p-4 bg-white">
         <RatingSection review={review} showDate={false} />
         {review.comment && (
-          <p className="rounded-lg px-1 w-full text-slate-600">
+          <p className="rounded-lg text-sm px-1 w-full text-slate-600">
             {review.comment}
           </p>
         )}
