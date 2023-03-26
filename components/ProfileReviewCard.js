@@ -1,6 +1,6 @@
 import Link from "next/link";
-import React, { useState } from "react";
-import { Edit3, X, User } from "react-feather";
+import React, { useCallback, useState } from "react";
+import { Edit3, X, User, ChevronLeft, ChevronRight } from "react-feather";
 import Modal from "react-responsive-modal";
 import { Image } from "./Image";
 import RatingPill from "./RatingPill";
@@ -13,6 +13,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import classNames from "classnames";
 import { RatingSection } from "./ReviewCard";
+import { ImageModal } from "./ImageModal";
 
 const ProfileReviewCard = ({ review, isIndex, userName }) => {
   const [imgModalOpen, setImgModalOpen] = useState(false);
@@ -89,7 +90,7 @@ const ProfileReviewCard = ({ review, isIndex, userName }) => {
           {formatDate(review.createdAt, "d MMMM yyyy", true)}
         </span>
       </div>
-      <div className="text-slate-700 mb mt-2 mb-8 border shadow-md rounded-md p-3 sm:p-4 bg-white">
+      <div className="text-slate-700 mb mt-2 mb-8 border border-slate-100 shadow rounded-md p-3 sm:p-4 bg-white">
         <RatingSection review={review} showDate={false} />
         {review.comment && (
           <p className="rounded-lg text-sm px-1 w-full text-slate-600">
@@ -118,7 +119,7 @@ const ProfileReviewCard = ({ review, isIndex, userName }) => {
                 <div
                   key={photo}
                   className={imageContainerClass}
-                  onClick={() => setImgModalOpen(true)}
+                  onClick={() => setImgModalOpen(index)}
                 >
                   <Image
                     src={photo}
@@ -147,26 +148,14 @@ const ProfileReviewCard = ({ review, isIndex, userName }) => {
           </div>
         )}
       </div>
-      <Modal
-        classNames={{
-          overlay: "customOverlay",
-          modal: "customModal",
-        }}
-        open={imgModalOpen}
+      <ImageModal
+        isOpen={imgModalOpen !== false}
         onClose={() => setImgModalOpen(false)}
-        closeIcon={<X />}
-        center
-      >
-        <div className="border w-full ">
-          <Image
-            src={review.photos?.[0]}
-            alt="poutine-user-photo"
-            width={"100%"}
-            className="border rounded-md"
-            onClick={() => setImgModalOpen(true)}
-          />
-        </div>
-      </Modal>
+        images={review.photos}
+        user={review.user.name}
+        restaurant={review.restaurants[0].name}
+        initialIndex={imgModalOpen}
+      />
     </>
   );
 };

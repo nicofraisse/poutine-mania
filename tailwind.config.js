@@ -5,6 +5,10 @@ module.exports = {
   ],
   theme: {
     extend: {
+      aspectRatio: {
+        "3/2": "3 / 2",
+      },
+
       screens: {
         xs: "440px",
 
