@@ -18,13 +18,15 @@ export const ImageModal = ({
   }, [initialIndex]);
 
   const handleNext = useCallback(() => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+    if (images) setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
   }, [images]);
 
   const handlePrev = useCallback(() => {
-    setCurrentIndex(
-      (prevIndex) => (prevIndex - 1 + images.length) % images.length
-    );
+    if (images) {
+      setCurrentIndex(
+        (prevIndex) => (prevIndex - 1 + images.length) % images.length
+      );
+    }
   }, [images]);
 
   const handleKeyDown = useCallback(
@@ -45,15 +47,21 @@ export const ImageModal = ({
     };
   }, [handleKeyDown]);
 
+  if (!images) return null;
+
   return (
     <Modal
       classNames={{
         overlay: "customOverlay",
-        modal: "customModal",
+        modal: "customModal aspect-3/2 ",
       }}
       styles={{
         modal: {
-          minWidth: "calc(100% - 200px)",
+          // minWidth: "calc(100% - 400px)",
+          width: "calc(100% - 100px)",
+          maxWidth: 1200,
+          maxHeight: "calc(100vh - 100px)",
+          // minHeight: "calc(100vh - 100px)",
         },
       }}
       open={isOpen}
@@ -64,7 +72,7 @@ export const ImageModal = ({
       <h2 className="text-center mb-4">
         Photos de {user} pour {restaurant}
       </h2>
-      <div className="relative aspect-3/2 aspect-h-2 h-[calc(100% - 100px)] max-h-[calc(100% - 200px)] w-full">
+      <div className="relative  h-[calc(100%-60px)]">
         <div className="bg-black w-full h-full flex items-center justify-center">
           <Image
             src={images[currentIndex]}
@@ -73,18 +81,22 @@ export const ImageModal = ({
           />
         </div>
 
-        <button
-          className="absolute left-0 top-1/2 transform -translate-y-1/2 text-white bg-opacity-50 bg-black p-2 rounded-full"
-          onClick={handlePrev}
-        >
-          <ChevronLeft />
-        </button>
-        <button
-          className="absolute right-0 top-1/2 transform -translate-y-1/2 text-white bg-opacity-50 bg-black p-2 rounded-full"
-          onClick={handleNext}
-        >
-          <ChevronRight />
-        </button>
+        {images.length > 1 && (
+          <>
+            <button
+              className="absolute left-0 top-1/2 transform -translate-y-1/2 text-white bg-opacity-50 bg-black p-2 rounded-full"
+              onClick={handlePrev}
+            >
+              <ChevronLeft />
+            </button>
+            <button
+              className="absolute right-0 top-1/2 transform -translate-y-1/2 text-white bg-opacity-50 bg-black p-2 rounded-full"
+              onClick={handleNext}
+            >
+              <ChevronRight />
+            </button>
+          </>
+        )}
       </div>
     </Modal>
   );

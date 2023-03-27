@@ -9,6 +9,7 @@ import Modal from "react-responsive-modal";
 import Link from "next/link";
 import Color from "color";
 import classNames from "classnames";
+import { ImageModal } from "./ImageModal";
 
 export const RatingSection = ({ review, showDate = true }) => {
   const miniRatings = (
@@ -96,9 +97,17 @@ export const RatingSection = ({ review, showDate = true }) => {
   );
 };
 
-export const ReviewCard = ({ review, handleEdit, handleDelete, isFirst }) => {
+export const ReviewCard = ({
+  review,
+  handleEdit,
+  handleDelete,
+  isFirst,
+  restaurantName,
+}) => {
   const [imgModalOpen, setImgModalOpen] = useState(false);
   const { currentUser } = useCurrentUser();
+
+  console.log(review);
 
   return (
     <>
@@ -168,19 +177,34 @@ export const ReviewCard = ({ review, handleEdit, handleDelete, isFirst }) => {
               <span className="text-slate-300">Aucun commentaire</span>
             )}
           </p>
-          <div className="flex flex-wrap">
-            {Array.isArray(review.photos) &&
-              review.photos.map((photo) => (
-                <Image
+          <div className="flex flex-wrap mt-3">
+            {review.photos?.map((photo, index) => {
+              const imageContainerClass = classNames(
+                "border-2 border-white",
+                "rounded-md",
+                "cursor-pointer",
+                "overflow-hidden",
+                "relative",
+                {
+                  "w-full pb-[66.666%]": false,
+                  "w-1/3 max-h-[100px] h-20 pb-[33%]": true,
+                }
+              );
+
+              return (
+                <div
                   key={photo}
-                  src={photo}
-                  alt="poutine-user-photo"
-                  // width={280}
-                  responsive
-                  className="border rounded-md object-cover sm:max-h-72 max-h-60 my-3 mr-3"
-                  onClick={() => setImgModalOpen(true)}
-                />
-              ))}
+                  className={imageContainerClass}
+                  onClick={() => setImgModalOpen(index)}
+                >
+                  <Image
+                    src={photo}
+                    alt="poutine-user-photo"
+                    className="object-cover object-center absolute top-0 left-0 w-full h-full"
+                  />
+                </div>
+              );
+            })}
           </div>
 
           {(review.userId === currentUser?._id || currentUser?.isAdmin) && (
@@ -202,30 +226,16 @@ export const ReviewCard = ({ review, handleEdit, handleDelete, isFirst }) => {
           )}
         </div>
       </div>
-      <Modal
-        classNames={{
-          overlay: "customOverlay",
-          modal: "customModal",
-        }}
-        open={imgModalOpen}
-        onClose={() => setImgModalOpen(false)}
-        closeIcon={<X />}
-        center
-      >
-        <div className="border w-full mt-6">
-          {Array.isArray(review.photos) &&
-            review.photos.map((photo) => (
-              <Image
-                key={photo}
-                src={photo}
-                alt="poutine-user-photo"
-                width={"100%"}
-                className="border rounded-md"
-                onClick={() => setImgModalOpen(true)}
-              />
-            ))}
-        </div>
-      </Modal>
+      {review.photos && (
+        <ImageModal
+          isOpen={imgModalOpen !== false}
+          onClose={() => setImgModalOpen(false)}
+          images={review.photos}
+          user={review.user.name}
+          restaurant={restaurantName}
+          initialIndex={imgModalOpen}
+        />
+      )}
     </>
   );
 };

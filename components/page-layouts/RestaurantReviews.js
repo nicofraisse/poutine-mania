@@ -350,6 +350,7 @@ const RestaurantReviews = ({ restaurant }) => {
           handleEdit={handleEdit}
           handleDelete={() => setReviewToDelete(r)}
           isFirst={i === 0}
+          restaurantName={restaurant.name}
         />
       ))}
     </div>

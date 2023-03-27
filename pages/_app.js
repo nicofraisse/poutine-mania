@@ -9,8 +9,20 @@ import { RestaurantSearchProvider } from "../components/context/RestaurantSearch
 import Head from "next/head";
 import { CookiesProvider } from "react-cookie";
 import { SidebarDataProvider } from "../components/context/SidebarDataProvider";
+import { useEffect } from "react";
 
 function App({ Component, pageProps }) {
+  useEffect(() => {
+    async function createIndexes() {
+      try {
+        await fetch("/api/init-db");
+        console.log("Indexes created successfully");
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    createIndexes();
+  }, []);
   return (
     <>
       <Head>

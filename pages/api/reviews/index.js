@@ -1,8 +1,10 @@
 import { connectToDatabase } from "../../../lib/db";
 
 const handler = async (req, res) => {
+  console.log("A");
   const client = await connectToDatabase();
   const db = await client.db();
+  console.log("B");
 
   const skip =
     req.query.skip && /^\d+$/.test(req.query.skip) ? Number(req.query.skip) : 0;
@@ -43,6 +45,8 @@ const handler = async (req, res) => {
       },
     ])
     .toArray();
+
+  console.log("C");
 
   res.status(200).json(data);
 };
