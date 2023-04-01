@@ -78,15 +78,15 @@ const ProfileReviewCard = ({ review, isIndex, userName }) => {
               &nbsp;
             </>
           )}
-          noté
+          noté{" "}
           <Link href={`/restaurants/${review.restaurants[0]._id}`}>
-            <a className="text-teal-500 ml-[6px] font-bold hover:text-teal-600">
+            <a className="text-teal-500 font-bold hover:text-teal-600">
               {review.restaurants[0].name}
             </a>
           </Link>
         </span>
-        <span className="text-slate-400 text-xs ml-1 font-normal relative top-[4px]">
-          <span className="inline sm:hidden">- le</span>{" "}
+        <span className="text-slate-300 text-xs ml-1 font-normal relative sm:top-[4px]">
+          <span className="inline sm:hidden">- </span>{" "}
           {formatDate(review.createdAt, "d MMMM yyyy", true)}
         </span>
       </div>

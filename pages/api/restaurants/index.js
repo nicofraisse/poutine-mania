@@ -1,8 +1,13 @@
+import nextConnect from "next-connect";
 import { connectToDatabase } from "../../../lib/db";
+import database from "../../../middleware/database";
 
-const handler = async (req, res) => {
-  const client = await connectToDatabase();
-  const db = await client.db();
+const handler = nextConnect();
+
+handler.use(database);
+
+handler.get(async (req, res) => {
+  const db = req.db;
 
   let result;
 
@@ -72,7 +77,7 @@ const handler = async (req, res) => {
       .toArray();
   }
   res.status(200).json(result);
-};
+});
 
 // pages/api/restaurants.js
 

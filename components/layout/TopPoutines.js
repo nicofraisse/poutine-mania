@@ -14,7 +14,7 @@ const TopPoutines = ({ restaurants }) => {
 
   return (
     <div className="max-w-4xl">
-      <div className="px-4 md:px-6">
+      <div className="sm:py-1 px-5 md:py-2 lg:px-6">
         <h1 className="text-2xl sm:text-3xl font-extrabold my-4">
           Top 10 poutines du Québec à savourer 🍟🧀🍯
         </h1>
@@ -43,7 +43,7 @@ const TopPoutines = ({ restaurants }) => {
         </p>
       </div>
 
-      <div className="shadow-lg border-white border-4 rounded-lg mb-16 xl:mb-40 mt-6">
+      <div className="sm:shadow-lg sm:border-white sm:border-4 rounded-lg sm:mb-16 xl:mb-40 mt-6">
         {restaurants ? (
           restaurants.map((r, i) => {
             const image = r.reviews?.find((res) => res.photos?.[0])?.photos[0];
@@ -51,7 +51,7 @@ const TopPoutines = ({ restaurants }) => {
               <div
                 key={r._id}
                 className={classNames(
-                  "xs:pt-3 xs:pr-3 pt-5 pb-6 xs:pb-3 2xl:pt-3 2xl:pr-3  border-b  bg-opacity-50",
+                  "xs:pt-3 xs:pr-3 pt-5 pb-6 xs:pb-3 2xl:pt-3 2xl:pr-3 border-b bg-opacity-50",
                   {
                     "bg-slate-100": i % 2 === 0,
                     "bg-white": i % 2 !== 0,
@@ -61,7 +61,7 @@ const TopPoutines = ({ restaurants }) => {
                 <div className="flex flex-col xs:flex-row items-center">
                   <div
                     className={classNames(
-                      "min-w-12 sm:min-w-16 md:min-w-24 flex justify-center mb-2 sm:mb-0 items-center",
+                      "min-w-16 sm:min-w-16 md:min-w-24 flex justify-center mb-2 sm:mb-0 items-center",
                       {
                         "mb-3 xs:mb-0 text-5xl": i < 3,
                         "text-3xl font-black text-slate-400": i >= 3,

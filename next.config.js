@@ -6,8 +6,8 @@ module.exports = {
     config.resolve.alias["context"] = path.join(__dirname, "context");
     config.resolve.alias["data"] = path.join(__dirname, "data");
     config.resolve.alias["lib"] = path.join(__dirname, "lib");
-    config.resolve.alias["context"] = path.join(__dirname, "context");
     config.resolve.alias["styles"] = path.join(__dirname, "styles");
+    config.resolve.alias["middleware"] = path.join(__dirname, "middleware");
     config.module.rules.push({
       include: [options.dir],
       exclude: /node_modules/,

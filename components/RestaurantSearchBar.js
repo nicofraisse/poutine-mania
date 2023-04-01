@@ -9,6 +9,7 @@ import { Image as ImageIcon } from "react-feather";
 import classNames from "classnames";
 import Button from "./Button";
 import { isMobile } from "react-device-detect";
+import { SurpriseButton } from "./SurpriseButton";
 
 const RestaurantSearchBar = React.forwardRef(({ onSubmit, isBanner }, ref) => {
   const { push, asPath } = useRouter();
@@ -183,14 +184,7 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit, isBanner }, ref) => {
                 <Button width="smd" height="smd" className="mr-3">
                   Rechercher
                 </Button>
-                <Button
-                  variant="secondary"
-                  width="smd"
-                  height="smd"
-                  className="bg-white"
-                >
-                  Surprends-moi
-                </Button>
+                <SurpriseButton />
               </div>
             ) : (
               <div

@@ -14,6 +14,7 @@ import { useRestaurantSearch } from "./context/RestaurantSearchProvider";
 import { toast } from "react-hot-toast";
 import classNames from "classnames";
 import { BrandLogo } from "./BrandLogo";
+import { SurpriseButton } from "components/SurpriseButton";
 
 const Header = ({ toggleMobileSidebar }) => {
   // const { currentUser, loading } = useCurrentUser();
@@ -25,7 +26,8 @@ const Header = ({ toggleMobileSidebar }) => {
   const { openLogin } = useLoginForm();
   const [showSearchBar, setShowSearchBar] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const { setSearchValue } = useRestaurantSearch();
+  const { nonDebouncedValue, searchValue, setSearchValue } =
+    useRestaurantSearch();
   const currentUser = session?.user;
 
   const BACKABLE_PAGE_PROPS = {
@@ -85,6 +87,18 @@ const Header = ({ toggleMobileSidebar }) => {
   };
 
   const isHomepage = pathname === "/";
+
+  const handleSearch = () => {
+    //  setTimeout(() => {
+    //    setShowSearchSuggestions(false);
+    //  }, 200);
+    const trimmedSearchValue = nonDebouncedValue?.trim();
+    push(
+      trimmedSearchValue
+        ? `/restaurants?search=${encodeURIComponent(trimmedSearchValue)}`
+        : `/restaurants`
+    );
+  };
 
   return (
     <header className="relative max-w-screen md:w-auto bg-indigo-white">
@@ -291,17 +305,15 @@ const Header = ({ toggleMobileSidebar }) => {
               {/* <Search className="absolute top-3 left-4 text-slate-500" /> */}
             </div>
             <div className="text-center">
-              <Button width="smd" height="smd" className="mr-3 shadow-md">
-                Rechercher
-              </Button>
               <Button
-                variant="secondary"
+                onClick={handleSearch}
                 width="smd"
                 height="smd"
-                className="bg-white shadow-md"
+                className="mr-3 shadow-md"
               >
-                Surprends-moi
+                Rechercher
               </Button>
+              <SurpriseButton />
             </div>
           </div>
         </div>

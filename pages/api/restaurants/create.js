@@ -1,9 +1,13 @@
-import { connectToDatabase } from "../../../lib/db";
+import nextConnect from "next-connect";
 import { getSession } from "next-auth/client";
+import database from "middleware/database";
 
-const handler = async (req, res) => {
-  const client = await connectToDatabase();
-  const db = await client.db();
+const handler = nextConnect();
+
+handler.use(database);
+
+handler.post(async (req, res) => {
+  const db = req.db;
   const session = await getSession({ req });
 
   const { insertedId } = await db.collection("restaurants").insertOne({
@@ -19,6 +23,6 @@ const handler = async (req, res) => {
 
   const data = await db.collection("restaurants").findOne({ _id: insertedId });
   res.status(200).json(data);
-};
+});
 
 export default handler;
