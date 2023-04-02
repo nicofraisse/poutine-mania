@@ -21,9 +21,9 @@ const RestaurantHeader = ({ restaurant }) => {
   );
 
   return (
-    <div className="relative h-1/3vw sm:h-1/4vw lg:h-1/5vw 2xl:h-1/6vw">
+    <div className="relative  h-1/2vw sm:h-1/3vw lg:h-1/5vw 2xl:h-1/6vw">
       <div className="flex w-full h-full">
-        <div className="w-1/3 bg-gray-100 flex items-center justify-center">
+        <div className="w-1/2 sm:w-1/3 bg-gray-100 flex items-center justify-center">
           {images[0] ? (
             <Image
               src={images[0]}
@@ -34,7 +34,7 @@ const RestaurantHeader = ({ restaurant }) => {
             <ImageIcon className="text-gray-300" size="80" alt="default" />
           )}
         </div>
-        <div className="w-1/3 bg-gray-100 flex items-center justify-center">
+        <div className="w-1/2 sm:w-1/3 bg-gray-100 flex items-center justify-center">
           {images[1] ? (
             <Image
               src={images[1]}
@@ -45,7 +45,7 @@ const RestaurantHeader = ({ restaurant }) => {
             <ImageIcon className="text-gray-300" size="80" alt="default" />
           )}
         </div>
-        <div className="w-1/3 bg-gray-100 flex items-center justify-center">
+        <div className="hidden sm:w-1/3 bg-gray-100 sm:flex items-center justify-center">
           {images[2] ? (
             <Image
               src={images[2]}

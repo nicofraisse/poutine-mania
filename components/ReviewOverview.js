@@ -22,7 +22,7 @@ const IngredientRatingRings = ({
   return (
     <div className={"flex justify-between"}>
       <div
-        className={classNames("mx-1", {
+        className={classNames("md:mx-1", {
           "opacity-60": noFries,
         })}
       >
@@ -38,7 +38,7 @@ const IngredientRatingRings = ({
         </div>
       </div>
       <div
-        className={classNames("mx-1", {
+        className={classNames("md:mx-1", {
           "opacity-60": noCheese,
         })}
       >
@@ -54,7 +54,7 @@ const IngredientRatingRings = ({
         </div>
       </div>
       <div
-        className={classNames("mx-1", {
+        className={classNames("md:mx-1", {
           "opacity-60": noSauce,
         })}
       >

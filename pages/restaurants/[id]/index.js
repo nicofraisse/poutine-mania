@@ -71,10 +71,10 @@ const Index = ({ SEO }) => {
       </Head>
       <div className="bg-[#fafafa] min-h-screen-minus-navbar">
         <RestaurantHeader restaurant={restaurant} />
-        <div className="p-4 xl:p-6 flex flex-col-reverse lg:flex-row">
+        <div className="py-2 xs:p-4 xl:p-6 flex flex-col-reverse lg:flex-row">
           <div className="lg:basis-2/3 lg:max-w-2/3">
             {!restaurant.approved && (
-              <div className="p-2 lg:p-5 sm:w-auto bg-yellow-50 shadow-md rounded-lg text-sm flex mb-4">
+              <div className="p-2 lg:p-5 sm:w-auto bg-yellow-50 xs:shadow-md rounded-lg text-sm flex mb-4">
                 <Info className="inline-block min-w-8 mt-1 mr-2" size={20} />
                 <p className="flex-shrink">
                   Ce restaurant est en cours de vérification par un membre de
@@ -88,7 +88,7 @@ const Index = ({ SEO }) => {
           </div>
           <div className="lg:w-1/3 lg:sticky lg:top-4 lg:h-full lg:ml-4 xl:ml-6 block sm:flex flex-row-reverse items-center lg:block">
             {currentUser?.isAdmin && (
-              <div className="bg-white shadow-md rounded-lg text-sm p-3 xl:p-5 mb-4 text-center text-gray-700 w-auto sm:w-1/2 lg:w-auto flex items-center justify-between">
+              <div className="bg-white xs:shadow-md rounded-lg text-sm p-3 xl:p-5 mb-4 text-center text-gray-700 w-auto sm:w-1/2 lg:w-auto flex items-center justify-between">
                 <div className="flex">
                   <ToggleSwitch
                     onChange={() =>
@@ -100,13 +100,13 @@ const Index = ({ SEO }) => {
                 </div>
                 <div>
                   <button
-                    className="p-1 bg-gray-200 rounded shadow hover:bg-gray-100 mx-2"
+                    className="p-1 bg-gray-200 rounded xs:shadow hover:bg-gray-100 mx-2"
                     onClick={() => push(`/restaurants/${restaurant._id}/edit`)}
                   >
                     <Edit size={20} />
                   </button>
                   <button
-                    className="p-1 bg-gray-200 rounded shadow hover:bg-gray-100 mx-2"
+                    className="p-1 bg-gray-200 rounded xs:shadow hover:bg-gray-100 mx-2"
                     onClick={() => handleDelete(restaurant)}
                   >
                     <Trash size={20} />
@@ -114,11 +114,11 @@ const Index = ({ SEO }) => {
                 </div>
               </div>
             )}
-            <div className="bg-white shadow-md rounded-lg text-sm p-3 xl:p-5 mb-4 text-center text-gray-700 w-auto sm:w-1/2 lg:w-auto">
+            <div className="bg-white xs:shadow-md rounded-lg text-sm p-3 xl:p-5 mb-2 xs:mb-4 text-center text-gray-700 w-auto sm:w-1/2 lg:w-auto">
               <ReviewOverview restaurant={restaurant} />
             </div>
 
-            <div className="bg-white shadow-md rounded-lg text-xs xl:text-sm p-4 text-gray-700 w-auto sm:w-1/2 lg:w-auto sm:mr-4 lg:mr-0 mb-4 lg:mb-0">
+            <div className="bg-white xs:shadow-md rounded-lg text-xs xl:text-sm p-4 text-gray-700 w-auto sm:w-1/2 lg:w-auto sm:mr-4 lg:mr-0 mb-2 xs:mb-4 lg:mb-0">
               <RestaurantInfo
                 showMap={showMap}
                 setShowMap={setShowMap}

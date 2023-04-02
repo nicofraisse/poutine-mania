@@ -6,7 +6,7 @@ export const RestaurantInfo = ({ showMap, restaurant, setShowMap }) => {
   return (
     <>
       {showMap && (
-        <div className="border h-[200px] mb-4 ">
+        <div className="border h-[200px] mb-4">
           <ShowPageMap restaurants={[restaurant]} isShowPage />
         </div>
       )}
@@ -22,12 +22,12 @@ export const RestaurantInfo = ({ showMap, restaurant, setShowMap }) => {
         </div>
       )}
       {restaurant.website && (
-        <div className="flex items-center">
+        <div className="flex items-center ">
           <ExternalLink className="mr-2 inline shrink-0" size={20} />
           <a
             target="_blank"
             href={restaurant.website}
-            className="underline text-ellipsis whitespace-nowrap overflow-hidden"
+            className="underline"
             rel="noreferrer"
           >
             {restaurant.website}

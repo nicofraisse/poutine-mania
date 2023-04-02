@@ -117,14 +117,13 @@ const ReviewStats = ({ reviews, restaurant }) => {
       >
         <div
           className={classNames(
-            "px-2 sm:px-0 flex flex-wrap w-full pt-1 justify-between items-baseline",
+            "px-2 sm:px-0 flex items-center flex-wrap w-full pt-1 justify-between ",
             {
-              "sm:mb-2": restaurant.reviews.length > 0,
+              "mb-2 sm:mb-0": restaurant.reviews.length > 0,
             }
           )}
         >
-          <div>
-            {/* <Button
+          {/* <Button
               height="sm"
               onClick={() => push(`/restaurants/${restaurant._id}/noter`)}
               className="inline-flex mr-2 items-center px-4 shrink-0 text-sm sm:text-md h-[35px] sm:h-[40px]"
@@ -133,18 +132,17 @@ const ReviewStats = ({ reviews, restaurant }) => {
               <Edit3 className="mr-2 sm:text-lg w-4 sm:w-5" />
               Noter
             </Button> */}
-            <h2 className="inline px-1 pl-1 mr-5 text-gray-700">
-              {reviews.length > 0 ? (
-                <span className="text-lg sm:text-xl">
-                  Avis ({reviews.length})
-                </span>
-              ) : (
-                <p className="mb-2">
-                  Soyez la première personne à laisser un avis!
-                </p>
-              )}
-            </h2>
-          </div>
+          <h2 className="inline px-1 pl-1 mr-5 text-gray-700">
+            {reviews.length > 0 ? (
+              <span className="text-lg sm:text-xl">
+                Avis ({reviews.length})
+              </span>
+            ) : (
+              <p className="mb-2">
+                Soyez la première personne à laisser un avis!
+              </p>
+            )}
+          </h2>
 
           <div className="">
             <Button
@@ -153,7 +151,7 @@ const ReviewStats = ({ reviews, restaurant }) => {
                 requireLogin(
                   handleAddToWatchlist,
                   <div className="px-4 sm:w-[380px] ">
-                    <div className="py-2 px-3 my-2 bg-blue-100 border--200 text-gray-700 rounded borer">
+                    <div className="py-2 px-3 my-2 bg-blue-100 text-gray-700 rounded">
                       {/* <Info size={18} className='text-gray-700 inline mr-2' /> */}
                       <b>Connectez-vous</b> pour ajouter cette poutine à votre
                       liste à essayer!
@@ -280,7 +278,7 @@ const RestaurantReviews = ({ restaurant }) => {
   };
 
   return (
-    <div className="pr-2 pb-2 pl-2 lg:pr-5 lg:pb-5 lg:pl-5 sm:w-auto bg-white shadow-md rounded-lg">
+    <div className="xs:pr-2 pb-2 xs:pl-2 lg:pr-5 lg:pb-5 lg:pl-5 sm:w-auto bg-white shadow-md rounded-lg">
       <Modal
         open={reviewToDelete}
         classNames={{

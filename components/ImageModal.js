@@ -77,7 +77,7 @@ export const ImageModal = ({
           <Image
             src={images[currentIndex]}
             alt="poutine-user-photo"
-            className="rounded-md mx-auto object-contain max-h-full max-w-full"
+            className="mx-auto object-contain max-h-full max-w-full"
           />
         </div>
 

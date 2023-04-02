@@ -112,7 +112,7 @@ export const ReviewCard = ({
   return (
     <>
       <div
-        className={classNames("sm:w-auto py-2 lg:py-6 sm:flex", {
+        className={classNames("sm:w-auto py-3 lg:py-6 sm:flex", {
           "border-t": !isFirst,
         })}
       >
@@ -180,7 +180,7 @@ export const ReviewCard = ({
           <div className="flex flex-wrap mt-3">
             {review.photos?.map((photo, index) => {
               const imageContainerClass = classNames(
-                "border-2 border-white",
+                "border-2 mb-2 border-white",
                 "rounded-md",
                 "cursor-pointer",
                 "overflow-hidden",
