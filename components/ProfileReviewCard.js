@@ -97,7 +97,7 @@ const ProfileReviewCard = ({ review, isIndex, userName }) => {
             {review.comment}
           </p>
         )}
-        {review.photos?.length > 0 && (
+        {Array.isArray(review.photos) && review.photos?.length > 0 && (
           <div className="mt-3 flex flex-wrap">
             {review.photos?.map((photo, index) => {
               const isFirstImage = index === 0;
@@ -152,7 +152,7 @@ const ProfileReviewCard = ({ review, isIndex, userName }) => {
         isOpen={imgModalOpen !== false}
         onClose={() => setImgModalOpen(false)}
         images={review.photos}
-        user={review.user.name}
+        user={review?.user?.name || "Inconnu"}
         restaurant={review.restaurants[0].name}
         initialIndex={imgModalOpen}
       />

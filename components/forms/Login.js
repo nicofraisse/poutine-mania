@@ -39,7 +39,6 @@ const Login = ({ onSubmit, redirect, setEmailToConfirm }) => {
       })
       .catch((e) => {
         const error = JSON.parse(e.message);
-        console.log("BRO AN ERR", error);
         toast.error(error);
         formikBag.setSubmitting(false);
       });

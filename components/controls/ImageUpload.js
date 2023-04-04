@@ -22,12 +22,8 @@ const ImageUpload = ({
   }, []);
 
   const handleChange = async (changeEvent) => {
-    console.log("SOMETHIGN");
     const files = Array.from(changeEvent.target.files);
     const newImageSrcs = isMulti ? [...imageSrcs] : [];
-
-    console.log(files);
-    console.log(newImageSrcs);
 
     for (const file of files) {
       const compressedFile = await compressImage(file);

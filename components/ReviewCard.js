@@ -107,8 +107,6 @@ export const ReviewCard = ({
   const [imgModalOpen, setImgModalOpen] = useState(false);
   const { currentUser } = useCurrentUser();
 
-  console.log(review);
-
   return (
     <>
       <div
@@ -177,18 +175,15 @@ export const ReviewCard = ({
               <span className="text-slate-300">Aucun commentaire</span>
             )}
           </p>
-          <div className="flex flex-wrap mt-3">
+          <div className="flex flex-wrap mt-3 max-w-[600px]">
             {review.photos?.map((photo, index) => {
               const imageContainerClass = classNames(
-                "border-2 mb-2 border-white",
+                "border-2 mb-1 mr-1 border-white",
                 "rounded-md",
                 "cursor-pointer",
                 "overflow-hidden",
                 "relative",
-                {
-                  "w-full pb-[66.666%]": false,
-                  "w-1/3 max-h-[100px] h-20 pb-[33%]": true,
-                }
+                "w-[32%] pb-[32%] sm:w-[30%] sm:pb-[30%]"
               );
 
               return (

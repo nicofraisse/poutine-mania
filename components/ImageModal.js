@@ -53,26 +53,17 @@ export const ImageModal = ({
     <Modal
       classNames={{
         overlay: "customOverlay",
-        modal: "customModal aspect-3/2 ",
-      }}
-      styles={{
-        modal: {
-          // minWidth: "calc(100% - 400px)",
-          width: "calc(100% - 100px)",
-          maxWidth: 1200,
-          maxHeight: "calc(100vh - 100px)",
-          // minHeight: "calc(100vh - 100px)",
-        },
+        modal: "customModal aspect-3/2 imageModal",
       }}
       open={isOpen}
       onClose={onClose}
       closeIcon={<X />}
       center
     >
-      <h2 className="text-center mb-4">
+      <h2 className="text-center mb-4 px-8">
         Photos de {user} pour {restaurant}
       </h2>
-      <div className="relative  h-[calc(100%-60px)]">
+      <div className="relative h-[calc(100%-60px)]">
         <div className="bg-black w-full h-full flex items-center justify-center">
           <Image
             src={images[currentIndex]}

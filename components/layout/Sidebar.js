@@ -83,19 +83,19 @@ const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
     <>
       {showMobileSidebar && (
         <div
-          className="bg-black fixed h-screen w-screen z-10 bg-opacity-40 block lg:hidden"
+          className="bg-black fixed h-screen w-screen z-30 bg-opacity-40 block lg:hidden"
           onClick={toggleMobileSidebar}
         ></div>
       )}
       <div
-        className={classNames("fixed lg:static lg:block lg:min-w-[228px]", {
+        className={classNames("fixed lg:static lg:block  lg:min-w-[228px]", {
           hidden: !showMobileSidebar,
-          "block bg-white h-screen z-10": showMobileSidebar,
+          "block bg-white h-screen z-50": showMobileSidebar,
         })}
       >
         <nav
           className={classNames(
-            "border-r lg:pt-2 h-screen lg:fixed lg:min-w-[228px] flex flex-col justify-between"
+            "border-r lg:pt-2 bg-white h-screen lg:fixed lg:min-w-[228px] flex flex-col justify-between"
           )}
         >
           <div className="select-none">

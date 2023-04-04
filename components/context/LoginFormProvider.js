@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useState } from "react";
 import { X } from "react-feather";
 import Modal from "react-responsive-modal";
 
@@ -14,10 +14,6 @@ export const LoginFormProvider = ({ children }) => {
   const [loginMessage, setLoginMessage] = useState(null);
   const [redirectUrl, setRedirectUrl] = useState("");
   const [emailToConfirm, setEmailToConfirm] = useState(null);
-
-  useEffect(() => {
-    console.log({ emailToConfirm });
-  }, [emailToConfirm]);
 
   const toggleLogin = (open, message = "", redirect = "") => {
     setLoginOpen(open);

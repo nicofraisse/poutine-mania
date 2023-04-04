@@ -55,6 +55,21 @@ a {
   padding-top: 36px;
 }
 
+.imageModal {
+  width: calc(100% - 100px);
+  max-width: 1200px;
+  max-height: calc(100vh - 100px);
+}
+
+@media (max-width: 1024px) {
+  .imageModal {
+    width: 100vw;
+    height: 100vh;
+    max-height: 100vh;
+    margin: 0;
+    overflow: hidden;
+  }
+}
 /* sm */
 @media (max-width: 640px) {
   .rateModal {

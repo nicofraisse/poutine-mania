@@ -31,7 +31,7 @@ const RestaurantCard = ({ restaurant }) => {
       <Link href={`/restaurants/${restaurant?._id}`} passHref>
         <div
           className={classNames(
-            "group py-3 px-2 lg:px-3 flex justify-between items-start transition duration-100 rounded-md mr-2",
+            "group py-3 px-2 lg:px-3 flex justify-between transition duration-100 xs:rounded-md",
             {
               "cursor-pointer": !loading,
               "bg-[#fefefe] shadow": !loading && hoveredId !== restaurant?._id,
@@ -47,7 +47,7 @@ const RestaurantCard = ({ restaurant }) => {
         >
           <div
             className={classNames(
-              "rounded w-1/4 min-h-24 min-w-24 sm:h-28 sm:min-w-28 mr-2 lg:mr-3",
+              "rounded h-28 sm:h-28 sm:min-w-28 mr-2 lg:mr-3",
               { "flex items-center justify-center": !loading }
             )}
             style={{ minWidth: "29%" }}

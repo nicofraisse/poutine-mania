@@ -117,10 +117,13 @@ const NewRatingPill = ({
       {!hideNewRatingInfo &&
         (avgRating ? (
           <div
-            className={classNames("text-sm font-bold mx-2 flex items-center", {
-              "text-white": isDarkBackground,
-              "text-gray-600": !isDarkBackground,
-            })}
+            className={classNames(
+              "text-sm font-bold mx-2 flex items-center text-center",
+              {
+                "text-white": isDarkBackground,
+                "text-gray-600": !isDarkBackground,
+              }
+            )}
           >
             <div>{formatRating(avgRating)}</div>
             <div
@@ -133,12 +136,12 @@ const NewRatingPill = ({
             </div>
             {reviewCount && (
               <div
-                className={classNames("font-normal text-xs ml-1", {
+                className={classNames("font-normal text-xs ml-2", {
                   "text-white": isDarkBackground,
-                  "text-gray-400": !isDarkBackground,
+                  "text-slate-400": !isDarkBackground,
                 })}
               >
-                {`(${reviewCount} avis)`}
+                {`${reviewCount} avis`}
               </div>
             )}
           </div>

@@ -360,7 +360,7 @@ const MapMap = ({ restaurants, isShowPage }) => {
             setIsSmallMarker(e.viewState.zoom < POUTINE_LOGO_ZOOM_THRESHOLD);
         }}
       >
-        <div className="absolute top-0 left-0 m-4 z-40">
+        <div className="absolute top-0 left-0 m-4 z-20">
           <button
             className="bg-teal-500 hover:bg-teal-700 mr-1 text-white font-bold py-2 px-4 rounded mb-2"
             onClick={() => handleLocationButtonClick("Montreal")}

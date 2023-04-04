@@ -145,7 +145,7 @@ const Restaurants = () => {
 
           {(restaurants || [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}]).map(
             (r, i) => (
-              <div className="block my-2 mx-3" key={i}>
+              <div className="block my-2 xs:mx-3" key={i}>
                 <RestaurantCard restaurant={r} />
                 <div className="w-full border-b border-gray-100"></div>
               </div>
