@@ -109,12 +109,12 @@ export const fetchTopRestaurants = async () => {
       },
     },
     {
-      $limit: 10,
-    },
-    {
       $sort: {
         avgRating: -1,
       },
+    },
+    {
+      $limit: 10,
     },
   ];
 
