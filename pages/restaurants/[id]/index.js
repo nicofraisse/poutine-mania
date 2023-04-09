@@ -71,7 +71,7 @@ const Index = ({ SEO }) => {
       </Head>
       <div className="bg-[#fafafa] min-h-screen-minus-navbar">
         <RestaurantHeader restaurant={restaurant} />
-        <div className="py-2 xs:p-4 xl:p-6 flex flex-col-reverse lg:flex-row">
+        <div className="pb-4 pt-2 xs:p-4 xl:p-6 flex flex-col-reverse lg:flex-row">
           <div className="lg:basis-2/3 lg:max-w-2/3">
             {!restaurant.approved && (
               <div className="p-2 lg:p-5 sm:w-auto bg-yellow-50 xs:shadow-md rounded-lg text-sm flex mb-4">

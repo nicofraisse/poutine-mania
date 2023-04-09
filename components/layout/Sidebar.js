@@ -8,6 +8,7 @@ import ConditionalWrapper from "components/ConditionalWrapper";
 import { useRequireLogin } from "../../lib/useRequireLogin";
 import { useSidebarData } from "../context/SidebarDataProvider";
 import { BrandLogo } from "../BrandLogo";
+import { useSession } from "next-auth/client";
 
 const Item = ({
   label,
@@ -53,9 +54,12 @@ const Item = ({
 };
 
 const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
-  const { currentUser } = useCurrentUser();
+  const [session, loading] = useSession();
+  const currentUser = session?.user;
   const requireLogin = useRequireLogin();
   const { sidebarEatenlistAmount, sidebarWatchlistAmount } = useSidebarData();
+
+  console.log("THE CURR", currentUser);
 
   const onClickItem = (isLoginRequired, label, requireLoginMessage) => {
     if (isLoginRequired) {

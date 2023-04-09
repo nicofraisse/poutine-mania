@@ -57,7 +57,7 @@ const User = () => {
   ];
 
   return (
-    <div className="p-10 w-full">
+    <div className="p-0 sm:p-10 w-full">
       <div className="flex items-start 3xl:justify-evenly">
         <div className="max-w-md">
           <ProfileHeader user={user} />
@@ -72,24 +72,30 @@ const User = () => {
             ))}
           </div>
           <div
-            className={classNames("bg-white p-5 border rounded-b rounded-r", {
-              hidden: selectedTab !== 1,
-            })}
+            className={classNames(
+              "bg-white sm:p-5 sm:rounded-b rounded-r border",
+              {
+                hidden: selectedTab !== 1,
+              }
+            )}
           >
             <UserRanking reviews={reviews} />
           </div>
           <div
-            className={classNames("bg-white p-5 border rounded-b rounded-r", {
-              hidden: selectedTab !== 2,
-            })}
+            className={classNames(
+              "bg-white p-4 sm:p-5 border rounded-b rounded-r",
+              {
+                hidden: selectedTab !== 2,
+              }
+            )}
           >
             <UserLastReviews reviews={reviews} user={user} />
           </div>
         </div>
 
-        <div className="ml-12 h-screen">
-          <div className="sticky top-12">{/* <ProfileStats /> */}</div>
-        </div>
+        {/* <div className="ml-12 h-screen">
+          <div className="sticky top-12"><ProfileStats /></div>
+        </div> */}
       </div>
     </div>
   );

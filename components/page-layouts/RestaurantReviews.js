@@ -17,6 +17,7 @@ import { useCurrentUser } from "lib/useCurrentUser";
 import { useSidebarData } from "components/context/SidebarDataProvider";
 import Modal from "react-responsive-modal";
 import { useRequireLogin } from "../../lib/useRequireLogin";
+import Link from "next/link";
 
 const ReviewStats = ({ reviews, restaurant }) => {
   const { currentUser } = useCurrentUser();
@@ -58,9 +59,19 @@ const ReviewStats = ({ reviews, restaurant }) => {
         setIsEatenLoading(false);
         setIsEaten(!isEaten);
         toast.success(
-          isEaten
-            ? "Supprimé des poutines mangées!"
-            : "Ajouté aux poutines mangées!"
+          isEaten ? (
+            "Supprimé des poutines mangées!"
+          ) : (
+            <>
+              Ajouté aux
+              <Link href="/mes-poutines">
+                <span className="underline text-blue-500 ml-1">
+                  poutines mangées
+                </span>
+              </Link>
+              !
+            </>
+          )
         );
 
         if (isWatch) {
@@ -90,9 +101,19 @@ const ReviewStats = ({ reviews, restaurant }) => {
         setIsWatchLoading(false);
         setIsWatch(!isWatch);
         toast.success(
-          isWatch
-            ? "Supprimé des poutines à essayer!"
-            : "Ajouté aux poutines à essayer!"
+          isWatch ? (
+            "Supprimé des poutines à essayer!"
+          ) : (
+            <>
+              Ajouté aux
+              <Link href="/a-essayer">
+                <span className="underline text-blue-500 ml-1">
+                  poutines à essayer
+                </span>
+              </Link>
+              !
+            </>
+          )
         );
         setSidebarWatchlistAmount(
           isWatch ? sidebarWatchlistAmount - 1 : sidebarWatchlistAmount + 1
@@ -138,7 +159,7 @@ const ReviewStats = ({ reviews, restaurant }) => {
                 Avis ({reviews.length})
               </span>
             ) : (
-              <p className="mb-2">
+              <p className="mb-2 text-sm">
                 Soyez la première personne à laisser un avis!
               </p>
             )}
@@ -278,7 +299,7 @@ const RestaurantReviews = ({ restaurant }) => {
   };
 
   return (
-    <div className="xs:pr-2 pb-2 xs:pl-2 lg:pr-5 lg:pb-5 lg:pl-5 sm:w-auto bg-white shadow-md rounded-lg">
+    <div className="xs:pr-2 pb-2 xs:pl-2 lg:pr-5 lg:pb-5 lg:pl-5 sm:w-auto bg-white xs:shadow-md rounded-lg text-slate-600">
       <Modal
         open={reviewToDelete}
         classNames={{

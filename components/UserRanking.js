@@ -30,20 +30,20 @@ const UserRanking = ({ reviews }) => {
       <table className="border-collapse table-auto w-full text-sm">
         <thead>
           <tr>
-            <th className="bg-slate-50 border-b font-bold text-slate-400 text-left rounded-tl-lg"></th>
-            <th className="bg-slate-50 border-b font-bold p-4  pl-0 pb-3 text-slate-400 text-left">
+            <th className="text-sm sm:text-base bg-slate-50 border-b font-bold text-slate-400 text-left rounded-tl-lg"></th>
+            <th className="text-sm sm:text-base bg-slate-50 border-b font-bold pr-8 p-4 pl-0 pb-3 text-slate-400 text-left">
               Poutinerie
             </th>
-            <th className="bg-slate-50 border-b font-bold p-4  pl-0 pb-3 text-slate-400 text-left">
+            <th className="text-sm sm:text-base bg-slate-50 border-b font-bold pr-3 p-4 pl-0 pb-3 text-slate-400 text-left">
               Description
             </th>
-            {/* <th className="bg-slate-50 border-b font-bold p-4  pl-0 pb-3 text-slate-400 text-left">
+            {/* <th className="text-sm sm:text-base bg-slate-50 border-b font-bold p-4  pl-0 pb-3 text-slate-400 text-left">
               Ville
             </th> */}
-            {/* <th className="bg-slate-50 border-b font-bold p-4  pl-0 pb-3 text-slate-400 text-left">
+            {/* <th className="text-sm sm:text-base bg-slate-50 border-b font-bold p-4  pl-0 pb-3 text-slate-400 text-left">
               Prix
             </th> */}
-            <th className="bg-slate-50 border-b font-bold p-4 pl-2 pb-3 text-slate-400 text-left w-32">
+            <th className="text-sm sm:text-base bg-slate-50 border-b font-bold pr-0 p-4 pl-2 pb-3 text-slate-400 text-left w-20 xs:w-28 sm:w-32 rounded-tr-lg">
               Sa note
             </th>
           </tr>
@@ -52,28 +52,30 @@ const UserRanking = ({ reviews }) => {
           {aggr.map((r, i) => {
             return (
               <tr key={r._id}>
-                <td className="border-b border-slate-100 p-3 pl-6 text-enter text-3xl text-stone-300 font-bold">
+                <td className="border-b border-slate-100 pr-2 sm:p-3 pl-3 sm:pl-6 text-enter text-lg sm:text-3xl text-stone-300 font-bold">
                   #{i + 1}
                 </td>
-                <td className="border-b border-slate-100 p-3 pl-0 text-base text-teal-600 hover:text-teal-500 font-bold">
+                <td className="border-b border-slate-100 sm:p-3 p-1 pl-0 text-teal-600 hover:text-teal-500 text-sm sm:text-base font-bold">
                   <Link href={`/restaurants/${r._id}`}>{r.name}</Link>
                 </td>
-                <td className="border-b border-slate-100 p-3 pl-0 text-slate-500">
+                <td className="border-b border-slate-100 sm:p-3 p-1 pl-0 text-xs sm:text-base text-slate-500">
                   {r.categories[0]}
-                  {r.succursales.length > 1 ? ", " : " à "}
-                  {r.succursales && formatCity(r)}
+                  <span className="hidden sm:inline">
+                    {r.succursales.length > 1 ? ", " : " à "}
+                    {r.succursales && formatCity(r)}
+                  </span>
                 </td>
-                {/* <td className="border-b border-slate-100 p-3 pl-0 text-slate-500">
+                {/* <td className="border-b border-slate-100 sm:sm:p-3 p-1 pl-0 text-slate-500">
                   {r.city}
                 </td> */}
-                {/* <td className="border-b border-slate-100 p-3 pl-0 text-slate-500">
+                {/* <td className="border-b border-slate-100 sm:sm:p-3 p-1 pl-0 text-slate-500">
                   <div className="bg-slate-400 px-2 rounded border inline-block text-white">
                     {repeat("$", r.priceRange)}
                   </div>
                 </td> */}
-                <td className="border-b border-slate-100 text-center flex">
+                <td className="border-b border-slate-100 text-center flex sm:p-3 p-1">
                   <div
-                    className="w-[4.5rem] h-9 my-3 flex items-center justify-center rounded shadow"
+                    className="w-[4.5rem] h-9 my-2 sm:my-3 flex items-center justify-center rounded shadow"
                     style={{
                       backgroundColor: Color(
                         getRatingColor(r.avgRating)
@@ -88,17 +90,21 @@ const UserRanking = ({ reviews }) => {
                     </span>
                   </div>
                   {r.nbReviews > 1 && (
-                    <div className="select-none ml-3 border-b border-slate-100 p-3 pl-0 text-slate-300 hover:text-slate-400 flex items-center justify-center">
+                    <div className="hidden sm:flex select-none xs:ml-3 border-slate-100 xs:p-3 pl-0 text-slate-300 hover:text-slate-400 items-center justify-center">
                       {/* <MessageCircle size={16} className="mr-[1px]" /> */}
                       <Tooltip
                         placement="top"
                         trigger={["hover"]}
                         overlay={<div>Basé sur {r.nbReviews} notes</div>}
+                        className=""
                       >
                         <div>({r.nbReviews})</div>
                       </Tooltip>
                     </div>
                   )}
+                  <div className="hidden xs:flex sm:hidden text-slate-300 text-xs items-center justify-center ml-3">
+                    ({r.nbReviews})
+                  </div>
                 </td>
               </tr>
             );

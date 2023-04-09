@@ -4,7 +4,7 @@ import { useGet } from "lib/useAxios";
 import { useEffect, useState } from "react";
 import classNames from "classnames";
 
-export function RecentActivity({ heightClass }) {
+export function RecentActivity({ heightClass, isScrollable }) {
   const [paginationSkip, setPaginationSkip] = useState(0);
   const [allReviews, setAllReviews] = useState([]);
 
@@ -32,8 +32,11 @@ export function RecentActivity({ heightClass }) {
   return (
     <div
       className={classNames(
-        "pl-4 sm:pl-2 pr-5 overflow-y-scroll max-w-xs scrollbar-hide mx-auto",
-        heightClass
+        "pl-4 sm:pl-2 pr-5 max-w-xs scrollbar-hide mx-auto",
+        heightClass,
+        {
+          "overflow-y-scroll": isScrollable,
+        }
       )}
       onScroll={handleScroll}
     >

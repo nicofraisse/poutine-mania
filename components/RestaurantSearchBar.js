@@ -16,7 +16,7 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit, isBanner }, ref) => {
   const { searchValue, setSearchValue, nonDebouncedValue } =
     useRestaurantSearch();
   const [showSearchSuggestions, setShowSearchSuggestions] = useState(false);
-  const inputRef = useRef();
+  const [highlightedIndex, setHighlightedIndex] = useState(-1);
 
   const { data: restaurants, loading: restaurantsLoading } = useGet(
     `/api/restaurants${getUrlQueryString({
@@ -26,6 +26,9 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit, isBanner }, ref) => {
       limit: 6,
     })}`
   );
+
+  const inputRef = useRef();
+  const restaurantsRef = useRef(restaurants);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -40,6 +43,7 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit, isBanner }, ref) => {
     );
     onSubmit && onSubmit();
   };
+
   useEffect(() => {
     if (isMobile) {
       const inputElement = inputRef.current;
@@ -49,7 +53,50 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit, isBanner }, ref) => {
         inputElement.removeEventListener("touchstart", handleFocus);
       };
     }
+    inputRef.current.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      // Clean up keydown event listener
+      if (inputRef.current) {
+        inputRef.current.removeEventListener("keydown", handleKeyDown);
+      }
+    };
   }, []);
+
+  useEffect(() => {
+    console.log("hi");
+    setHighlightedIndex(-1);
+  }, [searchValue]);
+
+  useEffect(() => {
+    restaurantsRef.current = restaurants;
+  }, [restaurants]);
+
+  const handleKeyDown = (e) => {
+    const restaurantsData = restaurantsRef.current;
+
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      setHighlightedIndex((prevIndex) =>
+        prevIndex < (restaurantsData?.length ?? 0) - 1 ? prevIndex + 1 : 0
+      );
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      setHighlightedIndex((prevIndex) =>
+        prevIndex > 0 ? prevIndex - 1 : restaurants.length - 1
+      );
+    } else if (e.key === "Enter") {
+      e.preventDefault();
+      if (highlightedIndex > -1) {
+        push(`/restaurants/${restaurants[highlightedIndex]._id}`);
+        setShowSearchSuggestions(false);
+      } else {
+        handleSearch(e);
+      }
+    } else if (e.key === "Escape") {
+      setShowSearchSuggestions(false);
+    }
+  };
 
   const handleBlur = () => {
     setTimeout(() => {
@@ -139,16 +186,24 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit, isBanner }, ref) => {
               }
             )}
           >
-            {restaurants?.map((r) => {
+            {restaurants?.map((r, index) => {
               const image = r.reviews?.find((res) => res.photos?.[0])
                 ?.photos[0];
 
               return (
                 <div
-                  className="p-2 sm:p-3 hover:bg-slate-100 cursor-pointer flex items-center border-b"
+                  className={classNames(
+                    "p-2 sm:p-3 hover:bg-slate-100 cursor-pointer flex items-center border-b",
+                    {
+                      "bg-slate-100": highlightedIndex === index,
+                    }
+                  )}
                   key={r._id}
                   onClick={() => {
                     push(`/restaurants/${r._id}`);
+                  }}
+                  onMouseEnter={() => {
+                    setHighlightedIndex(index);
                   }}
                 >
                   {image ? (

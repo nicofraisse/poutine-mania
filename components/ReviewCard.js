@@ -13,7 +13,7 @@ import { ImageModal } from "./ImageModal";
 
 export const RatingSection = ({ review, showDate = true }) => {
   const miniRatings = (
-    <div className="text-sm inline-flex text-slate-500 bg-slate-50 rounded px-1 mb-2 py-1 sm:p-0 sm:m-0 sm:bg-transparent">
+    <div className="text-xs sm:text-sm inline-flex text-slate-500 bg-slate-50 rounded px-1 mb-2 py-1 sm:p-0 sm:m-0 sm:bg-transparent">
       {review.friesRating && (
         <div className="mr-[4px]">
           Frites <span className="text-orange-500">{review.friesRating}</span>
@@ -176,30 +176,31 @@ export const ReviewCard = ({
             )}
           </p>
           <div className="flex flex-wrap mt-3 max-w-[600px]">
-            {review.photos?.map((photo, index) => {
-              const imageContainerClass = classNames(
-                "border-2 mb-1 mr-1 border-white",
-                "rounded-md",
-                "cursor-pointer",
-                "overflow-hidden",
-                "relative",
-                "w-[32%] pb-[32%] sm:w-[30%] sm:pb-[30%]"
-              );
+            {Array.isArray(review.photos) &&
+              review.photos?.map((photo, index) => {
+                const imageContainerClass = classNames(
+                  "border-2 mb-1 mr-1 border-white",
+                  "rounded-md",
+                  "cursor-pointer",
+                  "overflow-hidden",
+                  "relative",
+                  "w-[32%] pb-[32%] sm:w-[30%] sm:pb-[30%]"
+                );
 
-              return (
-                <div
-                  key={photo}
-                  className={imageContainerClass}
-                  onClick={() => setImgModalOpen(index)}
-                >
-                  <Image
-                    src={photo}
-                    alt="poutine-user-photo"
-                    className="object-cover object-center absolute top-0 left-0 w-full h-full"
-                  />
-                </div>
-              );
-            })}
+                return (
+                  <div
+                    key={photo}
+                    className={imageContainerClass}
+                    onClick={() => setImgModalOpen(index)}
+                  >
+                    <Image
+                      src={photo}
+                      alt="poutine-user-photo"
+                      className="object-cover object-center absolute top-0 left-0 w-full h-full"
+                    />
+                  </div>
+                );
+              })}
           </div>
 
           {(review.userId === currentUser?._id || currentUser?.isAdmin) && (

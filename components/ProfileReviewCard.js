@@ -45,48 +45,57 @@ const ProfileReviewCard = ({ review, isIndex, userName }) => {
 
   return (
     <>
-      <div className="text-slate-400 block sm:flex justify-between items-center text-sm">
-        <span>
-          {isIndex ? (
-            <>
-              <div className="inline-block relative top-[22px] translate-y-[-15px] translate-x-[-6px]">
-                {review.user.image ? (
-                  <Image
-                    alt="user-image"
-                    src={review.user.image}
-                    className="rounded-full h-6 w-6 object-cover object-center"
-                  />
-                ) : (
-                  <div className="h-6 w-6 rounded-full bg-slate-300 flex items-center justify-center translate-y-[-2px]">
-                    <User className="text-white" size={16} />
-                  </div>
-                )}
-              </div>
-              <Link href={`/users/${review.user._id}`} passHref>
-                <span className="font-bold hover:text-slate-500 cursor-pointer">
-                  {review?.user?.name}
-                </span>
-              </Link>{" "}
-              a{" "}
-            </>
-          ) : (
-            <>
-              <Edit3 size={20} className="mr-2 inline -mt-1" />
-              {currentUser && currentUser._id === review.userId
-                ? "Tu as"
-                : `${userName} a`}
-              &nbsp;
-            </>
+      <div className="text-slate-400 flex sm:justify-between items-start text-sm">
+        <div className="flex">
+          {isIndex && (
+            <div className="block relative top-[13px] translate-y-[-15px] translate-x-[-6px]">
+              {review.user?.image ? (
+                <Image
+                  alt="user-image"
+                  src={review.user.image}
+                  className="rounded-full h-6 min-w-6 max-w-6 object-cover object-center"
+                />
+              ) : (
+                <div className="h-6 min-w-6 rounded-full bg-slate-300 flex items-center justify-center translate-y-[-2px]">
+                  <User className="text-white" size={16} />
+                </div>
+              )}
+            </div>
           )}
-          noté{" "}
-          <Link href={`/restaurants/${review.restaurants[0]._id}`}>
-            <a className="text-teal-500 font-bold hover:text-teal-600">
-              {review.restaurants[0].name}
-            </a>
-          </Link>
-        </span>
-        <span className="text-slate-300 text-xs ml-1 font-normal relative sm:top-[4px]">
-          <span className="inline sm:hidden">- </span>{" "}
+          <span>
+            <span className="text-sm sm:text-base">
+              {isIndex ? (
+                <>
+                  <Link href={`/users/${review.userId}`} passHref>
+                    <span className="font-bold hover:text-slate-500 cursor-pointer">
+                      {review?.user?.name}
+                    </span>
+                  </Link>{" "}
+                  a{" "}
+                </>
+              ) : (
+                <>
+                  <Edit3 className="mr-1 sm:mr-2 inline -mt-1 w-4 h-4 sm:w-5 sm:h-5" />
+                  {currentUser && currentUser._id === review.userId
+                    ? "Tu as"
+                    : `${userName} a`}
+                  &nbsp;
+                </>
+              )}
+              noté{" "}
+              <Link href={`/restaurants/${review.restaurants[0]._id}`}>
+                <a className="text-teal-500 font-bold hover:text-teal-600">
+                  {review.restaurants[0].name}
+                </a>
+              </Link>
+            </span>
+            <span className="inline sm:hidden text-slate-300 right-0 text-xs ml-1 font-normal relative sm:top-[4px]">
+              <span className="">- </span>{" "}
+              {formatDate(review.createdAt, "d MMMM yyyy", true)}
+            </span>
+          </span>
+        </div>
+        <span className="hidden sm:inline text-slate-300 text-xs ml-1 font-normal relative sm:top-[4px]">
           {formatDate(review.createdAt, "d MMMM yyyy", true)}
         </span>
       </div>

@@ -25,7 +25,7 @@ const RestaurantBookmark = ({ restaurant }) => {
   } = useSidebarData();
 
   useEffect(() => {
-    setIsEaten(currentUser.eatenlist.includes(restaurant._id));
+    if (currentUser) setIsEaten(currentUser.eatenlist.includes(restaurant._id));
   }, [currentUser, restaurant]);
 
   const handleToggleFromEatenlist = (restaurant) => {
@@ -40,9 +40,19 @@ const RestaurantBookmark = ({ restaurant }) => {
         setIsEatenLoading(false);
         setIsEaten(!isEaten);
         toast.success(
-          isEaten
-            ? "Supprimé des poutines mangées!"
-            : "Ajouté aux poutines mangées!"
+          isEaten ? (
+            "Supprimé des poutines mangées!"
+          ) : (
+            <>
+              Ajouté aux
+              <Link href="/mes-poutines">
+                <span className="underline text-blue-500 ml-1">
+                  poutines mangées
+                </span>
+              </Link>
+              !
+            </>
+          )
         );
 
         setSidebarWatchlistAmount(
@@ -97,7 +107,7 @@ const RestaurantBookmark = ({ restaurant }) => {
   return (
     <div
       className={classNames(
-        "border p-4 mr-4 mb-4 w-[300px] text-center rounded-md transition-all bg-white",
+        "border p-4 sm:mr-4 mb-4 w-[300px] text-center rounded-md transition-all bg-white",
         {
           "shadow-md": !isEaten,
           "shadow-none": isEaten,
