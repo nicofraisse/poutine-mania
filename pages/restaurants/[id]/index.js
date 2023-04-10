@@ -58,7 +58,9 @@ const Index = ({ SEO }) => {
     }
   };
 
-  if (!restaurant || loading) return <Spinner />;
+  // if (!restaurant || loading) return <Spinner />;
+  const isSkeleton = !restaurant || loading;
+  // const isSkeleton = true;
 
   return (
     <>
@@ -73,7 +75,7 @@ const Index = ({ SEO }) => {
         <RestaurantHeader restaurant={restaurant} />
         <div className="pb-4 pt-2 xs:p-4 xl:p-6 flex flex-col-reverse lg:flex-row">
           <div className="lg:basis-2/3 lg:max-w-2/3">
-            {!restaurant.approved && (
+            {!isSkeleton && !restaurant.approved && (
               <div className="p-2 lg:p-5 sm:w-auto bg-yellow-50 xs:shadow-md rounded-lg text-sm flex mb-4">
                 <Info className="inline-block min-w-8 mt-1 mr-2" size={20} />
                 <p className="flex-shrink">
@@ -84,10 +86,14 @@ const Index = ({ SEO }) => {
                 </p>
               </div>
             )}
-            <RestaurantReviews restaurant={restaurant} />
+            {isSkeleton ? (
+              <Spinner />
+            ) : (
+              <RestaurantReviews restaurant={restaurant} />
+            )}
           </div>
           <div className="lg:w-1/3 lg:sticky lg:top-4 lg:h-full lg:ml-4 xl:ml-6 block sm:flex flex-row-reverse items-center lg:block">
-            {currentUser?.isAdmin && (
+            {!isSkeleton && currentUser?.isAdmin && (
               <div className="bg-white xs:shadow-md rounded-lg text-sm p-3 xl:p-5 mb-4 text-center text-gray-700 w-auto sm:w-1/2 lg:w-auto flex items-center justify-between">
                 <div className="flex">
                   <ToggleSwitch

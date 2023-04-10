@@ -31,12 +31,6 @@ const NotFound = () => {
       </p>
       <div>
         <button
-          className="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-2 px-4 rounded mr-4"
-          onClick={goBack}
-        >
-          Retourner
-        </button>
-        <button
           className="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-2 px-4 rounded"
           onClick={goToHomepage}
         >

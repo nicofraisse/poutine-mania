@@ -62,11 +62,17 @@ const ProfileHeader = ({ user }) => {
               </>
             ) : (
               <>
-                <div className="text-sm border border-yellow-600 text-yellow-600 px-3 py-1 rounded mr-2">
-                  Admin
-                </div>
+                {user.isAdmin && (
+                  <div className="text-sm border border-yellow-600 text-yellow-600 px-3 py-1 rounded mr-2">
+                    Admin
+                  </div>
+                )}
                 <div className="text-sm text-slate-500 bg-slate-100 border border-slate-100 px-3 py-1 rounded mr-2">
-                  Novice
+                  {user.eatenlist.length < 5
+                    ? "Novice"
+                    : user.eatenlist.length < 15
+                    ? "Connaisseur"
+                    : "Expert"}
                 </div>
               </>
             )}

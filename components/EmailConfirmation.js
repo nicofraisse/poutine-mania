@@ -52,7 +52,7 @@ export const EmailConfirmation = ({ email }) => {
 
         <div className="max-w-2xs text-md text-slate-500 text-center">
           Pour activer votre compte, cliquez sur le lien de confirmation dans le
-          courriel que nous venons de vous envoyer à l&apos;addresse fournie:{" "}
+          courriel que nous venons de vous envoyer à l&apos;adresse fournie:{" "}
           {JSON.stringify(email)}
           <br />
         </div>

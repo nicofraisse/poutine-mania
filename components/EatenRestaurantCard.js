@@ -15,7 +15,6 @@ import Skeleton from "react-loading-skeleton";
 
 export const EatenRestaurantCard = ({ restaurant }) => {
   const [imgModalOpen, setImgModalOpen] = useState(false);
-  console.log({ restaurant });
   const isSkeleton = restaurant ? Object.keys(restaurant).length === 0 : {};
   const photos = isSkeleton
     ? []

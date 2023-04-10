@@ -198,7 +198,6 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit, isBanner }, ref) => {
                   )}
                   key={r._id}
                   onMouseDown={() => {
-                    console.log("yea i clikd");
                     push(`/restaurants/${r._id}`);
                   }}
                   onMouseEnter={() => {

@@ -81,7 +81,7 @@ const Restaurants = () => {
                   <>
                     {restaurants.length} poutinerie
                     {restaurants.length > 1 && "s"} • {allSuccursales.length}{" "}
-                    addresse
+                    adresse
                     {allSuccursales.length > 1 && "s"}{" "}
                   </>
                 ) : (

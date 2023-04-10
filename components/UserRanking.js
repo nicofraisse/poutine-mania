@@ -1,7 +1,7 @@
 import Color from "color";
 import React from "react";
 import { getRatingColor } from "../data/ratingColors";
-import { meanBy, round } from "lodash";
+import { meanBy, round, uniqBy, orderBy } from "lodash";
 import { formatCity } from "../lib/formatAddress";
 import Tooltip from "rc-tooltip";
 import Link from "next/link";
@@ -12,19 +12,20 @@ const UserRanking = ({ reviews }) => {
     return { ...review.restaurants[0], review };
   });
 
-  const aggr = reviewedRestaurants
-    ?.map((r1) => {
-      const sameRestaurants = reviewedRestaurants.filter(
-        (r2) => r2._id === r1._id
-      );
-      const nbReviews = sameRestaurants.length;
-      return {
-        ...r1,
-        nbReviews,
-        avgRating: meanBy(sameRestaurants, (r3) => r3.review.finalRating),
-      };
-    })
-    .sort((a, b) => b.avgRating - a.avgRating);
+  const aggr = reviewedRestaurants?.map((r1) => {
+    const sameRestaurants = reviewedRestaurants.filter(
+      (r2) => r2._id === r1._id
+    );
+    const nbReviews = sameRestaurants.length;
+    return {
+      ...r1,
+      nbReviews,
+      avgRating: meanBy(sameRestaurants, (r3) => r3.review.finalRating),
+    };
+  });
+
+  const uniqueAggr = uniqBy(aggr, (r) => r._id);
+  const sortedAggr = orderBy(uniqueAggr, "avgRating", "desc");
 
   return (
     <div>
@@ -50,7 +51,7 @@ const UserRanking = ({ reviews }) => {
           </tr>
         </thead>
         <tbody>
-          {(aggr || [{}, {}, {}, {}, {}, {}]).map((r, i) => {
+          {(sortedAggr || [{}, {}, {}, {}, {}, {}]).map((r, i) => {
             const isSkeleton = Object.keys(r).length === 0;
             return (
               <tr key={r._id}>

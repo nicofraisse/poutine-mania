@@ -18,7 +18,6 @@ const MesPoutines = () => {
   );
 
   const filteredRestaurants = () => {
-    console.log(restaurants);
     return restaurants?.filter((r) => {
       if (currentTab.rated && currentTab.notRated) {
         return true;
