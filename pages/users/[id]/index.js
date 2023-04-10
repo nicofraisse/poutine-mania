@@ -2,10 +2,9 @@ import classNames from "classnames";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import ProfileHeader from "../../../components/profile/ProfileHeader";
-import Spinner from "../../../components/Spinner";
-import UserLastReviews from "../../../components/UserLastReviews";
 import UserRanking from "../../../components/UserRanking";
 import { useGet } from "../../../lib/useAxios";
+import UserLastReviews from "components/UserLastReviews";
 
 const Tab = ({ isSelected, handleSelectTab, title, description }) => {
   return (
@@ -43,8 +42,6 @@ const User = () => {
   const [selectedTab, handleSetSelectedTab] = useState(1);
   const { data: reviews } = useGet(`/api/users/${query.id}/reviews`);
 
-  if (!user || !reviews) return <Spinner />;
-
   const tabs = [
     {
       title: "🏅",
@@ -58,45 +55,44 @@ const User = () => {
 
   return (
     <div className="p-0 sm:p-10 w-full">
-      <div className="flex items-start 3xl:justify-evenly">
-        <div className="max-w-md">
-          <ProfileHeader user={user} />
-          <div className="flex mt-3 -mb-[1px]">
-            {tabs.map((props, i) => (
-              <Tab
-                key={i}
-                isSelected={selectedTab === i + 1}
-                handleSelectTab={() => handleSetSelectedTab(i + 1)}
-                {...props}
-              />
-            ))}
-          </div>
-          <div
-            className={classNames(
-              "bg-white sm:p-5 sm:rounded-b rounded-r border",
-              {
-                hidden: selectedTab !== 1,
-              }
-            )}
-          >
-            <UserRanking reviews={reviews} />
-          </div>
-          <div
-            className={classNames(
-              "bg-white p-4 sm:p-5 border rounded-b rounded-r",
-              {
-                hidden: selectedTab !== 2,
-              }
-            )}
-          >
-            <UserLastReviews reviews={reviews} user={user} />
-          </div>
+      <div className="max-w-md w-screen sm:w-auto mx-auto">
+        <ProfileHeader user={user} />
+        <div className="flex mt-3 -mb-[1px]">
+          {tabs.map((props, i) => (
+            <Tab
+              key={i}
+              isSelected={selectedTab === i + 1}
+              handleSelectTab={() => handleSetSelectedTab(i + 1)}
+              {...props}
+            />
+          ))}
         </div>
-
-        {/* <div className="ml-12 h-screen">
-          <div className="sticky top-12"><ProfileStats /></div>
-        </div> */}
+        <div
+          className={classNames(
+            "bg-white sm:p-5 sm:rounded-b rounded-r border",
+            {
+              hidden: selectedTab !== 1,
+            }
+          )}
+        >
+          <UserRanking reviews={reviews} />
+        </div>
+        <div
+          className={classNames(
+            "bg-white p-4 sm:p-5 border rounded-b rounded-r",
+            {
+              hidden: selectedTab !== 2,
+            }
+          )}
+        >
+          <UserLastReviews reviews={reviews} user={user} />
+        </div>
       </div>
+      {/* <div className="ml-12 h-screen">
+        <div className="sticky top-12">
+          <ProfileStats />
+        </div>
+      </div> */}
     </div>
   );
 };

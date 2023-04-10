@@ -12,8 +12,6 @@ export function RecentActivity({ heightClass, isScrollable }) {
     `/api/reviews?skip=${paginationSkip}`
   );
 
-  console.log(reviews);
-
   useEffect(() => {
     if (reviews) {
       setAllReviews((prevAllReviews) => [...prevAllReviews, ...reviews]);
@@ -27,8 +25,6 @@ export function RecentActivity({ heightClass, isScrollable }) {
     }
   };
 
-  if (!reviews) return <Spinner />;
-
   return (
     <div
       className={classNames(
@@ -40,8 +36,13 @@ export function RecentActivity({ heightClass, isScrollable }) {
       )}
       onScroll={handleScroll}
     >
-      {allReviews.map((review) => (
-        <ProfileReviewCard review={review} key={review._id} isIndex />
+      {(loading ? [{}, {}, {}, {}] : allReviews).map((review) => (
+        <ProfileReviewCard
+          loading={loading}
+          review={review}
+          key={review._id}
+          isIndex
+        />
       ))}
       <div className="h-[72px]">
         {loading && (

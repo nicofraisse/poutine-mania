@@ -64,7 +64,6 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit, isBanner }, ref) => {
   }, []);
 
   useEffect(() => {
-    console.log("hi");
     setHighlightedIndex(-1);
   }, [searchValue]);
 
@@ -83,7 +82,7 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit, isBanner }, ref) => {
     } else if (e.key === "ArrowUp") {
       e.preventDefault();
       setHighlightedIndex((prevIndex) =>
-        prevIndex > 0 ? prevIndex - 1 : restaurants.length - 1
+        prevIndex > 0 ? prevIndex - 1 : (restaurantsData?.length ?? 0) - 1
       );
     } else if (e.key === "Enter") {
       e.preventDefault();
@@ -167,7 +166,6 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit, isBanner }, ref) => {
               "absolute top-3 right-4 text-slate-500": isBanner,
             })}
             onMouseDown={(e) => {
-              e.preventDefault();
               setSearchValue("");
               inputRef.current.focus();
             }}
@@ -199,7 +197,8 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit, isBanner }, ref) => {
                     }
                   )}
                   key={r._id}
-                  onClick={() => {
+                  onMouseDown={() => {
+                    console.log("yea i clikd");
                     push(`/restaurants/${r._id}`);
                   }}
                   onMouseEnter={() => {

@@ -14,8 +14,9 @@ import toast from "react-hot-toast";
 import classNames from "classnames";
 import { RatingSection } from "./ReviewCard";
 import { ImageModal } from "./ImageModal";
+import Skeleton from "react-loading-skeleton";
 
-const ProfileReviewCard = ({ review, isIndex, userName }) => {
+const ProfileReviewCard = ({ review, isIndex, userName, loading }) => {
   const [imgModalOpen, setImgModalOpen] = useState(false);
   const { currentUser } = useCurrentUser();
   const { reload } = useRouter();
@@ -41,7 +42,30 @@ const ProfileReviewCard = ({ review, isIndex, userName }) => {
     }
   };
 
-  if (!review.restaurants || review.restaurants.length === 0) return null;
+  if (loading) {
+    return (
+      <div className="my-5">
+        <div>
+          <Skeleton inline circle width={28} height={28} />
+          <Skeleton inline height={24} width="50%" style={{ marginLeft: 10 }} />
+          <div className="mt-2 border border-slate-100 shadow rounded-md p-3 sm:p-4 bg-white">
+            <Skeleton width={50} height={32} inline />
+            <Skeleton
+              width={150}
+              height={24}
+              inline
+              className="ml-2 relative top-1"
+            />
+            <Skeleton height={120} className="mt-2" />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!review.restaurants || review.restaurants.length === 0) {
+    return null;
+  }
 
   return (
     <>
@@ -99,7 +123,7 @@ const ProfileReviewCard = ({ review, isIndex, userName }) => {
           {formatDate(review.createdAt, "d MMMM yyyy", true)}
         </span>
       </div>
-      <div className="text-slate-700 mb mt-2 mb-8 border border-slate-100 shadow rounded-md p-3 sm:p-4 bg-white">
+      <div className="text-slate-700 mt-2 mb-8 border border-slate-100 shadow rounded-md p-3 sm:p-4 bg-white">
         <RatingSection review={review} showDate={false} />
         {review.comment && (
           <p className="rounded-lg text-sm px-1 w-full text-slate-600">

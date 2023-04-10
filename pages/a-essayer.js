@@ -47,12 +47,10 @@ const MesPoutines = () => {
         À essayer
       </h1>
       <div className="flex flex-wrap items-start justify-center sm:justify-start">
-        {loading ? (
-          <Spinner />
-        ) : restaurants?.length === 0 ? (
+        {restaurants?.length === 0 ? (
           <EmptyState />
         ) : (
-          restaurants?.map((r, i) => (
+          (restaurants || [{}, {}, {}]).map((r, i) => (
             <RestaurantBookmark key={i} restaurant={r} />
           ))
         )}

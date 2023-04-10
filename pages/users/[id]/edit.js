@@ -5,7 +5,7 @@ import Field from "components/Field";
 import Button from "components/Button";
 import axios from "axios";
 import { useCurrentUser } from "lib/useCurrentUser";
-import { capitalize } from "lodash";
+import { capitalize, isString } from "lodash";
 import { ChevronLeft, Info } from "react-feather";
 import { useRouter } from "next/router";
 import { signOut } from "next-auth/client";
@@ -13,7 +13,7 @@ import ImageUpload from "../../../components/controls/ImageUpload";
 
 const Edit = () => {
   const { push, query } = useRouter();
-  const { currentUser, refetchUser } = useCurrentUser();
+  const { currentUser } = useCurrentUser();
 
   const handleChangePassword = (values, formikBag) => {
     axios
@@ -52,12 +52,12 @@ const Edit = () => {
 
       toast.success("Informations mises à jour avec succès!");
       formikBag.setSubmitting(false);
-      refetchUser();
     } catch (e) {
       toast.error(
         e?.response?.data?.message ||
           "Une erreur est survenue. Veuillez réessayer"
       );
+      console.log(e?.response?.data, e?.message);
       formikBag.setSubmitting(false);
     }
   };
@@ -90,38 +90,40 @@ const Edit = () => {
   }
 
   return (
-    <div className="max-w-[400px] ml-8 pt-5">
+    <div className="mx-auto w-full xs:max-w-[400px] pt-5">
       <Button
         size="sm"
         variant="lightLink"
         height="sm"
-        className="-ml-1 mb-3"
+        className="-ml-1"
         onClick={() => push(`/users/${currentUser._id}`)}
       >
         <ChevronLeft />
         Retour à mon profil
       </Button>
-      <div className="p-4 border rounded-lg my-4">
+      <div className="p-4 border rounded my-4 bg-white">
         <h2 className="font-bold text-2xl text-center my-4">
           Modifier mes informations
         </h2>
         <Form
           initialValues={{
             name: currentUser.name,
+            bio: currentUser.bio,
             avatar: currentUser.image,
           }}
           onSubmit={handleUpdateInfo}
           validationSchema={Yup.object({
             name: Yup.string().min(1).max(20).required("Requis"),
+            bio: Yup.string().min(0).max(300),
             avatar: Yup.object().nullable(),
           })}
           className="max-w-sm p-4"
         >
           {({ isSubmitting, errors }) => (
             <>
-              {JSON.stringify(errors)}
               <Field name="name" label="Nom d'utilisateur" />
 
+              <Field name="bio" type="textarea" />
               <Field name="avatar" control={ImageUpload} roundedFull />
               <Button
                 type="submit"
@@ -136,7 +138,7 @@ const Edit = () => {
         </Form>
       </div>
       {isCredentialAccount ? (
-        <div className={"p-4 border rounded-lg my-4"}>
+        <div className={"p-4 border rounded my-4 bg-white"}>
           <h2 className="font-bold text-2xl text-center my-4">
             Changer mon mot de passe
           </h2>
@@ -175,7 +177,7 @@ const Edit = () => {
           </Form>
         </div>
       ) : (
-        <div className="p-3 border rounded-lg">
+        <div className="p-3 border bg-white rounded">
           <Info className="inline mr-2" size={20} />
           Votre compte est lié à votre profil{" "}
           <span className="font-bold">{providerName}</span> dont le courriel

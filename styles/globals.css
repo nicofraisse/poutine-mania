@@ -135,6 +135,10 @@ a {
   cursor: pointer !important;
 }
 
+.mapboxgl-marker:hover {
+  z-index: 10 !important;
+}
+
 .PhoneInputInput {
   padding: 4px 8px;
   border-radius: 3px;

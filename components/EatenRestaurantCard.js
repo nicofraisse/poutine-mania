@@ -11,17 +11,20 @@ import Button from "../components/Button";
 import { formatDate } from "../lib/formatDate";
 import { flatten } from "lodash";
 import { ImageModal } from "./ImageModal";
+import Skeleton from "react-loading-skeleton";
 
 export const EatenRestaurantCard = ({ restaurant }) => {
   const [imgModalOpen, setImgModalOpen] = useState(false);
-  const photos = flatten(restaurant.reviews?.map((r) => r.photos)).filter(
-    Boolean
-  );
+  console.log({ restaurant });
+  const isSkeleton = restaurant ? Object.keys(restaurant).length === 0 : {};
+  const photos = isSkeleton
+    ? []
+    : flatten(restaurant?.reviews?.map((r) => r.photos)).filter(Boolean);
 
   return (
     <>
       <div
-        key={restaurant._id}
+        key={restaurant?._id}
         className="pt-5 rounded mb-2 items-start relative"
       >
         {/* <div className="bg-gray-100 rounded-sm h-12 w-12 sm:h-16 sm:w-16 mr-2 lg:mr-3 flex items-center justify-center ">
@@ -43,16 +46,22 @@ export const EatenRestaurantCard = ({ restaurant }) => {
                   03/05/2021
                 </div> */}
         <div className="flex justify-between px-3 sm:px-0">
-          <Link href={`/restaurants/${restaurant._id}`} passHref>
-            <a rel="noopener noreferrer">
-              <div className="font-bold text-base lg:text-lg text-teal-600 hover:underline">
-                {restaurant.name}
-              </div>
-            </a>
-          </Link>
+          {isSkeleton ? (
+            <Skeleton width={180} height={20} />
+          ) : (
+            <Link href={`/restaurants/${restaurant?._id}`} passHref>
+              <a rel="noopener noreferrer">
+                <div className="font-bold text-base lg:text-lg text-teal-600 hover:underline">
+                  {restaurant.name}
+                </div>
+              </a>
+            </Link>
+          )}
           <div className="h-[1px] bg-slate-200 mt-[14px] ml-4 mr-2 flex-grow"></div>
           <div className="mb-2 ml-4">
-            {restaurant.reviews.length > 0 ? (
+            {isSkeleton ? (
+              <Skeleton width={72} height={28} className="relative -top-1" />
+            ) : restaurant.reviews.length > 0 ? (
               <span
                 className="py-[0px] px-[12px] rounded text-xl text-white flex items-center"
                 style={{
@@ -67,7 +76,7 @@ export const EatenRestaurantCard = ({ restaurant }) => {
                 </span>
               </span>
             ) : (
-              <Link href={`/restaurants/${restaurant._id}/noter`} passHref>
+              <Link href={`/restaurants/${restaurant?._id}/noter`} passHref>
                 <Button height="xs" className="text-normal" variant="light">
                   Noter
                 </Button>
@@ -88,41 +97,60 @@ export const EatenRestaurantCard = ({ restaurant }) => {
                   /> */}
 
         <p className="px-3 sm:px-0" style={{ lineHeight: 1.4 }}>
-          <MessageCircle className="inline text-stone-500 mr-1" size={18} />
-          <span className="text-sm text-stone-500 inline">
-            {restaurant.reviews.length > 0 &&
-            restaurant.reviews.find((rev) => rev.comment) ? (
-              <>
-                {restaurant.reviews.find((rev) => rev.comment).comment}
-                <span className="text-stone-400 text-xs">
-                  {" "}
-                  - le{" "}
-                  {formatDate(
-                    restaurant.reviews.find((rev) => rev.comment).createdAt,
-                    "dd/MM/yyyy"
-                  )}
-                </span>
-              </>
-            ) : (
-              "Pas de commentaire"
-            )}
-          </span>
+          {isSkeleton ? (
+            <>
+              <Skeleton width={"100%"} />
+              <Skeleton width={"100%"} />
+            </>
+          ) : (
+            <>
+              <MessageCircle className="inline text-stone-500 mr-1" size={18} />
+              <span className="text-sm text-stone-500 inline">
+                {restaurant.reviews.length > 0 &&
+                restaurant.reviews.find((rev) => rev.comment) ? (
+                  <>
+                    {restaurant.reviews.find((rev) => rev.comment).comment}
+                    <span className="text-stone-400 text-xs">
+                      {" "}
+                      - le{" "}
+                      {formatDate(
+                        restaurant.reviews.find((rev) => rev.comment).createdAt,
+                        "dd/MM/yyyy"
+                      )}
+                    </span>
+                  </>
+                ) : (
+                  "Pas de commentaire"
+                )}
+              </span>
+            </>
+          )}
         </p>
+
         <div className="flex overflow-x-auto px-3 sm:px-0 w-screen sm:w-[600px] scrollbar-hide">
-          {photos.map((photo, index) => {
-            return (
-              <Image
-                key={photo}
-                src={photo}
-                alt="poutine-user-photo"
-                className="cursor-pointer rounded mr-3 mt-3 max-h-[140px] max-w-[240px] object-cover"
-                onClick={() => setImgModalOpen(index)}
-              />
-            );
-          })}
-          <div className="min-w-[50px]"></div>
-          {photos.length > 0 && (
-            <div className="absolute h-[140px] bottom-0 right-[-1px] w-[50px] bg-gradient-to-r from-transparent to-neutral-50"></div>
+          {isSkeleton ? (
+            <div className="flex mt-2">
+              <Skeleton inline width={160} height={120} className="mr-3" />
+              <Skeleton inline width={160} height={120} />
+            </div>
+          ) : (
+            <>
+              {photos.map((photo, index) => {
+                return (
+                  <Image
+                    key={photo}
+                    src={photo}
+                    alt="poutine-user-photo"
+                    className="cursor-pointer rounded mr-3 mt-3 max-h-[140px] max-w-[240px] object-cover"
+                    onClick={() => setImgModalOpen(index)}
+                  />
+                );
+              })}
+              <div className="min-w-[50px]"></div>
+              {photos.length > 0 && (
+                <div className="absolute h-[140px] bottom-0 right-[-1px] w-[50px] bg-gradient-to-r from-transparent to-neutral-50"></div>
+              )}
+            </>
           )}
         </div>
       </div>
@@ -131,7 +159,7 @@ export const EatenRestaurantCard = ({ restaurant }) => {
         onClose={() => setImgModalOpen(false)}
         images={photos}
         user={"User"}
-        restaurant={restaurant.name}
+        restaurant={restaurant?.name}
         initialIndex={imgModalOpen}
       />
     </>

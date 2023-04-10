@@ -12,7 +12,6 @@ const HomePage = ({ restaurants }) => {
   useEffect(() => {
     const handleScroll = throttle(() => {
       const { top } = actvityHeaderRef.current.getBoundingClientRect();
-      console.log(top);
       setIsScrollableActivity(window.innerWidth > 1080 || top <= 20);
     }, 100);
 

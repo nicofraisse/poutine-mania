@@ -15,6 +15,7 @@ import { toast } from "react-hot-toast";
 import classNames from "classnames";
 import { BrandLogo } from "./BrandLogo";
 import { SurpriseButton } from "components/SurpriseButton";
+import Skeleton from "react-loading-skeleton";
 
 const Header = ({ toggleMobileSidebar }) => {
   // const { currentUser, loading } = useCurrentUser();
@@ -202,13 +203,12 @@ const Header = ({ toggleMobileSidebar }) => {
               )}
 
               {loading && !currentUser ? (
-                <div className="animate-pulse flex items-center pointer-events-none">
-                  <div className="relative mx-4 lg:mx-5 z-20">
-                    <div className="h-[44px] w-[44px] bg-gray-400 rounded-full cursor-pointer hover:opacity-80 flex items-center justify-center">
-                      <User className="text-white" size={30} />
-                    </div>
-                  </div>
-                </div>
+                <Skeleton
+                  circle
+                  className="mx-4 lg:mx-5 z-20 flex-grow"
+                  width={44}
+                  height={44}
+                />
               ) : currentUser ? (
                 <div className="relative mx-4 lg:mx-5 z-20">
                   <div

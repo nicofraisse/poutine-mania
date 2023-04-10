@@ -65,7 +65,7 @@ const ReviewStats = ({ reviews, restaurant }) => {
             <>
               Ajouté aux
               <Link href="/mes-poutines">
-                <span className="underline text-blue-500 ml-1">
+                <span className="underline text-blue-500 ml-1 cursor-pointer">
                   poutines mangées
                 </span>
               </Link>
@@ -107,7 +107,7 @@ const ReviewStats = ({ reviews, restaurant }) => {
             <>
               Ajouté aux
               <Link href="/a-essayer">
-                <span className="underline text-blue-500 ml-1">
+                <span className="underline text-blue-500 ml-1 cursor-pointer">
                   poutines à essayer
                 </span>
               </Link>

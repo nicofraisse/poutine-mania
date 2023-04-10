@@ -28,7 +28,7 @@ async function handler(req, res) {
       return;
     }
 
-    const { name } = fields;
+    const { name, bio } = fields;
 
     const photos = [];
     for (const key in files) {
@@ -51,6 +51,7 @@ async function handler(req, res) {
         {
           $set: {
             name: name,
+            bio: bio,
             image: newPublicIds[0],
           },
         }

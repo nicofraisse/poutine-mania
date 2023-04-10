@@ -65,7 +65,6 @@ const RestaurantForm = ({ type }) => {
         .then(() => {
           toast.success("Succès");
           setSubmitting(false);
-          console.log("WIL PUTH");
           push(
             currentUser.isAdmin
               ? `/admin/restaurants`

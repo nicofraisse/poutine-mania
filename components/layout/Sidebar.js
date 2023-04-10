@@ -59,8 +59,6 @@ const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
   const requireLogin = useRequireLogin();
   const { sidebarEatenlistAmount, sidebarWatchlistAmount } = useSidebarData();
 
-  console.log("THE CURR", currentUser);
-
   const onClickItem = (isLoginRequired, label, requireLoginMessage) => {
     if (isLoginRequired) {
       requireLogin(
@@ -92,10 +90,13 @@ const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
         ></div>
       )}
       <div
-        className={classNames("fixed lg:static lg:block  lg:min-w-[228px]", {
-          hidden: !showMobileSidebar,
-          "block bg-white h-screen z-50": showMobileSidebar,
-        })}
+        className={classNames(
+          "fixed lg:sticky lg:top-0 lg:block lg:min-w-[228px] bg-white h-screen z-50 transform transition-transform duration-300 ease-in-out",
+          {
+            "translate-x-0": showMobileSidebar,
+            "-translate-x-full lg:translate-x-0": !showMobileSidebar,
+          }
+        )}
       >
         <nav
           className={classNames(

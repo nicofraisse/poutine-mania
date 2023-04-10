@@ -9,6 +9,7 @@ import { useCurrentUser } from "../lib/useCurrentUser";
 import { toast } from "react-hot-toast";
 import { Image } from "./Image";
 import { useSidebarData } from "components/context/SidebarDataProvider";
+import Skeleton from "react-loading-skeleton";
 
 const RestaurantBookmark = ({ restaurant }) => {
   const [isEatenLoading, setIsEatenLoading] = useState(false);
@@ -23,10 +24,12 @@ const RestaurantBookmark = ({ restaurant }) => {
     sidebarEatenlistAmount,
     setSidebarEatenlistAmount,
   } = useSidebarData();
+  const isSkeleton = Object.keys(restaurant || {}).length === 0;
 
   useEffect(() => {
-    if (currentUser) setIsEaten(currentUser.eatenlist.includes(restaurant._id));
-  }, [currentUser, restaurant]);
+    if (currentUser && !isSkeleton)
+      setIsEaten(currentUser.eatenlist.includes(restaurant._id));
+  }, [currentUser, restaurant, isSkeleton]);
 
   const handleToggleFromEatenlist = (restaurant) => {
     setIsEatenLoading(true);
@@ -46,7 +49,7 @@ const RestaurantBookmark = ({ restaurant }) => {
             <>
               Ajouté aux
               <Link href="/mes-poutines">
-                <span className="underline text-blue-500 ml-1">
+                <span className="underline text-blue-500 ml-1 cursor-pointer">
                   poutines mangées
                 </span>
               </Link>
@@ -123,7 +126,9 @@ const RestaurantBookmark = ({ restaurant }) => {
           { "opacity-50": isEaten }
         )}
       >
-        {restaurant.mainPhotos?.length > 0 ? (
+        {isSkeleton ? (
+          <Skeleton />
+        ) : restaurant.mainPhotos?.length > 0 ? (
           <Image
             src={restaurant.mainPhotos[0]}
             alt={`${restaurant.name}-photo`}
@@ -135,55 +140,73 @@ const RestaurantBookmark = ({ restaurant }) => {
       </div>
 
       <div className="flex flex-col justify-between">
-        <Link href={`/restaurants/${restaurant._id}`} passHref>
-          <a
-            className={classNames(
-              "text-xl font-bold text-teal-500 block my-2",
-              {
-                "opacity-50": isEaten,
-              }
-            )}
-          >
-            {restaurant.name}
-          </a>
-        </Link>
+        {isSkeleton ? (
+          <Skeleton className="mt-3 mb-2" width="70%" height={28} />
+        ) : (
+          <Link href={`/restaurants/${restaurant._id}`} passHref>
+            <a
+              className={classNames(
+                "text-xl font-bold text-teal-500 block my-2",
+                {
+                  "opacity-50": isEaten,
+                }
+              )}
+            >
+              {restaurant.name}
+            </a>
+          </Link>
+        )}
         <div
-          className={classNames("mb-4", {
+          className={classNames({
+            "mb-4": !isSkeleton,
             "opacity-50": isEaten,
           })}
         >
-          <TagSection
-            categories={restaurant.categories}
-            priceRange={restaurant.priceRange}
-            succursales={restaurant.succursales}
-            city={
-              restaurant.succursales[0].address?.context?.find((el) =>
-                el.id?.includes("neighborhood")
-              )?.text
-            }
-            smallText
-          />
+          {isSkeleton ? (
+            <>
+              <Skeleton height={12} />
+              <Skeleton height={12} className="relative -top-1" />
+            </>
+          ) : (
+            <TagSection
+              categories={restaurant.categories}
+              priceRange={restaurant.priceRange}
+              succursales={restaurant.succursales}
+              city={
+                restaurant.succursales[0].address?.context?.find((el) =>
+                  el.id?.includes("neighborhood")
+                )?.text
+              }
+              smallText
+            />
+          )}
         </div>
         <div className="flex items-center justify-around">
-          <Button
-            height="sm"
-            onClick={
-              !isEaten ? () => handleToggleFromEatenlist(restaurant) : null
-            }
-            className={classNames(
-              "inline-flex hover:bg-white hover:text-green-600 hover:border-green-600 transition-all items-center text-green-500 bg-white border-green-500 px-4 shrink-0 text-sm sm:text-md h-[35px] sm:h-[40px]",
-              {
-                "": !isEaten,
-                "text-green-400 bg-green-50 hover:bg-green-50 border-none pointer-events-none":
-                  isEaten,
+          {isSkeleton ? (
+            ""
+          ) : (
+            <Button
+              height="sm"
+              onClick={
+                !isEaten ? () => handleToggleFromEatenlist(restaurant) : null
               }
-            )}
-            variant="light"
-            loading={isEatenLoading}
-          >
-            {!isEaten && <CheckCircle className="mr-2 sm:text-lg w-4 sm:w-5" />}
-            <span>{isEaten ? "Mangé!" : "J'ai mangé"}</span>
-          </Button>
+              className={classNames(
+                "inline-flex hover:bg-white hover:text-green-600 hover:border-green-600 transition-all items-center text-green-500 bg-white border-green-500 px-4 shrink-0 text-sm sm:text-md h-[35px] sm:h-[40px]",
+                {
+                  "": !isEaten,
+                  "text-green-400 bg-green-50 hover:bg-green-50 border-none pointer-events-none":
+                    isEaten,
+                }
+              )}
+              variant="light"
+              loading={isEatenLoading}
+            >
+              {!isEaten && (
+                <CheckCircle className="mr-2 sm:text-lg w-4 sm:w-5" />
+              )}
+              <span>{isEaten ? "Mangé!" : "J'ai mangé"}</span>
+            </Button>
+          )}
           {/* <Button
             height="sm"
             variant={VariantColor.white2}
@@ -205,20 +228,24 @@ const RestaurantBookmark = ({ restaurant }) => {
             </Button>
           </Link> */}
         </div>
-        <button
-          className={classNames(
-            "mx-auto flex text-xs items-center transition-opacity duration-200 text-gray-400 mt-2",
-            { "animate-pulse": isWatchDeleting }
-          )}
-          onClick={() =>
-            isEaten
-              ? handleToggleFromEatenlist(restaurant)
-              : handleDeleteFromWatchlist(restaurant)
-          }
-        >
-          {!isEaten && <XCircle className="mr-1 sm:text-lg w-3 sm:w-4" />}
-          <span>{isEaten ? "Annuler" : "Pas intéressé(e)"}</span>
-        </button>
+        {isSkeleton ? (
+          <Skeleton width="45%" height={40} className="mt-2 mb-7" />
+        ) : (
+          <button
+            className={classNames(
+              "mx-auto flex text-xs items-center transition-opacity duration-200 text-gray-400 mt-2",
+              { "animate-pulse": isWatchDeleting }
+            )}
+            onClick={() =>
+              isEaten
+                ? handleToggleFromEatenlist(restaurant)
+                : handleDeleteFromWatchlist(restaurant)
+            }
+          >
+            {!isEaten && <XCircle className="mr-1 sm:text-lg w-3 sm:w-4" />}
+            <span>{isEaten ? "Annuler" : "Pas intéressé(e)"}</span>
+          </button>
+        )}
       </div>
     </div>
   );

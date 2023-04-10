@@ -1,9 +1,13 @@
-import { connectToDatabase } from "../../../../lib/db";
 import { ObjectId } from "mongodb";
+import database from "middleware/database";
+import nextConnect from "next-connect";
 
-const handler = async (req, res) => {
-  const client = await connectToDatabase();
-  const db = await client.db();
+const handler = nextConnect();
+
+handler.use(database);
+
+handler.get(async (req, res) => {
+  const db = req.db;
 
   const user = await db
     .collection("users")
@@ -30,6 +34,6 @@ const handler = async (req, res) => {
   });
 
   res.status(200).json(result);
-};
+});
 
 export default handler;

@@ -4,12 +4,13 @@ import { useCurrentUser } from "../lib/useCurrentUser";
 import Spinner from "components/Spinner";
 
 import { EatenRestaurantCard } from "../components/EatenRestaurantCard";
+import Skeleton from "react-loading-skeleton";
 
 const MesPoutines = () => {
   const { currentUser } = useCurrentUser();
   const [currentTab, setCurrentTab] = useState({ rated: true, notRated: true });
 
-  const { data: restaurants } = useGet(
+  const { data: restaurants, loading } = useGet(
     `/api/users/${currentUser?._id}/get-eatenlist`,
     {
       skip: !currentUser,
@@ -17,7 +18,8 @@ const MesPoutines = () => {
   );
 
   const filteredRestaurants = () => {
-    return restaurants.filter((r) => {
+    console.log(restaurants);
+    return restaurants?.filter((r) => {
       if (currentTab.rated && currentTab.notRated) {
         return true;
       } else if (currentTab.rated) {
@@ -28,6 +30,8 @@ const MesPoutines = () => {
       return false;
     });
   };
+
+  const isSkeleton = loading || !currentUser;
 
   const ratedCount = restaurants?.filter((r) => r.reviews.length > 0).length;
   const notRatedCount = restaurants?.filter(
@@ -59,46 +63,52 @@ const MesPoutines = () => {
       </Link> */}
 
       <div className="mx-3 sm:mx-0 border p-3 rounded bg-white text-sm text-slate-600">
-        <div className="font-bold mb-1">Afficher mes poutines:</div>
-        <div className="flex space-x-4">
-          <div className="flex items-center">
-            <input
-              type="checkbox"
-              id="rated"
-              checked={currentTab.rated}
-              onChange={() =>
-                setCurrentTab({ ...currentTab, rated: !currentTab.rated })
-              }
-            />
-            <label htmlFor="rated" className="ml-2">
-              Notées ({ratedCount})
-            </label>
-          </div>
-          <div className="flex items-center">
-            <input
-              type="checkbox"
-              id="notRated"
-              checked={currentTab.notRated}
-              onChange={() =>
-                setCurrentTab({ ...currentTab, notRated: !currentTab.notRated })
-              }
-            />
-            <label htmlFor="notRated" className="ml-2">
-              Pas encore notées ({notRatedCount})
-            </label>
-          </div>
-        </div>
+        {isSkeleton ? (
+          <>
+            <Skeleton width={160} className="mb-2" />
+            <Skeleton width={260} />
+          </>
+        ) : (
+          <>
+            <div className="font-bold mb-1">Afficher mes poutines:</div>
+            <div className="flex space-x-4">
+              <div className="flex items-center">
+                <input
+                  type="checkbox"
+                  id="rated"
+                  checked={currentTab.rated}
+                  onChange={() =>
+                    setCurrentTab({ ...currentTab, rated: !currentTab.rated })
+                  }
+                />
+                <label htmlFor="rated" className="ml-2">
+                  Notées ({ratedCount})
+                </label>
+              </div>
+              <div className="flex items-center">
+                <input
+                  type="checkbox"
+                  id="notRated"
+                  checked={currentTab.notRated}
+                  onChange={() =>
+                    setCurrentTab({
+                      ...currentTab,
+                      notRated: !currentTab.notRated,
+                    })
+                  }
+                />
+                <label htmlFor="notRated" className="ml-2">
+                  Pas encore notées ({notRatedCount})
+                </label>
+              </div>
+            </div>
+          </>
+        )}
       </div>
 
-      <>
-        {!restaurants ? (
-          <Spinner />
-        ) : (
-          filteredRestaurants().map((r) => {
-            return <EatenRestaurantCard key={r._id} restaurant={r} />;
-          })
-        )}
-      </>
+      {(filteredRestaurants() || [{}, {}, {}, {}]).map((r) => {
+        return <EatenRestaurantCard key={r?._id} restaurant={r} />;
+      })}
     </div>
   );
 };

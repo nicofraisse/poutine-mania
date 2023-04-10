@@ -46,7 +46,7 @@ const ImageUpload = ({
   const inputRef = useRef();
 
   const handleDelete = (index) => {
-    inputRef.current.value = "";
+    inputRef.current && (inputRef.current.value = "");
 
     const newImageSrcs = [...imageSrcs];
     newImageSrcs.splice(index, 1);

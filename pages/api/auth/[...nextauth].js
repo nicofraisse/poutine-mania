@@ -36,7 +36,6 @@ export default NextAuth({
         );
         client.close();
       }
-      console.log(user);
       if (!user.emailVerified) {
         const error = JSON.stringify({
           code: "EMAIL_NOT_VALIDATED",
@@ -99,6 +98,7 @@ export default NextAuth({
           email: foundUser.email,
           isAdmin: foundUser.isAdmin,
           name: foundUser.name,
+          bio: foundUser.bio,
           image: foundUser.image,
           emailVerified: foundUser.emailVerified,
           eatenlist: foundUser.eatenlist,
@@ -160,6 +160,7 @@ export default NextAuth({
           email: user.email,
           isAdmin: user.isAdmin,
           name: user.name,
+          bio: user.bio,
           image: user.image,
           emailVerified: user.emailVerified,
         };

@@ -28,7 +28,6 @@ const Login = ({ onSubmit, redirect, setEmailToConfirm }) => {
           if (error?.code === "EMAIL_NOT_VALIDATED") {
             setEmailToConfirm(values.email);
           } else {
-            console.log("err", error);
             toast.error(error?.message);
           }
         } else {
