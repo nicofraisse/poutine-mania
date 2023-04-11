@@ -1,9 +1,12 @@
-import { connectToDatabase } from "../../../../lib/db";
+import nextConnect from "next-connect";
 import { ObjectId } from "mongodb";
+import database from "middleware/database";
 
-const handler = async (req, res) => {
-  const client = await connectToDatabase();
-  const db = await client.db();
+const handler = nextConnect();
+handler.use(database);
+
+handler.get(async (req, res) => {
+  const db = req.db;
 
   const data = await db
     .collection("reviews")
@@ -31,6 +34,6 @@ const handler = async (req, res) => {
 
   const results = data.filter((d) => d.restaurants.length !== 0);
   res.status(200).json(results);
-};
+});
 
 export default handler;

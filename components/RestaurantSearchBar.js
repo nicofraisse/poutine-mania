@@ -27,6 +27,10 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit, isBanner }, ref) => {
     })}`
   );
 
+  useEffect(() => {
+    console.log("GETTING");
+  }, [restaurants]);
+
   const inputRef = useRef();
   const restaurantsRef = useRef(restaurants);
 

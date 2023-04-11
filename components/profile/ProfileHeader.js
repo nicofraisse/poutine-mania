@@ -11,6 +11,8 @@ const cooltext =
 const ProfileHeader = ({ user }) => {
   const { currentUser } = useCurrentUser();
 
+  console.log(user);
+
   const isSkeleton = !user;
   return (
     <div className="text-slate-700 border bg-white py-6 px-4 sm:p-7 rounded mb-6">
@@ -95,42 +97,48 @@ const ProfileHeader = ({ user }) => {
           {isSkeleton ? (
             <Skeleton height={50} width={150} />
           ) : (
-            <>
-              <div className="font-black text-slate-600 text-lg sm:text-xl">
-                ❤️ Greenspot
-              </div>
-              <div className="text-xs sm:text-sm text-slate-400">
-                Poutine préférée
-              </div>
-            </>
+            user.profileStats?.lastEatenRestaurant?.name && (
+              <>
+                <div className="font-black text-slate-700 text-lg sm:text-xl">
+                  😋 {user.profileStats.lastEatenRestaurant.name}
+                </div>
+                <div className="text-xs sm:text-sm text-slate-400">
+                  Dernière poutine mangée
+                </div>
+              </>
+            )
           )}
         </div>
         <div className="mt-4 mb-1">
           {isSkeleton ? (
             <Skeleton height={50} width={150} />
           ) : (
-            <>
-              <div className="font-black text-slate-700 text-lg sm:text-xl">
-                💔 Harvey&apos;s
-              </div>
-              <div className="text-xs sm:text-sm text-slate-400">
-                Poutine la moins aimée
-              </div>
-            </>
+            user.profileStats?.favoriteRestaurant?.name && (
+              <>
+                <div className="font-black text-slate-600 text-lg sm:text-xl">
+                  ❤️ {user.profileStats.favoriteRestaurant.name}
+                </div>
+                <div className="text-xs sm:text-sm text-slate-400">
+                  Poutine préférée
+                </div>
+              </>
+            )
           )}
         </div>
         <div className="mt-4 mb-1">
           {isSkeleton ? (
             <Skeleton height={50} width={150} />
           ) : (
-            <>
-              <div className="font-black text-slate-700 text-lg sm:text-xl">
-                😋 Patati Patata
-              </div>
-              <div className="text-xs sm:text-sm text-slate-400">
-                Dernière poutine mangée
-              </div>
-            </>
+            user.profileStats?.leastFavoriteRestaurant?.name && (
+              <>
+                <div className="font-black text-slate-700 text-lg sm:text-xl">
+                  💔 {user.profileStats.leastFavoriteRestaurant.name}
+                </div>
+                <div className="text-xs sm:text-sm text-slate-400">
+                  Poutine la moins aimée
+                </div>
+              </>
+            )
           )}
         </div>
       </div>

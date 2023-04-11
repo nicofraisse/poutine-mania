@@ -1,12 +1,14 @@
-// /api/users/[id]/update
-
 import formidable from "formidable";
 import { getSession } from "next-auth/client";
-import { connectToDatabase } from "../../../../lib/db";
-import { uploadToCloudinary } from "../../../../lib/uploadToCloudinary";
+import { uploadToCloudinary } from "lib/uploadToCloudinary";
 import { ObjectId } from "mongodb";
+import nextConnect from "next-connect";
+import database from "middleware/database";
 
-async function handler(req, res) {
+const handler = nextConnect();
+handler.use(database);
+
+handler.patch(async (req, res) => {
   if (req.method !== "PATCH") {
     res.status(405).json({ message: "Method not allowed" });
     return;
@@ -23,6 +25,8 @@ async function handler(req, res) {
 
   const form = new formidable.IncomingForm();
   form.parse(req, async (err, fields, files) => {
+    const db = req.db;
+
     if (err) {
       res.status(500).json({ message: "Failed to parse form data" });
       return;
@@ -42,8 +46,7 @@ async function handler(req, res) {
       newPublicIds = await uploadToCloudinary(photos);
     }
 
-    const client = await connectToDatabase();
-    const usersCollection = client.db().collection("users");
+    const usersCollection = db.collection("users");
 
     try {
       await usersCollection.updateOne(
@@ -51,7 +54,7 @@ async function handler(req, res) {
         {
           $set: {
             name: name,
-            bio: bio,
+            bio: bio || "",
             image: newPublicIds[0],
           },
         }
@@ -60,12 +63,9 @@ async function handler(req, res) {
       res.status(200).json({ message: "User updated successfully" });
     } catch (error) {
       res.status(500).json({ message: "Error updating the user" });
-    } finally {
-      // Close the database connection
-      client.close();
     }
   });
-}
+});
 
 export const config = {
   api: {

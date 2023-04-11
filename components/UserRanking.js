@@ -6,8 +6,9 @@ import { formatCity } from "../lib/formatAddress";
 import Tooltip from "rc-tooltip";
 import Link from "next/link";
 import Skeleton from "react-loading-skeleton";
+import { EmptyState } from "components/EmptyState";
 
-const UserRanking = ({ reviews }) => {
+const UserRanking = ({ reviews, loading }) => {
   const reviewedRestaurants = reviews?.map((review) => {
     return { ...review.restaurants[0], review };
   });
@@ -26,6 +27,8 @@ const UserRanking = ({ reviews }) => {
 
   const uniqueAggr = uniqBy(aggr, (r) => r._id);
   const sortedAggr = orderBy(uniqueAggr, "avgRating", "desc");
+  if (reviews && reviews.length === 0)
+    return <EmptyState hideButton title="Aucune poutine mangée" />;
 
   return (
     <div>
@@ -51,8 +54,8 @@ const UserRanking = ({ reviews }) => {
           </tr>
         </thead>
         <tbody>
-          {(sortedAggr || [{}, {}, {}, {}, {}, {}]).map((r, i) => {
-            const isSkeleton = Object.keys(r).length === 0;
+          {(loading ? [{}, {}, {}, {}] : sortedAggr).map((r, i) => {
+            const isSkeleton = loading;
             return (
               <tr key={r._id}>
                 <td className="border-b border-slate-100 pr-2 sm:p-3 pl-3 sm:pl-6 text-enter text-lg sm:text-3xl text-stone-300 font-bold">

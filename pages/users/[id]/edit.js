@@ -4,11 +4,11 @@ import Form from "components/Form";
 import Field from "components/Field";
 import Button from "components/Button";
 import axios from "axios";
-import { useCurrentUser } from "lib/useCurrentUser";
+import { useCurrentUser, refetchCurrentUser } from "lib/useCurrentUser";
 import { capitalize, isString } from "lodash";
 import { ChevronLeft, Info } from "react-feather";
 import { useRouter } from "next/router";
-import { signOut } from "next-auth/client";
+import { signOut, getSession } from "next-auth/client";
 import ImageUpload from "../../../components/controls/ImageUpload";
 
 const Edit = () => {
@@ -35,7 +35,6 @@ const Edit = () => {
     const formData = new FormData();
     for (const key in values) {
       if (key === "avatar" && values[key] && !isString(values[key])) {
-        console.log("not string", values[key]);
         for (const [, file] of values[key].entries()) {
           formData.append(`avatar`, file);
         }
@@ -45,20 +44,26 @@ const Edit = () => {
     }
 
     try {
-      await axios.patch(`/api/users/${query.id}/update`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.patch(
+        `/api/users/${query.id}/update`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
       toast.success("Informations mises à jour avec succès!");
       formikBag.setSubmitting(false);
+      const updatedSession = await getSession({ force: true });
+      updatedSession.user.image = response.data.image; // Assuming the API response returns the new image URL
+      refetchCurrentUser();
     } catch (e) {
       toast.error(
         e?.response?.data?.message ||
           "Une erreur est survenue. Veuillez réessayer"
       );
-      console.log(e?.response?.data, e?.message);
       formikBag.setSubmitting(false);
     }
   };

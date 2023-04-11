@@ -5,6 +5,7 @@ import ProfileHeader from "../../../components/profile/ProfileHeader";
 import UserRanking from "../../../components/UserRanking";
 import { useGet } from "../../../lib/useAxios";
 import UserLastReviews from "components/UserLastReviews";
+import { EmptyState } from "components/EmptyState";
 
 const Tab = ({ isSelected, handleSelectTab, title, description }) => {
   return (
@@ -40,7 +41,9 @@ const User = () => {
   const { query } = useRouter();
   const { data: user } = useGet(`/api/users/${query.id}`, { skip: !query.id });
   const [selectedTab, handleSetSelectedTab] = useState(1);
-  const { data: reviews } = useGet(`/api/users/${query.id}/reviews`);
+  const { data: reviews, loading: reviewsLoading } = useGet(
+    `/api/users/${query.id}/reviews`
+  );
 
   const tabs = [
     {
@@ -49,7 +52,7 @@ const User = () => {
     },
     {
       title: "✍️",
-      description: "  Derniers avis",
+      description: "Derniers avis",
     },
   ];
 
@@ -75,7 +78,11 @@ const User = () => {
             }
           )}
         >
-          <UserRanking reviews={reviews} />
+          {!reviewsLoading && reviews?.length === 0 ? (
+            <EmptyState hideButton title="Aucune poutine mangée" />
+          ) : (
+            <UserRanking reviews={reviews} loading={reviewsLoading} />
+          )}
         </div>
         <div
           className={classNames(
