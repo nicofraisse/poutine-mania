@@ -34,7 +34,8 @@ const Edit = () => {
     formikBag.setSubmitting(true);
     const formData = new FormData();
     for (const key in values) {
-      if (key === "avatar" && values[key]) {
+      if (key === "avatar" && values[key] && !isString(values[key])) {
+        console.log("not string", values[key]);
         for (const [, file] of values[key].entries()) {
           formData.append(`avatar`, file);
         }
@@ -90,7 +91,7 @@ const Edit = () => {
   }
 
   return (
-    <div className="mx-auto w-full xs:max-w-[400px] pt-5">
+    <div className="mx-auto w-full sm:max-w-[500px] pt-5">
       <Button
         size="sm"
         variant="lightLink"
@@ -101,8 +102,8 @@ const Edit = () => {
         <ChevronLeft />
         Retour à mon profil
       </Button>
-      <div className="p-4 border rounded my-4 bg-white">
-        <h2 className="font-bold text-2xl text-center my-4">
+      <div className="p-2 sm:p-4 border rounded my-4 bg-white">
+        <h2 className="font-bold text-xl sm:text-2xl text-center my-4">
           Modifier mes informations
         </h2>
         <Form
@@ -177,7 +178,7 @@ const Edit = () => {
           </Form>
         </div>
       ) : (
-        <div className="p-3 border bg-white rounded">
+        <div className="p-4 border bg-white rounded text-slate-500 text-sm">
           <Info className="inline mr-2" size={20} />
           Votre compte est lié à votre profil{" "}
           <span className="font-bold">{providerName}</span> dont le courriel

@@ -30,14 +30,14 @@ const sortOrders = [
 ];
 
 const Restaurants = () => {
-  const { searchValue, nonDebouncedValue } = useRestaurantSearch();
+  const { searchValue } = useRestaurantSearch();
   const [sortType, setSortType] = useState("reviewCount");
   const [sortOrder, setSortOrder] = useState(-1);
   const [filtersOpen, setFiltersOpen] = useState(false);
   const filtersRef = useClickOutside(() => setFiltersOpen(false));
   const { push } = useRouter();
 
-  const { data: restaurants, loading: restaurantsLoading } = useGet(
+  const { data: restaurants } = useGet(
     `/api/restaurants${getUrlQueryString({
       search: searchValue && encodeURIComponent(searchValue.trim()),
       sort: sortType,

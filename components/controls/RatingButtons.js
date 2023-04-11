@@ -1,6 +1,6 @@
 import { useField, useFormikContext } from "formik";
 import { useEffect, useState } from "react";
-import { getRatingColor, ratingColors } from "../../data/ratingColors";
+import { getRatingColor } from "../../data/ratingColors";
 import Color from "color";
 import { X } from "react-feather";
 

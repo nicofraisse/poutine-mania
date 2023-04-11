@@ -1,9 +1,7 @@
 import Link from "next/link";
-import React, { useCallback, useState } from "react";
-import { Edit3, X, User, ChevronLeft, ChevronRight } from "react-feather";
-import Modal from "react-responsive-modal";
+import React, { useState } from "react";
+import { Edit3, User } from "react-feather";
 import { Image } from "./Image";
-import RatingPill from "./RatingPill";
 import { formatDate } from "lib/formatDate";
 
 import { useCurrentUser } from "../lib/useCurrentUser";

@@ -13,7 +13,6 @@ import { useRouter } from "next/router";
 import { useRestaurantSearch } from "./context/RestaurantSearchProvider";
 import { toast } from "react-hot-toast";
 import classNames from "classnames";
-import { BrandLogo } from "./BrandLogo";
 import { SurpriseButton } from "components/SurpriseButton";
 import Skeleton from "react-loading-skeleton";
 
@@ -27,8 +26,7 @@ const Header = ({ toggleMobileSidebar }) => {
   const { openLogin } = useLoginForm();
   const [showSearchBar, setShowSearchBar] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const { nonDebouncedValue, searchValue, setSearchValue } =
-    useRestaurantSearch();
+  const { nonDebouncedValue, setSearchValue } = useRestaurantSearch();
   const currentUser = session?.user;
 
   const BACKABLE_PAGE_PROPS = {

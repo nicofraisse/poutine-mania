@@ -1,9 +1,6 @@
-import classNames from "classnames";
 import { lowerCase } from "lodash";
-import { Search } from "react-feather";
-import Spinner from "./Spinner";
 
-const Input = ({ className, value, type, loading, handleSearch, ...props }) => {
+const Input = ({ value, type, ...props }) => {
   const placeholder =
     props.placeholder || `Enter ${lowerCase(props.name)} here`;
   if (type === "textarea") {

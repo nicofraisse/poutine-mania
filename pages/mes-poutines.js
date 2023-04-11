@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useGet } from "../lib/useAxios";
 import { useCurrentUser } from "../lib/useCurrentUser";
-import Spinner from "components/Spinner";
 
 import { EatenRestaurantCard } from "../components/EatenRestaurantCard";
 import Skeleton from "react-loading-skeleton";

@@ -21,7 +21,7 @@ async function database(req, _, next) {
       };
     });
     cached.conn = await cached.promise;
-    console.log(`Connection to database ${process.env.MONGO_URI} successful`);
+    console.log(`Connection to database successful`);
   }
 
   req.dbClient = cached.conn.client;
@@ -30,21 +30,4 @@ async function database(req, _, next) {
   return next();
 }
 
-async function getDb() {
-  if (!cached.promise) {
-    console.log("No cached database found. Connecting...");
-    cached.promise = mongoClient.connect().then((client) => {
-      return {
-        client,
-        db: client.db(process.env.MONGODB_DB),
-      };
-    });
-    cached.conn = await cached.promise;
-    console.log(`Connection to database ${process.env.MONGO_URI} successful`);
-  }
-
-  return cached.conn.db;
-}
-
 export default database;
-export { getDb };

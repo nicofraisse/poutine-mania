@@ -5,9 +5,34 @@ import * as Yup from "yup";
 import Form from "components/Form";
 import Field from "components/Field";
 import { useLoginForm } from "../context/LoginFormProvider";
+import { signInNewWindow } from "lib/signInNewWindow";
 
 const Login = ({ onSubmit, redirect, setEmailToConfirm }) => {
   const { openSignup, closeLogin } = useLoginForm();
+
+  // ***** For custom postlogin page *****
+
+  // const options = {
+  //   redirect: false,
+  //   callbackUrl: `${window.location.origin}/oauth-callback`,
+  // };
+
+  // useEffect(() => {
+  //   const handleMessage = (event) => {
+  //     if (
+  //       event.origin === window.location.origin &&
+  //       event.data.type === "oauth-callback"
+  //     ) {
+  //       // Redirect the main window to the callback URL
+  //       window.location.href = event.data.url;
+  //     }
+  //   };
+
+  //   window.addEventListener("message", handleMessage);
+  //   return () => {
+  //     window.removeEventListener("message", handleMessage);
+  //   };
+  // }, []);
 
   const options = {
     redirect: false,
@@ -65,7 +90,7 @@ const Login = ({ onSubmit, redirect, setEmailToConfirm }) => {
             variant="white"
             className="w-full mb-4"
             bgClassName="bg-white"
-            onClick={() => signIn("google", options)}
+            onClick={() => signInNewWindow("google", options, false)}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -107,7 +132,7 @@ const Login = ({ onSubmit, redirect, setEmailToConfirm }) => {
             type="button"
             variant={VariantColor.blue}
             className="px-5 w-full text-white"
-            onClick={() => signIn("facebook", options)}
+            onClick={() => signInNewWindow("facebook", options, false)}
           >
             <svg
               width="32px"

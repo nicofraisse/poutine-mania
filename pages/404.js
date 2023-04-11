@@ -4,10 +4,6 @@ import Image from "next/image";
 const NotFound = () => {
   const router = useRouter();
 
-  const goBack = () => {
-    router.back();
-  };
-
   const goToHomepage = () => {
     router.push("/");
   };
