@@ -89,7 +89,6 @@ const Login = ({ onSubmit, redirect, setEmailToConfirm }) => {
             type="button"
             variant="white"
             className="w-full mb-4"
-            bgClassName="bg-white"
             onClick={() => signInNewWindow("google", options, false)}
           >
             <svg

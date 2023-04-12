@@ -3,7 +3,12 @@ import NextImage from "next/image";
 import { Image as ImageIcon } from "react-feather";
 import classNames from "classnames";
 
-const Image = ({ alt, src, ...props }) => {
+const Image = ({ alt, src, forceNextImage, quality = 20, ...props }) => {
+  if (forceNextImage)
+    return (
+      <NextImage width="100%" height="100%" src={src} {...props} alt="image" />
+    );
+
   if (typeof src === "string") {
     if (!src.includes("http")) {
       return (
@@ -11,7 +16,7 @@ const Image = ({ alt, src, ...props }) => {
           cloudName={process.env.CLOUD_NAME}
           publicId={src}
           alt={alt}
-          quality={60}
+          quality={quality}
           {...props}
         />
       );

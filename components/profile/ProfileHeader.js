@@ -11,8 +11,6 @@ const cooltext =
 const ProfileHeader = ({ user }) => {
   const { currentUser } = useCurrentUser();
 
-  console.log(user);
-
   const isSkeleton = !user;
   return (
     <div className="text-slate-700 border bg-white py-6 px-4 sm:p-7 rounded mb-6">
@@ -26,6 +24,7 @@ const ProfileHeader = ({ user }) => {
           ) : user.image ? (
             <Image
               alt="user-image"
+              quality={50}
               src={user.image}
               className="rounded-full min-w-28 max-w-28 h-28 sm:min-w-32 sm:h-32 object-cover flex-shrink-0 object-center"
             />

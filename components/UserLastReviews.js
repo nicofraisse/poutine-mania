@@ -4,10 +4,10 @@ import ProfileReviewCard from "./ProfileReviewCard";
 const UserLastReviews = ({ reviews, user }) => {
   return (
     <div>
-      {(reviews || [{}, {}, {}, {}]).map((review) => (
+      {(reviews || [{}, {}, {}, {}]).map((review, i) => (
         <ProfileReviewCard
           review={review}
-          key={review?._id}
+          key={i}
           userName={user?.name}
           loading={!reviews}
         />

@@ -125,6 +125,7 @@ export const ReviewCard = ({
                       width="100%"
                       height="100%"
                       className="rounded-full h-full w-full object-cover object-center"
+                      quality={20}
                     />
                   ) : (
                     <User />

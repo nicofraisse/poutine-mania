@@ -133,6 +133,7 @@ const RestaurantBookmark = ({ restaurant }) => {
             src={restaurant.mainPhotos[0]}
             alt={`${restaurant.name}-photo`}
             className="h-[180px] w-full object-cover object-center rounded"
+            quality={20}
           />
         ) : (
           <ImageIcon className="text-gray-300" size={48} alt="placeholder" />

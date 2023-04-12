@@ -42,7 +42,8 @@ const User = () => {
   const { data: user } = useGet(`/api/users/${query.id}`, { skip: !query.id });
   const [selectedTab, handleSetSelectedTab] = useState(1);
   const { data: reviews, loading: reviewsLoading } = useGet(
-    `/api/users/${query.id}/reviews`
+    `/api/users/${query.id}/reviews`,
+    { skip: !query.id }
   );
 
   const tabs = [

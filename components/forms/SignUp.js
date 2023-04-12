@@ -45,7 +45,6 @@ const SignUp = ({ onSubmit }) => {
             type="button"
             variant="white"
             className="w-full mb-4"
-            bgClassName="bg-white"
             onClick={() => signIn("google")}
           >
             <svg

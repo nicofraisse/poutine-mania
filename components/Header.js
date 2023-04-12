@@ -142,6 +142,7 @@ const Header = ({ toggleMobileSidebar }) => {
                       src="/poutine.png"
                       width={1.506 * 50}
                       height={50}
+                      quality={1}
                     />
                   </a>
                 </Link>
@@ -219,6 +220,7 @@ const Header = ({ toggleMobileSidebar }) => {
                         alt="user-image"
                         src={currentUser.image}
                         className="rounded-full object-cover object-center h-full w-full"
+                        quality={30}
                       />
                     ) : (
                       <User className="text-white" size={30} />

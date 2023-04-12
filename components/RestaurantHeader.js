@@ -31,6 +31,7 @@ const RestaurantHeader = ({ restaurant }) => {
           {images?.[0] ? (
             <Image
               src={images[0]}
+              quality={50}
               className="w-full h-full object-cover object-center"
               alt="restaurant-main-image-1"
             />
@@ -44,6 +45,7 @@ const RestaurantHeader = ({ restaurant }) => {
           {images?.[1] ? (
             <Image
               src={images[1]}
+              quality={50}
               className="w-full h-full object-cover object-center"
               alt="restaurant-main-image-2"
             />
@@ -57,6 +59,7 @@ const RestaurantHeader = ({ restaurant }) => {
           {images?.[2] ? (
             <Image
               src={images[2]}
+              quality={50}
               className="w-full h-full object-cover object-center"
               alt="restaurant-main-image-3"
             />

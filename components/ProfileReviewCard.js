@@ -66,7 +66,7 @@ const ProfileReviewCard = ({ review, isIndex, userName, loading }) => {
   }
 
   return (
-    <>
+    <div className="max-w-[540px]">
       <div className="text-slate-400 flex sm:justify-between items-start text-sm">
         <div className="flex">
           {isIndex && (
@@ -76,6 +76,7 @@ const ProfileReviewCard = ({ review, isIndex, userName, loading }) => {
                   alt="user-image"
                   src={review.user.image}
                   className="rounded-full h-6 min-w-6 max-w-6 object-cover object-center"
+                  quality={10}
                 />
               ) : (
                 <div className="h-6 min-w-6 rounded-full bg-slate-300 flex items-center justify-center translate-y-[-2px]">
@@ -148,7 +149,7 @@ const ProfileReviewCard = ({ review, isIndex, userName, loading }) => {
 
               return (
                 <div
-                  key={photo}
+                  key={index}
                   className={imageContainerClass}
                   onClick={() => setImgModalOpen(index)}
                 >
@@ -156,6 +157,7 @@ const ProfileReviewCard = ({ review, isIndex, userName, loading }) => {
                     src={photo}
                     alt="poutine-user-photo"
                     className="object-cover object-center absolute top-0 left-0 w-full h-full"
+                    quality={50}
                   />
                 </div>
               );
@@ -187,7 +189,7 @@ const ProfileReviewCard = ({ review, isIndex, userName, loading }) => {
         restaurant={review.restaurants[0].name}
         initialIndex={imgModalOpen}
       />
-    </>
+    </div>
   );
 };
 

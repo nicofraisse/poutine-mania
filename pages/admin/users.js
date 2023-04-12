@@ -73,7 +73,8 @@ const Users = () => {
           {users.map((user) => (
             <tr
               key={user._id}
-              className="hover:bg-slate-50 tansition-colors duration-100"
+              className="hover:bg-slate-50 tansition-colors duration-100 cursor-pointer"
+              onClick={() => push(`/users/${user._id}`)}
             >
               <td className="border-b border-slate-100 p-2 pl-8 text-slate-500">
                 {user.isAdmin ? "Yes" : "No"}

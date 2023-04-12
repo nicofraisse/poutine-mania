@@ -1,5 +1,5 @@
 import RatingPill from "components/RatingPill";
-import { Image as ImageIcon, MapPin } from "react-feather";
+import { MapPin } from "react-feather";
 import { repeat } from "lodash";
 import { useRestaurantCardHover } from "./context/RestaurantCardHoverProvider";
 import classNames from "classnames";
@@ -61,11 +61,14 @@ const RestaurantCard = ({ restaurant }) => {
             ) : loading ? (
               <Skeleton className="h-full relative bottom-1" height="100%" />
             ) : (
-              <div className="bg-gray-100">
-                <ImageIcon
-                  className="text-gray-300"
-                  size={48}
-                  alt="placeholder"
+              <div className="bg-gray-100 w-full h-full flex items-center justify-center rounded">
+                <Image
+                  forceNextImage
+                  src="/poutinebw.png"
+                  width={64}
+                  height={64}
+                  alt="empty-poutine"
+                  className="opacity-30"
                 />
               </div>
             )}

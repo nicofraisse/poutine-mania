@@ -19,12 +19,42 @@ import { filterBlankRatings } from "lib/filterBlankRatings";
 import { MIN_COMMENT_CHARS } from "../../data/minCommentLength";
 import { AlmostThere } from "../display/messages/AlmostThere";
 import { useLoginForm } from "../context/LoginFormProvider";
+import classNames from "classnames";
 
 const ratingFields = [
-  { name: "friesRating", label: "Frites" },
-  { name: "cheeseRating", label: "Fromage" },
-  { name: "sauceRating", label: "Sauce" },
-  { name: "portionRating", label: "Rapport portion/prix" },
+  {
+    name: "friesRating",
+    label: (
+      <>
+        <span className="text-xl relative top-[1px] mr-[7px]">🍟</span>Frites
+      </>
+    ),
+  },
+  {
+    name: "cheeseRating",
+    label: (
+      <>
+        <span className="text-xl relative top-[1px] mr-[7px]">🧀</span>Fromage
+      </>
+    ),
+  },
+  {
+    name: "sauceRating",
+    label: (
+      <>
+        <span className="text-xl relative top-[1px] mr-[7px]">🍯</span>Sauce
+      </>
+    ),
+  },
+  {
+    name: "portionRating",
+    label: (
+      <>
+        <span className="text-xl relative top-[1px] mr-[7px]">🤑</span>Rapport
+        portion/prix
+      </>
+    ),
+  },
 ];
 
 const buildRatingValidation = (label) =>
@@ -79,6 +109,7 @@ export const RateRestaurantNew = ({
   onSubmit,
   restaurantId,
   existingReview,
+  loading,
 }) => {
   const { currentUser } = useCurrentUser();
   const {
@@ -168,7 +199,9 @@ export const RateRestaurantNew = ({
       initialValues={initialValues}
       onSubmit={handleSubmit}
       validationSchema={validationSchema}
-      className="sm:w-[460px]"
+      className={classNames("sm:w-[460px]", {
+        "opacity-50 animate-pulse cursor-wait": loading,
+      })}
     >
       {({ isSubmitting, values, errors, touched }) => {
         const nbFilledFields = ratingFields
@@ -182,7 +215,8 @@ export const RateRestaurantNew = ({
             : null;
 
         const disableSubmitBtn =
-          nbFilledFields === 0 && values.comment.trim().length === 0;
+          loading ||
+          (nbFilledFields === 0 && values.comment.trim().length === 0);
 
         return (
           <>

@@ -142,6 +142,7 @@ export const EatenRestaurantCard = ({ restaurant }) => {
                     alt="poutine-user-photo"
                     className="cursor-pointer rounded mr-3 mt-3 max-h-[140px] max-w-[240px] object-cover"
                     onClick={() => setImgModalOpen(index)}
+                    quality={20}
                   />
                 );
               })}

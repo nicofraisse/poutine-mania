@@ -61,7 +61,6 @@ const Noter = () => {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           type="text"
-          className="font-bold text-sm"
           placeholder="Quelle poutine voulez-vous noter?"
           loading={searchResultsLoading}
         />

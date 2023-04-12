@@ -18,7 +18,7 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit, isBanner }, ref) => {
   const [showSearchSuggestions, setShowSearchSuggestions] = useState(false);
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
 
-  const { data: restaurants, loading: restaurantsLoading } = useGet(
+  const { data: restaurants } = useGet(
     `/api/restaurants${getUrlQueryString({
       search: searchValue?.trim(),
       sort: "reviewCount",
@@ -26,10 +26,6 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit, isBanner }, ref) => {
       limit: 6,
     })}`
   );
-
-  useEffect(() => {
-    console.log("GETTING");
-  }, [restaurants]);
 
   const inputRef = useRef();
   const restaurantsRef = useRef(restaurants);
@@ -145,7 +141,6 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit, isBanner }, ref) => {
             "py-3 px-12 rounded-full border-slate-300 shadow-md": isBanner,
           })}
           placeholder="Rechercher une poutinerie"
-          defaultValue={nonDebouncedValue ?? ""}
           value={nonDebouncedValue ?? ""}
           onChange={(e) => {
             setShowSearchSuggestions(true);

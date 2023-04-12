@@ -36,14 +36,16 @@ export function RecentActivity({ heightClass, isScrollable }) {
       )}
       onScroll={handleScroll}
     >
-      {(loading ? [{}, {}, {}, {}] : allReviews).map((review) => (
-        <ProfileReviewCard
-          loading={loading}
-          review={review}
-          key={review._id}
-          isIndex
-        />
-      ))}
+      {(loading && paginationSkip === 0 ? [{}, {}, {}, {}] : allReviews).map(
+        (review, i) => (
+          <ProfileReviewCard
+            loading={loading && paginationSkip === 0}
+            review={review}
+            key={i}
+            isIndex
+          />
+        )
+      )}
       <div className="h-[72px]">
         {loading && (
           <div className="flex justify-center">

@@ -25,7 +25,9 @@ const UserRanking = ({ reviews, loading }) => {
     };
   });
 
-  const uniqueAggr = uniqBy(aggr, (r) => r._id);
+  const uniqueAggr = uniqBy(aggr, (r) => r._id).filter(
+    (r) => !isNaN(r.avgRating)
+  );
   const sortedAggr = orderBy(uniqueAggr, "avgRating", "desc");
   if (reviews && reviews.length === 0)
     return <EmptyState hideButton title="Aucune poutine mangée" />;
@@ -57,7 +59,7 @@ const UserRanking = ({ reviews, loading }) => {
           {(loading ? [{}, {}, {}, {}] : sortedAggr).map((r, i) => {
             const isSkeleton = loading;
             return (
-              <tr key={r._id}>
+              <tr key={i}>
                 <td className="border-b border-slate-100 pr-2 sm:p-3 pl-3 sm:pl-6 text-enter text-lg sm:text-3xl text-stone-300 font-bold">
                   {isSkeleton ? (
                     <Skeleton width={40} className="mr-2" />
