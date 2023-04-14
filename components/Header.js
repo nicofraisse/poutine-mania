@@ -17,7 +17,6 @@ import { SurpriseButton } from "components/SurpriseButton";
 import Skeleton from "react-loading-skeleton";
 
 const Header = ({ toggleMobileSidebar }) => {
-  // const { currentUser, loading } = useCurrentUser();
   const [session, loading] = useSession();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const toggleRef = createRef();
@@ -209,7 +208,7 @@ const Header = ({ toggleMobileSidebar }) => {
                   height={44}
                 />
               ) : currentUser ? (
-                <div className="relative mx-4 lg:mx-5 z-20">
+                <div className="relative mx-4 lg:mx-5 z-30">
                   <div
                     className="h-[44px] w-[44px] bg-gray-400 rounded-full cursor-pointer hover:opacity-80 flex items-center justify-center"
                     onClick={() => setDropdownOpen(!dropdownOpen)}

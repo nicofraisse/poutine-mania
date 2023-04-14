@@ -3,7 +3,6 @@ import React from "react";
 import { Home, Info, Lock, Map, User, Star, CheckCircle } from "react-feather";
 import { useRouter } from "next/router";
 import classNames from "classnames";
-import { useCurrentUser } from "lib/useCurrentUser";
 import ConditionalWrapper from "components/ConditionalWrapper";
 import { useRequireLogin } from "../../lib/useRequireLogin";
 import { useSidebarData } from "../context/SidebarDataProvider";

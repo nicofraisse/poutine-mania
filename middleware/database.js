@@ -30,4 +30,4 @@ async function database(req, _, next) {
   return next();
 }
 
-export default database;
+export { database };

@@ -5,11 +5,11 @@ import { useState, useEffect } from "react";
 import { Trash, Edit } from "react-feather";
 import Link from "next/link";
 import toast from "react-hot-toast";
-import Spinner from "../../components/Spinner";
+import Spinner from "components/Spinner";
 import { format } from "date-fns";
-import { getUrlQueryString } from "../../lib/getUrlqueryString";
-import { ToggleSwitch } from "../../components/controls/ToggleSwitch";
-import { useCurrentUser } from "../../lib/useCurrentUser";
+import { getUrlQueryString } from "lib/getUrlqueryString";
+import { ToggleSwitch } from "components/controls/ToggleSwitch";
+import { useCurrentUser } from "lib/useCurrentUser";
 import { formatCity, formatCountry } from "lib/formatAddress";
 
 const Restaurants = () => {
@@ -47,7 +47,7 @@ const Restaurants = () => {
     await axios
       .post(`/api/restaurants/${id}/approve`, { approved })
       .then(() => {
-        toast.success("Approved!");
+        toast.success(approved ? "Approved!" : "Unapproved!");
       })
       .catch((e) => toast.error(e.message));
   };

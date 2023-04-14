@@ -235,10 +235,13 @@ const RestaurantForm = ({ type }) => {
             <Button
               loading={isSubmitting}
               onClick={() => {
-                if (Object.keys(errors).length > 0)
+                console.log(errors);
+                if (Object.keys(errors).length > 0) {
                   toast.error(
                     "Veuillez remplir tous les champs correctement (voir les erreurs plus haut)"
                   );
+                  toast.error(JSON.stringify(errors));
+                }
               }}
               className="bg-teal-500-300 px-4 py-1 rounded-lg shadoow w-40"
               type="submit"

@@ -1,6 +1,6 @@
 import nextConnect from "next-connect";
 import { ObjectId } from "mongodb";
-import database from "middleware/database";
+import { database } from "middleware/database";
 
 const handler = nextConnect();
 handler.use(database);

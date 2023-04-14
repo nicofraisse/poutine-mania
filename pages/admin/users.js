@@ -5,6 +5,8 @@ import Spinner from "../../components/Spinner";
 import { useCurrentUser } from "../../lib/useCurrentUser";
 import { useRouter } from "next/dist/client/router";
 import { format } from "date-fns";
+import { toast } from "react-hot-toast";
+import { ToggleSwitch } from "components/controls/ToggleSwitch";
 
 const Users = () => {
   const [users, setUsers] = useState([]);
@@ -29,6 +31,15 @@ const Users = () => {
       });
   }, []);
 
+  const handleApprove = async (id, isAdmin) => {
+    await axios
+      .post(`/api/users/${id}/make-admin`, { isAdmin })
+      .then(() => {
+        toast.success(isAdmin ? "Made admin!" : "Unmade admin!");
+      })
+      .catch((e) => toast.error(e.message));
+  };
+
   if (loading || !users) return <Spinner />;
 
   if (currentUser && !currentUser.isAdmin) {
@@ -44,7 +55,7 @@ const Users = () => {
         <thead>
           <tr>
             <th className="bg-slate-100 border-b font-medium p-4 pl-8 pb-3 text-slate-500 text-left">
-              isAdmin
+              Admin
             </th>
             <th className="bg-slate-100 border-b font-medium p-4 pl-8 pb-3 text-slate-500 text-left">
               Email
@@ -73,11 +84,14 @@ const Users = () => {
           {users.map((user) => (
             <tr
               key={user._id}
-              className="hover:bg-slate-50 tansition-colors duration-100 cursor-pointer"
-              onClick={() => push(`/users/${user._id}`)}
+              className="hover:bg-slate-50 tansition-colors duration-100"
+              // onClick={() => push(`/users/${user._id}`)}
             >
               <td className="border-b border-slate-100 p-2 pl-8 text-slate-500">
-                {user.isAdmin ? "Yes" : "No"}
+                <ToggleSwitch
+                  onChange={() => handleApprove(user._id, !user.isAdmin)}
+                  checked={user.isAdmin}
+                />
               </td>
               <td className="border-b border-slate-100 p-2 pl-8 text-slate-500 max-w-60 truncate">
                 {user.email}

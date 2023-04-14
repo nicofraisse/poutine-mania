@@ -1,6 +1,6 @@
 import nextConnect from "next-connect";
 import { connectToDatabase } from "../../../lib/db";
-import database from "../../../middleware/database";
+import { database } from "../../../middleware/database";
 
 const handler = nextConnect();
 

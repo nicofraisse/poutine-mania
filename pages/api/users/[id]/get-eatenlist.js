@@ -1,5 +1,5 @@
 import { ObjectId } from "mongodb";
-import database from "middleware/database";
+import { database } from "middleware/database";
 import nextConnect from "next-connect";
 
 const handler = nextConnect();
