@@ -9,6 +9,7 @@ import { RestaurantSearchProvider } from "../components/context/RestaurantSearch
 import Head from "next/head";
 import { CookiesProvider } from "react-cookie";
 import { SidebarDataProvider } from "../components/context/SidebarDataProvider";
+import { Analytics } from "@vercel/analytics/react";
 
 function App({ Component, pageProps }) {
   return (
@@ -48,6 +49,8 @@ function App({ Component, pageProps }) {
           </LoginFormProvider>
         </Provider>
       </CookiesProvider>
+
+      <Analytics />
     </>
   );
 }

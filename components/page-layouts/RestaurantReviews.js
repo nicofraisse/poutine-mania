@@ -311,7 +311,7 @@ const RestaurantReviews = ({ restaurant }) => {
           setDeleteFromEatenlist(true);
         }}
       >
-        <div className="w-xs p-2">
+        <div className="sm:w-xs p-2">
           <div className="text-3xl font-black mb-3">Supprimer l&apos;avis?</div>
           <div className="text-slate-400 mb-4 border border-slate-300 text-sm bg-slate-50 p-2 rounded my-2 flex items-center">
             <Info className="inline mr-2" size={16} />

@@ -302,17 +302,17 @@ const MapMap = ({ restaurants, isShowPage }) => {
     const locations = {
       Montreal: {
         latitude: 45.53,
-        longitude: -73.69,
+        longitude: -73.61,
         zoom: 10,
       },
       QuebecCity: {
-        longitude: -71.21225932890741,
-        latitude: 46.857649627704205,
+        longitude: -71.23225932890741,
+        latitude: 46.837649627704205,
         zoom: 9.997052251475678,
       },
       QuebecRegion: {
-        longitude: -71.13625096725893,
-        latitude: 49.42899423624456,
+        longitude: -72.65,
+        latitude: 47.28,
         zoom: 5.254900910397835,
       },
     };
