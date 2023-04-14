@@ -6,34 +6,33 @@ Social website to rate & review poutines
 - `npm run dev`
 
 ## Todo
-- [ ] Enhance mobile UI (more relevant home page content with clear CTAs, smaller text, better harmony in spacing between elements etc)
-- [ ] Test on mobile browsers including FB, IG & LinkedIn native browsers 
-- [ ] Favorite a restaurant feature & page
+- [X} Database pooling
+- [ ] Test mobile browser compatibility including FB, IG & LinkedIn native browsers 
 - [X] "Add towatch list"/"poutines to try" feature & page
 - [ ] Edit profile (name, profile photo, password, deactivate/delete account)
 - [ ] Follow user feature
 - [ ] About us/contact page
-- [ ] Protect login-only/admin-only endpoints in backend w/ middleware
+- [ ] Create isLoggedIn and isAdmin BE middleware
 - [ ] Add backend validation (Joi)
 - [ ] Refetch data without refreshing when logging in, creating account, adding a review, etc.
 - [ ] Cache the current user
-- [ ] Skeleton screens instead of spinner
+- [X] Skeleton screens instead of spinner
 - [ ] Hover 150ms transition for all color & opacity changes
-- [ ] Add filtering in restaurants page (eg. only show restaurants with ratings > 7 & dine-in category
-- [ ] Email verification for email signup
+- [ ] Add filtering in restaurants page (eg. only show restaurants with ratings > 7 & dine-in category)
+- [X] Email verification for email signup
 - [ ] Email based password change
 - [ ] Upvote / downvote / report review
 
 Reviews:
-- [ ] Enable adding multiple photos to a review instead of just one
+- [X] Enable adding multiple photos to a review instead of just one
 - [ ] Add takeout/dine-in pill select in review form
-- [ ] Fries (rating + comment)
-- [ ] Sauce (rating + comment)
-- [ ] Cheese (rating + comment)
+- [X] Fries 
+- [X] Sauce 
+- [X] Cheese 
 - [ ] Poutine name + Price of poutine
-More inspiration here for rating criteria http://www.routedelapoutine.com/
+Inspiration for rating criteria http://www.routedelapoutine.com/
 
 Restaurants
-- [ ] Add isShutDown boolean to restaurants and adapt UI for restaurants that are shut down
-- [ ] Better looking category tag pills in restaurant card and show page
+- [ ] Add isPermanentlyClosed boolean to restaurants and adapt UI for restaurants that are shut forever
+- [X] Better looking category tag pills in restaurant card and show page
 - [X] Add isApproved boolean to restaurants - A user can create & review a new restaurant but it will only be visible by him until admin approves it
