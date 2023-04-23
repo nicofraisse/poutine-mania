@@ -1,7 +1,7 @@
 Social website to rate & review poutines
 
 ## Getting Started
-- Add environment variables
+- Add environment variables in `/env.development`
 - `npm i`
 - `npm run dev`
 
