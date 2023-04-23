@@ -6,7 +6,7 @@ Social website to rate & review poutines
 - `npm run dev`
 
 ## Todo
-- [X} Database pooling
+- [X] Database pooling
 - [ ] Test compatibility with various mobile browsers
 - [X] "Add towatch list"/"poutines to try" feature & page
 - [X] Edit profile (name, profile photo, bio, deactivate/delete account)
