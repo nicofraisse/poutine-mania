@@ -36,11 +36,12 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit, isBanner }, ref) => {
       setShowSearchSuggestions(false);
     }, 200);
     const trimmedSearchValue = nonDebouncedValue?.trim();
-    push(
-      trimmedSearchValue
-        ? `/restaurants?search=${encodeURIComponent(trimmedSearchValue)}`
-        : `/restaurants`
-    );
+    console.log({ searchValue, nonDebouncedValue });
+    // push(
+    //   trimmedSearchValue
+    //     ? `/restaurants?search=${encodeURIComponent(trimmedSearchValue)}`
+    //     : `/restaurants`
+    // );
     onSubmit && onSubmit();
   };
 
@@ -128,12 +129,11 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit, isBanner }, ref) => {
   return (
     <form
       className="relative grow sm:ml-6 mr-1 lg:mx-0"
-      onSubmit={handleSearch}
       ref={ref}
       onFocus={handleFocus}
       onBlur={handleBlur}
     >
-      <div className={"relative "}>
+      <div className={"relative"}>
         <input
           className={classNames("w-full", {
             "border-2 border-slate-300 rounded-md py-[8px] px-10 text-sm font-bold ":
