@@ -1,30 +1,29 @@
 Social website to rate & review poutines
 
 ## Getting Started
-- Add environment variables
+- Add environment variables in `.env.development`
 - `npm i`
 - `npm run dev`
 
 ## Todo
-- [X} Database pooling
-- [ ] Test mobile browser compatibility including FB, IG & LinkedIn native browsers 
+- [X] Database pooling
+- [ ] Test compatibility with various mobile browsers
 - [X] "Add towatch list"/"poutines to try" feature & page
-- [ ] Edit profile (name, profile photo, password, deactivate/delete account)
+- [X] Edit profile (name, profile photo, bio, deactivate/delete account)
 - [ ] Follow user feature
 - [ ] About us/contact page
 - [ ] Create isLoggedIn and isAdmin BE middleware
 - [ ] Add backend validation (Joi)
 - [ ] Refetch data without refreshing when logging in, creating account, adding a review, etc.
-- [ ] Cache the current user
+- [X] Cache the current user
 - [X] Skeleton screens instead of spinner
-- [ ] Hover 150ms transition for all color & opacity changes
 - [ ] Add filtering in restaurants page (eg. only show restaurants with ratings > 7 & dine-in category)
 - [X] Email verification for email signup
 - [ ] Email based password change
 - [ ] Upvote / downvote / report review
 
 Reviews:
-- [X] Enable adding multiple photos to a review instead of just one
+- [X] Multi-photo upload
 - [ ] Add takeout/dine-in pill select in review form
 - [X] Fries 
 - [X] Sauce 
