@@ -20,8 +20,11 @@ const RestaurantHeader = ({ restaurant }) => {
 
   const images =
     restaurant &&
-    flatten(restaurant.reviews.map((r) => r.photos)).filter(Boolean);
+    flatten(restaurant.reviews.map((r) => r.photos))
+      .filter(Boolean)
+      .filter((i) => i !== "null");
 
+  console.log(images);
   const isSkeleton = !restaurant;
 
   return (

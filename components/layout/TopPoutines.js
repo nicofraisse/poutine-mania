@@ -27,7 +27,7 @@ const TopPoutines = ({ restaurants }) => {
         </p>
 
         <h2 className="mt-4 mb-3 text-lg sm:text-xl font-semibold">
-          À la recherche d'une poutine près de toi ou selon tes envies? 🕵️‍♀️
+          À la recherche d'une poutine près de toi ou selon tes envies?
         </h2>
 
         <p className="my-1 text-sm sm:text-md leading-relaxed">
@@ -39,7 +39,7 @@ const TopPoutines = ({ restaurants }) => {
           </Link>
           ! 🗺️ Choisis parmi les restos les mieux notés, selon le type
           d'établissement, la note sur 10 et bien d'autres critères. En avant, à
-          la découverte de la poutine parfaite! 🚀
+          la découverte de la poutine parfaite! 🕵️‍♀️
         </p>
       </div>
 

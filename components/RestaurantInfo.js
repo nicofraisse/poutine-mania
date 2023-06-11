@@ -5,7 +5,6 @@ import Skeleton from "react-loading-skeleton";
 
 export const RestaurantInfo = ({ showMap, restaurant, setShowMap }) => {
   const isSkeleton = !restaurant;
-  // const isSkeleton = true;
   return (
     <>
       {showMap &&

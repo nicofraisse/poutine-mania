@@ -7,21 +7,29 @@ const APropos = () => {
     <div className="text-center flex flex-col justify-center item-center h-screen-minus-navbar">
       <h1 className="-mt-5 mb-10 font-black text-4xl">À Propos</h1>
       <div className="max-w-2xl mx-auto mb-2">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-        occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-        mollit anim id est laborum.
+        <p className="text-left mb-4">
+          Bienvenue sur la référence pour tous les amateurs de poutine! Ici,
+          découvrez, évaluez et partagez vos poutines favorites dans votre
+          quartier ou ailleurs. Depuis notre première bouchée à Montréal, nous
+          sommes devenus de véritables passionnés de poutine et avons créé ce
+          site pour vous aider à trouver votre prochaine expérience culinaire.
+          Merci de nous rejoindre dans cette aventure gourmande!
+        </p>
+        <p className="text-left">
+          Pour toutes <b>questions</b>, <b>suggestions d&apos;amélioration</b>,{" "}
+          <b>problèmes à signaler</b>, ou si vous voulez simplement discuter de
+          poutine, n&apos;hésitez pas à nous contacter en cliquant sur le bouton
+          ci-dessous.
+        </p>
       </div>
+
       <a href="mailto:info@nicolasfraisse.com">
         <Button variant="white" className="my-12 w-[128px] mx-auto">
           <Mail className="mr-2" />
           Contact
         </Button>
       </a>
-      <div className="mb-4">© Poutine Mania | 2022</div>
+      <div className="mb-4">© Poutine Mania | 2022-2023</div>
     </div>
   );
 };

@@ -12,13 +12,17 @@ import { formatDate } from "../lib/formatDate";
 import { flatten } from "lodash";
 import { ImageModal } from "./ImageModal";
 import Skeleton from "react-loading-skeleton";
+import { useSession } from "next-auth/client";
 
 export const EatenRestaurantCard = ({ restaurant }) => {
+  const [currentUser] = useSession();
   const [imgModalOpen, setImgModalOpen] = useState(false);
   const isSkeleton = restaurant ? Object.keys(restaurant).length === 0 : {};
   const photos = isSkeleton
     ? []
-    : flatten(restaurant?.reviews?.map((r) => r.photos)).filter(Boolean);
+    : flatten(restaurant?.reviews?.map((r) => r.photos))
+        .filter(Boolean)
+        .filter((i) => i !== "null");
 
   return (
     <>
@@ -154,11 +158,12 @@ export const EatenRestaurantCard = ({ restaurant }) => {
           )}
         </div>
       </div>
+      {console.log(currentUser)}
       <ImageModal
         isOpen={imgModalOpen !== false}
         onClose={() => setImgModalOpen(false)}
         images={photos}
-        user={"User"}
+        user={currentUser?.user?.name}
         restaurant={restaurant?.name}
         initialIndex={imgModalOpen}
       />

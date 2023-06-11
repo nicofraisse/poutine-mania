@@ -25,6 +25,8 @@ const MarkerAndPopup = ({
   closeOtherPopups,
   isShowPage,
   isSmallMarker,
+  mapRef,
+  viewState,
 }) => {
   // const [showPopup, setShowPopup] = useState(false)
   const { hoveredId } = useRestaurantCardHover();
@@ -36,6 +38,11 @@ const MarkerAndPopup = ({
       closePopup(popupId);
     } else {
       openPopup(popupId);
+      mapRef.current.flyTo({
+        center: [address.center[0], address.center[1]],
+        zoom: viewState.zoom,
+        duration: 1000,
+      });
     }
   };
 
@@ -137,6 +144,7 @@ const MarkerAndPopup = ({
         <Popup
           longitude={address.center[0]}
           latitude={address.center[1]}
+          dynamicPosition={true}
           anchor="bottom"
           offset={isSmallMarker ? 24 : 44}
           closeButton={false}
@@ -396,6 +404,8 @@ const MapMap = ({ restaurants, isShowPage }) => {
               closeOtherPopups={closeOtherPopups}
               closeAllPopups={closeAllPopups}
               isSmallMarker={isSmallMarker}
+              mapRef={mapRef}
+              viewState={viewState}
             />
           ))
         )}

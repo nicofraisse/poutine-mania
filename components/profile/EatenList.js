@@ -133,6 +133,7 @@ const EatenList = ({ userId }) => {
                   <div className="flex overflow-x-auto w-[548px] scrollbar-hide">
                     {flatten(r.reviews?.map((r) => r.photos))
                       .filter(Boolean)
+                      .filter((i) => i !== "null")
                       .map((photo) => {
                         return (
                           <Image
