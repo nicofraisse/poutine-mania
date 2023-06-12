@@ -10,8 +10,16 @@ import Head from "next/head";
 import { CookiesProvider } from "react-cookie";
 import { SidebarDataProvider } from "../components/context/SidebarDataProvider";
 import { Analytics } from "@vercel/analytics/react";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 function App({ Component, pageProps }) {
+  const { push, asPath } = useRouter();
+
+  useEffect(() => {
+    if (asPath.includes("jesus")) push("/users/640e4561a262b3d79edcfe45");
+  }, [asPath, push]);
+
   return (
     <>
       <Head>
