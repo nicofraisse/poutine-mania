@@ -168,7 +168,7 @@ export const ReviewCard = ({
         <div className="sm:basis-5/6 sm:w-5/6 pt-1 sm:pt-2 px-3 sm:px-0">
           <RatingSection review={review} />
           <p
-            className="text-slate-500 font-light break-words text-sm sm:text-md"
+            className="text-slate-500 font-light break-words text-sm sm:text-md whitespace-pre-wrap"
             style={{ width: 0, minWidth: "100%" }}
           >
             {review.comment || (
