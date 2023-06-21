@@ -6,7 +6,7 @@ async function createIndexes() {
     useUnifiedTopology: true,
   });
 
-  const db = client.db(process.env.MONGODB_DB);
+  const db = client.db(process.env.DB_NAME);
 
   // For pages/api/restaurants/index.js
   await db.collection("restaurants").createIndex({ name: "text" });

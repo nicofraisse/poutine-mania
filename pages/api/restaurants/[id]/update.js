@@ -1,9 +1,11 @@
 import { ObjectId } from "mongodb";
-import { connectToDatabase } from "../../../../lib/db";
+import { connectToDatabase } from "lib/db";
+import { generateRestaurantSlug } from "lib/generateRestaurantSlug";
 
 const handler = async (req, res) => {
   const client = await connectToDatabase();
   const db = await client.db();
+
   const updatedRestaurant = await db.collection("restaurants").updateOne(
     { _id: ObjectId(req.query.id) },
     {

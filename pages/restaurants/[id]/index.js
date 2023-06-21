@@ -18,7 +18,7 @@ import { connectToDatabase } from "../../../lib/db";
 import toast from "react-hot-toast";
 
 const Index = ({ SEO }) => {
-  const { query, reload, push } = useRouter();
+  const { query, reload, push, isFallback } = useRouter();
   const { data: restaurant, loading } = useGet(`/api/restaurants/${query.id}`, {
     skip: !query.id,
   });
