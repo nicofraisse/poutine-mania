@@ -26,18 +26,18 @@ const APropos = () => {
             de poutine, n&apos;hésitez pas à nous contacter en cliquant sur le
             bouton ci-dessous.
           </p>
+          <a href="mailto:info@nicolasfraisse.com">
+            <Button
+              variant="white"
+              className="mt-4 mb-1 w-[128px] mx-auto max-h-[56px]"
+            >
+              <Mail className="mr-2" />
+              Contact
+            </Button>
+          </a>
         </div>
 
-        <a href="mailto:info@nicolasfraisse.com">
-          <Button
-            variant="white"
-            className="my-12 w-[128px] mx-auto max-h-[56px]"
-          >
-            <Mail className="mr-2" />
-            Contact
-          </Button>
-        </a>
-        <div className="mb-4">© Poutine Mania | 2022-2023</div>
+        <div className="mb-4 mt-12">© Poutine Mania | 2022-2023</div>
       </div>
     </div>
   );
