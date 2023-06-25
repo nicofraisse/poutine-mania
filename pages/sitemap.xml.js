@@ -19,9 +19,7 @@ function generateSiteMap(restaurants) {
         .map(
           ({ slug }) =>
             `<url>
-              <loc>
-                ${BASE_URI}/restaurants/${slug}
-              </loc>
+              <loc>${BASE_URI}/restaurants/${slug}</loc>
             </url>
           `
         )
