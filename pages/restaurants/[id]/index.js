@@ -3,22 +3,21 @@ import { useRouter } from "next/router";
 import Spinner from "components/Spinner";
 import RestaurantReviews from "components/page-layouts/RestaurantReviews";
 import RestaurantHeader from "components/RestaurantHeader";
-import { ObjectId } from "mongodb";
 
 import { Edit, Info, Trash } from "react-feather";
 import { useEffect, useState } from "react";
 
-import { ReviewOverview } from "../../../components/ReviewOverview";
-import { RestaurantInfo } from "../../../components/RestaurantInfo";
-import { ToggleSwitch } from "../../../components/controls/ToggleSwitch";
+import { ReviewOverview } from "components/ReviewOverview";
+import { RestaurantInfo } from "components/RestaurantInfo";
+import { ToggleSwitch } from "components/controls/ToggleSwitch";
 import axios from "axios";
 import { useCurrentUser } from "lib/useCurrentUser";
 import Head from "next/head";
-import { connectToDatabase } from "../../../lib/db";
+import { connectToDatabase } from "lib/db";
 import toast from "react-hot-toast";
 
 const Index = ({ SEO }) => {
-  const { query, reload, push, isFallback } = useRouter();
+  const { query, reload, push } = useRouter();
   const { data: restaurant, loading } = useGet(`/api/restaurants/${query.id}`, {
     skip: !query.id,
   });
@@ -107,7 +106,7 @@ const Index = ({ SEO }) => {
                 <div>
                   <button
                     className="p-1 bg-gray-200 rounded xs:shadow hover:bg-gray-100 mx-2"
-                    onClick={() => push(`/restaurants/${restaurant._id}/edit`)}
+                    onClick={() => push(`/restaurants/${restaurant.slug}/edit`)}
                   >
                     <Edit size={20} />
                   </button>
@@ -148,7 +147,7 @@ export async function getStaticPaths() {
     .toArray();
 
   return {
-    paths: restaurants.map((r) => `/restaurants/${r._id}`),
+    paths: restaurants.map((r) => `/restaurants/${r.slug}`),
     fallback: true,
   };
 }
@@ -159,7 +158,7 @@ export async function getStaticProps({ params }) {
 
   const restaurant = await db
     .collection("restaurants")
-    .findOne({ _id: ObjectId(params.id) });
+    .findOne({ slug: params.id });
 
   return {
     props: {

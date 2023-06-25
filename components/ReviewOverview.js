@@ -148,7 +148,7 @@ export const ReviewOverview = ({ restaurant }) => {
         <Button
           height="sm"
           className="mx-auto mt-6 mb-2"
-          onClick={() => push(`/restaurants/${restaurant._id}/noter`)}
+          onClick={() => push(`/restaurants/${restaurant.slug}/noter`)}
         >
           <Edit3 size={20} className="mr-2" />
           Noter leur poutine

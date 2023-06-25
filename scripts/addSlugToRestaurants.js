@@ -1,5 +1,4 @@
 const { MongoClient, ObjectId } = require("mongodb");
-const _ = require("lodash");
 const { generateRestaurantSlug } = require("../lib/generateRestaurantSlug");
 
 async function createSlugsForAllRestaurants() {

@@ -125,7 +125,7 @@ const Edit = () => {
           })}
           className="max-w-sm p-4"
         >
-          {({ isSubmitting, errors }) => (
+          {({ isSubmitting }) => (
             <>
               <Field name="name" label="Nom d'utilisateur" />
 

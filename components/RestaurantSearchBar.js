@@ -165,7 +165,7 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit, isBanner }, ref) => {
                 !isBanner,
               "absolute top-3 right-4 text-slate-500": isBanner,
             })}
-            onMouseDown={(e) => {
+            onMouseDown={() => {
               setSearchValue("");
               inputRef.current.focus();
             }}
@@ -198,7 +198,7 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit, isBanner }, ref) => {
                   )}
                   key={r._id}
                   onMouseDown={() => {
-                    push(`/restaurants/${r._id}`);
+                    push(`/restaurants/${r.slug}`);
                   }}
                   onMouseEnter={() => {
                     setHighlightedIndex(index);

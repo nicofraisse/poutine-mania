@@ -1,6 +1,4 @@
-import { createIndexes } from "../../lib/db";
-
-export default async function handler(req, res) {
+export default async function handler() {
   // try {
   //   await createIndexes();
   //   console.log("Indexes created successfully");

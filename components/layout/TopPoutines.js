@@ -1,5 +1,4 @@
 import Spinner from "components/Spinner";
-import { useGet } from "lib/useAxios";
 import { Image as ImageIcon } from "react-feather";
 import { MapPin } from "react-feather";
 import classNames from "classnames";
@@ -19,15 +18,15 @@ const TopPoutines = ({ restaurants }) => {
           Top 10 poutines du Québec à savourer 🍟🧀🍯
         </h1>
         <p className="my-1 text-sm sm:text-md leading-relaxed">
-          Hey, fan de poutine! Viens t'éclater avec notre appli pour classer tes
-          poutines favorites! 🌟 Partage tes aventures gourmandes, explore
-          celles des autres et découvre des spots incroyables près de chez toi
-          ou ailleurs au Québec. Rejoins la bande des poutine-lovers et trouve
-          ta prochaine poutine coup de cœur! 💗
+          Hey, fan de poutine! Viens t&apos;éclater avec notre appli pour
+          classer tes poutines favorites! 🌟 Partage tes aventures gourmandes,
+          explore celles des autres et découvre des spots incroyables près de
+          chez toi ou ailleurs au Québec. Rejoins la bande des poutine-lovers et
+          trouve ta prochaine poutine coup de cœur! 💗
         </p>
 
         <h2 className="mt-4 mb-3 text-lg sm:text-xl font-semibold">
-          À la recherche d'une poutine près de toi ou selon tes envies?
+          À la recherche d&apos;une poutine près de toi ou selon tes envies?
         </h2>
 
         <p className="my-1 text-sm sm:text-md leading-relaxed">
@@ -38,8 +37,8 @@ const TopPoutines = ({ restaurants }) => {
             </span>
           </Link>
           ! 🗺️ Choisis parmi les restos les mieux notés, selon le type
-          d'établissement, la note sur 10 et bien d'autres critères. En avant, à
-          la découverte de la poutine parfaite! 🕵️‍♀️
+          d&apos;établissement, la note sur 10 et bien d&apos;autres critères.
+          En avant, à la découverte de la poutine parfaite! 🕵️‍♀️
         </p>
       </div>
 

@@ -53,7 +53,7 @@ const Item = ({
 };
 
 const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
-  const [session, loading] = useSession();
+  const [session] = useSession();
   const currentUser = session?.user;
   const requireLogin = useRequireLogin();
   const { sidebarEatenlistAmount, sidebarWatchlistAmount } = useSidebarData();

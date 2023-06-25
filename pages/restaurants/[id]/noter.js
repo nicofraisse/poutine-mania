@@ -3,7 +3,6 @@ import { useGet } from "lib/useAxios";
 import { useRouter } from "next/router";
 import RestaurantCard from "components/RestaurantCard";
 import { RateRestaurantNew } from "components/forms/RateRestaurantNew";
-import Skeleton from "react-loading-skeleton";
 
 const NoterRestaurant = () => {
   const { query, push } = useRouter();

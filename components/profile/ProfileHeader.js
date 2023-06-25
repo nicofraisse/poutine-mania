@@ -5,6 +5,7 @@ import { useCurrentUser } from "../../lib/useCurrentUser";
 import { Image } from "../Image";
 import Skeleton from "react-loading-skeleton";
 
+// eslint-disable-next-line
 const cooltext =
   "Et ainsi, je me suis tourné vers le Seigneur et j&apos;ai prié pour trouver un sens à ma vie. Et la poutine fut ma réponse divine, la bénédiction culinaire qui me guide sur ce chemin sacré.";
 

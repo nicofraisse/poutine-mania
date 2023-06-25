@@ -6,7 +6,6 @@ import { Image } from "../../components/Image";
 import { MessageCircle } from "react-feather";
 import Color from "color";
 import { ratingColors } from "../../data/ratingColors";
-import { round } from "lodash";
 import { formatRating } from "../../lib/formatRating";
 import Button from "../../components/Button";
 import { formatDate } from "../../lib/formatDate";
@@ -58,7 +57,7 @@ const EatenList = ({ userId }) => {
                 </div>
                 <div className="flex-grow relative">
                   <div className="flex justify-between">
-                    <Link href={`/restaurants/${r._id}`} passHref>
+                    <Link href={`/restaurants/${r.slug}`} passHref>
                       <a rel="noopener noreferrer">
                         <div className="font-bold text-base lg:text-lg text-teal-600 hover:underline">
                           {r.name}
@@ -82,7 +81,7 @@ const EatenList = ({ userId }) => {
                           </span>
                         </span>
                       ) : (
-                        <Link href={`/restaurants/${r._id}/noter`} passHref>
+                        <Link href={`/restaurants/${r.slug}/noter`} passHref>
                           <Button
                             height="xs"
                             className="text-normal"

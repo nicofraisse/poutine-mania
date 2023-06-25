@@ -52,7 +52,7 @@ export const EatenRestaurantCard = ({ restaurant }) => {
           {isSkeleton ? (
             <Skeleton width={180} height={20} />
           ) : (
-            <Link href={`/restaurants/${restaurant?._id}`} passHref>
+            <Link href={`/restaurants/${restaurant?.slug}`} passHref>
               <a rel="noopener noreferrer">
                 <div className="font-bold text-base lg:text-lg text-teal-600 hover:underline">
                   {restaurant.name}

@@ -23,7 +23,7 @@ const NotFound = () => {
         />
       </div>
       <p className="text-base sm:text-lg mb-6 text-gray-600">
-        Désolé, nous n'avons pas trouvé la page que vous recherchez.
+        Désolé, nous n&apos;avons pas trouvé la page que vous recherchez.
       </p>
       <div>
         <button

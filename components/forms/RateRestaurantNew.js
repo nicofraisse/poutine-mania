@@ -9,7 +9,6 @@ import * as Yup from "yup";
 import Form from "components/Form";
 import toast from "react-hot-toast";
 import Color from "color";
-import { round } from "lodash";
 import { formatRating } from "lib/formatRating";
 import { Check } from "react-feather";
 import { useCookies } from "react-cookie";

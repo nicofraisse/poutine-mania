@@ -13,7 +13,6 @@ import Color from "color";
 import { Image as CloudImage } from "components/Image";
 import { TagSection } from "./RestaurantCard";
 import { useRestaurantSearch } from "components/context/RestaurantSearchProvider";
-import Skeleton from "react-loading-skeleton";
 
 const MarkerAndPopup = ({
   restaurant,
@@ -160,7 +159,7 @@ const MarkerAndPopup = ({
         >
           <div
             onClick={() =>
-              !isShowPage && window.open(`/restaurants/${restaurant._id}`)
+              !isShowPage && window.open(`/restaurants/${restaurant.slug}`)
             }
           >
             {image && !isShowPage && (

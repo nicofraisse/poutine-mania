@@ -106,7 +106,7 @@ const ProfileReviewCard = ({ review, isIndex, userName, loading }) => {
                 </>
               )}
               noté{" "}
-              <Link href={`/restaurants/${review.restaurants[0]._id}`}>
+              <Link href={`/restaurants/${review.restaurants[0].slug}`}>
                 <a className="text-teal-500 font-bold hover:text-teal-600">
                   {review.restaurants[0].name}
                 </a>

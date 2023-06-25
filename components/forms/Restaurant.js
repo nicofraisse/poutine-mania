@@ -55,7 +55,7 @@ const RestaurantForm = ({ type }) => {
           push(
             currentUser.isAdmin
               ? "/admin/restaurants"
-              : `/restaurants/${restaurant._id}`
+              : `/restaurants/${restaurant.slug}`
           );
         })
         .catch((err) => toast.error(err.message));
@@ -68,7 +68,7 @@ const RestaurantForm = ({ type }) => {
           push(
             currentUser.isAdmin
               ? `/admin/restaurants`
-              : `/restaurants/${restaurant._id}`
+              : `/restaurants/${restaurant.slug}`
           );
         })
         .catch((err) => toast.error(err.message));

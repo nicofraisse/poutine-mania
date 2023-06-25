@@ -3,7 +3,7 @@ import React from "react";
 import Button, { VariantColor } from "./Button";
 import { useLoginForm } from "./context/LoginFormProvider";
 import { useCurrentUser } from "lib/useCurrentUser";
-import { Plus, PlusCircle } from "react-feather";
+import { Plus } from "react-feather";
 
 const LoginMessage = () => (
   <div className="px-4 sm:w-[380px] ">

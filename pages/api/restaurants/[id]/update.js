@@ -1,6 +1,5 @@
 import { ObjectId } from "mongodb";
 import { connectToDatabase } from "lib/db";
-import { generateRestaurantSlug } from "lib/generateRestaurantSlug";
 
 const handler = async (req, res) => {
   const client = await connectToDatabase();

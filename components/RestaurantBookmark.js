@@ -144,7 +144,7 @@ const RestaurantBookmark = ({ restaurant }) => {
         {isSkeleton ? (
           <Skeleton className="mt-3 mb-2" width="70%" height={28} />
         ) : (
-          <Link href={`/restaurants/${restaurant._id}`} passHref>
+          <Link href={`/restaurants/${restaurant.slug}`} passHref>
             <a
               className={classNames(
                 "text-xl font-bold text-teal-500 block my-2",
