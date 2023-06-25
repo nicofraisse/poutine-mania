@@ -13,9 +13,7 @@ handler.get(async (req, res) => {
     .find({ approved: true })
     .toArray();
 
-  const slugs = restaurants.map((r) => r.slug);
-
-  res.status(200).json(slugs);
+  res.status(200).json(restaurants);
 });
 
 export default handler;
