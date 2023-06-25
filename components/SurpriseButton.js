@@ -8,7 +8,7 @@ export const SurpriseButton = () => {
     const response = await fetch("/api/restaurants/surprise");
     const restaurant = await response.json();
 
-    router.push(`/restaurants/${restaurant._id}`);
+    router.push(`/restaurants/${restaurant.slug}`);
   };
 
   return (

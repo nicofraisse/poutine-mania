@@ -98,7 +98,7 @@ const Restaurants = () => {
               <tr
                 key={r._id}
                 className="hover:bg-slate-50 tansition-colors duration-100"
-                onDoubleClick={() => push(`/restaurants/${r._id}`)}
+                onDoubleClick={() => push(`/restaurants/${r.slug}`)}
               >
                 <td className="border-b border-slate-100 p-2 pl-8 text-slate-500">
                   <ToggleSwitch
@@ -123,7 +123,7 @@ const Restaurants = () => {
                 <td className="border-b border-slate-100 p-2 pl-8 text-slate-500">
                   <button
                     className="p-1 bg-gray-200 rounded shadow hover:bg-gray-100 mx-2"
-                    onClick={() => push(`/restaurants/${r._id}/edit`)}
+                    onClick={() => push(`/restaurants/${r.slug}/edit`)}
                   >
                     <Edit size={20} />
                   </button>

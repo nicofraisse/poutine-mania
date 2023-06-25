@@ -147,7 +147,7 @@ const MarkerAndPopup = ({
         >
           <div
             onClick={() =>
-              !isShowPage && window.open(`/restaurants/${restaurant._id}`)
+              !isShowPage && window.open(`/restaurants/${restaurant.slug}`)
             }
           >
             {image && !isShowPage && (

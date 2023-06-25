@@ -146,7 +146,7 @@ const ReviewStats = ({ reviews, restaurant }) => {
         >
           {/* <Button
               height="sm"
-              onClick={() => push(`/restaurants/${restaurant._id}/noter`)}
+              onClick={() => push(`/restaurants/${restaurant.slug}/noter`)}
               className="inline-flex mr-2 items-center px-4 shrink-0 text-sm sm:text-md h-[35px] sm:h-[40px]"
               variant="light"
               >
@@ -250,7 +250,6 @@ const ReviewStats = ({ reviews, restaurant }) => {
                   <div className="text-gray-500 h-10 text-right mt-1 text-sm">
                     {i}
                   </div>
-                  {/* <div>{n}</div> */}
                 </div>
               );
             })}

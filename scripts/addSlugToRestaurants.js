@@ -2,15 +2,12 @@ const { MongoClient, ObjectId } = require("mongodb");
 const { generateRestaurantSlug } = require("../lib/generateRestaurantSlug");
 
 async function createSlugsForAllRestaurants() {
-  const client = await MongoClient.connect(
-    "mongodb+srv://admin:admin@poutinemania-dev-cluste.x1igu6q.mongodb.net/poutinemania-dev?retryWrites=true&w=majority",
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    }
-  );
+  const client = await MongoClient.connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
 
-  const db = client.db("poutinemania-dev");
+  const db = client.db(process.env.DB_NAME);
 
   try {
     // Connect to the MongoDB cluster
@@ -32,13 +29,12 @@ async function createSlugsForAllRestaurants() {
     }
 
     console.log("Slug creation/update process completed!");
+    await client.close();
   } catch (error) {
     console.error(
       "An error occurred while creating/updating the slugs: ",
       error
     );
-  } finally {
-    // Close the connection to the MongoDB cluster
     await client.close();
   }
 }

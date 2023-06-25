@@ -1,4 +1,4 @@
-import { MongoClient } from "mongodb";
+const MongoClient = require("mongodb");
 
 async function createIndexes() {
   const client = await MongoClient.connect(process.env.MONGO_URI, {
@@ -10,6 +10,7 @@ async function createIndexes() {
 
   // For pages/api/restaurants/index.js
   await db.collection("restaurants").createIndex({ name: "text" });
+  await db.collection("restaurants").createIndex({ slug: 1 });
   await db.collection("reviews").createIndex({ restaurantId: 1 });
 
   // For [nextauth].js

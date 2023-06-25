@@ -77,7 +77,7 @@ const TopPoutines = ({ restaurants }) => {
                         : `#${i + 1}`}
                     </span>
                     <div className="xs:hidden flex items-center ml-2">
-                      <Link href={`/restaurants/${r._id}`} passHref>
+                      <Link href={`/restaurants/${r.slug}`} passHref>
                         <a className="text-xl lg:text-2xl font-bold text-teal-500 hover:text-teal-600">
                           {r.name}
                         </a>
@@ -103,7 +103,7 @@ const TopPoutines = ({ restaurants }) => {
                   <div className="w-full px-2 xs:px-0 text-center xs:text-left">
                     <div className="">
                       <div className="hidden xs:block">
-                        <Link href={`/restaurants/${r._id}`} passHref>
+                        <Link href={`/restaurants/${r.slug}`} passHref>
                           <a className="text-xl lg:text-2xl font-bold text-teal-500 mb-2 text-left hover:text-teal-600">
                             {r.name}
                           </a>
@@ -118,7 +118,7 @@ const TopPoutines = ({ restaurants }) => {
                         />
                         <button
                           className="mx-1 underline text-gray-500"
-                          onClick={() => push(`/restaurants/${r._id}/noter`)}
+                          onClick={() => push(`/restaurants/${r.slug}/noter`)}
                         >
                           Noter
                         </button>

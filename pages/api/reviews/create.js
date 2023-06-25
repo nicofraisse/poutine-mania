@@ -38,6 +38,8 @@ const handler = async (req, res) => {
           restaurantId,
         } = fields;
 
+        console.log("res id", restaurantId);
+
         await db.collection("reviews").insertOne({
           finalRating: finalRating && Number(finalRating),
           friesRating: friesRating && Number(friesRating),

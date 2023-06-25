@@ -22,8 +22,8 @@ const NoterRestaurant = () => {
       </div>
 
       <RateRestaurantNew
-        onSubmit={() => push(`/noter?fromRateSuccess=${query.id}`)}
-        restaurantId={query.id}
+        onSubmit={() => push(`/noter?fromRateSuccess=${restaurant?.slug}`)}
+        restaurantId={restaurant?._id}
         loading={loading || !restaurant}
       />
     </div>

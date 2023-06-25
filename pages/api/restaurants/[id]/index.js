@@ -1,4 +1,3 @@
-import { ObjectId } from "mongodb";
 import { connectToDatabase } from "../../../../lib/db";
 
 const handler = async (req, res) => {
@@ -7,12 +6,12 @@ const handler = async (req, res) => {
   const data = await db
     .collection("restaurants")
     .aggregate([
-      { $match: { _id: ObjectId(req.query.id) } },
+      { $match: { slug: req.query.id } },
       {
         $lookup: {
           from: "reviews",
           localField: "_id",
-          foreignField: "restaurantId",
+          foreignField: "b",
           as: "reviews",
         },
       },

@@ -23,7 +23,7 @@ const SelectRestaurant = ({ restaurants, userRatedRestaurants }) => {
             href={
               alreadyRated
                 ? ""
-                : `/restaurants/${restaurant._id}/noter?fromList=true`
+                : `/restaurants/${restaurant.slug}/noter?fromList=true`
             }
             passHref
             shallow={!!alreadyRated}

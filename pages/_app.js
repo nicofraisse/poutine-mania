@@ -20,6 +20,8 @@ function App({ Component, pageProps }) {
     if (asPath.includes("jesus")) push("/users/640e4561a262b3d79edcfe45");
   }, [asPath, push]);
 
+  // useEffect(() => axios.get("/api/init-db").then((res) => console.log(res)));
+
   return (
     <>
       <Head>

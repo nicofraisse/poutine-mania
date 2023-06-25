@@ -61,7 +61,7 @@ function HomePage() {
                     {i === 0 ? "🥇" : i === 1 ? "🥈" : "🥉"}
                   </span>
                   <div>
-                    <Link href={`/restaurants/${r._id}`} passHref>
+                    <Link href={`/restaurants/${r.slug}`} passHref>
                       <a className="text-xl font-black text-teal-500 mb-1 hover:text-teal-600">
                         {r.name}
                       </a>

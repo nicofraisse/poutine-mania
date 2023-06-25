@@ -216,7 +216,7 @@ const RestaurantBookmark = ({ restaurant }) => {
             <XCircle className="mr-1 sm:text-lg w-3 sm:w-4 font-" /> Pas
             intéressé
           </Button> */}
-          {/* <Link href={`/restaurants/${restaurant._id}/noter`} passHref>
+          {/* <Link href={`/restaurants/${restaurant.slug}/noter`} passHref>
             <Button
               height="sm"
               className={classNames(

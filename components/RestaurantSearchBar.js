@@ -89,7 +89,7 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit, isBanner }, ref) => {
       e.preventDefault();
       if (highlightedIndex > -1) {
         console.log(1);
-        push(`/restaurants/${restaurants[highlightedIndex]._id}`);
+        push(`/restaurants/${restaurants[highlightedIndex].slug}`);
         setShowSearchSuggestions(false);
       } else {
         handleSearch(e);

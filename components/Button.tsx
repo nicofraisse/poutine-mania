@@ -2,16 +2,16 @@ import classNames from "classnames";
 import React from "react";
 import Spinner from "./Spinner";
 
-export enum VariantColor {
-  primary = "primary",
-  secondary = "secondary",
-  light = "light",
-  white = "white",
-  white2 = "white",
-  lightLink = "lightLink",
-  danger = "danger",
-  blue = "blue",
-}
+export const VariantColor = {
+  primary: "primary",
+  secondary: "secondary",
+  light: "light",
+  white: "white",
+  white2: "white2",
+  lightLink: "lightLink",
+  danger: "danger",
+  blue: "blue",
+};
 
 const bgColorClass = {
   [VariantColor.primary]: "bg-teal-600",
@@ -73,7 +73,6 @@ const widthClass = {
 const Button = ({
   children,
   variant = "primary",
-  size = "lg",
   loading,
   width = "sm",
   height = "md",

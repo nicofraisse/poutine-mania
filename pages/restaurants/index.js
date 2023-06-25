@@ -1,18 +1,18 @@
 import { useState } from "react";
 
 import Map from "components/Map";
-import RestaurantCard from "../../components/RestaurantCard";
+import RestaurantCard from "components/RestaurantCard";
 import { useRestaurantSearch } from "components/context/RestaurantSearchProvider";
 import { useGet } from "lib/useAxios";
 import { RestaurantCardHoverProvider } from "components/context/RestaurantCardHoverProvider";
 import ReactSelect from "react-select";
 import { Sliders, X } from "react-feather";
 import Button from "components/Button";
-import useClickOutside from "../../lib/useClickOutside";
+import useClickOutside from "lib/useClickOutside";
 import classNames from "classnames";
-import { getUrlQueryString } from "../../lib/getUrlqueryString";
+import { getUrlQueryString } from "lib/getUrlqueryString";
 import { useRouter } from "next/router";
-import RestaurantIntrouvable from "../../components/RestaurantIntrouvable";
+import RestaurantIntrouvable from "components/RestaurantIntrouvable";
 import { flatten } from "lodash";
 import Skeleton from "react-loading-skeleton";
 
