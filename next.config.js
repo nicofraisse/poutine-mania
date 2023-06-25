@@ -1,4 +1,5 @@
 const path = require("path");
+const { redirects } = require("./data/redirects");
 
 module.exports = {
   webpack: (config, options) => {
@@ -22,5 +23,8 @@ module.exports = {
     CLOUD_NAME: process.env.CLOUD_NAME,
     CLOUD_UPLOAD_PRESET: process.env.CLOUD_UPLOAD_PRESET,
     MAPBOX_API_KEY: process.env.MAPBOX_API_KEY,
+  },
+  async redirects() {
+    return redirects;
   },
 };

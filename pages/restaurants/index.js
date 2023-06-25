@@ -46,6 +46,9 @@ const Restaurants = () => {
     })}`
   );
 
+  const test = useGet("/api/restaurants/approved-restaurants");
+  console.log({ test });
+
   const allSuccursales =
     restaurants && flatten(restaurants.map((r) => r.succursales));
   // const loading = searchValue !== nonDebouncedValue || restaurantsLoading;

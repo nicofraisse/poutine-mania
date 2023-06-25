@@ -15,6 +15,7 @@ import { useCurrentUser } from "lib/useCurrentUser";
 import Head from "next/head";
 import { connectToDatabase } from "lib/db";
 import toast from "react-hot-toast";
+import { ObjectId } from "mongodb";
 
 const Index = ({ SEO }) => {
   const { query, reload, push } = useRouter();
