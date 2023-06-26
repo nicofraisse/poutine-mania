@@ -25,17 +25,13 @@ function App({ Component, pageProps }) {
   return (
     <>
       <Head>
-        <title>Poutine Mania - La quête de la poutine ultime</title>
-        <meta
-          name="description"
-          content="Découvrez les meilleures poutines du Québec grâce à notre communauté de passionnés! Partagez vos notes et critiques sur les frites, le fromage et la sauce de chaque restaurant pour trouver les poutines parfaites pour votre palais. Rejoignez-nous dans notre quête de la poutine ultime!"
-        ></meta>
-        <meta name="referrer" content="no-referrer" />
+        <meta name="referrer" content="strict-origin-when-cross-origin" />
         <meta charSet="UTF-8" />
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"
         />
+        <link rel="icon" href="/favicon.ico" sizes="any" />
       </Head>
 
       <CookiesProvider>

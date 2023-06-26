@@ -57,17 +57,15 @@ const Index = ({ SEO }) => {
     }
   };
 
-  // if (!restaurant || loading) return <Spinner />;
   const isSkeleton = !restaurant || loading;
-  // const isSkeleton = true;
 
   return (
     <>
       <Head>
-        <title>{SEO?.restaurantName} - Poutine Mania</title>
+        <title>{SEO?.restaurantName.toUpperCase()} - Une bonne poutine?</title>
         <meta
           name="description"
-          content={`Trouvez toutes les informations sur le restaurant ${SEO?.restaurantName} sur notre site, y compris les notes et critiques de notre communauté sur leurs poutines, et bien plus.`}
+          content={`Lire les avis sur le restaurant ${SEO?.restaurantName} au Québec, et partagez le vôtre.`}
         />
       </Head>
       <div className="bg-[#fafafa] min-h-screen-minus-navbar">
