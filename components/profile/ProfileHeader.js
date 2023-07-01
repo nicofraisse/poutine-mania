@@ -37,8 +37,8 @@ const ProfileHeader = ({ user }) => {
             </div>
           )}
         </div>
-        <div className="grow">
-          <div className="flex items-center justify-center sm:justify-between mb-5 sm:w-3/4">
+        <div className="grow sm:w-3/4">
+          <div className="flex items-center justify-center sm:justify-between mb-5 ">
             <div className="font-black text-2xl xs:text-3xl text-center sm:text-left md:pr-8">
               {isSkeleton ? <Skeleton width={220} height={32} /> : user.name}
             </div>
