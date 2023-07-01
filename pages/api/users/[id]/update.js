@@ -32,18 +32,23 @@ handler.patch(async (req, res) => {
       return;
     }
 
-    const { name, bio } = fields;
-
-    const photos = [];
-    for (const key in files) {
-      if (key.startsWith("avatar")) {
-        photos.push(files[key]);
-      }
-    }
+    console.log({ fields });
+    const { name, bio, avatar: avatarStringKey } = fields;
 
     let newPublicIds = [];
-    if (photos.length > 0) {
-      newPublicIds = await uploadToCloudinary(photos);
+    if (avatarStringKey && avatarStringKey !== "null") {
+      newPublicIds.push(avatarStringKey);
+    } else {
+      const photos = [];
+      for (const key in files) {
+        if (key.startsWith("avatar")) {
+          photos.push(files[key]);
+        }
+      }
+
+      if (photos.length > 0) {
+        newPublicIds = await uploadToCloudinary(photos);
+      }
     }
 
     const usersCollection = db.collection("users");

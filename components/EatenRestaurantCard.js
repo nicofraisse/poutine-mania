@@ -158,7 +158,7 @@ export const EatenRestaurantCard = ({ restaurant }) => {
           )}
         </div>
       </div>
-      {console.log(currentUser)}
+      \{" "}
       <ImageModal
         isOpen={imgModalOpen !== false}
         onClose={() => setImgModalOpen(false)}

@@ -43,6 +43,8 @@ const Edit = () => {
       }
     }
 
+    console.log({ values, formData });
+
     try {
       const response = await axios.patch(
         `/api/users/${query.id}/update`,

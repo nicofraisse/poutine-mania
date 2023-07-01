@@ -3,8 +3,8 @@ import { Image } from "components/Image";
 import { Camera, Trash } from "react-feather";
 import { useField, useFormikContext } from "formik";
 import classNames from "classnames";
-import { isString } from "lodash";
 import { compressImage } from "lib/compressImage";
+import { isArray, isString } from "lodash";
 
 const ImageUpload = ({
   roundedFull,
@@ -51,10 +51,13 @@ const ImageUpload = ({
     const newImageSrcs = [...imageSrcs];
     newImageSrcs.splice(index, 1);
     setImageSrcs(newImageSrcs);
-
-    const newValue = [...field.value];
-    newValue.splice(index, 1);
-    setFieldValue(field.name, newValue);
+    if (isArray(field.value)) {
+      const newValue = [...field.value];
+      newValue.splice(index, 1);
+      setFieldValue(field.name, newValue);
+    } else if (isString(field.value)) {
+      setFieldValue(field.name, "null");
+    }
   };
 
   return (

@@ -15,14 +15,13 @@ const TopPoutines = ({ restaurants }) => {
     <div className="max-w-4xl">
       <div className="sm:py-1 px-5 md:py-2 lg:px-6">
         <h1 className="text-2xl sm:text-3xl font-extrabold my-4">
-          Top 10 poutines du Québec à savourer 🍟🧀🍯
+          Top 10 poutines au Québec 🍟🧀🍯
         </h1>
         <p className="my-1 text-sm sm:text-md leading-relaxed">
-          Hey, fan de poutine! Viens t&apos;éclater avec notre appli pour
-          classer tes poutines favorites! 🌟 Partage tes aventures gourmandes,
-          explore celles des autres et découvre des spots incroyables près de
-          chez toi ou ailleurs au Québec. Rejoins la bande des poutine-lovers et
-          trouve ta prochaine poutine coup de cœur! 💗
+          Hey, fan de poutine! Viens partager tes aventures gourmandes, explore
+          celles des autres et découvre des spots incroyables près de chez toi
+          ou ailleurs au Québec. Rejoins la bande des poutine-lovers et trouve
+          ta prochaine poutine coup de cœur! 💗
         </p>
 
         <h2 className="mt-4 mb-3 text-lg sm:text-xl font-semibold">

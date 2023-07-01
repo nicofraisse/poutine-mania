@@ -24,7 +24,6 @@ const RestaurantHeader = ({ restaurant }) => {
       .filter(Boolean)
       .filter((i) => i !== "null");
 
-  console.log(images);
   const isSkeleton = !restaurant;
 
   return (

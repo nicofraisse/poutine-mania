@@ -50,6 +50,7 @@
     "react-dom": "17.0.2",
     "react-feather": "^2.0.9",
     "react-hot-toast": "^2.2.0",
+    "react-linkify": "^1.0.0-alpha",
     "react-loading-skeleton": "^3.2.0",
     "react-map-gl": "^7.0.13",
     "react-phone-number-input": "^3.2.13",

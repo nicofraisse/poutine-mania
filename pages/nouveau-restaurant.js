@@ -13,9 +13,9 @@ const CreateRestaurant = () => {
     );
   }
   return (
-    <div className="sm:w-[600px] py-2 px-4 sm:py-10 sm:px-16">
+    <div className="sm:w-[600px] py-2 px-4 sm:py-6 sm:px-8 bg-white my-2 lg:my-6 rounded-md mx-auto xl:ml-10 shadow-md">
       <h1 className="my-3 sm:mt-4 sm:mb-5 font-black text-xl sm:text-2xl">
-        Nouveau Restaurant
+        Ajouter un restaurant
       </h1>
       <RestaurantForm type="create" isAdmin={!currentUser.isAdmin} />
     </div>

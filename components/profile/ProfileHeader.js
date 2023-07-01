@@ -4,6 +4,8 @@ import { User } from "react-feather";
 import { useCurrentUser } from "../../lib/useCurrentUser";
 import { Image } from "../Image";
 import Skeleton from "react-loading-skeleton";
+import ReactLinkify from "react-linkify";
+import { Linkify } from "../Linkify.js";
 
 // eslint-disable-next-line
 const cooltext =
@@ -36,7 +38,7 @@ const ProfileHeader = ({ user }) => {
           )}
         </div>
         <div className="grow">
-          <div className="flex items-center justify-center sm:justify-between mb-5">
+          <div className="flex items-center justify-center sm:justify-between mb-5 sm:w-3/4">
             <div className="font-black text-2xl xs:text-3xl text-center sm:text-left md:pr-8">
               {isSkeleton ? <Skeleton width={220} height={32} /> : user.name}
             </div>
@@ -79,7 +81,7 @@ const ProfileHeader = ({ user }) => {
               </>
             )}
           </div>
-          <p className="relative text-xs text-center sm:text-justify sm:text-sm text-slate-500">
+          <p className="relative text-xs text-center sm:text-justify sm:text-sm text-slate-500 whitespace-pre-line break-words sm:w-3/4">
             {isSkeleton ? (
               <>
                 <Skeleton />
@@ -87,7 +89,7 @@ const ProfileHeader = ({ user }) => {
                 <Skeleton />
               </>
             ) : (
-              user.bio
+              <Linkify>{user.bio}</Linkify>
             )}
           </p>
         </div>

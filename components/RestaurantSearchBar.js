@@ -41,7 +41,6 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit, isBanner }, ref) => {
     //     ? `/restaurants?search=${encodeURIComponent(trimmedSearchValue)}`
     //     : `/restaurants`
     // );
-    console.log("SEARCH", trimmedSearchValue);
     onSubmit && onSubmit();
   };
 
@@ -88,7 +87,6 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit, isBanner }, ref) => {
     } else if (e.key === "Enter") {
       e.preventDefault();
       if (highlightedIndex > -1) {
-        console.log(1);
         push(`/restaurants/${restaurants[highlightedIndex].slug}`);
         setShowSearchSuggestions(false);
       } else {
