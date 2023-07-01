@@ -1,5 +1,5 @@
 const { MongoClient, ObjectId } = require("mongodb");
-const { generateRestaurantSlug } = require("../lib/generateRestaurantSlug");
+const { generateSlug } = require("../lib/generateSlug");
 
 async function createSlugsForAllRestaurants() {
   const client = await MongoClient.connect(process.env.MONGO_URI, {
@@ -20,7 +20,7 @@ async function createSlugsForAllRestaurants() {
 
     // Iterate over each restaurant and create/update the slug
     for (let restaurant of restaurants) {
-      const slug = await generateRestaurantSlug(restaurant.name, db);
+      const slug = await generateSlug(restaurant.name, db, "restaurants");
 
       // Then update the current restaurant with the new slug
       await db

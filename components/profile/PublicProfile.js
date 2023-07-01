@@ -37,7 +37,7 @@ const PublicProfile = ({ user }) => {
               {user._id === currentUser?._id ? (
                 <Link
                   className="text-base mx-3 px-4 py-1 rounded-lg text-gray-500 sm:-mb-1 hover:text-gray-700 flex"
-                  href={`/users/${user._id}/edit`}
+                  href={`/profil/${user.slug}/edit`}
                 >
                   Modifier
                 </Link>

@@ -166,7 +166,7 @@ const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
               onClick={onClickItem}
               label="Mon profil"
               icon={User}
-              href={`/users/${currentUser?._id}`}
+              href={`/profil/${currentUser?.slug}`}
               requireLogin={!currentUser}
               requireLoginMessage=""
             />

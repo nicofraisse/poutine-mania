@@ -61,6 +61,7 @@ const Edit = () => {
       const updatedSession = await getSession({ force: true });
       updatedSession.user.image = response.data.image; // Assuming the API response returns the new image URL
       refetchCurrentUser();
+      push(`/profil/${currentUser._id}`);
     } catch (e) {
       toast.error(
         e?.response?.data?.message ||
@@ -104,7 +105,7 @@ const Edit = () => {
         variant="lightLink"
         height="sm"
         className="-ml-1"
-        onClick={() => push(`/users/${currentUser._id}`)}
+        onClick={() => push(`/profil/${currentUser.slug}`)}
       >
         <ChevronLeft />
         Retour à mon profil

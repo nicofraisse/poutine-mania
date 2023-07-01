@@ -4,7 +4,6 @@ import { User } from "react-feather";
 import { useCurrentUser } from "../../lib/useCurrentUser";
 import { Image } from "../Image";
 import Skeleton from "react-loading-skeleton";
-import ReactLinkify from "react-linkify";
 import { Linkify } from "../Linkify.js";
 
 // eslint-disable-next-line
@@ -46,15 +45,16 @@ const ProfileHeader = ({ user }) => {
               {isSkeleton ? (
                 <Skeleton />
               ) : user._id === currentUser?._id ? (
-                <Link href={`/users/${user._id}/edit`} passHref>
+                <Link href={`/profil/${user.slug}/edit`} passHref>
                   <button className="text-base font-bold bg-blue-400 px-6 py-2 rounded-full text-white inline-block">
                     Modifier mon profil
                   </button>
                 </Link>
               ) : (
-                <button className="mr-auto text-base font-bold bg-blue-400 px-6 py-2 rounded-full text-white inline-block">
-                  Suivre
-                </button>
+                // <button className="mr-auto text-base font-bold bg-blue-400 px-6 py-2 rounded-full text-white inline-block">
+                //   Suivre
+                // </button>
+                ""
               )}
             </div>
           </div>

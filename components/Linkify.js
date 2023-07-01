@@ -2,12 +2,7 @@ import ReactLinkify from "react-linkify";
 
 export const Linkify = ({ children }) => {
   const componentDecorator = (decoratedHref, decoratedText, key) => (
-    <a
-      target="blank"
-      href={decoratedHref}
-      key={key}
-      className="text-blue-500 underline"
-    >
+    <a target="blank" href={decoratedHref} key={key} className="text-sky-600">
       {decoratedText}
     </a>
   );

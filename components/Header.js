@@ -203,14 +203,15 @@ const Header = ({ toggleMobileSidebar }) => {
               {loading && !currentUser ? (
                 <Skeleton
                   circle
-                  className="mx-4 lg:mx-5 z-20 flex-grow"
+                  className="mx-4 lg:mx-5 z-20"
                   width={44}
                   height={44}
+                  containerClassName="flex"
                 />
               ) : currentUser ? (
                 <div className="relative mx-4 lg:mx-5 z-30">
                   <div
-                    className="h-[44px] w-[44px] bg-gray-400 rounded-full cursor-pointer hover:opacity-80 flex items-center justify-center"
+                    className="h-[44px] w-[44px] bg-gray-400 rounded-full cursor-pointer hover:brightness-125 transition duration-150 flex items-center justify-center shadow"
                     onClick={() => setDropdownOpen(!dropdownOpen)}
                     ref={toggleRef}
                   >
@@ -237,7 +238,7 @@ const Header = ({ toggleMobileSidebar }) => {
                         }, 100);
                       }}
                     >
-                      <Link href={`/users/${currentUser._id}`} passHref>
+                      <Link href={`/profil/${currentUser.slug}`} passHref>
                         <div className="hover:bg-gray-100 rounded-t-lg px-3 py-2 text-gray-700 cursor-pointer">
                           Mon profil
                         </div>

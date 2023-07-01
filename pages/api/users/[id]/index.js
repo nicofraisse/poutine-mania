@@ -9,9 +9,7 @@ handler.use(database);
 handler.get(async (req, res) => {
   const db = req.db;
 
-  const user = await db
-    .collection("users")
-    .findOne({ _id: new ObjectId(req.query.id) });
+  const user = await db.collection("users").findOne({ slug: req.query.id });
 
   if (!user) {
     return res.status(404).json({ error: "User not found" });
@@ -20,7 +18,7 @@ handler.get(async (req, res) => {
   // Get all user reviews
   const reviews = await db
     .collection("reviews")
-    .find({ userId: new ObjectId(req.query.id) })
+    .find({ userId: new ObjectId(user._id) })
     .sort({ createdAt: -1 })
     .toArray();
 

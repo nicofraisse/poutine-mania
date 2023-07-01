@@ -27,4 +27,13 @@ module.exports = {
   async redirects() {
     return redirects;
   },
+
+  async rewrites() {
+    return [
+      {
+        source: "/profil/:id*",
+        destination: "/users/:id*",
+      },
+    ];
+  },
 };

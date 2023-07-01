@@ -103,6 +103,7 @@ export default NextAuth({
           emailVerified: foundUser.emailVerified,
           eatenlist: foundUser.eatenlist,
           watchlist: foundUser.watchlist,
+          slug: foundUser.slug,
           connectedAccounts: foundConnectedAccounts,
           nbReviews: reviews.length,
         };

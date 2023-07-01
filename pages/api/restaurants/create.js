@@ -1,7 +1,7 @@
 import nextConnect from "next-connect";
 import { getSession } from "next-auth/client";
 import { database } from "middleware/database";
-import { generateRestaurantSlug } from "../../../lib/generateRestaurantSlug";
+import { generateSlug } from "../../../lib/generateSlug";
 
 const handler = nextConnect();
 
@@ -11,7 +11,7 @@ handler.post(async (req, res) => {
   const db = req.db;
   const session = await getSession({ req });
 
-  const slug = await generateRestaurantSlug(req.body.name, db);
+  const slug = await generateSlug(req.body.name, db, "restaurants");
 
   const { insertedId } = await db.collection("restaurants").insertOne({
     name: req.body.name,

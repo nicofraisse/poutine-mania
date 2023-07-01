@@ -17,7 +17,7 @@ function App({ Component, pageProps }) {
   const { push, asPath } = useRouter();
 
   useEffect(() => {
-    if (asPath.includes("jesus")) push("/users/640e4561a262b3d79edcfe45");
+    if (asPath.includes("jesus")) push("/profil/poutine-jesus");
   }, [asPath, push]);
 
   // useEffect(() => axios.get("/api/init-db").then((res) => console.log(res)));

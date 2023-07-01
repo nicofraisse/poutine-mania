@@ -89,7 +89,7 @@ const ProfileReviewCard = ({ review, isIndex, userName, loading }) => {
             <span className="text-sm sm:text-base">
               {isIndex ? (
                 <>
-                  <Link href={`/users/${review.userId}`} passHref>
+                  <Link href={`/profil/${review.user?.slug}`} passHref>
                     <span className="font-bold hover:text-slate-500 cursor-pointer">
                       {review?.user?.name}
                     </span>

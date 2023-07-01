@@ -8,12 +8,14 @@ handler.use(database);
 handler.get(async (req, res) => {
   const db = req.db;
 
+  const user = await db.collection("users").findOne({ slug: req.query.id });
+
   const data = await db
     .collection("reviews")
     .aggregate([
       {
         $match: {
-          userId: new ObjectId(req.query.id),
+          userId: new ObjectId(user._id),
         },
       },
       {

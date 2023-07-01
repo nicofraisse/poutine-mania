@@ -1,5 +1,6 @@
 import { hashPassword } from "../../../lib/auth";
 import { connectToDatabase } from "../../../lib/db";
+import { generateSlug } from "../../../lib/generateSlug";
 import { sendVerificationEmail } from "../../../lib/sendVerificationEmail";
 import crypto from "crypto";
 import { isValidEmail } from "lib/isValidEmail";
@@ -44,6 +45,8 @@ async function handler(req, res) {
     // Create a verification token
     const verificationToken = crypto.randomBytes(32).toString("hex");
 
+    const slug = await generateSlug(req.body.name, db, "users");
+
     await db.collection("users").insertOne({
       email: email,
       name: name,
@@ -54,6 +57,7 @@ async function handler(req, res) {
       watchlist: [],
       emailVerified: false,
       verificationToken: verificationToken,
+      slug,
     });
 
     await sendVerificationEmail(email, verificationToken);

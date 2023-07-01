@@ -15,6 +15,7 @@ async function createIndexes() {
 
   // For [nextauth].js
   await db.collection("users").createIndex({ email: 1 });
+  await db.collection("users").createIndex({ slug: 1 });
   await db.collection("accounts").createIndex({ userId: 1 });
 
   // Existing indexes from previous response
