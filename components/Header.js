@@ -286,7 +286,7 @@ const Header = ({ toggleMobileSidebar }) => {
         >
           <div className="flex flex-col items-center">
             <h1
-              className="text-center text-3xl lg:text-4xl 2xl:text-5xl font-black text-white"
+              className="text-center text-3xl lg:text-4xl 2xl:text-5xl font-bold text-white"
               style={{ textShadow: "0px 0px 4px rgba(0, 0, 0, 0.6)" }}
             >
               {/* <div
