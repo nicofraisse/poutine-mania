@@ -144,7 +144,8 @@ const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
               requireLogin={!currentUser}
               requireLoginMessage={
                 <span>
-                  <b>connecte-toi</b> accéder à ta liste de poutines à essayer!
+                  <b>Connecte-toi</b> pour accéder à ta liste de poutines à
+                  essayer!
                 </span>
               }
             />
@@ -156,7 +157,8 @@ const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
               requireLogin={!currentUser}
               requireLoginMessage={
                 <span>
-                  <b>connecte-toi</b> accéder à ta liste de poutines mangées!
+                  <b>Connecte-toi</b> pour accéder à ta liste de poutines
+                  mangées!
                 </span>
               }
             />

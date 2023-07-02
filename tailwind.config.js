@@ -5,6 +5,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        chelsea: ["var(--font-chelsea)"],
+      },
       aspectRatio: {
         "3/2": "3 / 2",
       },

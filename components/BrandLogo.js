@@ -10,10 +10,10 @@ export const BrandLogo = () => {
         height={80}
       />
       <div className="text-2xl font-black mt-[-8px] ml-1">
-        <div className="text-amber-600">POUTINE</div>
-        <div className="mt-[-10px] text-orange-600">
-          MANIA<span className="text-gray-300">.ca</span>
-        </div>
+        <h1 className="text-amber-600">POUTINE</h1>
+        <h1 className="mt-[-10px] text-orange-600">
+          MANIA<h1 className="text-gray-300 inline">.ca</h1>
+        </h1>
       </div>
     </div>
   );

@@ -23,7 +23,14 @@ const getAvgSection = (field) => ({
         },
       },
       as: "review",
-      in: `$$review.${field}`,
+      in: {
+        $convert: {
+          input: `$$review.${field}`,
+          to: "double",
+          onError: "$$REMOVE",
+          onNull: "$$REMOVE",
+        },
+      },
     },
   },
 });
@@ -39,14 +46,6 @@ const handler = async (req, res) => {
     "sauceRating",
     "portionRating",
   ];
-
-  const conversionSection = ratingFields.reduce(
-    (acc, field) => ({
-      ...acc,
-      [field]: getConvertSection(field),
-    }),
-    {}
-  );
 
   const avgSection = ratingFields.reduce(
     (acc, field) => ({
@@ -71,15 +70,6 @@ const handler = async (req, res) => {
       },
       {
         $addFields: {
-          reviews: {
-            $map: {
-              input: "$reviews",
-              as: "review",
-              in: {
-                $mergeObjects: ["$$review", conversionSection],
-              },
-            },
-          },
           reviewCount: { $size: "$reviews" },
         },
       },

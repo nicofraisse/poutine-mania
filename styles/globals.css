@@ -20,6 +20,13 @@ body {
   background-color: #fdfbf4;
 }
 
+* {
+  /* font-family: "Darumadrop One", cursive; */
+  /* font-family: "Poppins", sans-serif; */
+  /* font-family: "Poppins", sans-serif; */
+  font-family: "DM Sans", sans-serif;
+}
+
 a {
   color: inherit;
   text-decoration: none;

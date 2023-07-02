@@ -114,7 +114,7 @@ const SignUp = ({ onSubmit }) => {
               className="font-bold cursor-pointer hover:underline"
               onClick={handleSwitchForm}
             >
-              connecte-toi
+              Connexion
             </span>
           </div>
           <Button
