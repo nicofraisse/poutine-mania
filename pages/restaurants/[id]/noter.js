@@ -12,7 +12,7 @@ const NoterRestaurant = () => {
   });
 
   return (
-    <div className="p-4 sm:p-10 max-w-xs">
+    <div className="p-4 sm:p-10 sm:pb-4 max-w-xs mx-auto bg-white mb-10">
       <h1 className="text-lg xs:text-xl font-black mb-3">
         Qu&apos;avez-vous pensé(e) de leur poutine?
       </h1>

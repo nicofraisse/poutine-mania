@@ -5,10 +5,13 @@ import convertObjectIdsToStrings from "../lib/convertObjectIdsToStrings";
 import { fetchTopRestaurants } from "./api/restaurants";
 import { throttle } from "lodash";
 import Head from "next/head";
+import { useRouter } from "next/router";
+import { useLoginForm } from "../components/context/LoginFormProvider";
 
 const HomePage = ({ restaurants }) => {
   const [isScrollableActivity, setIsScrollableActivity] = useState(false);
   const actvityHeaderRef = useRef(null);
+  const { openLogin } = useLoginForm();
 
   useEffect(() => {
     const handleScroll = throttle(() => {
@@ -19,6 +22,21 @@ const HomePage = ({ restaurants }) => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const { query } = useRouter();
+
+  useEffect(() => {
+    const { connexion, ...rest } = query;
+    if (connexion) {
+      openLogin();
+      let newPath = window.location.pathname;
+
+      if (Object.keys(rest).length > 0) {
+        newPath += `?${new URLSearchParams(rest).toString()}`;
+      }
+      window.history.replaceState(null, "", newPath);
+    }
+  }, [query]);
 
   return (
     <>

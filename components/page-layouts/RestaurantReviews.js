@@ -174,8 +174,8 @@ const ReviewStats = ({ reviews, restaurant }) => {
                   <div className="px-4 sm:w-[380px] ">
                     <div className="py-2 px-3 my-2 bg-blue-100 text-gray-700 rounded">
                       {/* <Info size={18} className='text-gray-700 inline mr-2' /> */}
-                      <b>Connectez-vous</b> pour ajouter cette poutine à votre
-                      liste à essayer!
+                      <b>connecte-toi</b> pour ajouter cette poutine à ta liste
+                      à essayer!
                     </div>
                   </div>
                 )
@@ -208,8 +208,8 @@ const ReviewStats = ({ reviews, restaurant }) => {
                   <div className="px-4 sm:w-[380px] ">
                     <div className="py-2 px-3 my-2 bg-blue-100 border--200 text-gray-700 rounded borer">
                       {/* <Info size={18} className='text-gray-700 inline mr-2' /> */}
-                      <b>Connectez-vous</b> pour ajouter cette poutine à votre
-                      liste de poutines mangées!
+                      <b>connecte-toi</b> pour ajouter cette poutine à ta liste
+                      de poutines mangées!
                     </div>
                   </div>
                 )

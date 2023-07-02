@@ -47,12 +47,12 @@ export const EmailConfirmation = ({ email }) => {
       </div>
       <div className="bg-slate-50 border rounded border-slate-200 px-5 py-6">
         <h2 className="font-black text-2xl text-center mb-3 text-slate-500">
-          Vous y êtes presque!
+          Tu y es presque!
         </h2>
 
         <div className="max-w-2xs text-md text-slate-500 text-center">
-          Pour activer votre compte, cliquez sur le lien de confirmation dans le
-          courriel que nous venons de vous envoyer à l&apos;adresse fournie:{" "}
+          Pour activer ton compte, clique sur le lien de confirmation dans le
+          courriel que nous venons de t&apos;envoyer à l&apos;adresse fournie:{" "}
           {JSON.stringify(email)}
           <br />
         </div>
@@ -61,14 +61,14 @@ export const EmailConfirmation = ({ email }) => {
       <div className="text-xs mt-6 text-slate-500 text-center">
         {showResend ? (
           <>
-            Si vous n&apos;avez pas reçu notre courriel de validation, veuillez
-            vérifier votre dossier de courrier indésirable ou spam, et{" "}
+            Si tu n&apos;as pas reçu notre courriel de validation, merci de
+            vérifier tes dans ton dossier de courriels indésirables, et{" "}
             <button
               className="underline focus:outline-none"
               onClick={resendVerificationEmail}
               disabled={sending && !showResend}
             >
-              cliquez ici
+              clique ici
             </button>{" "}
             pour l&apos;envoyer de nouveau.
           </>

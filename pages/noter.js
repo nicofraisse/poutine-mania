@@ -28,7 +28,7 @@ const Noter = () => {
   );
 
   return (
-    <div className="max-w-md mx-auto">
+    <div className="max-w-md mx-auto bg-white sm:p-3">
       <div className="p-4">
         {query.fromRateSuccess && (
           <div
@@ -43,13 +43,13 @@ const Noter = () => {
               <div className="font-bold text-xl">Avis publié!</div>
             </div>
             <div className="text-gray-400 px-3 text-sm">
-              Merci d&apos;avoir noté cette poutine. Votre avis compte! Chaque
-              note que vous donnez aide la communauté à trouver les meilleures
+              Merci d&apos;avoir noté cette poutine. Ton avis compte! Chaque
+              note que tu donne aide la communauté à trouver les meilleures
               poutine locales.
             </div>
             <div className="bg-gray-100 px-3 py-1 rounded text-gray-700 text-sm mt-2 cursor-pointer">
               <Link href={`/restaurants/${query.fromRateSuccess}`}>
-                Voir votre avis
+                Voir ton avis
               </Link>
             </div>
           </div>

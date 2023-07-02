@@ -27,7 +27,7 @@ const ProfileReviewCard = ({ review, isIndex, userName, loading }) => {
   const handleDelete = async (id) => {
     if (
       window.confirm(
-        "Êtes-vous sûr(e) de vouloir supprimer l'avis? Cette action est irréversible."
+        "Ês-tu sûr(e) de vouloir supprimer l'avis? Cette action est irréversible."
       )
     ) {
       await axios

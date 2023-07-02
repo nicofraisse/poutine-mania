@@ -74,13 +74,13 @@ const Edit = () => {
   const handleDeleteAccount = () => {
     if (
       window.confirm(
-        "Êtes-vous sûr(e) de vouloir supprimer votre compte ainsi que toutes les données qui lui sont associées? Cette action est irréversible."
+        "Es-tu sûr(e) de vouloir supprimer ton compte ainsi que toutes les données qui lui sont associées? Cette action est irréversible."
       )
     ) {
       axios
         .post(`/api/users/${query.id}/soft-delete`)
         .then(() => {
-          toast.success("Votre compte a été supprimé avec succès!");
+          toast.success("Ton compte a été supprimé avec succès!");
           setTimeout(() => {
             signOut();
             push("/");
@@ -188,7 +188,7 @@ const Edit = () => {
       ) : (
         <div className="p-4 border bg-white rounded text-slate-500 text-sm">
           <Info className="inline mr-2" size={20} />
-          Votre compte est lié à votre profil{" "}
+          Ton compte est lié à ton profil{" "}
           <span className="font-bold">{providerName}</span> dont le courriel
           associé est {currentUser.email}.
         </div>

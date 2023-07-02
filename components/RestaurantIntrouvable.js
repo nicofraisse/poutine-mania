@@ -9,7 +9,7 @@ const LoginMessage = () => (
   <div className="px-4 sm:w-[380px] ">
     <div className="py-2 px-3 my-2 bg-blue-100 border--200 text-slate-700 rounded borer">
       {/* <Info size={18} className='text-slate-700 inline mr-2' /> */}
-      <b>Connectez-vous</b> pour ajouter un restaurant.
+      <b>Connecte-toi</b> pour ajouter un restaurant.
     </div>
   </div>
 );
@@ -28,7 +28,7 @@ const RestaurantIntrouvable = () => {
   };
 
   return (
-    <div className="bg-white mb-20 py-3 px-5 xs:py-4 border-t border-b flex text-center xs:text-left items-center justify-center flex-col xs:flex-row">
+    <div className="bg-white py-3 px-5 xs:py-4 border-t border-b flex text-center xs:text-left items-center justify-center flex-col xs:flex-row">
       <div>
         <div className="font-bold text-md text-slate-500 mr-4">
           Restaurant introuvable?

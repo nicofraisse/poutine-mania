@@ -52,7 +52,7 @@ const VerifyEmail = () => {
     success: {
       header: "Email vérifié avec succès!",
       paragraph:
-        "Votre email a été vérifié avec succès. Vous pouvez maintenant vous connecter à votre compte.",
+        "Ton email a été vérifié avec succès. Tu peux maintenant te connecter à ton compte.",
 
       cta: (
         <Button

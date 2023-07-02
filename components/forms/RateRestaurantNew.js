@@ -221,7 +221,7 @@ export const RateRestaurantNew = ({
           <>
             {existingReview && (
               <h2 className="font-black text-2xl mb-5 text-center">
-                Modifier votre avis
+                Modifier ton avis
               </h2>
             )}
             {ratingFields.map((field) => (

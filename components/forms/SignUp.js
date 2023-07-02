@@ -109,12 +109,12 @@ const SignUp = ({ onSubmit }) => {
           <Field name="email" label="Adresse courriel" />
           <Field name="password" type="password" label="Mot de passe" />
           <div className="text-sm">
-            Vous avez déjà un compte?
+            Vous avez déjà un compte?{" "}
             <span
               className="font-bold cursor-pointer hover:underline"
               onClick={handleSwitchForm}
             >
-              Connectez-vous
+              connecte-toi
             </span>
           </div>
           <Button

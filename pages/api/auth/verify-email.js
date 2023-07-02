@@ -1,4 +1,5 @@
 import { connectToDatabase } from "../../../lib/db";
+import { sendWelcomeEmail } from "../../../lib/sendVerificationEmail";
 
 async function handler(req, res) {
   if (req.method !== "POST") {
@@ -33,6 +34,8 @@ async function handler(req, res) {
     );
 
   res.status(200).json({ message: "Email vérifié avec succès!" });
+
+  await sendWelcomeEmail(user.email, user.name);
   client.close();
 }
 
