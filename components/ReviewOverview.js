@@ -95,7 +95,7 @@ export const ReviewOverview = ({ restaurant }) => {
           ) : (
             <>
               <span className="font-bold text-4xl">
-                {noReviews ? "?" : round(restaurant.avgRating, 1)}
+                {noReviews ? "?" : round(restaurant.avgFinalRating, 1)}
               </span>
               <span className="text-sm">/10</span>
             </>
@@ -107,7 +107,7 @@ export const ReviewOverview = ({ restaurant }) => {
           ) : (
             <RatingPill
               isNew
-              avgRating={restaurant.avgRating}
+              avgRating={restaurant.avgFinalRating}
               reviewCount={restaurant.reviewCount}
               hideNewRatingInfo
             />

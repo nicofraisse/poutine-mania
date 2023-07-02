@@ -89,7 +89,7 @@ const RestaurantCard = ({ restaurant }) => {
             ) : (
               <div className="mb-2 mt-1">
                 <RatingPill
-                  avgRating={restaurant.avgRating}
+                  avgRating={restaurant.avgFinalRating || restaurant.avgRating}
                   reviewCount={restaurant.reviewCount}
                   isNew
                   onRate={() => rateRestaurant(restaurant)}

@@ -32,7 +32,6 @@ handler.patch(async (req, res) => {
       return;
     }
 
-    console.log({ fields });
     const { name, bio, avatar: avatarStringKey } = fields;
 
     let newPublicIds = [];

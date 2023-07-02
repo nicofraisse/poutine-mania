@@ -44,7 +44,7 @@ const HomePage = ({ restaurants }) => {
         <title>PoutineMania: La communauté de la poutine</title>
         <meta
           name="description"
-          content="Notez vos poutines préférées en critiquant les frites, le fromage et la sauce. Lisez les avis et explorez la carte interactive pour dénicher la poutine ultime du Québec!"
+          content="Note tes poutines préférées en critiquant les frites, le fromage et la sauce. Explore la carte pour dénicher la poutine ultime du Québec!"
         ></meta>
       </Head>
 
