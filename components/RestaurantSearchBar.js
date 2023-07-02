@@ -35,7 +35,7 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit, isBanner }, ref) => {
     setTimeout(() => {
       setShowSearchSuggestions(false);
     }, 200);
-    const trimmedSearchValue = searchValue?.trim();
+    // const trimmedSearchValue = searchValue?.trim();
     // push(
     //   trimmedSearchValue
     //     ? `/restaurants?search=${encodeURIComponent(trimmedSearchValue)}`
