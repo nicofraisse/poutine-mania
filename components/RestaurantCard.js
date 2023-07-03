@@ -75,14 +75,14 @@ const RestaurantCard = ({ restaurant }) => {
           </div>
 
           <div style={{ minWidth: "71%" }}>
-            <div
+            <h2
               className={classNames(
-                "font-bold text-base lg:text-lg text-teal-600 group-hover:text-teal-500 transition duration-100",
+                "font-semibold text-base lg:text-lg text-teal-600 group-hover:text-teal-500 transition duration-100",
                 { "-mt-1": loading }
               )}
             >
               {restaurant?.name || <Skeleton width="50%" />}
-            </div>
+            </h2>
 
             {loading ? (
               <Skeleton width="82%" />

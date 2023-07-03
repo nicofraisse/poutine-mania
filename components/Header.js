@@ -211,7 +211,7 @@ const Header = ({ toggleMobileSidebar }) => {
               ) : currentUser ? (
                 <div className="relative mx-4 lg:mx-5 z-30">
                   <div
-                    className="h-[44px] w-[44px] bg-gray-400 rounded-full cursor-pointer hover:brightness-125 transition duration-150 flex items-center justify-center shadow"
+                    className="h-[44px] w-[44px] bg-gray-400 rounded-full cursor-pointer hover:brightness-110 transition duration-150 flex items-center justify-center shadow"
                     onClick={() => setDropdownOpen(!dropdownOpen)}
                     ref={toggleRef}
                   >
@@ -286,8 +286,8 @@ const Header = ({ toggleMobileSidebar }) => {
         >
           <div className="flex flex-col items-center">
             <h1
-              className="text-center text-3xl lg:text-4xl 2xl:text-5xl font-bold text-white"
-              style={{ textShadow: "0px 0px 4px rgba(0, 0, 0, 0.6)" }}
+              className="text-center text-3xl lg:text-4xl 2xl:text-5xl font-semibold text-white"
+              style={{ textShadow: "0px 0px 4px rgba(0, 0, 0, 0.7)" }}
             >
               {/* <div
                 className="rounded mb-4 inline-block relative"

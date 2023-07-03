@@ -69,7 +69,7 @@ const MarkerAndPopup = ({
               backgroundColor:
                 restaurant.reviewCount > 0
                   ? Color(
-                      ratingColors[Math.floor(restaurant.avgRating)]
+                      ratingColors[Math.floor(restaurant.avgFinalRating)]
                     ).darken(0.4)
                   : "rgb(160, 160, 160)",
               boxShadow: isHovered ? "0px 0px 7px rgba(0, 0, 0, 0.5)" : "",
@@ -108,7 +108,7 @@ const MarkerAndPopup = ({
               size={40}
               color={
                 restaurant.reviewCount > 0
-                  ? Color(ratingColors[Math.floor(restaurant.avgRating)])
+                  ? Color(ratingColors[Math.floor(restaurant.avgFinalRating)])
                       .darken(0.4)
                       .hex()
                   : "rgb(205, 205, 205)"
@@ -116,7 +116,7 @@ const MarkerAndPopup = ({
               fill={
                 restaurant.reviewCount > 0
                   ? Color(
-                      ratingColors[Math.floor(restaurant.avgRating)]
+                      ratingColors[Math.floor(restaurant.avgFinalRating)]
                     ).saturate(0.5)
                   : "white"
               }
@@ -175,7 +175,7 @@ const MarkerAndPopup = ({
               <>
                 <div className="max-w-28">
                   <RatingPill
-                    avgRating={restaurant.avgRating}
+                    avgRating={restaurant.avgFinalRating}
                     reviewCount={restaurant.reviewCount}
                   />
                 </div>
