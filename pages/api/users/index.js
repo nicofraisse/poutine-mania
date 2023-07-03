@@ -26,15 +26,28 @@ handler.get(async (req, res) => {
         },
       },
       {
+        $lookup: {
+          from: "accounts",
+          localField: "_id",
+          foreignField: "userId",
+          as: "connectedAccounts",
+        },
+      },
+      {
         $addFields: {
           eatenlistCount: { $size: "$eatenlist" },
           watchlistCount: { $size: "$watchlist" },
           reviewCount: { $size: "$userReviews" },
+          connectedAccount: { $arrayElemAt: ["$connectedAccounts", 0] },
         },
       },
       {
         $project: {
           userReviews: 0,
+          connectedAccounts: 0,
+          "connectedAccount.refreshToken": 0,
+          "connectedAccount.accessToken": 0,
+          "connectedAccount.accessTokenExpires": 0,
         },
       },
     ])

@@ -6,6 +6,7 @@ import { useCurrentUser } from "../../lib/useCurrentUser";
 import { useRouter } from "next/dist/client/router";
 import { format } from "date-fns";
 import { toast } from "react-hot-toast";
+import { upperFirst } from "lodash";
 import { ToggleSwitch } from "components/controls/ToggleSwitch";
 
 const Users = () => {
@@ -64,6 +65,9 @@ const Users = () => {
               Email Verified
             </th>
             <th className="bg-slate-100 border-b font-medium p-4 pl-8 pb-3 text-slate-500 text-left">
+              Provider
+            </th>
+            <th className="bg-slate-100 border-b font-medium p-4 pl-8 pb-3 text-slate-500 text-left">
               Name
             </th>
             <th className="bg-slate-100 border-b font-medium p-4 pl-8 pb-3 text-slate-500 text-left">
@@ -85,7 +89,7 @@ const Users = () => {
             <tr
               key={user._id}
               className="hover:bg-slate-50 tansition-colors duration-100"
-              // onClick={() => push(`/users/${user._id}`)}
+              onDoubleClick={() => push(`/users/${user.slug}`)}
             >
               <td className="border-b border-slate-100 p-2 pl-8 text-slate-500">
                 <ToggleSwitch
@@ -98,6 +102,9 @@ const Users = () => {
               </td>
               <td className="border-b border-slate-100 p-2 pl-8 text-slate-500">
                 {user.emailVerified ? "✅" : "❌"}
+              </td>
+              <td className="border-b border-slate-100 p-2 pl-8 text-slate-500 max-w-60 truncate">
+                {upperFirst(user.connectedAccount?.providerId) || "-"}
               </td>
               <td className="border-b border-slate-100 p-2 pl-8 text-slate-500 max-w-60 truncate">
                 {user.name}
