@@ -69,7 +69,14 @@ const Index = ({ SEO }) => {
           name="description"
           content={`Lire les avis sur le restaurant ${SEO?.restaurantName} au Québec, et partagez le vôtre.`}
         />
-        <meta name="image" content={SEO?.mainPhoto} />
+        <meta
+          name="image"
+          content={
+            SEO?.mainPhoto
+              ? `https://res.cloudinary.com/${process.env.CLOUD_NAME}/image/upload/q_50/${SEO.mainPhoto}`
+              : ""
+          }
+        />
 
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
@@ -85,7 +92,14 @@ const Index = ({ SEO }) => {
           property="og:description"
           content={`Lire les avis sur le restaurant ${SEO?.restaurantName} au Québec, et partagez le vôtre.`}
         />
-        <meta property="og:image" content={SEO?.mainPhoto} />
+        <meta
+          property="og:image"
+          content={
+            SEO?.mainPhoto
+              ? `https://res.cloudinary.com/${process.env.CLOUD_NAME}/image/upload/q_50/${SEO.mainPhoto}`
+              : ""
+          }
+        />
 
         {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
@@ -101,7 +115,14 @@ const Index = ({ SEO }) => {
           property="twitter:description"
           content={`Lire les avis sur le restaurant ${SEO?.restaurantName} au Québec, et partagez le vôtre.`}
         />
-        <meta property="twitter:image" content={SEO?.mainPhoto} />
+        <meta
+          property="twitter:image"
+          content={
+            SEO?.mainPhoto
+              ? `https://res.cloudinary.com/${process.env.CLOUD_NAME}/image/upload/q_50/${SEO.mainPhoto}.jpg`
+              : ""
+          }
+        />
       </Head>
       <div className="bg-[#fafafa] min-h-screen-minus-navbar">
         <RestaurantHeader restaurant={restaurant} />
