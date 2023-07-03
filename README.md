@@ -8,18 +8,18 @@ Social website to rate & review poutines
 ## Todo
 - [X] Database pooling
 - [ ] Test compatibility with various mobile browsers
-- [X] "Add towatch list"/"poutines to try" feature & page
-- [X] Edit profile (name, profile photo, bio, deactivate/delete account)
+- [X] "Add to watch list"/"poutines to try" feature & page
+- [X] Edit profile (name, profile photo, bio, soft-delete account)
 - [ ] Follow user feature
-- [ ] About us/contact page
+- [X] About us/contact page
 - [ ] Create isLoggedIn and isAdmin BE middleware
 - [ ] Add backend validation (Joi)
 - [ ] Refetch data without refreshing when logging in, creating account, adding a review, etc.
 - [X] Cache the current user
 - [X] Skeleton screens instead of spinner
-- [ ] Add filtering in restaurants page (eg. only show restaurants with ratings > 7 & dine-in category)
+- [X] Add filtering in restaurants index page
 - [X] Email verification for email signup
-- [ ] Email based password change
+- [X] Email based password change
 - [ ] Upvote / downvote / report review
 
 Reviews:
