@@ -14,6 +14,8 @@ const ImageUpload = ({
 }) => {
   const [imageSrcs, setImageSrcs] = useState([]);
   const [field] = useField(props);
+  const [dragging, setDragging] = useState(false);
+
   const { setFieldValue } = useFormikContext();
 
   useEffect(() => {
@@ -41,6 +43,22 @@ const ImageUpload = ({
 
       reader.readAsDataURL(compressedFile);
     }
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    setDragging(true); // Set dragging state to true
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setDragging(false); // Reset dragging state to false
+    handleChange({ target: { files: e.dataTransfer.files } });
+  };
+
+  const handleDragLeave = (e) => {
+    e.preventDefault();
+    setDragging(false); // Reset dragging state to false
   };
 
   const inputRef = useRef();
@@ -104,7 +122,15 @@ const ImageUpload = ({
         </div>
       ))}
       {(isMulti ? imageSrcs.length < maxImages : imageSrcs.length === 0) && (
-        <div className="m-2">
+        <div
+          className={classNames(
+            "m-2 rounded-lg",
+            { "border-gray-300 bg-sky-100": dragging } // Add these classes when dragging
+          )}
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+          onDrop={handleDrop}
+        >
           <input
             type="file"
             name="file"
