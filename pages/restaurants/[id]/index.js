@@ -63,7 +63,6 @@ const Index = ({ SEO }) => {
     <>
       <Head>
         <title>{SEO?.restaurantName.toUpperCase()} - Une bonne poutine?</title>
-
         {/* Generic */}
         <meta
           name="description"
@@ -77,9 +76,10 @@ const Index = ({ SEO }) => {
               : ""
           }
         />
-
         {/* Open Graph / Facebook */}
+        <meta property="fb:app_id" content="572135587608476" />
         <meta property="og:type" content="website" />
+
         <meta
           property="og:url"
           content={process.env.NEXT_PUBLIC_APP_URL + "/restaurants/" + query.id}
@@ -100,7 +100,6 @@ const Index = ({ SEO }) => {
               : ""
           }
         />
-
         {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
         <meta
