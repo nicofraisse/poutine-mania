@@ -197,7 +197,7 @@ export async function getStaticProps({ params }) {
     props: {
       SEO: {
         restaurantName: restaurant.name,
-        mainPhoto: restaurant.mainPhotos && restaurant.mainPhotos[0],
+        mainPhoto: restaurant.mainPhotos ? restaurant.mainPhotos[0] : null,
       },
     },
   };
