@@ -63,10 +63,45 @@ const Index = ({ SEO }) => {
     <>
       <Head>
         <title>{SEO?.restaurantName.toUpperCase()} - Une bonne poutine?</title>
+
+        {/* Generic */}
         <meta
           name="description"
           content={`Lire les avis sur le restaurant ${SEO?.restaurantName} au Québec, et partagez le vôtre.`}
         />
+        <meta name="image" content={SEO?.mainPhoto} />
+
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:url"
+          content={process.env.NEXT_PUBLIC_APP_URL + "/restaurants/" + query.id}
+        />
+        <meta
+          property="og:title"
+          content={`${SEO?.restaurantName.toUpperCase()} - Une bonne poutine?`}
+        />
+        <meta
+          property="og:description"
+          content={`Lire les avis sur le restaurant ${SEO?.restaurantName} au Québec, et partagez le vôtre.`}
+        />
+        <meta property="og:image" content={SEO?.mainPhoto} />
+
+        {/* Twitter */}
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta
+          property="twitter:url"
+          content={process.env.NEXT_PUBLIC_APP_URL + "/restaurants/" + query.id}
+        />
+        <meta
+          property="twitter:title"
+          content={`${SEO?.restaurantName.toUpperCase()} - Une bonne poutine?`}
+        />
+        <meta
+          property="twitter:description"
+          content={`Lire les avis sur le restaurant ${SEO?.restaurantName} au Québec, et partagez le vôtre.`}
+        />
+        <meta property="twitter:image" content={SEO?.mainPhoto} />
       </Head>
       <div className="bg-[#fafafa] min-h-screen-minus-navbar">
         <RestaurantHeader restaurant={restaurant} />
@@ -160,7 +195,10 @@ export async function getStaticProps({ params }) {
 
   return {
     props: {
-      SEO: { restaurantName: restaurant.name },
+      SEO: {
+        restaurantName: restaurant.name,
+        mainPhoto: restaurant.mainPhotos && restaurant.mainPhotos[0],
+      },
     },
   };
 }
