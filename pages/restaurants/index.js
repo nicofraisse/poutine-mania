@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 import Map from "components/Map";
 import RestaurantCard from "components/RestaurantCard";
@@ -37,14 +37,16 @@ const Restaurants = () => {
   const filtersRef = useClickOutside(() => setFiltersOpen(false));
   const { push } = useRouter();
 
-  const { data: restaurants } = useGet(
-    `/api/restaurants${getUrlQueryString({
+  const url = useMemo(() => {
+    return `/api/restaurants${getUrlQueryString({
       search: searchValue && encodeURIComponent(searchValue.trim()),
       sort: sortType,
       order: sortOrder,
       noUnapproved: true,
-    })}`
-  );
+    })}`;
+  }, [searchValue, sortType, sortOrder]);
+
+  const { data: restaurants } = useGet(url);
 
   const allSuccursales =
     restaurants && flatten(restaurants.map((r) => r.succursales));
