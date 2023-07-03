@@ -59,7 +59,7 @@ const Edit = () => {
       const updatedSession = await getSession({ force: true });
       updatedSession.user.image = response.data.image; // Assuming the API response returns the new image URL
       refetchCurrentUser();
-      push(`/profil/${currentUser._id}`);
+      push(`/profil/${query.id}`);
     } catch (e) {
       toast.error(
         e?.response?.data?.message ||

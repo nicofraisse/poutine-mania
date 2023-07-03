@@ -21,8 +21,6 @@ handler.patch(async (req, res) => {
     return;
   }
 
-  const userId = ObjectId(req.query.id);
-
   const form = new formidable.IncomingForm();
   form.parse(req, async (err, fields, files) => {
     const db = req.db;
@@ -54,7 +52,7 @@ handler.patch(async (req, res) => {
 
     try {
       await usersCollection.updateOne(
-        { _id: userId },
+        { slug: req.query.id },
         {
           $set: {
             name: name,
