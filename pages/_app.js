@@ -10,19 +10,8 @@ import Head from "next/head";
 import { CookiesProvider } from "react-cookie";
 import { SidebarDataProvider } from "../components/context/SidebarDataProvider";
 import { Analytics } from "@vercel/analytics/react";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
 
 function App({ Component, pageProps }) {
-  const { push, asPath } = useRouter();
-
-  useEffect(() => {
-    console.log({ asPath, push });
-    if (asPath === "/poutine-jesus") push("/profil/poutine-jesus");
-  }, [asPath, push]);
-
-  // useEffect(() => axios.get("/api/init-db").then((res) => console.log(res)));
-
   return (
     <>
       <Head>
