@@ -50,6 +50,16 @@ a {
 * {
   box-sizing: border-box;
 }
+
+input[type="range"] {
+  height: 30px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  height: 30px;
+  width: 30px;
+}
+
 /* For Webkit-based browsers (Chrome, Safari and Opera) */
 .scrollbar-hide::-webkit-scrollbar {
   display: none;

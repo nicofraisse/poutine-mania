@@ -1,12 +1,5 @@
 import { connectToDatabase } from "../../../../lib/db";
 
-const getConvertSection = (field) => ({
-  $convert: {
-    input: `$$review.${field}`,
-    to: "double",
-  },
-});
-
 const getAvgSection = (field) => ({
   $avg: {
     $map: {

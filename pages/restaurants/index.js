@@ -5,9 +5,7 @@ import RestaurantCard from "components/RestaurantCard";
 import { useRestaurantSearch } from "components/context/RestaurantSearchProvider";
 import { useGet } from "lib/useAxios";
 import { RestaurantCardHoverProvider } from "components/context/RestaurantCardHoverProvider";
-import ReactSelect from "react-select";
-import { Sliders, X } from "react-feather";
-import Button from "components/Button";
+import { X } from "react-feather";
 import useClickOutside from "lib/useClickOutside";
 import classNames from "classnames";
 import { getUrlQueryString } from "lib/getUrlqueryString";
@@ -15,13 +13,12 @@ import { useRouter } from "next/router";
 import RestaurantIntrouvable from "components/RestaurantIntrouvable";
 import { flatten } from "lodash";
 import Skeleton from "react-loading-skeleton";
+import { RestaurantsFilters } from "../../components/RestaurantsFilters";
 
 const sortTypes = [
   { label: "Popularité", value: "reviewCount" },
   { label: "Nom", value: "name" },
   { label: "Note moyenne", value: "avgRating" },
-  // { label: 'Date de création', value: 'createdAt' },
-  // { label: 'Proximité', value: 'proximity' },
 ];
 
 const sortOrders = [
@@ -33,9 +30,18 @@ const Restaurants = () => {
   const { searchValue } = useRestaurantSearch();
   const [sortType, setSortType] = useState("reviewCount");
   const [sortOrder, setSortOrder] = useState(-1);
+  const [priceFilter, setPriceFilter] = useState([]);
+  const [categoryFilter, setCategoryFilter] = useState([]);
+  const [ratingFilter, setRatingFilter] = useState(null);
   const [filtersOpen, setFiltersOpen] = useState(false);
   const filtersRef = useClickOutside(() => setFiltersOpen(false));
   const { push } = useRouter();
+
+  const onApplyFilters = (priceFilter, categoryFilter, ratingFilter) => {
+    setPriceFilter(priceFilter);
+    setCategoryFilter(categoryFilter);
+    setRatingFilter(ratingFilter);
+  };
 
   const url = useMemo(() => {
     return `/api/restaurants${getUrlQueryString({
@@ -43,14 +49,24 @@ const Restaurants = () => {
       sort: sortType,
       order: sortOrder,
       noUnapproved: true,
+      rating: ratingFilter,
+      categories:
+        categoryFilter && categoryFilter.length ? categoryFilter : undefined,
+      price: priceFilter && priceFilter.length ? priceFilter : undefined,
     })}`;
-  }, [searchValue, sortType, sortOrder]);
+  }, [
+    searchValue,
+    sortType,
+    sortOrder,
+    ratingFilter,
+    categoryFilter,
+    priceFilter,
+  ]);
 
   const { data: restaurants } = useGet(url);
 
   const allSuccursales =
     restaurants && flatten(restaurants.map((r) => r.succursales));
-  // const loading = searchValue !== nonDebouncedValue || restaurantsLoading;
 
   return (
     <RestaurantCardHoverProvider>
@@ -67,7 +83,7 @@ const Restaurants = () => {
             }
           )}
         >
-          <div className="lg:pl-6 lg:pr-5 px-2 mb-3 lg:mb-0 flex justify-between items-start w-full">
+          <div className="px-3 mb-3 lg:mb-0 flex justify-between items-start w-full">
             {!restaurants ? (
               <Skeleton
                 width="300px"
@@ -76,7 +92,7 @@ const Restaurants = () => {
               />
             ) : (
               <h2
-                className="font-bold text-slate-500 text-lg flex items-center h-12 mr-2"
+                className="font-bold text-slate-500 md:text-lg flex items-center h-12 mr-2"
                 style={{ lineHeight: 1.3 }}
               >
                 {restaurants.length > 0 ? (
@@ -101,48 +117,23 @@ const Restaurants = () => {
               </h2>
             )}
 
-            <div className="relative" ref={filtersRef}>
-              {!restaurants ? (
-                <Skeleton height={36} width={36} />
-              ) : (
-                <Button
-                  variant="light"
-                  height="sm"
-                  className="w-[40px]"
-                  onClick={() => setFiltersOpen(!filtersOpen)}
-                >
-                  <Sliders className="min-w-5" />
-                </Button>
-              )}
-
-              <div
-                className={classNames(
-                  "flex items-center absolute top-[48px] right-0 w-[375px] bg-white transition-opacity duration-300 p-3 rounded border",
-                  {
-                    "shadow-lg opacity-100": filtersOpen,
-                    "shadow-none opacity-0 pointer-events-none": !filtersOpen,
-                  }
-                )}
-              >
-                <div className="text-sm font-bold text-gray-500 mr-2">
-                  Tri par
-                </div>
-                <ReactSelect
-                  placeholder="Trier par..."
-                  options={sortTypes}
-                  className="mr-2 text-sm"
-                  onChange={({ value }) => setSortType(value)}
-                  defaultValue={sortTypes[0]}
-                />
-                <ReactSelect
-                  placeholder="Ordre"
-                  options={sortOrders}
-                  className="text-sm"
-                  onChange={({ value }) => setSortOrder(value)}
-                  defaultValue={sortOrders[0]}
-                />
-              </div>
-            </div>
+            <RestaurantsFilters
+              filtersRef={filtersRef}
+              restaurants={restaurants}
+              filtersOpen={filtersOpen}
+              setFiltersOpen={setFiltersOpen}
+              setSortType={setSortType}
+              setSortOrder={setSortOrder}
+              sortOrders={sortOrders}
+              sortTypes={sortTypes}
+              priceFilter={priceFilter}
+              setPriceFilter={setPriceFilter}
+              categoryFilter={categoryFilter}
+              setCategoryFilter={setCategoryFilter}
+              ratingFilter={ratingFilter}
+              setRatingFilter={setRatingFilter}
+              onApplyFilters={onApplyFilters}
+            />
           </div>
 
           {(restaurants || [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}]).map(

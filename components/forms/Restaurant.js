@@ -235,7 +235,6 @@ const RestaurantForm = ({ type }) => {
             <Button
               loading={isSubmitting}
               onClick={() => {
-                console.log(errors);
                 if (Object.keys(errors).length > 0) {
                   toast.error(
                     "Veuillez remplir tous les champs correctement (voir les erreurs plus haut)"

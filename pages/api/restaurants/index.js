@@ -20,6 +20,21 @@ handler.get(async (req, res) => {
       }
     : undefined;
 
+  let { rating, categories, price } = req.query;
+
+  // convert category and price back to array, if they are not nullish
+  categories = categories ? categories.split(",") : [];
+  price = price ? price.split(",").map(Number) : [];
+
+  const categoryMatch = categories.length
+    ? { categories: { $in: categories } }
+    : undefined;
+
+  const priceMatch = price.length ? { priceRange: { $in: price } } : undefined;
+
+  const ratingMatch =
+    rating > 0 ? { avgRating: { $gte: Number(rating) } } : undefined;
+
   const baseAggregaor = [
     {
       $lookup: {
@@ -39,6 +54,9 @@ handler.get(async (req, res) => {
       $match: {
         reviewCount: { $gte: minReviewCount ? Number(minReviewCount) : 0 },
         ...(approvedMatch && approvedMatch),
+        ...(categoryMatch && categoryMatch),
+        ...(priceMatch && priceMatch),
+        ...(ratingMatch && ratingMatch),
       },
     },
     {
