@@ -41,7 +41,7 @@ const HomePage = ({ restaurants }) => {
   return (
     <>
       <Head>
-        <title>PoutineMania: La communauté de la poutine</title>
+        <title>Poutine Mania: La communauté de la poutine!</title>
         <meta
           name="description"
           content="Note tes poutines préférées en critiquant les frites, le fromage et la sauce. Explore la carte pour dénicher la poutine ultime du Québec!"
