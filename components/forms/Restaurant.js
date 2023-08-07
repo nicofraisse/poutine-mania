@@ -48,14 +48,14 @@ const RestaurantForm = ({ type }) => {
     if (type === "create") {
       axios
         .post("/api/restaurants/create", submitValues)
-        .then(() => {
+        .then(({ data }) => {
           setSubmitting(false);
           toast.success("Succès");
 
           push(
             currentUser.isAdmin
               ? "/admin/restaurants"
-              : `/restaurants/${restaurant.slug}`
+              : `/restaurants/${data.restaurant.slug}`
           );
         })
         .catch((err) => toast.error(err.message));
@@ -201,7 +201,7 @@ const RestaurantForm = ({ type }) => {
                 />
                 <Field
                   name={`phoneNumber-${index}`}
-                  label="Numéro de téléphone"
+                  label="Numéro de téléphone (optionnel)"
                   value={succursale.phoneNumber}
                   onChange={(value) =>
                     updateSuccursaleField(value, index, "phoneNumber")
@@ -230,7 +230,7 @@ const RestaurantForm = ({ type }) => {
               Ajouter une succursale
             </Button>
           </div>
-          <Field name="website" label="Site internet" />
+          <Field name="website" label="Site web (optionnel)" />
           <div className="flex items-center justify-between">
             <Button
               loading={isSubmitting}

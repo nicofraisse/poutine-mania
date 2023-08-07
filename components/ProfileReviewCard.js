@@ -70,12 +70,12 @@ const ProfileReviewCard = ({ review, isIndex, userName, loading }) => {
       <div className="text-slate-400 flex sm:justify-between items-start text-sm">
         <div className="flex">
           {isIndex && (
-            <div className="block relative top-[13px] translate-y-[-13px] translate-x-[-6px]">
+            <div className="h-6 min-w-6 max-w-6 block relative top-[13px] translate-y-[-13px] translate-x-[-6px]">
               {review.user?.image ? (
                 <Image
                   alt="user-image"
                   src={review.user.image}
-                  className="rounded-full h-6 min-w-6 max-w-6 object-cover object-center"
+                  className="h-6 min-w-6 max-w-6 rounded-full object-cover object-center"
                   quality={10}
                 />
               ) : (

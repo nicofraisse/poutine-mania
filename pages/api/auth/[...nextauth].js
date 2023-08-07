@@ -5,6 +5,7 @@ import FacebookProvider from "next-auth/providers/facebook";
 import { capitalize } from "lodash";
 import { verifyPassword } from "lib/auth";
 import { connectToDatabase } from "lib/db";
+import { generateSlug } from "../../../lib/generateSlug";
 
 export default NextAuth({
   session: {
@@ -55,6 +56,18 @@ export default NextAuth({
         .findOne({ email: user.email });
 
       if (foundUser) {
+        if (!foundUser.slug) {
+          const slug = await generateSlug(user.name, db, "users");
+          await db.collection("users").updateOne(
+            { _id: foundUser._id },
+            {
+              $set: {
+                slug,
+              },
+            }
+          );
+        }
+
         const foundConnectedAccounts = await db
           .collection("accounts")
           .find({ userId: foundUser._id })

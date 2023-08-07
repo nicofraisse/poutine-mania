@@ -19,12 +19,13 @@ import Skeleton from "react-loading-skeleton";
 const Header = ({ toggleMobileSidebar }) => {
   const [session, loading] = useSession();
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [showSearchBar, setShowSearchBar] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
   const toggleRef = createRef();
   const headerSearchbarRef = useRef();
   const { push, pathname, query } = useRouter();
   const { openLogin } = useLoginForm();
-  const [showSearchBar, setShowSearchBar] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
   const { nonDebouncedValue, setSearchValue } = useRestaurantSearch();
   const currentUser = session?.user;
 

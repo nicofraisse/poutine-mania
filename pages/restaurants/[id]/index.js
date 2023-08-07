@@ -62,7 +62,9 @@ const Index = ({ SEO }) => {
   return (
     <>
       <Head>
-        <title>{SEO?.restaurantName.toUpperCase()} - Une bonne poutine?</title>
+        <title>
+          {SEO?.restaurantName.toUpperCase()} - Avis sur leur poutine
+        </title>
         {/* Generic */}
         <meta
           name="description"
@@ -86,7 +88,7 @@ const Index = ({ SEO }) => {
         />
         <meta
           property="og:title"
-          content={`${SEO?.restaurantName.toUpperCase()} - Une bonne poutine?`}
+          content={`${SEO?.restaurantName.toUpperCase()} - Avis sur leur poutine`}
         />
         <meta
           property="og:description"
@@ -96,7 +98,7 @@ const Index = ({ SEO }) => {
           property="og:image"
           content={
             SEO?.mainPhoto
-              ? `https://res.cloudinary.com/${process.env.CLOUD_NAME}/image/upload/q_50/${SEO.mainPhoto}`
+              ? `https://res.cloudinary.com/${process.env.CLOUD_NAME}/image/upload/q_50/${SEO?.mainPhoto}`
               : ""
           }
         />
@@ -108,7 +110,7 @@ const Index = ({ SEO }) => {
         />
         <meta
           property="twitter:title"
-          content={`${SEO?.restaurantName.toUpperCase()} - Une bonne poutine?`}
+          content={`${SEO?.restaurantName.toUpperCase()} - Avis sur leur poutine`}
         />
         <meta
           property="twitter:description"
@@ -118,7 +120,7 @@ const Index = ({ SEO }) => {
           property="twitter:image"
           content={
             SEO?.mainPhoto
-              ? `https://res.cloudinary.com/${process.env.CLOUD_NAME}/image/upload/q_50/${SEO.mainPhoto}.jpg`
+              ? `https://res.cloudinary.com/${process.env.CLOUD_NAME}/image/upload/q_50/${SEO?.mainPhoto}.jpg`
               : ""
           }
         />
@@ -217,7 +219,7 @@ export async function getStaticProps({ params }) {
     props: {
       SEO: {
         restaurantName: restaurant.name,
-        mainPhoto: restaurant.mainPhotos ? restaurant.mainPhotos[0] : null,
+        mainPhoto: restaurant.mainPhotos?.[0] || null,
       },
     },
   };

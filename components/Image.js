@@ -6,7 +6,7 @@ import classNames from "classnames";
 const Image = ({ alt, src, forceNextImage, quality = 20, ...props }) => {
   if (forceNextImage)
     return (
-      <NextImage width="100%" height="100%" src={src} {...props} alt="image" />
+      <NextImage width="100%" height="100%" src={src} alt="image" {...props} />
     );
 
   if (typeof src === "string") {
@@ -22,7 +22,7 @@ const Image = ({ alt, src, forceNextImage, quality = 20, ...props }) => {
       );
     }
     return (
-      <NextImage width="100%" height="100%" src={src} {...props} alt="image" />
+      <NextImage width="100%" height="100%" src={src} alt="image" {...props} />
     );
   }
   return (

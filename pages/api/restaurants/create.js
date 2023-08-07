@@ -26,7 +26,7 @@ handler.post(async (req, res) => {
   });
 
   const data = await db.collection("restaurants").findOne({ _id: insertedId });
-  res.status(200).json(data);
+  res.status(200).json({ restaurant: data });
 });
 
 export default handler;

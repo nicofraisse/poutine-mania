@@ -30,6 +30,7 @@ const Edit = () => {
         formikBag.setSubmitting(false);
       });
   };
+
   const handleUpdateInfo = async (values, formikBag) => {
     formikBag.setSubmitting(true);
     const formData = new FormData();
@@ -57,7 +58,7 @@ const Edit = () => {
       toast.success("Informations mises à jour avec succès!");
       formikBag.setSubmitting(false);
       const updatedSession = await getSession({ force: true });
-      updatedSession.user.image = response.data.image; // Assuming the API response returns the new image URL
+      updatedSession.user.image = response.data.image;
       refetchCurrentUser();
       push(`/profil/${query.id}`);
     } catch (e) {
