@@ -38,7 +38,7 @@ const APropos = () => {
               poutine, n&apos;hésite pas à nous contacter en cliquant sur le
               bouton ci-dessous.
             </p>
-            <a href="mailto:info@nicolasfraisse.com">
+            <a href="mailto:cyys100@gmail.com">
               <Button
                 variant="white"
                 className="mt-4 mb-1 w-[128px] mx-auto max-h-[56px]"
