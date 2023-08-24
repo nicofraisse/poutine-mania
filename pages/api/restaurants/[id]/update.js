@@ -6,7 +6,7 @@ const handler = async (req, res) => {
   const db = await client.db();
 
   const updatedRestaurant = await db.collection("restaurants").updateOne(
-    { _id: ObjectId(req.query.id) },
+    { slug: req.query.id },
     {
       $set: {
         name: req.body.name,

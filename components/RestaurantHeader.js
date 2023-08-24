@@ -8,15 +8,19 @@ import Skeleton from "react-loading-skeleton";
 const RestaurantHeader = ({ restaurant }) => {
   const city =
     restaurant &&
-    (restaurant.succursales[0].address?.context?.find((el) =>
-      el.id?.includes("neighborhood")
-    )?.text ||
-      restaurant.succursales[0].address?.context?.find((el) =>
-        el.id?.includes("place")
-      )?.text ||
-      restaurant.succursales[0].address?.context?.find((el) =>
-        el.id?.includes("country")
-      )?.text);
+    (restaurant.succursales.length > 1
+      ? `${restaurant.succursales.length} addresses au Quebec`
+      : restaurant.succursales[0].address?.context?.find((el) =>
+          el.id?.includes("neighborhood")
+        )?.text ||
+        restaurant.succursales[0].address?.context?.find((el) =>
+          el.id?.includes("place")
+        )?.text ||
+        restaurant.succursales[0].address?.context?.find((el) =>
+          el.id?.includes("country")
+        )?.text);
+
+  console.log(restaurant?.succursales);
 
   const images =
     restaurant &&
