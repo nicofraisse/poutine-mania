@@ -15,7 +15,7 @@ const MesPoutines = () => {
   );
 
   return (
-    <div className="p-5 ">
+    <div className="p-5 mx-auto max-w-lg">
       <h1 className="text-2xl font-black mb-5 mt-3 text-center sm:text-start">
         À essayer
       </h1>

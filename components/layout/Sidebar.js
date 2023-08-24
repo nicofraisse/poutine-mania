@@ -1,6 +1,16 @@
 import Link from "next/link";
 import React from "react";
-import { Home, Info, Lock, Map, User, Star, CheckCircle } from "react-feather";
+import {
+  Home,
+  Info,
+  Lock,
+  Map,
+  User,
+  Star,
+  CheckCircle,
+  Edit2,
+  Edit3,
+} from "react-feather";
 import { useRouter } from "next/router";
 import classNames from "classnames";
 import ConditionalWrapper from "components/ConditionalWrapper";
@@ -120,6 +130,12 @@ const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
               label="Toutes les poutines"
               icon={Map}
               href="/restaurants"
+            />
+            <Item
+              onClick={onClickItem}
+              label="Noter une poutine"
+              icon={Edit3}
+              href="/noter"
             />
             {/* <Item
               onClick={onClickItem}

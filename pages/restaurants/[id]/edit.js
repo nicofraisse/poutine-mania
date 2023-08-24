@@ -1,4 +1,4 @@
-import RestaurantForm from "components/forms/Restaurant";
+import { RestaurantForm } from "components/forms/Restaurant";
 
 const CreateRestaurant = () => {
   return (

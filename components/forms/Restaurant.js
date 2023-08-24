@@ -17,7 +17,7 @@ import PillSelect from "../controls/PillSelect";
 import PhoneInput from "components/controls/PhoneInput";
 import { useCurrentUser } from "../../lib/useCurrentUser";
 
-const RestaurantForm = ({ type }) => {
+export const RestaurantForm = ({ type }) => {
   const { query, push } = useRouter();
   const { currentUser } = useCurrentUser();
 
@@ -237,9 +237,8 @@ const RestaurantForm = ({ type }) => {
               onClick={() => {
                 if (Object.keys(errors).length > 0) {
                   toast.error(
-                    "Veuillez remplir tous les champs correctement (voir les erreurs plus haut)"
+                    "Veuillez remplir tous les champs obligatoires correctement"
                   );
-                  toast.error(JSON.stringify(errors));
                 }
               }}
               className="bg-teal-500-300 px-4 py-1 rounded-lg shadoow w-40"
@@ -254,5 +253,3 @@ const RestaurantForm = ({ type }) => {
     </Form>
   );
 };
-
-export default RestaurantForm;
