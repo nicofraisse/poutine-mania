@@ -15,9 +15,9 @@ const APropos = () => {
           }
         />
       </Head>
-      <div className="text-center flex justify-center items-center h-screen-minus-navbar">
+      <div className="text-center sm:flex justify-center items-center min-h-screen-minus-navbar">
         <div>
-          <h1 className="sm:-mt-5 mb-10 font-black text-3xl sm:text-4xl">
+          <h1 className="sm:-mt-5 mb-6 sm:mb-10 pt-4 sm:pt-0 font-black text-3xl sm:text-4xl">
             À Propos
           </h1>
           <div className="max-w-2xl mx-auto bg-white py-5 px-6 -sm border rounded-md text-sm sm:text-md">
@@ -51,7 +51,7 @@ const APropos = () => {
             </a>
           </div>
 
-          <div className="mb-4 mt-12">© Poutine Mania | 2022-2023</div>
+          <div className="mb-4 sm:mt-12 mt-8">© Poutine Mania | 2022-2023</div>
         </div>
       </div>
     </>
