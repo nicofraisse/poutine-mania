@@ -1,37 +1,37 @@
-Social website to rate & review poutines
+# Social Website to Rate & Review Poutines
 
 ## Getting Started
 - Add environment variables in `.env.development`
-- `npm i`
-- `npm run dev`
+- Run `npm i` to install dependencies
+- Run `npm run dev` to start the development server
 
 ## Todo
-- [X] Database pooling
+- [X] Implement database pooling
 - [ ] Test compatibility with various mobile browsers
-- [X] "Add to watch list"/"poutines to try" feature & page
-- [X] Edit profile (name, profile photo, bio, soft-delete account)
-- [ ] Follow user feature
-- [X] About us/contact page
-- [ ] Create isLoggedIn and isAdmin BE middleware
-- [ ] Add backend validation (Joi)
-- [ ] Refetch data without refreshing when logging in, creating account, adding a review, etc.
+- [X] Add "Add to Watch List"/"Poutines to Try" feature & page
+- [X] Implement edit profile functionality (name, profile photo, bio, soft-delete account)
+- [ ] Implement follow user feature
+- [X] Create About Us/Contact page
+- [ ] Create `isLoggedIn` and `isAdmin` backend middleware
+- [ ] Add backend validation using Joi
+- [ ] Refetch data without page refresh for actions like login, account creation, adding a review, etc.
 - [X] Cache the current user
-- [X] Skeleton screens instead of spinner
-- [X] Add filtering in restaurants index page
-- [X] Email verification for email signup
-- [X] Email based password change
-- [ ] Upvote / downvote / report review
+- [X] Use skeleton screens instead of spinner
+- [X] Add filtering options on restaurant index page
+- [X] Implement email verification for email signup
+- [X] Implement email-based password change
+- [ ] Add upvote, downvote, and report review features
 
-Reviews:
-- [X] Multi-photo upload
-- [ ] Add takeout/dine-in pill select in review form
-- [X] Fries 
-- [X] Sauce 
-- [X] Cheese 
-- [ ] Poutine name + Price of poutine
-Inspiration for rating criteria http://www.routedelapoutine.com/
+### Reviews
+- [X] Support multi-photo upload
+- [ ] Add takeout/dine-in pill selector in review form
+- [X] Rate fries
+- [X] Rate sauce
+- [X] Rate cheese
+- [ ] Include poutine name and price in reviews  
+Inspiration for rating criteria: [Route de la Poutine](http://www.routedelapoutine.com/)
 
-Restaurants
-- [ ] Add isPermanentlyClosed boolean to restaurants and adapt UI for restaurants that are shut forever
-- [X] Better looking category tag pills in restaurant card and show page
-- [X] Add isApproved boolean to restaurants - A user can create & review a new restaurant but it will only be visible by him until admin approves it
+### Restaurants
+- [ ] Add `isPermanentlyClosed` boolean for restaurants and adapt UI for restaurants that are closed permanently
+- [X] Improve design of category tag pills in restaurant card and show page
+- [X] Add `isApproved` boolean to restaurants — Users can create & review a new restaurant, but it will only be visible to them until an admin approves it
