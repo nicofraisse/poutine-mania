@@ -17,8 +17,10 @@ const APropos = () => {
       </Head>
       <div className="text-center flex justify-center items-center h-screen-minus-navbar">
         <div>
-          <h1 className="-mt-5 mb-10 font-black text-4xl">À Propos</h1>
-          <div className="max-w-2xl mx-auto bg-white py-5 px-6 -sm border rounded-md">
+          <h1 className="sm:-mt-5 mb-10 font-black text-3xl sm:text-4xl">
+            À Propos
+          </h1>
+          <div className="max-w-2xl mx-auto bg-white py-5 px-6 -sm border rounded-md text-sm sm:text-md">
             <p className="text-left mb-4">
               Bienvenue sur la référence des amateurs de poutine! Ici, découvre,
               évalue et partage test poutines favorites dans ton quartier ou

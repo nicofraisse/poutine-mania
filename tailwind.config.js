@@ -75,7 +75,7 @@ module.exports = {
         xl: "1280px",
         full: "100%",
         auto: "auto",
-        "screen-minus-navbar": "calc(100vh - 64px)",
+        "screen-minus-navbar": "calc(100vh - 68px)",
       },
       maxWidth: (theme) => ({
         ...theme("spacing"),

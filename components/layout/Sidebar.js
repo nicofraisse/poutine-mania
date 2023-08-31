@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Home,
   Info,
@@ -8,7 +8,6 @@ import {
   User,
   Star,
   CheckCircle,
-  Edit2,
   Edit3,
 } from "react-feather";
 import { useRouter } from "next/router";
@@ -84,6 +83,12 @@ const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
     } else toggleMobileSidebar();
   };
 
+  useEffect(() => {
+    document.querySelector("html").style.overflow = showMobileSidebar
+      ? "hidden"
+      : "auto";
+  }, [showMobileSidebar]);
+
   const getAmountString = (amount) => {
     if (!amount) return "";
     if (amount > 999) return " (999+)";
@@ -96,11 +101,11 @@ const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
         <div
           className="bg-black fixed h-screen w-screen z-30 bg-opacity-40 block lg:hidden"
           onClick={toggleMobileSidebar}
-        ></div>
+        />
       )}
       <div
         className={classNames(
-          "fixed lg:sticky lg:top-0 lg:block lg:min-w-[228px] bg-white h-screen z-50 transform transition-transform duration-300 ease-in-out",
+          "fixed lg:sticky lg:top-0 lg:block lg:min-w-[228px] h-screen bg-white z-50 transform transition-transform duration-300 ease-in-out",
           {
             "translate-x-0": showMobileSidebar,
             "-translate-x-full lg:translate-x-0": !showMobileSidebar,
@@ -203,7 +208,8 @@ const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
               />
             )}
           </div>
-          <div className="mb-3">
+
+          <div className="sticky bottom-0 pb-3">
             <Item
               onClick={onClickItem}
               label="À Propos"
