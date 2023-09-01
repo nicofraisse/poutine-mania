@@ -1,8 +1,8 @@
 import Spinner from "components/Spinner";
-import ProfileReviewCard from "components/ProfileReviewCard";
 import { useGet } from "lib/useAxios";
 import { useEffect, useState } from "react";
 import classNames from "classnames";
+import ProfileReviewCard from "../ProfileReviewCard";
 
 export function RecentActivity({ heightClass, isScrollable }) {
   const [paginationSkip, setPaginationSkip] = useState(0);
@@ -28,7 +28,7 @@ export function RecentActivity({ heightClass, isScrollable }) {
   return (
     <div
       className={classNames(
-        "pl-4 sm:pl-2 pr-5 max-w-xs scrollbar-hide mx-auto",
+        "px-4 sm:pl-2 max-w-xs scrollbar-hide mx-auto pt-1",
         heightClass,
         {
           "overflow-y-scroll": isScrollable,
@@ -46,7 +46,7 @@ export function RecentActivity({ heightClass, isScrollable }) {
           />
         )
       )}
-      <div className="h-[72px]">
+      <div className="h-[70px]">
         {loading && (
           <div className="flex justify-center">
             <Spinner />

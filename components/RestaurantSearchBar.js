@@ -3,13 +3,14 @@ import { useRouter } from "next/router";
 import { useRestaurantSearch } from "./context/RestaurantSearchProvider";
 import { useGet } from "../lib/useAxios";
 import { getUrlQueryString } from "../lib/getUrlqueryString";
-import { MapPin, Search, X } from "react-feather";
+import { MapPin, Search, X, XCircle } from "react-feather";
 import { Image } from "./Image";
 import { Image as ImageIcon } from "react-feather";
 import classNames from "classnames";
 import Button from "./Button";
 import { isMobile } from "react-device-detect";
 import { SurpriseButton } from "./SurpriseButton";
+import { isMotionValue } from "framer-motion";
 
 const RestaurantSearchBar = React.forwardRef(({ onSubmit, isBanner }, ref) => {
   const { push, asPath } = useRouter();
@@ -49,17 +50,34 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit, isBanner }, ref) => {
     if (isMobile) {
       const inputElement = inputRef.current;
       inputElement.addEventListener("touchstart", handleFocus);
-
-      return () => {
-        inputElement.removeEventListener("touchstart", handleFocus);
-      };
     }
     inputRef.current.addEventListener("keydown", handleKeyDown);
 
+    const handleInputFocus = (e) => {
+      setShowSearchSuggestions(true);
+
+      if (isBanner && isMobile) {
+        e.preventDefault();
+        const inputElement = inputRef.current;
+
+        const inputTopPosition =
+          inputElement.getBoundingClientRect().top + window.scrollY;
+        window.scrollTo({
+          top: inputTopPosition - 136,
+          behavior: "smooth",
+        });
+        setTimeout(() => {
+          inputElement.focus();
+        }, 500);
+      }
+    };
+
+    inputRef.current.addEventListener("focus", handleInputFocus);
+
     return () => {
-      // Clean up keydown event listener
       if (inputRef.current) {
         inputRef.current.removeEventListener("keydown", handleKeyDown);
+        inputRef.current.removeEventListener("focus", handleInputFocus);
       }
     };
   }, []);
@@ -105,22 +123,20 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit, isBanner }, ref) => {
   };
 
   const handleFocus = (e) => {
-    setShowSearchSuggestions(true);
-
-    if (isBanner && isMobile) {
-      e.preventDefault();
-      const inputElement = inputRef.current;
-
-      const inputTopPosition =
-        inputElement.getBoundingClientRect().top + window.scrollY;
-      window.scrollTo({
-        top: inputTopPosition - 136,
-        behavior: "smooth",
-      });
-      setTimeout(() => {
-        inputElement.focus();
-      }, 500);
-    }
+    // setShowSearchSuggestions(true);
+    // if (isBanner && isMobile) {
+    //   e.preventDefault();
+    //   const inputElement = inputRef.current;
+    //   const inputTopPosition =
+    //     inputElement.getBoundingClientRect().top + window.scrollY;
+    //   window.scrollTo({
+    //     top: inputTopPosition - 136,
+    //     behavior: "smooth",
+    //   });
+    //   setTimeout(() => {
+    //     inputElement.focus();
+    //   }, 500);
+    // }
   };
   const urlArray = asPath.split("/");
   const isRestaurantsPath =
@@ -158,15 +174,15 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit, isBanner }, ref) => {
           onClick={handleSearch}
         />
         {nonDebouncedValue.length > 1 && (
-          <X
+          <XCircle
             className={classNames("cursor-pointer", {
               "absolute top-2 right-2 text-slate-400 cursor-pointer hover:text-slate-500 transition duration-300":
                 !isBanner,
-              "absolute top-3 right-4 text-slate-500": isBanner,
+              "absolute top-3 right-4 text-slate-400": isBanner,
             })}
-            onMouseDown={() => {
+            onClick={() => {
               setSearchValue("");
-              inputRef.current.focus();
+              if (!isMobile) inputRef.current.focus();
             }}
           />
         )}

@@ -14,7 +14,7 @@ import { RatingSection } from "./ReviewCard";
 import { ImageModal } from "./ImageModal";
 import Skeleton from "react-loading-skeleton";
 
-const ProfileReviewCard = ({ review, isIndex, userName, loading }) => {
+export const ProfileReviewCard = ({ review, isIndex, userName, loading }) => {
   const [imgModalOpen, setImgModalOpen] = useState(false);
   const { currentUser } = useCurrentUser();
   const { reload } = useRouter();
@@ -67,7 +67,7 @@ const ProfileReviewCard = ({ review, isIndex, userName, loading }) => {
 
   return (
     <div className="max-w-[540px]">
-      <div className="text-slate-400 flex sm:justify-between items-start text-sm">
+      <div className="text-slate-400 flex sm:justify-between xl:justify-start items-start text-sm">
         <div className="flex">
           {isIndex && (
             <div className="h-6 min-w-6 max-w-6 block relative top-[13px] translate-y-[-13px] translate-x-[-6px]">
@@ -90,8 +90,8 @@ const ProfileReviewCard = ({ review, isIndex, userName, loading }) => {
               {isIndex ? (
                 <>
                   <Link href={`/profil/${review.user?.slug}`} passHref>
-                    <span className="font-bold hover:text-slate-500 cursor-pointer">
-                      {review?.user?.name}
+                    <span className="font-bold hover:text-slate-500 cursor-pointer w-3/4">
+                      {review?.user?.name?.slice(0, 32)}
                     </span>
                   </Link>{" "}
                   a{" "}
@@ -112,20 +112,20 @@ const ProfileReviewCard = ({ review, isIndex, userName, loading }) => {
                 </a>
               </Link>
             </span>
-            <span className="inline sm:hidden text-slate-300 right-0 text-xs ml-1 font-normal relative sm:top-[4px]">
+            <span className="inline sm:hidden xl:inline text-slate-300 right-0 text-xs ml-1 font-normal relative sm:top-[4px] xl:top-0">
               <span className="">- </span>{" "}
               {formatDate(review.createdAt, "d MMMM yyyy", true)}
             </span>
           </span>
         </div>
-        <span className="hidden sm:inline text-slate-300 text-xs ml-1 font-normal relative sm:top-[4px]">
+        <span className="hidden sm:inline xl:hidden text-slate-300 text-xs ml-1 font-normal relative sm:top-[4px] flex-grow border text-right min-w-28">
           {formatDate(review.createdAt, "d MMMM yyyy", true)}
         </span>
       </div>
       <div className="text-slate-700 mt-2 mb-8 border border-slate-100 shadow rounded-md p-3 sm:p-4 bg-white">
         <RatingSection review={review} showDate={false} />
         {review.comment && (
-          <p className="rounded-lg text-sm px-1 w-full text-slate-600">
+          <p className="rounded-xl text-sm px-1 w-full text-slate-600">
             {review.comment}
           </p>
         )}

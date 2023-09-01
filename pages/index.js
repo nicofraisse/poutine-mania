@@ -55,7 +55,7 @@ const HomePage = ({ restaurants }) => {
         <div className="xl:w-5/12 2xl:w-1/3 3xl:w-auto text h-screen sticky top-0 overflow-hidden">
           <h2
             ref={actvityHeaderRef}
-            className="text-2xl font-bold my-5 text-center"
+            className="text-xl sm:text-2xl font-bold my-5 text-center"
           >
             Activité récente
           </h2>

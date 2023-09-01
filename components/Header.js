@@ -61,12 +61,13 @@ const Header = ({ toggleMobileSidebar }) => {
   }, []);
 
   useEffect(() => {
-    if (showSearchBar) {
+    if (showSearchBar && headerSearchbarRef.current) {
       headerSearchbarRef.current.querySelector("input").focus();
     }
   }, [showSearchBar]);
 
   useEffect(() => {
+    if (pathname === "/") setShowSearchBar(false);
     if (headerSearchbarRef.current && pathname !== "/restaurants") {
       headerSearchbarRef.current.querySelector("input").value = "";
       setSearchValue("");

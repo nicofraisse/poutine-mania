@@ -127,7 +127,7 @@ const Login = ({ onSubmit, redirect, setEmailToConfirm }) => {
             </svg>
             Continuer avec Google
           </Button>
-          <Button
+          {/* <Button
             type="button"
             variant={VariantColor.blue}
             className="px-5 w-full text-white"
@@ -146,7 +146,7 @@ const Login = ({ onSubmit, redirect, setEmailToConfirm }) => {
               <path d="M480,257.35c0-123.7-100.3-224-224-224s-224,100.3-224,224c0,111.8,81.9,204.47,189,221.29V322.12H164.11V257.35H221V208c0-56.13,33.45-87.16,84.61-87.16,24.51,0,50.15,4.38,50.15,4.38v55.13H327.5c-27.81,0-36.51,17.26-36.51,35v42h62.12l-9.92,64.77H291V478.66C398.1,461.85,480,369.18,480,257.35Z" />
             </svg>
             Continuer avec Facebook
-          </Button>
+          </Button> */}
           <div className="w-full flex items-center justify-between my-6">
             <div className="grow bg-gray-300 h-[1px]"></div>
             <div className="text-gray-500 px-3 text-sm">OU</div>

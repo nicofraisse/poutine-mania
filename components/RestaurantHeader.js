@@ -20,8 +20,6 @@ const RestaurantHeader = ({ restaurant }) => {
           el.id?.includes("country")
         )?.text);
 
-  console.log(restaurant?.succursales);
-
   const images =
     restaurant &&
     flatten(restaurant.reviews.map((r) => r.photos))
