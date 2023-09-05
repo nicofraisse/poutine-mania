@@ -10,7 +10,6 @@ import classNames from "classnames";
 import Button from "./Button";
 import { isMobile } from "react-device-detect";
 import { SurpriseButton } from "./SurpriseButton";
-import { isMotionValue } from "framer-motion";
 
 const RestaurantSearchBar = React.forwardRef(({ onSubmit, isBanner }, ref) => {
   const { push, asPath } = useRouter();

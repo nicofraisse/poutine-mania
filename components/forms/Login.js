@@ -1,14 +1,47 @@
 import { signIn } from "next-auth/client";
 import toast from "react-hot-toast";
-import Button, { VariantColor } from "../Button";
+import Button from "../Button";
 import * as Yup from "yup";
 import Form from "components/Form";
 import Field from "components/Field";
 import { useLoginForm } from "../context/LoginFormProvider";
-import { signInNewWindow } from "lib/signInNewWindow";
+import { useEffect, useState } from "react";
 
 const Login = ({ onSubmit, redirect, setEmailToConfirm }) => {
   const { openSignup, closeLogin } = useLoginForm();
+
+  const [isEmbeddedBrowser, setIsEmbeddedBrowser] = useState();
+  const [showEmbeddedBrrowserError, setShowEmbeddedBrrowserError] =
+    useState(false);
+
+  useEffect(() => {
+    const userAgent = navigator.userAgent;
+    setIsEmbeddedBrowser(isEmbeddedBrowserFunc(userAgent));
+  }, []);
+
+  const isEmbeddedBrowserFunc = (userAgent) => {
+    const embeddedIdentifiers = [
+      "Instagram",
+      "LinkedIn",
+      "FBA[NV]",
+      "Twitter",
+      "WhatsApp",
+      "Snapchat",
+      "Pinterest",
+      "WeChat",
+      "Line",
+      "Slack",
+    ];
+
+    for (const identifier of embeddedIdentifiers) {
+      const regex = new RegExp(identifier, "i");
+      if (regex.test(userAgent)) {
+        return true;
+      }
+    }
+
+    return false;
+  };
 
   // ***** For custom postlogin page *****
 
@@ -73,6 +106,14 @@ const Login = ({ onSubmit, redirect, setEmailToConfirm }) => {
     openSignup();
   };
 
+  const handleGoogleSignin = () => {
+    if (isEmbeddedBrowser) {
+      setShowEmbeddedBrrowserError(true);
+      return;
+    }
+    signIn("google", options);
+  };
+
   return (
     <Form
       initialValues={{ email: "", password: "" }}
@@ -89,7 +130,7 @@ const Login = ({ onSubmit, redirect, setEmailToConfirm }) => {
             type="button"
             variant="white"
             className="w-full mb-4"
-            onClick={() => signInNewWindow("google", options, false)}
+            onClick={() => handleGoogleSignin()}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -127,6 +168,12 @@ const Login = ({ onSubmit, redirect, setEmailToConfirm }) => {
             </svg>
             Continuer avec Google
           </Button>
+          {showEmbeddedBrrowserError && (
+            <div className="text-xs text-red-500">
+              Pour vous connecter avec Google, vous devez ouvrir cette page dans
+              le navigateur de votre smartphone (Safari ou Chrome).
+            </div>
+          )}
           {/* <Button
             type="button"
             variant={VariantColor.blue}

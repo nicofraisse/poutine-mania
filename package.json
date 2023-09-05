@@ -34,7 +34,6 @@
     "formidable": "^2.1.1",
     "formidable-serverless": "^1.1.1",
     "formik": "^2.2.9",
-    "framer-motion": "^6.3.3",
     "i": "^0.3.7",
     "mapbox-gl": "^2.8.2",
     "next": "^12.2.5",
