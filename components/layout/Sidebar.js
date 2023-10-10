@@ -132,7 +132,7 @@ const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
             <Item onClick={onClickItem} label="Accueil" icon={Home} href="/" />
             <Item
               onClick={onClickItem}
-              label="Toutes les poutines"
+              label="Carte des poutines"
               icon={Map}
               href="/restaurants"
             />
