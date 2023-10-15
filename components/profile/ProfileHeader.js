@@ -5,6 +5,7 @@ import { useCurrentUser } from "../../lib/useCurrentUser";
 import { Image } from "../Image";
 import Skeleton from "react-loading-skeleton";
 import { Linkify } from "../Linkify.js";
+import classNames from "classnames";
 
 // eslint-disable-next-line
 const cooltext =
@@ -58,6 +59,7 @@ const ProfileHeader = ({ user }) => {
               )}
             </div>
           </div>
+
           <div className="flex items-start justify-center sm:justify-start flex-wrap py-1 -mt-4 mb-3">
             {isSkeleton ? (
               <>
@@ -81,6 +83,21 @@ const ProfileHeader = ({ user }) => {
               </>
             )}
           </div>
+
+          <div className="sm:hidden flex justify-center">
+            {isSkeleton ? (
+              <Skeleton />
+            ) : (
+              user._id === currentUser?._id && (
+                <Link href={`/profil/${user.slug}/edit`} passHref>
+                  <button className="text-base font-bold bg-blue-400 px-6 py-2 rounded-full text-white inline-block">
+                    Modifier mon profil
+                  </button>
+                </Link>
+              )
+            )}
+          </div>
+
           <p className="relative text-xs text-center sm:text-justify sm:text-sm text-slate-500 whitespace-pre-line break-words sm:w-3/4">
             {isSkeleton ? (
               <>
@@ -94,7 +111,18 @@ const ProfileHeader = ({ user }) => {
           </p>
         </div>
       </div>
-      <div className="text-center flex flex-col sm:flex-row w-full justify-between sm:px-6 sm:mt-8 sm:pt-4 mt-4 border-t border-slate-100">
+      <div
+        className={classNames(
+          "text-center flex flex-col sm:flex-row w-full justify-between sm:px-6 sm:mt-8 sm:pt-4 mt-4 border-t border-slate-100",
+          {
+            hidden:
+              user &&
+              !user.profileStats?.lastEatenRestaurant?.name &&
+              !user.profileStats?.favoriteRestaurant?.name &&
+              !user.profileStats?.leastFavoriteRestaurant?.name,
+          }
+        )}
+      >
         <div className="mt-4 mb-1">
           {isSkeleton ? (
             <Skeleton height={50} width={150} />
@@ -111,6 +139,7 @@ const ProfileHeader = ({ user }) => {
             )
           )}
         </div>
+        {console.log(user)}
         <div className="mt-4 mb-1">
           {isSkeleton ? (
             <Skeleton height={50} width={150} />
