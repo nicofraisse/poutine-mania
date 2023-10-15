@@ -118,7 +118,7 @@ export const ProfileReviewCard = ({ review, isIndex, userName, loading }) => {
             </span>
           </span>
         </div>
-        <span className="hidden sm:inline xl:hidden text-slate-300 text-xs ml-1 font-normal relative sm:top-[4px] flex-grow border text-right min-w-28">
+        <span className="hidden sm:inline xl:hidden text-slate-300 text-xs ml-1 font-normal relative sm:top-[4px] flex-grow text-right min-w-28">
           {formatDate(review.createdAt, "d MMMM yyyy", true)}
         </span>
       </div>
