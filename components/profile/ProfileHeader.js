@@ -139,7 +139,6 @@ const ProfileHeader = ({ user }) => {
             )
           )}
         </div>
-        {console.log(user)}
         <div className="mt-4 mb-1">
           {isSkeleton ? (
             <Skeleton height={50} width={150} />
