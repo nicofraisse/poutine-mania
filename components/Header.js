@@ -107,7 +107,7 @@ const Header = ({ toggleMobileSidebar }) => {
     );
   };
 
-  const handleArrowClick = (e) => {
+  const handleArrowClick = () => {
     window.scrollTo({
       top: headerRef.current.clientHeight,
       left: 0,

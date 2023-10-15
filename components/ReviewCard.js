@@ -54,7 +54,12 @@ export const RatingSection = ({ review, showDate = true }) => {
 
   return (
     <>
-      <div className="hidden sm:flex flex-wrap justify-between text-base items-center mb-3">
+      <div
+        className={classNames(
+          "hidden sm:flex flex-wrap justify-between text-base items-center",
+          { "mb-3": !!review.comment }
+        )}
+      >
         <div className="sm:flex flex-wrap">
           <span
             className="py-[1px] px-[6px] bg-green-200 rounded mr-2 text-lg text-white flex items-center"
