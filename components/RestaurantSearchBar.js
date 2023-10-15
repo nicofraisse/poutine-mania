@@ -190,7 +190,7 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit, isBanner }, ref) => {
       {!isRestaurantsPath && showSearchSuggestions && (
         <div
           className={classNames(
-            "absolute z-50 w-full bg-white border shadow-lg left-0 px-2 sm:px-3 py-2",
+            "absolute z-50 w-full bg-white border shadow-lg left-0 px-1 xs:px-2 sm:px-3 py-2",
             {
               "rounded-xl": isBanner,
             }
@@ -246,14 +246,14 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit, isBanner }, ref) => {
           {isBanner ? (
             <div>
               <RestaurantIntrouvable />
-              <div className="text-center py-3">
+              <div className="text-center py-3 flex items-center justify-center text-sm xs:text-base">
                 <Button
                   width="smd"
                   height="smd"
                   className="mr-3"
                   onClick={handleSearch}
                 >
-                  Rechercher
+                  <Search className="mr-2" /> Rechercher
                 </Button>
                 <SurpriseButton />
               </div>

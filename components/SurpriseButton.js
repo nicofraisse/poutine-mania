@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import Button from "./Button";
+import Image from "next/image";
 
 export const SurpriseButton = () => {
   const router = useRouter();
@@ -15,10 +16,13 @@ export const SurpriseButton = () => {
       variant="secondary"
       width="smd"
       height="smd"
-      className="bg-white shadow-md"
+      className="bg-white shadow-md flex items-center"
       onClick={handleClick}
       type="button"
     >
+      <div className="dice-container">
+        <Image alt="poutine-logo" src="/dice.png" width={40} height={40} />
+      </div>
       Surprends-moi
     </Button>
   );

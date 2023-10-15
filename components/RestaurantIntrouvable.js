@@ -20,7 +20,8 @@ const RestaurantIntrouvable = ({ hideBorders }) => {
   const { openLogin } = useLoginForm();
   const { push } = useRouter();
 
-  const handleClickAdd = () => {
+  const handleClickAdd = (e) => {
+    e.stopPropagation();
     if (!currentUser) {
       openLogin(<LoginMessage />, "/nouveau-restaurant");
     } else {
@@ -31,12 +32,12 @@ const RestaurantIntrouvable = ({ hideBorders }) => {
   return (
     <div
       className={classNames(
-        "bg-white py-3 px-5 xs:py-4 flex text-center xs:text-left items-center justify-center flex-col xs:flex-row",
+        "bg-white py-3 xs:px-5 xs:py-4 flex text-center xs:text-left items-center justify-center xs:flex-row",
         { "border-b": !hideBorders }
       )}
     >
       <div>
-        <div className="font-bold text-md text-slate-500 mr-4">
+        <div className="font-bold text-sm xs:text-base text-slate-500 mr-4">
           Restaurant introuvable?
         </div>
         {/* <div className="text-slate-400 mt-1 mb-2 text-xs font-light">
@@ -48,7 +49,7 @@ const RestaurantIntrouvable = ({ hideBorders }) => {
         size="sm"
         height="sm"
         className="min-w-[120px] text-light text-sm mx:mt-0"
-        onClick={handleClickAdd}
+        onClick={(e) => handleClickAdd(e)}
         type="button"
       >
         <Plus className="mr-1 text-gray -ml-1" size={16} />

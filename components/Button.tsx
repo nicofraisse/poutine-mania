@@ -56,18 +56,18 @@ const textColorClass = {
 };
 
 const heightClass = {
-  sm: "h-[40px]",
-  smd: "h-[48px]",
-  md: "h-[56px]",
-  lg: "h-[56px]",
+  sm: "h-[36px] xs:h-[40px]",
+  smd: "h-[44px] xs:h-[48px]",
+  md: "h-[52px] xs:h-[56px]",
+  lg: "h-[52px] xs:h-[56px]",
 };
 
 const widthClass = {
-  xs: "px-2",
-  sm: "px-3",
-  smd: "px-4",
-  md: "px-8",
-  lg: "px-12",
+  xs: "px-1 xs:px-2",
+  sm: "px-2 xs:px-3",
+  smd: "px-3 xs:px-4",
+  md: "px-6 xs:px-8",
+  lg: "px-10 xs:px-12",
 };
 
 const Button = ({

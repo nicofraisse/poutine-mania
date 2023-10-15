@@ -1,7 +1,16 @@
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/client";
 import Button from "./Button";
-import { ArrowLeft, Edit3, Menu, Search, User, X } from "react-feather";
+import {
+  ArrowLeft,
+  ChevronDown,
+  Edit3,
+  Map,
+  Menu,
+  Search,
+  User,
+  X,
+} from "react-feather";
 import { useState, createRef, useEffect, useRef } from "react";
 import Dropdown from "./Dropdown";
 import { useLoginForm } from "./context/LoginFormProvider";
@@ -24,6 +33,7 @@ const Header = ({ toggleMobileSidebar }) => {
 
   const toggleRef = createRef();
   const headerSearchbarRef = useRef();
+  const headerRef = useRef();
   const { push, pathname, query } = useRouter();
   const { openLogin } = useLoginForm();
   const { nonDebouncedValue, setSearchValue } = useRestaurantSearch();
@@ -89,9 +99,6 @@ const Header = ({ toggleMobileSidebar }) => {
   const isHomepage = pathname === "/";
 
   const handleSearch = () => {
-    //  setTimeout(() => {
-    //    setShowSearchSuggestions(false);
-    //  }, 200);
     const trimmedSearchValue = nonDebouncedValue?.trim();
     push(
       trimmedSearchValue
@@ -100,8 +107,19 @@ const Header = ({ toggleMobileSidebar }) => {
     );
   };
 
+  const handleArrowClick = (e) => {
+    window.scrollTo({
+      top: headerRef.current.clientHeight,
+      left: 0,
+      behavior: "smooth",
+    });
+  };
+
   return (
-    <header className="relative max-w-screen md:w-auto bg-indigo-white">
+    <header
+      className="relative max-w-screen md:w-auto bg-indigo-white"
+      ref={headerRef}
+    >
       <div
         className={classNames(
           "flex justify-between items-center pl-4 z-10 py-3",
@@ -286,6 +304,12 @@ const Header = ({ toggleMobileSidebar }) => {
             backgroundPosition: "center center",
           }}
         >
+          <div
+            className="arrow bounce cursor-pointer block sm:hidden"
+            onClick={handleArrowClick}
+          >
+            <ChevronDown size={40} />
+          </div>
           <div className="flex flex-col items-center">
             <h1
               className="text-center text-3xl lg:text-4xl 2xl:text-5xl font-semibold text-white"
@@ -306,14 +330,16 @@ const Header = ({ toggleMobileSidebar }) => {
               <RestaurantSearchBar isBanner />
               {/* <Search className="absolute top-3 left-4 text-slate-500" /> */}
             </div>
-            <div className="text-center">
+            <div className="flex items-center">
               <Button
                 onClick={handleSearch}
                 width="smd"
                 height="smd"
                 className="mr-3 shadow-md"
               >
-                Rechercher
+                <Map className="mr-2 xs:mr-3" />
+                <span className="hidden xs:inline">Voir la carte</span>
+                <span className="inline xs:hidden">Carte</span>
               </Button>
               <SurpriseButton />
             </div>
