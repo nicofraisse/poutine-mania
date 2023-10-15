@@ -6,10 +6,43 @@ import Field from "components/Field";
 import Button from "components/Button";
 import { useLoginForm } from "../context/LoginFormProvider";
 import { signIn } from "next-auth/client";
-import { VariantColor } from "../Button";
+import { useEffect, useState } from "react";
 
 const SignUp = ({ onSubmit }) => {
   const { openLogin, closeSignup } = useLoginForm();
+  const [isEmbeddedBrowser, setIsEmbeddedBrowser] = useState();
+
+  const [showEmbeddedBrrowserError, setShowEmbeddedBrrowserError] =
+    useState(false);
+
+  useEffect(() => {
+    const userAgent = navigator.userAgent;
+    setIsEmbeddedBrowser(isEmbeddedBrowserFunc(userAgent));
+  }, []);
+
+  const isEmbeddedBrowserFunc = (userAgent) => {
+    const embeddedIdentifiers = [
+      "Instagram",
+      "LinkedIn",
+      "FBA[NV]",
+      "Twitter",
+      "WhatsApp",
+      "Snapchat",
+      "Pinterest",
+      "WeChat",
+      "Line",
+      "Slack",
+    ];
+
+    for (const identifier of embeddedIdentifiers) {
+      const regex = new RegExp(identifier, "i");
+      if (regex.test(userAgent)) {
+        return true;
+      }
+    }
+
+    return false;
+  };
 
   const handleSubmit = (values, formikBag) => {
     axios
@@ -26,6 +59,14 @@ const SignUp = ({ onSubmit }) => {
   const handleSwitchForm = () => {
     closeSignup();
     openLogin();
+  };
+
+  const handleGoogleSignin = () => {
+    if (isEmbeddedBrowser) {
+      setShowEmbeddedBrrowserError(true);
+      return;
+    }
+    signIn("google", options);
   };
 
   return (
@@ -45,7 +86,7 @@ const SignUp = ({ onSubmit }) => {
             type="button"
             variant="white"
             className="w-full mb-4"
-            onClick={() => signIn("google")}
+            onClick={handleGoogleSignin}
           >
             <svg
               viewBox="0 0 48 48"
@@ -81,6 +122,12 @@ const SignUp = ({ onSubmit }) => {
             </svg>
             Continuer avec Google
           </Button>
+          {showEmbeddedBrrowserError && (
+            <div className="text-xs text-red-500">
+              Pour vous connecter avec Google, vous devez ouvrir cette page dans
+              le navigateur de votre smartphone (Safari ou Chrome).
+            </div>
+          )}
           {/* <Button
             type="button"
             variant={VariantColor.blue}
