@@ -7,8 +7,7 @@ export const SurpriseButton = () => {
   const handleClick = async () => {
     const response = await fetch("/api/restaurants/surprise");
     const restaurant = await response.json();
-
-    router.push(`/restaurants/${restaurant.slug}`);
+    await router.push(`/restaurants/${restaurant.slug}`);
   };
 
   return (
@@ -18,6 +17,7 @@ export const SurpriseButton = () => {
       height="smd"
       className="bg-white shadow-md"
       onClick={handleClick}
+      type="button"
     >
       Surprends-moi
     </Button>

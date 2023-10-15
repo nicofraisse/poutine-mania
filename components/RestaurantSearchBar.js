@@ -10,6 +10,7 @@ import classNames from "classnames";
 import Button from "./Button";
 import { isMobile } from "react-device-detect";
 import { SurpriseButton } from "./SurpriseButton";
+import RestaurantIntrouvable from "./RestaurantIntrouvable";
 
 const RestaurantSearchBar = React.forwardRef(({ onSubmit, isBanner }, ref) => {
   const { push, asPath } = useRouter();
@@ -36,7 +37,7 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit, isBanner }, ref) => {
       setShowSearchSuggestions(false);
     }, 200);
 
-    const trimmedSearchValue = e.target?.value?.trim();
+    const trimmedSearchValue = e.target?.value?.trim() || searchValue;
     push(
       trimmedSearchValue
         ? `/restaurants?search=${encodeURIComponent(trimmedSearchValue)}`
@@ -186,87 +187,90 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit, isBanner }, ref) => {
           />
         )}
       </div>
-      {!isRestaurantsPath &&
-        showSearchSuggestions &&
-        restaurants &&
-        (!isBanner || (isBanner && restaurants.length > 0)) && (
-          <div
-            className={classNames(
-              "absolute z-50 w-full bg-white border shadow-lg left-0 px-2 sm:px-3 py-2",
-              {
-                "rounded-xl": isBanner,
-              }
-            )}
-          >
-            {restaurants?.map((r, index) => {
-              const image = r.reviews?.find((res) => res.photos?.[0])
-                ?.photos[0];
+      {!isRestaurantsPath && showSearchSuggestions && (
+        <div
+          className={classNames(
+            "absolute z-50 w-full bg-white border shadow-lg left-0 px-2 sm:px-3 py-2",
+            {
+              "rounded-xl": isBanner,
+            }
+          )}
+        >
+          {restaurants?.map((r, index) => {
+            const image = r.reviews?.find((res) => res.photos?.[0])?.photos[0];
 
-              return (
-                <div
-                  className={classNames(
-                    "p-2 sm:p-3 hover:bg-slate-100 cursor-pointer flex items-center border-b",
-                    {
-                      "bg-slate-100": highlightedIndex === index,
-                    }
-                  )}
-                  key={r._id}
-                  onMouseDown={() => {
-                    push(`/restaurants/${r.slug}`);
-                  }}
-                  onMouseEnter={() => {
-                    setHighlightedIndex(index);
-                  }}
-                >
-                  {image ? (
-                    <Image
-                      src={image}
-                      alt={`${r.name}-photo`}
-                      className="w-10 h-8 sm:w-12 sm:h-10 rounded object-cover object-center"
+            return (
+              <div
+                className={classNames(
+                  "p-2 sm:p-3 hover:bg-slate-100 cursor-pointer flex items-center border-b",
+                  {
+                    "bg-slate-100": highlightedIndex === index,
+                  }
+                )}
+                key={r._id}
+                onMouseDown={() => {
+                  push(`/restaurants/${r.slug}`);
+                }}
+                onMouseEnter={() => {
+                  setHighlightedIndex(index);
+                }}
+              >
+                {image ? (
+                  <Image
+                    src={image}
+                    alt={`${r.name}-photo`}
+                    className="w-10 h-8 sm:w-12 sm:h-10 rounded object-cover object-center"
+                  />
+                ) : (
+                  <div className="w-10 h-8 sm:w-12 sm:h-10 flex justify-center items-center">
+                    <ImageIcon
+                      className="text-slate-300"
+                      size={32}
+                      alt="placeholder"
                     />
-                  ) : (
-                    <div className="w-10 h-8 sm:w-12 sm:h-10 flex justify-center items-center">
-                      <ImageIcon
-                        className="text-slate-300"
-                        size={32}
-                        alt="placeholder"
-                      />
-                    </div>
-                  )}
+                  </div>
+                )}
 
-                  <div className="pl-3">
-                    <div className="text-sm font-bold">{r.name}</div>
-                    <div className="text-xs  text-slate-400">
-                      <MapPin size={12} className="inline mt-[-2px]" />{" "}
-                      {r.succursales.length === 1
-                        ? r.succursales[0].address.place_name.split(", Q")[0]
-                        : `${r.succursales.length} adresses au Québec`}
-                    </div>
+                <div className="pl-3">
+                  <div className="text-sm font-bold">{r.name}</div>
+                  <div className="text-xs  text-slate-400">
+                    <MapPin size={12} className="inline mt-[-2px]" />{" "}
+                    {r.succursales.length === 1
+                      ? r.succursales[0].address.place_name.split(", Q")[0]
+                      : `${r.succursales.length} adresses au Québec`}
                   </div>
                 </div>
-              );
-            })}
-            {isBanner ? (
+              </div>
+            );
+          })}
+          {isBanner ? (
+            <div>
+              <RestaurantIntrouvable />
               <div className="text-center py-3">
-                <Button width="smd" height="smd" className="mr-3">
+                <Button
+                  width="smd"
+                  height="smd"
+                  className="mr-3"
+                  onClick={handleSearch}
+                >
                   Rechercher
                 </Button>
                 <SurpriseButton />
               </div>
-            ) : (
-              <div
-                className="hover:bg-slate-100 cursor-pointer flex items-center text-slate-600 font-light p-4 text-sm sm:text-base"
-                onClick={handleSearch}
-              >
-                <Search className="text-slate-500 mr-2" size={20} /> Voir tous
-                les{" "}
-                {searchValue.length > 2
-                  ? `résultats pour "${searchValue}"`
-                  : "restaurants"}
-              </div>
-            )}
-          </div>
-        )}
+            </div>
+          ) : (
+            <div
+              className="hover:bg-slate-100 cursor-pointer flex items-center text-slate-600 font-light p-4 text-sm sm:text-base"
+              onClick={handleSearch}
+            >
+              <Search className="text-slate-500 mr-2" size={20} /> Voir tous les{" "}
+              {searchValue.length > 2
+                ? `résultats pour "${searchValue}"`
+                : "restaurants"}
+            </div>
+          )}
+        </div>
+      )}
     </form>
   );
 });

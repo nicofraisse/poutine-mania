@@ -4,6 +4,7 @@ import Button, { VariantColor } from "./Button";
 import { useLoginForm } from "./context/LoginFormProvider";
 import { useCurrentUser } from "lib/useCurrentUser";
 import { Plus } from "react-feather";
+import classNames from "classnames";
 
 const LoginMessage = () => (
   <div className="px-4 sm:w-[380px] ">
@@ -14,7 +15,7 @@ const LoginMessage = () => (
   </div>
 );
 
-const RestaurantIntrouvable = () => {
+const RestaurantIntrouvable = ({ hideBorders }) => {
   const { currentUser } = useCurrentUser();
   const { openLogin } = useLoginForm();
   const { push } = useRouter();
@@ -28,7 +29,12 @@ const RestaurantIntrouvable = () => {
   };
 
   return (
-    <div className="bg-white py-3 px-5 xs:py-4 border-t border-b flex text-center xs:text-left items-center justify-center flex-col xs:flex-row">
+    <div
+      className={classNames(
+        "bg-white py-3 px-5 xs:py-4 flex text-center xs:text-left items-center justify-center flex-col xs:flex-row",
+        { "border-b": !hideBorders }
+      )}
+    >
       <div>
         <div className="font-bold text-md text-slate-500 mr-4">
           Restaurant introuvable?
@@ -43,6 +49,7 @@ const RestaurantIntrouvable = () => {
         height="sm"
         className="min-w-[120px] text-light text-sm mx:mt-0"
         onClick={handleClickAdd}
+        type="button"
       >
         <Plus className="mr-1 text-gray -ml-1" size={16} />
         Ajouter
