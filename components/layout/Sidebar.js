@@ -84,9 +84,8 @@ const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
   };
 
   useEffect(() => {
-    document.querySelector("html").style.overflow = showMobileSidebar
-      ? "hidden"
-      : "auto";
+    document.querySelector("html").style.overflow =
+      showMobileSidebar && window.innerWidth < 1080 ? "hidden" : "auto";
   }, [showMobileSidebar]);
 
   const getAmountString = (amount) => {

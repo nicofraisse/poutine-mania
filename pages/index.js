@@ -48,7 +48,7 @@ const HomePage = ({ restaurants }) => {
         ></meta>
       </Head>
 
-      <div className="xl:flex justify-evenly text-slate-700 ">
+      <div className="xl:flex justify-evenly text-slate-700">
         <div className="px-0 sm:px-6 md:px-8">
           <TopPoutines restaurants={restaurants} />
         </div>
