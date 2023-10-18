@@ -177,7 +177,7 @@ export const ReviewCard = ({
             style={{ width: 0, minWidth: "100%" }}
           >
             {review.comment || (
-              <span className="text-slate-300">Aucun commentaire</span>
+              <div className="text-slate-300 mt-2">Aucun commentaire</div>
             )}
           </p>
           <div className="flex flex-wrap mt-3 max-w-[600px]">
