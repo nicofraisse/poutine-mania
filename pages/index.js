@@ -57,7 +57,7 @@ const HomePage = ({ restaurants }) => {
             ref={actvityHeaderRef}
             className="text-xl sm:text-2xl font-bold my-5 text-center"
           >
-            Activité récente
+            À l&apos;affiche
           </h2>
           <RecentActivity
             heightClass="h-[calc(100vh-72px)]"
