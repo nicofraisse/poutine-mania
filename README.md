@@ -6,7 +6,7 @@
 - Rate poutines based on overall quality, fries, sauce, and cheese
 - Create a personalized "Poutines to Try" list
 - Connect with fellow poutine lovers
-- Find restaurants based on your preferences (e.g., vegetarian options, late-night spots)
+- Find restaurants based on your preferences (e.g. type of restaurant, popularity, minimum rating)
 - Contribute to the community by adding new poutine spots
 - Customize your profile to showcase your poutine expertise
 
