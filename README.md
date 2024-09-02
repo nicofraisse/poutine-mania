@@ -1,4 +1,4 @@
-# Poutine Mania - A Social Website to Rate & Review Poutines
+# Poutine Mania - A Social Website to Find & Review Poutines
 
 ## About
 A platform for poutine enthusiasts to discover, rate, and review poutines from various restaurants.
