@@ -1,13 +1,32 @@
-# Social Website to Rate & Review Poutines
+# Poutine Mania - A Social Website to Rate & Review Poutines
+
+## About
+A platform for poutine enthusiasts to discover, rate, and review poutines from various restaurants.
+
+## Tech Stack
+- Frontend: React.js, Next.js, Tailwind CSS
+- Backend: Node.js, Express.js, MongoDB
+- Auth: JWT, OAuth
+- Storage: AWS S3
+- Deployment: Vercel
+- Emails: SendGrid,
+
+## Features
+- User authentication
+- Restaurant profiles and reviews
+- Multi-criteria poutine rating system
+- "Poutines to Try" watchlist
+- Search and filtering options
+- Admin moderation tools
 
 ## Getting Started
 - Add environment variables in `.env.development`
-- Run `npm i` to install dependencies
-- Run `npm run dev` to start the development server
+- Run `npm i`
+- Run `npm run dev`
 
 ## Todo
 - [X] Implement database pooling
-- [ ] Test compatibility with various mobile browsers
+- [X] Test compatibility with various mobile browsers
 - [X] Add "Add to Watch List"/"Poutines to Try" feature & page
 - [X] Implement edit profile functionality (name, profile photo, bio, soft-delete account)
 - [ ] Implement follow user feature
@@ -29,9 +48,9 @@
 - [X] Rate sauce
 - [X] Rate cheese
 - [ ] Include poutine name and price in reviews  
-Inspiration for rating criteria: [Route de la Poutine](http://www.routedelapoutine.com/)
+Inspiration ideas for rating criteria: [Route de la Poutine](http://www.routedelapoutine.com/)
 
 ### Restaurants
-- [ ] Add `isPermanentlyClosed` boolean for restaurants and adapt UI for restaurants that are closed permanently
+- [ ] Add `isPermanentlyClosed` boolean
 - [X] Improve design of category tag pills in restaurant card and show page
 - [X] Add `isApproved` boolean to restaurants — Users can create & review a new restaurant, but it will only be visible to them until an admin approves it
