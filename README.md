@@ -1,23 +1,21 @@
 # Poutine Mania - A Social Website to Find & Review Poutines
 
-## About
-A platform for poutine enthusiasts to discover, rate, and review poutines from various restaurants.
+## Features
+- Discover the best poutines in your area
+- Share your poutine experiences with detailed reviews and photos
+- Rate poutines based on overall quality, fries, sauce, and cheese
+- Create a personalized "Poutines to Try" list
+- Connect with fellow poutine lovers
+- Find restaurants based on your preferences (e.g., vegetarian options, late-night spots)
+- Contribute to the community by adding new poutine spots
+- Customize your profile to showcase your poutine expertise
 
 ## Tech Stack
 - Frontend: React.js, Next.js, Tailwind CSS
 - Backend: Node.js, Express.js, MongoDB
 - Auth: JWT, OAuth
-- Storage: AWS S3
 - Deployment: Vercel
 - Emails: SendGrid,
-
-## Features
-- User authentication
-- Restaurant profiles and reviews
-- Multi-criteria poutine rating system
-- "Poutines to Try" watchlist
-- Search and filtering options
-- Admin moderation tools
 
 ## Getting Started
 - Add environment variables in `.env.development`
