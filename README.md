@@ -12,7 +12,8 @@
 
 ## Tech Stack
 - Frontend: React.js, Next.js, Tailwind CSS
-- Backend: Node.js, Express.js, MongoDB
+- Backend: Node.js (Next.js api routing)
+- Storage: MongoDB, Cloudinary
 - Auth: JWT, OAuth
 - Deployment: Vercel
 - Emails: SendGrid,
