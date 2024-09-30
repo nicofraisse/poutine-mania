@@ -106,7 +106,7 @@ const ProfileHeader = ({ user }) => {
                 <Skeleton />
               </>
             ) : (
-              <Linkify>{user.bio}</Linkify>
+              <Linkify>{!(user.bio === "undefined") && user.bio}</Linkify>
             )}
           </p>
         </div>
@@ -123,7 +123,7 @@ const ProfileHeader = ({ user }) => {
           }
         )}
       >
-        <div className="mt-4 mb-1">
+        <div className="mt-4 mb-1 px-2">
           {isSkeleton ? (
             <Skeleton height={50} width={150} />
           ) : (
@@ -139,7 +139,7 @@ const ProfileHeader = ({ user }) => {
             )
           )}
         </div>
-        <div className="mt-4 mb-1">
+        <div className="mt-4 mb-1 px-2">
           {isSkeleton ? (
             <Skeleton height={50} width={150} />
           ) : (
@@ -155,7 +155,7 @@ const ProfileHeader = ({ user }) => {
             )
           )}
         </div>
-        <div className="mt-4 mb-1">
+        <div className="mt-4 mb-1 px-2">
           {isSkeleton ? (
             <Skeleton height={50} width={150} />
           ) : (

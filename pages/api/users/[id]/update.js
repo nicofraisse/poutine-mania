@@ -1,7 +1,6 @@
 import formidable from "formidable";
 import { getSession } from "next-auth/client";
 import { uploadToCloudinary } from "lib/uploadToCloudinary";
-import { ObjectId } from "mongodb";
 import nextConnect from "next-connect";
 import { database } from "middleware/database";
 

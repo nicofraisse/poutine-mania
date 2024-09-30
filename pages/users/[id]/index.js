@@ -96,11 +96,6 @@ const User = () => {
           <UserLastReviews reviews={reviews} user={user} />
         </div>
       </div>
-      {/* <div className="ml-12 h-screen">
-        <div className="sticky top-12">
-          <ProfileStats />
-        </div>
-      </div> */}
     </div>
   );
 };
