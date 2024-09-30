@@ -1,13 +1,31 @@
-# Social Website to Rate & Review Poutines
+# Poutine Mania - A Social Website to Find & Review Poutines
+
+## Features
+- Discover the best poutines in your area
+- Share your poutine experiences with detailed reviews and photos
+- Rate poutines based on overall quality, fries, sauce, and cheese
+- Create a personalized "Poutines to Try" list
+- Connect with fellow poutine lovers
+- Find restaurants based on your preferences (e.g. type of restaurant, popularity, minimum rating)
+- Contribute to the community by adding new poutine spots
+- Customize your profile to showcase your poutine expertise
+
+## Tech Stack
+- Frontend: React.js, Next.js, Tailwind CSS
+- Backend: Node.js (Next.js api routing)
+- Storage: MongoDB, Cloudinary
+- Auth: JWT, OAuth
+- Deployment: Vercel
+- Emails: SendGrid,
 
 ## Getting Started
 - Add environment variables in `.env.development`
-- Run `npm i` to install dependencies
-- Run `npm run dev` to start the development server
+- Run `npm i`
+- Run `npm run dev`
 
 ## Todo
 - [X] Implement database pooling
-- [ ] Test compatibility with various mobile browsers
+- [X] Test compatibility with various mobile browsers
 - [X] Add "Add to Watch List"/"Poutines to Try" feature & page
 - [X] Implement edit profile functionality (name, profile photo, bio, soft-delete account)
 - [ ] Implement follow user feature
@@ -29,9 +47,9 @@
 - [X] Rate sauce
 - [X] Rate cheese
 - [ ] Include poutine name and price in reviews  
-Inspiration for rating criteria: [Route de la Poutine](http://www.routedelapoutine.com/)
+Inspiration ideas for rating criteria: [Route de la Poutine](http://www.routedelapoutine.com/)
 
 ### Restaurants
-- [ ] Add `isPermanentlyClosed` boolean for restaurants and adapt UI for restaurants that are closed permanently
+- [ ] Add `isPermanentlyClosed` boolean
 - [X] Improve design of category tag pills in restaurant card and show page
 - [X] Add `isApproved` boolean to restaurants — Users can create & review a new restaurant, but it will only be visible to them until an admin approves it
