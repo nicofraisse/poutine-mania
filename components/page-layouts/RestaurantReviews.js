@@ -64,7 +64,7 @@ const ReviewStats = ({ reviews, restaurant }) => {
           ) : (
             <>
               Ajouté aux
-              <Link href="/mes-poutines">
+              <Link legacyBehavior href="/mes-poutines">
                 <span className="underline text-blue-500 ml-1 cursor-pointer">
                   poutines mangées
                 </span>
@@ -106,7 +106,7 @@ const ReviewStats = ({ reviews, restaurant }) => {
           ) : (
             <>
               Ajouté aux
-              <Link href="/a-essayer">
+              <Link legacyBehavior href="/a-essayer">
                 <span className="underline text-blue-500 ml-1 cursor-pointer">
                   poutines à essayer
                 </span>

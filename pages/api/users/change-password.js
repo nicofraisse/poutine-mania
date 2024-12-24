@@ -1,4 +1,4 @@
-import { getSession } from "next-auth/client";
+import { getSession } from "next-auth";
 
 import { hashPassword, verifyPassword } from "../../../lib/auth";
 import { connectToDatabase } from "../../../lib/db";

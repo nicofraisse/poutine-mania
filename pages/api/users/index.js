@@ -1,6 +1,6 @@
 import nextConnect from "next-connect";
 import { database } from "middleware/database";
-import { getSession } from "next-auth/client";
+import { getSession } from "next-auth";
 
 const handler = nextConnect();
 

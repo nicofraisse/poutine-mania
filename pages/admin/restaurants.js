@@ -64,7 +64,7 @@ const Restaurants = () => {
   if (currentUser?.isAdmin)
     return (
       <div className="w-full min-h-screen-minus-navbar p-6 max-w-lg">
-        <Link href="/nouveau-restaurant" passHref>
+        <Link legacyBehavior href="/nouveau-restaurant" passHref>
           <button className="px-4 py-2 bg-slate-700 text-white font-black text-sm mb-3 rounded ml-auto block">
             Créer un restaurant
           </button>

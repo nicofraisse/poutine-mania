@@ -1,5 +1,5 @@
 import nextConnect from "next-connect";
-import { getSession } from "next-auth/client";
+import { getSession } from "next-auth";
 import { database } from "middleware/database";
 import { generateSlug } from "../../../lib/generateSlug";
 

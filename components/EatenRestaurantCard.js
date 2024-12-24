@@ -12,7 +12,7 @@ import { formatDate } from "../lib/formatDate";
 import { flatten } from "lodash";
 import { ImageModal } from "./ImageModal";
 import Skeleton from "react-loading-skeleton";
-import { useSession } from "next-auth/client";
+import { useSession } from "next-auth/react";
 
 export const EatenRestaurantCard = ({ restaurant }) => {
   const [currentUser] = useSession();
@@ -52,7 +52,11 @@ export const EatenRestaurantCard = ({ restaurant }) => {
           {isSkeleton ? (
             <Skeleton width={180} height={20} />
           ) : (
-            <Link href={`/restaurants/${restaurant?.slug}`} passHref>
+            <Link
+              legacyBehavior
+              href={`/restaurants/${restaurant?.slug}`}
+              passHref
+            >
               <a rel="noopener noreferrer">
                 <div className="font-bold text-base lg:text-lg text-teal-600 hover:underline">
                   {restaurant.name}
@@ -79,7 +83,11 @@ export const EatenRestaurantCard = ({ restaurant }) => {
                 </span>
               </span>
             ) : (
-              <Link href={`/restaurants/${restaurant?._id}/noter`} passHref>
+              <Link
+                legacyBehavior
+                href={`/restaurants/${restaurant?._id}/noter`}
+                passHref
+              >
                 <Button height="xs" className="text-normal" variant="light">
                   Noter
                 </Button>

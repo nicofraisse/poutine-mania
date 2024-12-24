@@ -28,7 +28,7 @@ const RestaurantCard = ({ restaurant }) => {
 
   return (
     <div>
-      <Link href={`/restaurants/${restaurant?.slug}`} passHref>
+      <Link legacyBehavior href={`/restaurants/${restaurant?.slug}`} passHref>
         <div
           className={classNames(
             "group py-3 px-2 lg:px-3 flex justify-between transition duration-100 xs:rounded-md",

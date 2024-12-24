@@ -1,4 +1,4 @@
-import { Provider } from "next-auth/client";
+import { SessionProvider } from "next-auth/react";
 import { Toaster } from "react-hot-toast";
 import { RateRestaurantProvider } from "components/context/RateRestaurantProvider";
 import Layout from "../components/layout/Layout";
@@ -35,7 +35,7 @@ function App({ Component, pageProps }) {
       </Head>
 
       <CookiesProvider>
-        <Provider session={pageProps.session}>
+        <SessionProvider session={pageProps.session}>
           <LoginFormProvider>
             <SidebarDataProvider>
               <RestaurantSearchProvider>
@@ -53,7 +53,7 @@ function App({ Component, pageProps }) {
               </RestaurantSearchProvider>
             </SidebarDataProvider>
           </LoginFormProvider>
-        </Provider>
+        </SessionProvider>
       </CookiesProvider>
 
       <Analytics />

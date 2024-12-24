@@ -16,7 +16,7 @@ import ConditionalWrapper from "components/ConditionalWrapper";
 import { useRequireLogin } from "../../lib/useRequireLogin";
 import { useSidebarData } from "../context/SidebarDataProvider";
 import { BrandLogo } from "../BrandLogo";
-import { useSession } from "next-auth/client";
+import { useSession } from "next-auth/react";
 
 const Item = ({
   label,
@@ -35,7 +35,7 @@ const Item = ({
     <ConditionalWrapper
       condition={!requireLogin}
       wrapper={(children) => (
-        <Link href={href} passHref>
+        <Link legacyBehavior href={href} passHref>
           {children}
         </Link>
       )}
@@ -62,12 +62,12 @@ const Item = ({
 };
 
 const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
-  const [session] = useSession();
+  const { data: session } = useSession();
   const currentUser = session?.user;
   const requireLogin = useRequireLogin();
   const { sidebarEatenlistAmount, sidebarWatchlistAmount } = useSidebarData();
 
-  const onClickItem = (isLoginRequired, label, requireLoginMessage) => {
+  const onClickItem = (isLoginRequired, requireLoginMessage) => {
     if (isLoginRequired) {
       requireLogin(
         toggleMobileSidebar,
@@ -117,7 +117,7 @@ const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
           )}
         >
           <div className="select-none">
-            <Link href="/">
+            <Link legacyBehavior href="/">
               <a>
                 <BrandLogo />
               </a>

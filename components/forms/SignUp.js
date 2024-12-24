@@ -5,7 +5,7 @@ import Form from "components/Form";
 import Field from "components/Field";
 import Button from "components/Button";
 import { useLoginForm } from "../context/LoginFormProvider";
-import { signIn } from "next-auth/client";
+import { signIn } from "next-auth/react";
 import { useEffect, useState } from "react";
 
 const SignUp = ({ onSubmit }) => {

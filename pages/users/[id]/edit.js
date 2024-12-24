@@ -8,7 +8,8 @@ import { useCurrentUser, refetchCurrentUser } from "lib/useCurrentUser";
 import { capitalize, isString } from "lodash";
 import { ChevronLeft, Info } from "react-feather";
 import { useRouter } from "next/router";
-import { signOut, getSession } from "next-auth/client";
+import { signOut } from "next-auth/reafct";
+import { getSession } from "next-auth";
 import ImageUpload from "../../../components/controls/ImageUpload";
 
 const Edit = () => {

@@ -19,6 +19,7 @@ const SelectRestaurant = ({ restaurants, userRatedRestaurants }) => {
 
         return (
           <Link
+            legacyBehavior
             key={restaurant._id}
             href={
               alreadyRated

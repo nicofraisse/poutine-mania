@@ -57,7 +57,11 @@ const EatenList = ({ userId }) => {
                 </div>
                 <div className="flex-grow relative">
                   <div className="flex justify-between">
-                    <Link href={`/restaurants/${r.slug}`} passHref>
+                    <Link
+                      legacyBehavior
+                      href={`/restaurants/${r.slug}`}
+                      passHref
+                    >
                       <a rel="noopener noreferrer">
                         <div className="font-bold text-base lg:text-lg text-teal-600 hover:underline">
                           {r.name}
@@ -81,7 +85,11 @@ const EatenList = ({ userId }) => {
                           </span>
                         </span>
                       ) : (
-                        <Link href={`/restaurants/${r.slug}/noter`} passHref>
+                        <Link
+                          legacyBehavior
+                          href={`/restaurants/${r.slug}/noter`}
+                          passHref
+                        >
                           <Button
                             height="xs"
                             className="text-normal"

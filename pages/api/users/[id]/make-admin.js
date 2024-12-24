@@ -1,5 +1,5 @@
 import { ObjectId } from "mongodb";
-import { getSession } from "next-auth/client";
+import { getSession } from "next-auth";
 import { connectToDatabase } from "lib/db";
 import nextConnect from "next-connect";
 import { database } from "middleware/database";

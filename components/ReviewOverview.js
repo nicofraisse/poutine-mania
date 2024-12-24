@@ -1,9 +1,13 @@
 import RatingPill from "./RatingPill";
 import { DataRing } from "./display/DataRing";
 
-import cheese1 from "assets/icons/cheese1.svg";
-import fries from "assets/icons/fries.svg";
-import sauce from "assets/icons/sauce.svg";
+// import Cheese1 from "assets/icons/cheese1.svg";
+// Usage in JSX
+{
+  /* <Cheese1 />; */
+}
+import fries from "/assets/icons/fries.svg";
+import sauce from "/assets/icons/sauce.svg";
 import { useEffect, useState } from "react";
 import { round } from "lodash";
 import classNames from "classnames";
@@ -44,11 +48,11 @@ const IngredientRatingRings = ({
         })}
       >
         <DataRing
-          caption="Fromage"
-          icon={cheese1}
-          iconStyle={{ width: 25 }}
-          percent={cheeseRating * 10}
-          noRatings={noCheese}
+          caption="Frites"
+          icon="/assets/icons/cheese1.svg"
+          iconStyle={{ width: 28 }}
+          percent={friesRating * 10}
+          noRatings={noFries}
         />
         <div className="text-sm text-center font-bold text-gray-400">
           Fromage

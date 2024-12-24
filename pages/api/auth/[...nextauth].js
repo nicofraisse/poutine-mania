@@ -1,25 +1,32 @@
 import NextAuth from "next-auth";
-import Providers from "next-auth/providers";
 import GoogleProvider from "next-auth/providers/google";
 import FacebookProvider from "next-auth/providers/facebook";
 import { capitalize } from "lodash";
 import { verifyPassword } from "lib/auth";
 import { connectToDatabase } from "lib/db";
 import { generateSlug } from "../../../lib/generateSlug";
+import CredentialsProvider from "next-auth/providers/credentials";
 
 export default NextAuth({
   session: {
-    jwt: true,
+    strategy: "jwt",
   },
   jwt: {
+    secret: "lkxklfjlkxd",
     encryption: true,
   },
-  secret: "lkxklfjlkxd",
   callbacks: {
-    async jwt(token, account) {
+    async jwt({ token, user, account }) {
+      if (user) {
+        token.email = user.email;
+        token.name = user.name;
+        token.userId = user._id;
+        token.isAdmin = user.isAdmin;
+      }
       if (account?.accessToken) {
         token.accessToken = account.accessToken;
       }
+
       return token;
     },
 
@@ -30,7 +37,7 @@ export default NextAuth({
         const usersCollection = db.collection("users");
 
         user.emailVerified = true;
-        // Update the emailVerified status in the MongoDB database
+
         await usersCollection.updateOne(
           { email: user.email },
           { $set: { emailVerified: true } }
@@ -48,16 +55,16 @@ export default NextAuth({
       return true;
     },
 
-    session: async (session, user) => {
+    session: async ({ session, token }) => {
       const client = await connectToDatabase();
-      const db = await client.db();
+      const db = client.db();
       const foundUser = await db
         .collection("users")
-        .findOne({ email: user.email });
+        .findOne({ email: token.email });
 
       if (foundUser) {
         if (!foundUser.slug) {
-          const slug = await generateSlug(user.name, db, "users");
+          const slug = await generateSlug(foundUser.name, db, "users");
           await db.collection("users").updateOne(
             { _id: foundUser._id },
             {
@@ -121,14 +128,16 @@ export default NextAuth({
           nbReviews: reviews.length,
         };
 
-        return Promise.resolve(session);
+        client.close();
+        return session;
       } else {
+        client.close();
         throw new Error("No session");
       }
     },
   },
   providers: [
-    Providers.Credentials({
+    CredentialsProvider({
       async authorize(credentials) {
         const client = await connectToDatabase();
         const usersCollection = client.db().collection("users");
@@ -196,5 +205,4 @@ export default NextAuth({
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
     }),
   ],
-  database: process.env.MONGO_URI,
 });

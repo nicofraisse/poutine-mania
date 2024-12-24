@@ -13,10 +13,10 @@ export const BrandLogo = () => {
         className="text-2xl font-bold mt-[-8px] ml-1"
         style={{ fontFamily: "Poppins, sans-serif" }}
       >
-        <h1 className="text-amber-600">POUTINE</h1>
-        <h1 className="mt-[-10px] text-orange-600">
-          MANIA<h1 className="text-gray-300 inline">.ca</h1>
-        </h1>
+        <div className="text-amber-600">POUTINE</div>
+        <div className="mt-[-10px] text-orange-600">
+          MANIA<div className="text-gray-300 inline">.ca</div>
+        </div>
       </div>
     </div>
   );

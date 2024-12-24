@@ -3,7 +3,9 @@ import React from "react";
 
 const SiteMapLink = ({ href, children }) => (
   <div className="text-blue-600 hover:text-blue-400">
-    <Link href={href}>{children}</Link>
+    <Link legacyBehavior href={href}>
+      {children}
+    </Link>
   </div>
 );
 

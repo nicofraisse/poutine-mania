@@ -1,5 +1,5 @@
 import formidable from "formidable";
-import { getSession } from "next-auth/client";
+import { getSession } from "next-auth";
 import { uploadToCloudinary } from "lib/uploadToCloudinary";
 import nextConnect from "next-connect";
 import { database } from "middleware/database";

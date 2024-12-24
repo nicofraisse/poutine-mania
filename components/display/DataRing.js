@@ -35,7 +35,7 @@ export const DataRing = ({ icon, percent, iconStyle, noRatings }) => {
       <div className="absolute rounded-full flex items-center justify-center">
         {/* <Icon className="absolute" color={iconColor} /> */}
         <div className="absolute top-4" style={iconStyle}>
-          <Image src={icon} alt="data-ring-icon" />
+          <Image src={icon} fill={true} alt="data-ring-icon" />
           <div className="text-xs text-gray-500 absolute top-7 left-0 w-full text-center">
             {noRatings ? "?" : percentValue}%
           </div>
