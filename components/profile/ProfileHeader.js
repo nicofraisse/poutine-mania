@@ -18,7 +18,7 @@ const ProfileHeader = ({ user }) => {
   return (
     <div className="text-slate-700 border bg-white py-6 px-4 sm:p-7 rounded mb-6">
       <div className="flex items-center flex-col sm:flex-row">
-        <div className="sm:mr-7 flex items-center justify-center sm:block mb-5 sm:mb-0">
+        <div className="sm:mr-7 w-28 h-28 sm:min-w-32 sm:w-32 sm:h-32 flex items-center justify-center sm:block mb-5 relative sm:mb-0">
           {isSkeleton ? (
             <Skeleton
               className="min-w-28 max-w-28 h-28 sm:min-w-32 sm:h-32"
@@ -29,7 +29,7 @@ const ProfileHeader = ({ user }) => {
               alt="user-image"
               quality={50}
               src={user.image}
-              className="rounded-full min-w-28 max-w-28 h-28 sm:min-w-32 sm:h-32 object-cover flex-shrink-0 object-center"
+              className="rounded-full object-cover flex-shrink-0 object-center w-full h-full"
             />
           ) : (
             <div className="min-w-28 h-28 sm:min-w-32 sm:h-32 rounded-full bg-gray-300 flex items-center flex-shrink-0 justify-center">

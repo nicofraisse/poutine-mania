@@ -8,7 +8,7 @@ import { useCurrentUser, refetchCurrentUser } from "lib/useCurrentUser";
 import { capitalize, isString } from "lodash";
 import { ChevronLeft, Info } from "react-feather";
 import { useRouter } from "next/router";
-import { signOut } from "next-auth/reafct";
+import { signOut } from "next-auth/react";
 import { getSession } from "next-auth/react";
 import ImageUpload from "../../../components/controls/ImageUpload";
 

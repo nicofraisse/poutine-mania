@@ -41,7 +41,7 @@ const Item = ({
       )}
     >
       <div
-        onClick={() => onClick(requireLogin, label, requireLoginMessage)}
+        onClick={() => onClick(requireLogin, requireLoginMessage)}
         className={classNames(
           "flex items-center p-3 pl-4 text-base cursor-pointer select-none transition duration-100",
           {
@@ -74,7 +74,6 @@ const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
         requireLoginMessage && (
           <div className="px-4 sm:w-[380px] ">
             <div className="py-2 px-3 my-2 bg-blue-100 border--200 text-gray-700 rounded borer">
-              {/* <Info size={18} className='text-gray-700 inline mr-2' /> */}
               {requireLoginMessage}
             </div>
           </div>

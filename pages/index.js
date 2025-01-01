@@ -14,9 +14,8 @@ const HomePage = ({ restaurants }) => {
   const { openLogin } = useLoginForm();
 
   useEffect(() => {
-    if (!activityHeaderRef.current) return;
-
     const handleScroll = throttle(() => {
+      if (!activityHeaderRef.current) return;
       const { top } = activityHeaderRef.current.getBoundingClientRect();
       setIsScrollableActivity(window.innerWidth > 1080 || top <= 20);
     }, 100);

@@ -57,7 +57,6 @@ const Login = ({ onSubmit, redirect, setEmailToConfirm }) => {
     })
       .then((data) => {
         if (data.error) {
-          console.log("the error", data.error, "raw", data);
           const error = data.error;
 
           if (error?.code === "EMAIL_NOT_VALIDATED") {

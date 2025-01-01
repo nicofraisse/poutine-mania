@@ -15,12 +15,18 @@ export const LoginFormProvider = ({ children }) => {
   const [redirectUrl, setRedirectUrl] = useState("");
   const [emailToConfirm, setEmailToConfirm] = useState(null);
 
-  const toggleLogin = (open, message = "", redirect = "") => {
+  console.log({ loginMessage });
+
+  const toggleLogin = (open, options) => {
     setLoginOpen(open);
-    setTimeout(() => {
-      setLoginMessage(message);
-    }, [!open ? 500 : 0]);
-    setRedirectUrl(redirect);
+    if (options?.message) {
+      setTimeout(() => {
+        setLoginMessage(options.message);
+      }, [!open ? 500 : 0]);
+    }
+    if (options?.redirect) {
+      setRedirectUrl(options.redirect);
+    }
   };
 
   const toggleSignup = (open, redirect = "") => {
@@ -35,7 +41,8 @@ export const LoginFormProvider = ({ children }) => {
   return (
     <LoginFormContext.Provider
       value={{
-        openLogin: (message, redirect) => toggleLogin(true, message, redirect),
+        openLogin: ({ message, redirect }) =>
+          toggleLogin(true, { message, redirect }),
         openSignup: (redirect) => toggleSignup(true, redirect),
         closeLogin: () => toggleLogin(false),
         closeSignup: () => toggleSignup(false),

@@ -1,13 +1,14 @@
 import { ObjectId } from "mongodb";
-import { getSession } from "next-auth/react";
 import { connectToDatabase } from "../../../../lib/db";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../../auth/[...nextauth]";
 
 const handler = async (req, res) => {
   const client = await connectToDatabase();
   const db = await client.db();
-  const session = await getSession({ req });
+  const session = await getServerSession(req, res, authOptions);
   // Validate request
-  if (!session || session.user._id !== req.query.id) {
+  if (!session || session.user._id.toString() !== req.query.id) {
     res.status(403).json({ message: "unauthorized" });
     return;
   }

@@ -1,7 +1,7 @@
 import nextConnect from "next-connect";
-import { getSession } from "next-auth/react";
 import { database } from "middleware/database";
 import { generateSlug } from "../../../lib/generateSlug";
+import { getServerSession } from "next-auth";
 
 const handler = nextConnect();
 
@@ -9,7 +9,7 @@ handler.use(database);
 
 handler.post(async (req, res) => {
   const db = req.db;
-  const session = await getSession({ req });
+  const session = await getServerSession(req, res, authOptions);
 
   const slug = await generateSlug(req.body.name, db, "restaurants");
 

@@ -282,7 +282,7 @@ const Header = ({ toggleMobileSidebar }) => {
                 <div className="relative mx-4 lg:mx-5 z-20">
                   <div
                     className="h-[44px] w-[44px] bg-gray-400 rounded-full cursor-pointer hover:opacity-80 flex items-center justify-center"
-                    onClick={() => openLogin()}
+                    onClick={openLogin}
                     ref={toggleRef}
                   >
                     <User className="text-white" size={30} />

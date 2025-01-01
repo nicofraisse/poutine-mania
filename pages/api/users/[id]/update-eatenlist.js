@@ -1,21 +1,22 @@
 import { ObjectId } from "mongodb";
-import { getSession } from "next-auth/react";
 import { connectToDatabase } from "../../../../lib/db";
+import { authOptions } from "../../auth/[...nextauth]";
+import { getServerSession } from "next-auth";
 
 const handler = async (req, res) => {
   const client = await connectToDatabase();
   const db = await client.db();
-  const session = await getSession({ req });
+  const session = await getServerSession(req, res, authOptions);
 
   // Validate request
-  if (!session.user || session.user._id !== req.query.id) {
-    res.status(403).json("unauthorized");
+  if (!session.user || session.user._id.toString() !== req.query.id) {
+    return res.status(403).json("unauthorized");
   }
   if (!req.body.type || !["add", "remove"].includes(req.body.type)) {
-    res.status(400).json("Missing or wrong type (add or remove)");
+    return res.status(400).json("Missing or wrong type (add or remove)");
   }
   if (!req.body.restaurantId) {
-    res.status(400).json("Missing restaurant id");
+    return res.status(400).json("Missing restaurant id");
   }
 
   // Create updated eatenlist

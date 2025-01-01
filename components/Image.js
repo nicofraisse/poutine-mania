@@ -7,8 +7,6 @@ const Image = ({ alt, src, forceNextImage, quality = 20, ...props }) => {
   const width = props.width;
   const height = props.height;
 
-  console.log("src", src);
-
   if (forceNextImage)
     return (
       <NextImage

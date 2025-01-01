@@ -7,7 +7,7 @@ import { connectToDatabase } from "lib/db";
 import { generateSlug } from "../../../lib/generateSlug";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-export default NextAuth({
+export const authOptions = {
   session: {
     strategy: "jwt",
   },
@@ -18,9 +18,9 @@ export default NextAuth({
   callbacks: {
     async jwt({ token, user, account }) {
       if (user) {
+        token.userId = user._id;
         token.email = user.email;
         token.name = user.name;
-        token.userId = user._id;
         token.isAdmin = user.isAdmin;
       }
       if (account?.accessToken) {
@@ -205,4 +205,6 @@ export default NextAuth({
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
     }),
   ],
-});
+};
+
+export default (req, res) => NextAuth(req, res, authOptions);
