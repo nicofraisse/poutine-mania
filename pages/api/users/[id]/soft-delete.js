@@ -1,6 +1,6 @@
 import { ObjectId } from "mongodb";
 import { connectToDatabase } from "../../../../lib/db";
-import { getSession } from "next-auth";
+import { getSession } from "next-auth/react";
 
 const handler = async (req, res) => {
   const client = await connectToDatabase();

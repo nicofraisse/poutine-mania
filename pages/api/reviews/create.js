@@ -1,5 +1,5 @@
 import { connectToDatabase } from "../../../lib/db";
-import { getSession } from "next-auth";
+import { getSession } from "next-auth/react";
 import { ObjectId } from "mongodb";
 import formidable from "formidable";
 import { uploadToCloudinary } from "../../../lib/uploadToCloudinary";

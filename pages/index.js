@@ -10,12 +10,14 @@ import { useLoginForm } from "../components/context/LoginFormProvider";
 
 const HomePage = ({ restaurants }) => {
   const [isScrollableActivity, setIsScrollableActivity] = useState(false);
-  const actvityHeaderRef = useRef(null);
+  const activityHeaderRef = useRef(null);
   const { openLogin } = useLoginForm();
 
   useEffect(() => {
+    if (!activityHeaderRef.current) return;
+
     const handleScroll = throttle(() => {
-      const { top } = actvityHeaderRef.current.getBoundingClientRect();
+      const { top } = activityHeaderRef.current.getBoundingClientRect();
       setIsScrollableActivity(window.innerWidth > 1080 || top <= 20);
     }, 100);
 
@@ -54,7 +56,7 @@ const HomePage = ({ restaurants }) => {
         </div>
         <div className="xl:w-5/12 2xl:w-1/3 3xl:w-auto text h-screen sticky top-0 overflow-hidden">
           <h2
-            ref={actvityHeaderRef}
+            ref={activityHeaderRef}
             className="text-xl sm:text-2xl font-bold my-5 text-center"
           >
             À l&apos;affiche

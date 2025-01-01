@@ -9,7 +9,7 @@ import { capitalize, isString } from "lodash";
 import { ChevronLeft, Info } from "react-feather";
 import { useRouter } from "next/router";
 import { signOut } from "next-auth/reafct";
-import { getSession } from "next-auth";
+import { getSession } from "next-auth/react";
 import ImageUpload from "../../../components/controls/ImageUpload";
 
 const Edit = () => {

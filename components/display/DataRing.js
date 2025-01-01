@@ -32,7 +32,6 @@ export const DataRing = ({ icon, percent, iconWidth, noRatings }) => {
   return (
     <div className="relative">
       <div className="absolute rounded-full flex items-center justify-center">
-        {/* <Icon className="absolute" color={iconColor} /> */}
         <div className="absolute top-4" style={{ width: iconWidth }}>
           <Image
             src={icon}
@@ -63,7 +62,6 @@ export const DataRing = ({ icon, percent, iconWidth, noRatings }) => {
         <svg width="73" height="73">
           <circle
             className={classNames(classes.ProgressRingCircle, "")}
-            // ref d={ringRef}
             stroke="#eee"
             strokeWidth="5"
             fill="transparent"

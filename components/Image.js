@@ -7,6 +7,8 @@ const Image = ({ alt, src, forceNextImage, quality = 20, ...props }) => {
   const width = props.width;
   const height = props.height;
 
+  console.log("src", src);
+
   if (forceNextImage)
     return (
       <NextImage
@@ -35,13 +37,12 @@ const Image = ({ alt, src, forceNextImage, quality = 20, ...props }) => {
     }
     return (
       <NextImage
-        fill={true}
         src={src}
         alt="image"
+        fill={true}
         {...{
           ...(width && { width }),
           ...(height && { height }),
-          ...(!width && { fill: true }),
           ...props,
         }}
       />

@@ -12,10 +12,10 @@ import { formatDate } from "../lib/formatDate";
 import { flatten } from "lodash";
 import { ImageModal } from "./ImageModal";
 import Skeleton from "react-loading-skeleton";
-import { useSession } from "next-auth/react";
+import { useCurrentUser } from "../lib/useCurrentUser";
 
 export const EatenRestaurantCard = ({ restaurant }) => {
-  const [currentUser] = useSession();
+  const { currentUser } = useCurrentUser();
   const [imgModalOpen, setImgModalOpen] = useState(false);
   const isSkeleton = restaurant ? Object.keys(restaurant).length === 0 : {};
   const photos = isSkeleton
