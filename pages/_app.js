@@ -29,7 +29,7 @@ function App({ Component, pageProps }) {
           crossOrigin="true"
         />
         <link
-          href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Darumadrop+One&family=Open+Sans:wght@300;400;500;600;700&family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap"
+          href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;900&family=Darumadrop+One&family=Open+Sans:wght@300;400;500;600;700&family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap"
           rel="stylesheet"
         />
       </Head>

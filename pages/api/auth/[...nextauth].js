@@ -30,8 +30,8 @@ export default NextAuth({
       return token;
     },
 
-    async signIn(user, account) {
-      if (account.provider === "google" || account.provider === "facebook") {
+    async signIn({ user, account }) {
+      if (["google", "facebook"].includes(account?.provider)) {
         const client = await connectToDatabase();
         const db = client.db();
         const usersCollection = db.collection("users");
@@ -44,7 +44,7 @@ export default NextAuth({
         );
         client.close();
       }
-      if (!user.emailVerified) {
+      if (!user?.emailVerified) {
         const error = JSON.stringify({
           code: "EMAIL_NOT_VALIDATED",
           message:

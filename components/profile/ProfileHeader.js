@@ -46,7 +46,11 @@ const ProfileHeader = ({ user }) => {
               {isSkeleton ? (
                 <Skeleton />
               ) : user._id === currentUser?._id ? (
-                <Link legacyBehavior href={`/profil/${user.slug}/edit`} passHref>
+                <Link
+                  legacyBehavior
+                  href={`/profil/${user.slug}/edit`}
+                  passHref
+                >
                   <button className="text-base font-bold bg-blue-400 px-6 py-2 rounded-full text-white inline-block">
                     Modifier mon profil
                   </button>
@@ -89,7 +93,11 @@ const ProfileHeader = ({ user }) => {
               <Skeleton />
             ) : (
               user._id === currentUser?._id && (
-                <Link legacyBehavior href={`/profil/${user.slug}/edit`} passHref>
+                <Link
+                  legacyBehavior
+                  href={`/profil/${user.slug}/edit`}
+                  passHref
+                >
                   <button className="text-base font-bold bg-blue-400 px-6 py-2 rounded-full text-white inline-block">
                     Modifier mon profil
                   </button>
@@ -106,7 +114,9 @@ const ProfileHeader = ({ user }) => {
                 <Skeleton />
               </>
             ) : (
-              <Link legacyBehaviorify>{!(user.bio === "undefined") && user.bio}</Linkify>
+              <Linkify legacyBehaviorify>
+                {!(user.bio === "undefined") && user.bio}
+              </Linkify>
             )}
           </p>
         </div>

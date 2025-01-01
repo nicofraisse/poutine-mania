@@ -57,7 +57,8 @@ const Login = ({ onSubmit, redirect, setEmailToConfirm }) => {
     })
       .then((data) => {
         if (data.error) {
-          const error = JSON.parse(data.error);
+          console.log("the error", data.error, "raw", data);
+          const error = data.error;
 
           if (error?.code === "EMAIL_NOT_VALIDATED") {
             setEmailToConfirm(values.email);
@@ -71,8 +72,8 @@ const Login = ({ onSubmit, redirect, setEmailToConfirm }) => {
         formikBag.setSubmitting(false);
       })
       .catch((e) => {
-        const error = JSON.parse(e.message);
-        toast.error(error);
+        console.error("Sign in error:", e.message, "raw", e);
+        toast.error("Une erreur s'est produite");
         formikBag.setSubmitting(false);
       });
   };

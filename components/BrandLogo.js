@@ -9,10 +9,7 @@ export const BrandLogo = () => {
         width={1.506 * 80}
         height={80}
       />
-      <div
-        className="text-2xl font-bold mt-[-8px] ml-1"
-        style={{ fontFamily: "Poppins, sans-serif" }}
-      >
+      <div className="text-2xl font-bold font-poppins mt-[-8px] ml-1">
         <div className="text-amber-600">POUTINE</div>
         <div className="mt-[-10px] text-orange-600">
           MANIA<div className="text-gray-300 inline">.ca</div>
