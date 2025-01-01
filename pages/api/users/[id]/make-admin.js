@@ -3,6 +3,11 @@ import { getSession } from "next-auth/client";
 import { connectToDatabase } from "lib/db";
 import nextConnect from "next-connect";
 import { database } from "middleware/database";
+<<<<<<< Updated upstream
+=======
+import { authOptions } from "../../auth/[...nextauth]";
+import { getServerSession } from "next-auth";
+>>>>>>> Stashed changes
 
 const handler = nextConnect();
 handler.use(database);

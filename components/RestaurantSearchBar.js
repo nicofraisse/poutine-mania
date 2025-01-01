@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useRestaurantSearch } from "./context/RestaurantSearchProvider";
 import { useGet } from "../lib/useAxios";
 import { getUrlQueryString } from "../lib/getUrlqueryString";
-import { MapPin, Search, X, XCircle } from "react-feather";
+import { MapPin, Search, XCircle } from "react-feather";
 import { Image } from "./Image";
 import { Image as ImageIcon } from "react-feather";
 import classNames from "classnames";
@@ -122,7 +122,7 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit, isBanner }, ref) => {
     }, 50);
   };
 
-  const handleFocus = (e) => {
+  const handleFocus = () => {
     // setShowSearchSuggestions(true);
     // if (isBanner && isMobile) {
     //   e.preventDefault();

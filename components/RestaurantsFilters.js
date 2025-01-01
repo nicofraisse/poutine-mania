@@ -152,7 +152,7 @@ export const RestaurantsFilters = ({
             "bg-slate-500 text-white hover:bg-slate-700 text-sm":
               filtersApplied,
           })}
-          onClick={(e) => {
+          onClick={() => {
             setFiltersOpen(!filtersOpen);
           }}
         >

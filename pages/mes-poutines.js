@@ -5,8 +5,6 @@ import { useCurrentUser } from "../lib/useCurrentUser";
 import { EatenRestaurantCard } from "../components/EatenRestaurantCard";
 import Skeleton from "react-loading-skeleton";
 import { EmptyState } from "../components/EmptyState";
-import { Plus } from "react-feather";
-import Link from "next/link";
 
 const MesPoutines = () => {
   const { currentUser } = useCurrentUser();

@@ -1,4 +1,3 @@
-import { ObjectId } from "mongodb";
 import { connectToDatabase } from "lib/db";
 
 const handler = async (req, res) => {

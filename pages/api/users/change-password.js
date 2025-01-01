@@ -1,5 +1,9 @@
+<<<<<<< Updated upstream
 import { getSession } from "next-auth/client";
 
+=======
+import { getServerSession } from "next-auth";
+>>>>>>> Stashed changes
 import { hashPassword, verifyPassword } from "../../../lib/auth";
 import { connectToDatabase } from "../../../lib/db";
 
