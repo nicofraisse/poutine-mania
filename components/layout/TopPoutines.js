@@ -30,7 +30,7 @@ const TopPoutines = ({ restaurants }) => {
 
         <p className="my-1 text-sm sm:text-md leading-relaxed">
           Rends-toi sur notre{" "}
-          <Link href={"/restaurants"} passHref>
+          <Link legacyBehavior href={"/restaurants"} passHref>
             <span className="text-teal-500 font-bold cursor-pointer hover:text-teal-600">
               Carte des poutines
             </span>
@@ -76,7 +76,11 @@ const TopPoutines = ({ restaurants }) => {
                         : `#${i + 1}`}
                     </span>
                     <div className="xs:hidden flex items-center ml-2">
-                      <Link href={`/restaurants/${r.slug}`} passHref>
+                      <Link
+                        legacyBehavior
+                        href={`/restaurants/${r.slug}`}
+                        passHref
+                      >
                         <a className="text-xl lg:text-2xl font-bold text-teal-500 hover:text-teal-600">
                           {r.name}
                         </a>
@@ -102,7 +106,11 @@ const TopPoutines = ({ restaurants }) => {
                   <div className="w-full px-2 xs:px-0 text-center xs:text-left">
                     <div className="">
                       <div className="hidden xs:block">
-                        <Link href={`/restaurants/${r.slug}`} passHref>
+                        <Link
+                          legacyBehavior
+                          href={`/restaurants/${r.slug}`}
+                          passHref
+                        >
                           <a className="text-xl lg:text-2xl font-bold text-teal-500 mb-2 text-left hover:text-teal-600">
                             {r.name}
                           </a>

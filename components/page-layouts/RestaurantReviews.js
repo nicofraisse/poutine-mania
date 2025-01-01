@@ -64,7 +64,7 @@ const ReviewStats = ({ reviews, restaurant }) => {
           ) : (
             <>
               Ajouté aux
-              <Link href="/mes-poutines">
+              <Link legacyBehavior href="/mes-poutines">
                 <span className="underline text-blue-500 ml-1 cursor-pointer">
                   poutines mangées
                 </span>
@@ -106,7 +106,7 @@ const ReviewStats = ({ reviews, restaurant }) => {
           ) : (
             <>
               Ajouté aux
-              <Link href="/a-essayer">
+              <Link legacyBehavior href="/a-essayer">
                 <span className="underline text-blue-500 ml-1 cursor-pointer">
                   poutines à essayer
                 </span>
@@ -144,15 +144,6 @@ const ReviewStats = ({ reviews, restaurant }) => {
             }
           )}
         >
-          {/* <Button
-              height="sm"
-              onClick={() => push(`/restaurants/${restaurant.slug}/noter`)}
-              className="inline-flex mr-2 items-center px-4 shrink-0 text-sm sm:text-md h-[35px] sm:h-[40px]"
-              variant="light"
-              >
-              <Edit3 className="mr-2 sm:text-lg w-4 sm:w-5" />
-              Noter
-            </Button> */}
           <h2 className="inline px-1 pl-1 mr-5 text-gray-700">
             {reviews.length > 0 ? (
               <span className="text-lg sm:text-xl">

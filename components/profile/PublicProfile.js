@@ -36,6 +36,7 @@ const PublicProfile = ({ user }) => {
               <div className="font-black text-2xl">{user.name}</div>
               {user._id === currentUser?._id ? (
                 <Link
+                  legacyBehavior
                   className="text-base mx-3 px-4 py-1 rounded-lg text-gray-500 sm:-mb-1 hover:text-gray-700 flex"
                   href={`/profil/${user.slug}/edit`}
                 >
@@ -72,6 +73,7 @@ const PublicProfile = ({ user }) => {
               <div className="text-lg mt-1">
                 <span className="text-xl">❤️</span> Poutine préférée:
                 <Link
+                  legacyBehavior
                   href={`/restaurants/${
                     maxBy(reviews, "finalRating")?.restaurants[0]?._id
                   }`}

@@ -119,16 +119,15 @@ export const ReviewCard = ({
         })}
       >
         <div className="sm:basis-1/6 flex sm:flex-col items-center justify-centere text-slate-500 justify-between">
-          <Link href={`/profil/${review.user.slug}`} passHref>
+          <Link legacyBehavior href={`/profil/${review.user.slug}`} passHref>
             <div className="sm:pr-3 min-w-20">
               <div className="py-2 px-2 sm:px-3 flex sm:flex-col items-center border-slate-100 rounded-lg hover:bg-slate-100 transition duration-150 cursor-pointer">
-                <div className="bg-slate-50 border h-10 w-10 sm:h-12 sm:w-12 rounded-full text-slate-300 flex items-center justify-center">
+                <div className="bg-slate-50 relative border h-10 w-10 sm:h-12 sm:w-12 rounded-full text-slate-300 flex items-center justify-center">
                   {review.user.image ? (
                     <Image
                       alt="user-image"
                       src={review.user.image}
-                      width="100%"
-                      height="100%"
+                      fill={true}
                       className="rounded-full h-full w-full object-cover object-center"
                       quality={20}
                     />

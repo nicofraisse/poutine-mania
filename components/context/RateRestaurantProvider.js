@@ -28,7 +28,7 @@ export const RateRestaurantProvider = ({ children }) => {
 
   const rateRestaurant = (restaurant, review) => {
     if (!currentUser) {
-      openLogin(<LoginMessage restaurantName={restaurant.name} />);
+      openLogin({ message: <LoginMessage restaurantName={restaurant.name} /> });
     } else {
       setRateRestaurantOpen(true);
       setPreselectedRestaurant(restaurant);

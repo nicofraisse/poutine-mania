@@ -1,8 +1,8 @@
 import { ObjectId } from "mongodb";
-import { getSession } from "next-auth/client";
 import { connectToDatabase } from "lib/db";
 import nextConnect from "next-connect";
 import { database } from "middleware/database";
+import { authOptions } from "../../auth/[...nextauth]";
 
 const handler = nextConnect();
 handler.use(database);
@@ -10,7 +10,7 @@ handler.use(database);
 handler.post(async (req, res) => {
   const client = await connectToDatabase();
   const db = await client.db();
-  const session = await getSession({ req });
+  const session = await getServerSession(req, res, authOptions);
 
   try {
     if (session?.user.isAdmin) {

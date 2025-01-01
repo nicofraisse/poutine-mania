@@ -6,7 +6,7 @@ import Color from "color";
 import classes from "./data-ring.module.scss";
 import Image from "next/image";
 
-export const DataRing = ({ icon, percent, iconStyle, noRatings }) => {
+export const DataRing = ({ icon, percent, iconWidth, noRatings }) => {
   const ringRef = useRef(null);
   const [percentValue, setPercentValue] = useState(0);
 
@@ -29,13 +29,16 @@ export const DataRing = ({ icon, percent, iconStyle, noRatings }) => {
       }, 12);
     }
   }, [percent, percentValue]);
-
   return (
     <div className="relative">
       <div className="absolute rounded-full flex items-center justify-center">
-        {/* <Icon className="absolute" color={iconColor} /> */}
-        <div className="absolute top-4" style={iconStyle}>
-          <Image src={icon} alt="data-ring-icon" />
+        <div className="absolute top-4" style={{ width: iconWidth }}>
+          <Image
+            src={icon}
+            alt="data-ring-icon"
+            width={iconWidth}
+            height={iconWidth}
+          />
           <div className="text-xs text-gray-500 absolute top-7 left-0 w-full text-center">
             {noRatings ? "?" : percentValue}%
           </div>
@@ -59,7 +62,6 @@ export const DataRing = ({ icon, percent, iconStyle, noRatings }) => {
         <svg width="73" height="73">
           <circle
             className={classNames(classes.ProgressRingCircle, "")}
-            // ref d={ringRef}
             stroke="#eee"
             strokeWidth="5"
             fill="transparent"

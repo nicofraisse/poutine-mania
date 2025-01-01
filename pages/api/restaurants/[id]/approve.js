@@ -1,11 +1,12 @@
 import { ObjectId } from "mongodb";
-import { getSession } from "next-auth/client";
+import { getServerSession } from "next-auth/next";
 import { connectToDatabase } from "../../../../lib/db";
+import { authOptions } from "../../../api/auth/[...nextauth]";
 
 const handler = async (req, res) => {
   const client = await connectToDatabase();
   const db = await client.db();
-  const session = await getSession({ req });
+  const session = await getServerSession(req, res, authOptions);
 
   try {
     if (session?.user.isAdmin) {

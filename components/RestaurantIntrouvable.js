@@ -23,7 +23,7 @@ const RestaurantIntrouvable = ({ hideBorders }) => {
   const handleClickAdd = (e) => {
     e.stopPropagation();
     if (!currentUser) {
-      openLogin(<LoginMessage />, "/nouveau-restaurant");
+      openLogin({ message: <LoginMessage />, redirect: "/nouveau-restaurant" });
     } else {
       push("/nouveau-restaurant");
     }

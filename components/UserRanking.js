@@ -71,7 +71,9 @@ const UserRanking = ({ reviews, loading }) => {
                   {isSkeleton ? (
                     <Skeleton className="flex-grow" />
                   ) : (
-                    <Link href={`/restaurants/${r.slug}`}>{r.name}</Link>
+                    <Link legacyBehavior href={`/restaurants/${r.slug}`}>
+                      {r.name}
+                    </Link>
                   )}
                 </td>
                 <td className="border-b border-slate-100 sm:pr-3 p-1 pl-0 text-xs sm:text-base text-slate-500">

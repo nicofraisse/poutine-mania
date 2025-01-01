@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { signOut, useSession } from "next-auth/client";
+import { signOut, useSession } from "next-auth/react";
 import Button from "./Button";
 import {
   ArrowLeft,
@@ -26,7 +26,8 @@ import { SurpriseButton } from "components/SurpriseButton";
 import Skeleton from "react-loading-skeleton";
 
 const Header = ({ toggleMobileSidebar }) => {
-  const [session, loading] = useSession();
+  const { data: session, status } = useSession();
+  const loading = status === "loading";
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [showSearchBar, setShowSearchBar] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -154,7 +155,7 @@ const Header = ({ toggleMobileSidebar }) => {
 
             {!isHomepage && !(isMobile && showSearchBar) && !backablePage && (
               <div className="-mb-2 -ml-3 block select-none min-w-20">
-                <Link href="/">
+                <Link legacyBehavior href="/">
                   <a>
                     <Image
                       alt="poutine-logo"
@@ -258,7 +259,11 @@ const Header = ({ toggleMobileSidebar }) => {
                         }, 100);
                       }}
                     >
-                      <Link href={`/profil/${currentUser.slug}`} passHref>
+                      <Link
+                        legacyBehavior
+                        href={`/profil/${currentUser.slug}`}
+                        passHref
+                      >
                         <div className="hover:bg-gray-100 rounded-t-lg px-3 py-2 text-gray-700 cursor-pointer">
                           Mon profil
                         </div>
@@ -277,7 +282,7 @@ const Header = ({ toggleMobileSidebar }) => {
                 <div className="relative mx-4 lg:mx-5 z-20">
                   <div
                     className="h-[44px] w-[44px] bg-gray-400 rounded-full cursor-pointer hover:opacity-80 flex items-center justify-center"
-                    onClick={() => openLogin()}
+                    onClick={openLogin}
                     ref={toggleRef}
                   >
                     <User className="text-white" size={30} />

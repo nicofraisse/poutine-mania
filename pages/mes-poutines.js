@@ -44,7 +44,7 @@ const MesPoutines = () => {
       <h1 className="text-2xl font-black mb-5 mt-3 px-3 sm:px-0">
         Mes poutines mangées
       </h1>
-      {/* <Link href={"/noter"} passHref>
+      {/* <Link legacyBehavior href={"/noter"} passHref>
         <div
           className="mt-0s w-[220px] inline-flex mr-1 justify-center items-center py-2 px-2 bg-gray-50 border-gray-100 border-2 rounded-full text-neutral-400 cursor-pointer select-none hover:text-neutral-500 hover:border-neutral-300 transition-colors duration-200
         "
@@ -53,12 +53,12 @@ const MesPoutines = () => {
           Ajouter des poutines
         </div>
       </Link> */}
-      {/* <Link href={"/noter"} passHref>
+      {/* <Link legacyBehavior href={"/noter"} passHref>
         <div
           className="mt-0s w-[150px] inline-flex justify-center items-center py-2 px-2 bg-gray-50 border-gray-100 border-2 rounded-full text-neutral-400 cursor-pointer select-none hover:text-neutral-500 hover:border-neutral-300 transition-colors duration-200
         "
         >
-          <LinkIcon className="mr-2" size={20} />
+          <Link legacyBehaviorIcon className="mr-2" size={20} />
           Partager
         </div>
       </Link> */}

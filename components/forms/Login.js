@@ -1,4 +1,4 @@
-import { signIn } from "next-auth/client";
+import { signIn } from "next-auth/react";
 import toast from "react-hot-toast";
 import Button from "../Button";
 import * as Yup from "yup";
@@ -43,30 +43,6 @@ const Login = ({ onSubmit, redirect, setEmailToConfirm }) => {
     return false;
   };
 
-  // ***** For custom postlogin page *****
-
-  // const options = {
-  //   redirect: false,
-  //   callbackUrl: `${window.location.origin}/oauth-callback`,
-  // };
-
-  // useEffect(() => {
-  //   const handleMessage = (event) => {
-  //     if (
-  //       event.origin === window.location.origin &&
-  //       event.data.type === "oauth-callback"
-  //     ) {
-  //       // Redirect the main window to the callback URL
-  //       window.location.href = event.data.url;
-  //     }
-  //   };
-
-  //   window.addEventListener("message", handleMessage);
-  //   return () => {
-  //     window.removeEventListener("message", handleMessage);
-  //   };
-  // }, []);
-
   const options = {
     redirect: false,
     callbackUrl: redirect
@@ -81,12 +57,12 @@ const Login = ({ onSubmit, redirect, setEmailToConfirm }) => {
     })
       .then((data) => {
         if (data.error) {
-          const error = JSON.parse(data.error);
+          const error = data.error;
 
           if (error?.code === "EMAIL_NOT_VALIDATED") {
             setEmailToConfirm(values.email);
           } else {
-            toast.error(error?.message);
+            toast.error(error);
           }
         } else {
           toast.success("Vous êtes maintenant connecté(e).");
@@ -95,8 +71,8 @@ const Login = ({ onSubmit, redirect, setEmailToConfirm }) => {
         formikBag.setSubmitting(false);
       })
       .catch((e) => {
-        const error = JSON.parse(e.message);
-        toast.error(error);
+        console.error("Sign in error:", e.message, "raw", e);
+        toast.error("Une erreur s'est produite");
         formikBag.setSubmitting(false);
       });
   };
