@@ -1,12 +1,13 @@
 import { connectToDatabase } from "../../../lib/db";
-import { getSession } from "next-auth/client";
 import { ObjectId } from "mongodb";
 import formidable from "formidable";
 import { uploadToCloudinary } from "../../../lib/uploadToCloudinary";
+import { authOptions } from "../auth/[...nextauth]";
+import { getServerSession } from "next-auth";
 
 const handler = async (req, res) => {
   if (req.method === "POST") {
-    const session = await getSession({ req });
+    const session = await getServerSession(req, res, authOptions);
 
     if (session) {
       const form = new formidable.IncomingForm();

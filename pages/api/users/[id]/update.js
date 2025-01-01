@@ -1,8 +1,9 @@
 import formidable from "formidable";
-import { getSession } from "next-auth/client";
 import { uploadToCloudinary } from "lib/uploadToCloudinary";
 import nextConnect from "next-connect";
 import { database } from "middleware/database";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../../auth/[...nextauth]";
 
 const handler = nextConnect();
 handler.use(database);
@@ -13,7 +14,7 @@ handler.patch(async (req, res) => {
     return;
   }
 
-  const session = await getSession({ req });
+  const session = await getServerSession(req, res, authOptions);
 
   if (!session) {
     res.status(401).json({ message: "Not authenticated" });

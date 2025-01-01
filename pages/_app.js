@@ -1,4 +1,4 @@
-import { Provider } from "next-auth/client";
+import { SessionProvider } from "next-auth/react";
 import { Toaster } from "react-hot-toast";
 import { RateRestaurantProvider } from "components/context/RateRestaurantProvider";
 import Layout from "../components/layout/Layout";
@@ -29,13 +29,13 @@ function App({ Component, pageProps }) {
           crossOrigin="true"
         />
         <link
-          href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Darumadrop+One&family=Open+Sans:wght@300;400;500;600;700&family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap"
+          href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;900&family=Darumadrop+One&family=Open+Sans:wght@300;400;500;600;700&family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap"
           rel="stylesheet"
         />
       </Head>
 
       <CookiesProvider>
-        <Provider session={pageProps.session}>
+        <SessionProvider session={pageProps.session}>
           <LoginFormProvider>
             <SidebarDataProvider>
               <RestaurantSearchProvider>
@@ -53,7 +53,7 @@ function App({ Component, pageProps }) {
               </RestaurantSearchProvider>
             </SidebarDataProvider>
           </LoginFormProvider>
-        </Provider>
+        </SessionProvider>
       </CookiesProvider>
 
       <Analytics />

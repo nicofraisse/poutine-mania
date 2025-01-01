@@ -89,7 +89,11 @@ export const ProfileReviewCard = ({ review, isIndex, userName, loading }) => {
             <span className="text-sm sm:text-base">
               {isIndex ? (
                 <>
-                  <Link href={`/profil/${review.user?.slug}`} passHref>
+                  <Link
+                    legacyBehavior
+                    href={`/profil/${review.user?.slug}`}
+                    passHref
+                  >
                     <span className="font-bold hover:text-slate-500 cursor-pointer w-3/4">
                       {review?.user?.name?.slice(0, 32)}
                     </span>
@@ -106,7 +110,10 @@ export const ProfileReviewCard = ({ review, isIndex, userName, loading }) => {
                 </>
               )}
               noté{" "}
-              <Link href={`/restaurants/${review.restaurants[0].slug}`}>
+              <Link
+                legacyBehavior
+                href={`/restaurants/${review.restaurants[0].slug}`}
+              >
                 <a className="text-teal-500 font-bold hover:text-teal-600">
                   {review.restaurants[0].name}
                 </a>

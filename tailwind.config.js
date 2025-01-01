@@ -7,6 +7,7 @@ module.exports = {
     extend: {
       fontFamily: {
         chelsea: ["var(--font-chelsea)"],
+        poppins: ['"Poppins"', "sans-serif"],
       },
       aspectRatio: {
         "3/2": "3 / 2",

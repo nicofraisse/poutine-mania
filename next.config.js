@@ -9,15 +9,35 @@ module.exports = {
     config.resolve.alias["lib"] = path.join(__dirname, "lib");
     config.resolve.alias["styles"] = path.join(__dirname, "styles");
     config.resolve.alias["middleware"] = path.join(__dirname, "middleware");
+
     config.module.rules.push({
-      include: [options.dir],
-      exclude: /node_modules/,
+      test: /\.svg$/,
+      oneOf: [
+        {
+          issuer: /\.[jt]sx?$/,
+          resourceQuery: /url/,
+          type: "asset/resource",
+        },
+        {
+          issuer: /\.[jt]sx?$/,
+          use: ["@svgr/webpack"],
+        },
+      ],
     });
 
     return config;
   },
   images: {
-    domains: ["platform-lookaside.fbsbx.com", "lh3.googleusercontent.com"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "platform-lookaside.fbsbx.com",
+      },
+      {
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com",
+      },
+    ],
   },
   env: {
     CLOUD_NAME: process.env.CLOUD_NAME,
@@ -27,7 +47,6 @@ module.exports = {
   async redirects() {
     return redirects;
   },
-
   async rewrites() {
     return [
       {

@@ -16,7 +16,7 @@ import ConditionalWrapper from "components/ConditionalWrapper";
 import { useRequireLogin } from "../../lib/useRequireLogin";
 import { useSidebarData } from "../context/SidebarDataProvider";
 import { BrandLogo } from "../BrandLogo";
-import { useSession } from "next-auth/client";
+import { useSession } from "next-auth/react";
 
 const Item = ({
   label,
@@ -35,13 +35,13 @@ const Item = ({
     <ConditionalWrapper
       condition={!requireLogin}
       wrapper={(children) => (
-        <Link href={href} passHref>
+        <Link legacyBehavior href={href} passHref>
           {children}
         </Link>
       )}
     >
       <div
-        onClick={() => onClick(requireLogin, label, requireLoginMessage)}
+        onClick={() => onClick(requireLogin, requireLoginMessage)}
         className={classNames(
           "flex items-center p-3 pl-4 text-base cursor-pointer select-none transition duration-100",
           {
@@ -62,19 +62,18 @@ const Item = ({
 };
 
 const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
-  const [session] = useSession();
+  const { data: session } = useSession();
   const currentUser = session?.user;
   const requireLogin = useRequireLogin();
   const { sidebarEatenlistAmount, sidebarWatchlistAmount } = useSidebarData();
 
-  const onClickItem = (isLoginRequired, label, requireLoginMessage) => {
+  const onClickItem = (isLoginRequired, requireLoginMessage) => {
     if (isLoginRequired) {
       requireLogin(
         toggleMobileSidebar,
         requireLoginMessage && (
           <div className="px-4 sm:w-[380px] ">
             <div className="py-2 px-3 my-2 bg-blue-100 border--200 text-gray-700 rounded borer">
-              {/* <Info size={18} className='text-gray-700 inline mr-2' /> */}
               {requireLoginMessage}
             </div>
           </div>
@@ -117,7 +116,7 @@ const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
           )}
         >
           <div className="select-none">
-            <Link href="/">
+            <Link legacyBehavior href="/">
               <a>
                 <BrandLogo />
               </a>

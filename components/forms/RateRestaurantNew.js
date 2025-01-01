@@ -125,7 +125,7 @@ export const RateRestaurantNew = ({
     if (!currentUser) {
       setCookies("reviewInProgress", values);
       setCookies("reviewRestaurantInProgress", restaurantId);
-      openLogin(<AlmostThere />);
+      openLogin({ message: <AlmostThere /> });
       return;
     }
 

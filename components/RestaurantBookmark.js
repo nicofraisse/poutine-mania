@@ -48,7 +48,7 @@ const RestaurantBookmark = ({ restaurant }) => {
           ) : (
             <>
               Ajouté aux
-              <Link href="/mes-poutines">
+              <Link legacyBehavior href="/mes-poutines">
                 <span className="underline text-blue-500 ml-1 cursor-pointer">
                   poutines mangées
                 </span>
@@ -144,7 +144,11 @@ const RestaurantBookmark = ({ restaurant }) => {
         {isSkeleton ? (
           <Skeleton className="mt-3 mb-2" width="70%" height={28} />
         ) : (
-          <Link href={`/restaurants/${restaurant.slug}`} passHref>
+          <Link
+            legacyBehavior
+            href={`/restaurants/${restaurant.slug}`}
+            passHref
+          >
             <a
               className={classNames(
                 "text-xl font-bold text-teal-500 block my-2",
@@ -216,7 +220,7 @@ const RestaurantBookmark = ({ restaurant }) => {
             <XCircle className="mr-1 sm:text-lg w-3 sm:w-4 font-" /> Pas
             intéressé
           </Button> */}
-          {/* <Link href={`/restaurants/${restaurant.slug}/noter`} passHref>
+          {/* <Link legacyBehavior href={`/restaurants/${restaurant.slug}/noter`} passHref>
             <Button
               height="sm"
               className={classNames(

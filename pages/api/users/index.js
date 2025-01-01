@@ -1,18 +1,14 @@
 import nextConnect from "next-connect";
 import { database } from "middleware/database";
-<<<<<<< Updated upstream
-import { getSession } from "next-auth/client";
-=======
 import { authOptions } from "../auth/[...nextauth]";
 import { getServerSession } from "next-auth";
->>>>>>> Stashed changes
 
 const handler = nextConnect();
 
 handler.use(database);
 
 handler.get(async (req, res) => {
-  const session = await getSession({ req });
+  const session = await getServerSession(req, res, authOptions);
 
   if (!session?.user || !session.user.isAdmin) {
     res.status(401).json({ message: "Unauthorized" });

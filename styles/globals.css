@@ -8,7 +8,7 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: Helvetica;
+  font-family: "DM Sans", sans-serif;
   color: #111827;
 }
 
@@ -18,13 +18,6 @@ body {
 
 .bg-light-orange {
   background-color: #fdfbf4;
-}
-
-* {
-  /* font-family: "Darumadrop One", cursive; */
-  /* font-family: "Poppins", sans-serif; */
-  /* font-family: "DM Sans", sans-serif; */
-  font-family: "DM Sans", sans-serif;
 }
 
 h1,

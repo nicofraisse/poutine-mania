@@ -50,9 +50,8 @@ const Restaurants = () => {
       order: sortOrder,
       noUnapproved: true,
       rating: ratingFilter,
-      categories:
-        categoryFilter && categoryFilter.length ? categoryFilter : undefined,
-      price: priceFilter && priceFilter.length ? priceFilter : undefined,
+      categories: categoryFilter?.length ? categoryFilter : undefined,
+      price: priceFilter?.length ? priceFilter : undefined,
     })}`;
   }, [
     searchValue,

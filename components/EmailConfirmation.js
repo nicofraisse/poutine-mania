@@ -62,7 +62,7 @@ export const EmailConfirmation = ({ email }) => {
         {showResend ? (
           <>
             Si tu n&apos;as pas reçu notre courriel de validation, merci de
-            vérifier tes dans ton dossier de courriels indésirables, et{" "}
+            vérifier tes courriels indésirables, et{" "}
             <button
               className="underline focus:outline-none"
               onClick={resendVerificationEmail}
