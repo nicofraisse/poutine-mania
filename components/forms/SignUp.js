@@ -66,7 +66,7 @@ const SignUp = ({ onSubmit }) => {
       setShowEmbeddedBrrowserError(true);
       return;
     }
-    signIn("google", options);
+    signIn("google");
   };
 
   return (

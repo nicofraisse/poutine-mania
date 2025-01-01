@@ -12,7 +12,7 @@ export const authOptions = {
     strategy: "jwt",
   },
   jwt: {
-    secret: "lkxklfjlkxd",
+    secret: process.env.NEXTAUTH_JWT_SECRET,
     encryption: true,
   },
   callbacks: {

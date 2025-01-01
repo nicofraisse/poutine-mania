@@ -128,7 +128,7 @@ export const ReviewCard = ({
                       alt="user-image"
                       src={review.user.image}
                       fill={true}
-                      className="rounded-full object-cover object-center"
+                      className="rounded-full h-full w-full object-cover object-center"
                       quality={20}
                     />
                   ) : (

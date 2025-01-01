@@ -18,7 +18,7 @@ const NoterRestaurant = () => {
       </h1>
 
       <div className="-ml-4 -mr-4 xs:w-auto xs:mr-0 xs:ml-0 mt-0 rounded mb-5">
-        <RestaurantCard restaurant={restaurant || {}} />
+        <RestaurantCard restaurant={restaurant || {}} openInNewTab={true} />
       </div>
 
       <RateRestaurantNew

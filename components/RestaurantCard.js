@@ -8,7 +8,7 @@ import Link from "next/link";
 import { useRateRestaurant } from "./context/RateRestaurantProvider";
 import Skeleton from "react-loading-skeleton";
 
-const RestaurantCard = ({ restaurant }) => {
+const RestaurantCard = ({ restaurant, openInNewTab }) => {
   const loading = Object.keys(restaurant).length === 0;
   const { setHoveredId, hoveredId } = useRestaurantCardHover();
   const { rateRestaurant } = useRateRestaurant();
@@ -29,90 +29,95 @@ const RestaurantCard = ({ restaurant }) => {
   return (
     <div>
       <Link legacyBehavior href={`/restaurants/${restaurant?.slug}`} passHref>
-        <div
-          className={classNames(
-            "group py-3 px-2 lg:px-3 flex justify-between transition duration-100 xs:rounded-md",
-            {
-              "cursor-pointer": !loading,
-              "bg-[#fefefe] shadow": !loading && hoveredId !== restaurant?._id,
-              "bg-none shadow-none": loading,
-              "bg-white shadow-md transform -translate-y-[2px]":
-                !loading && hoveredId === restaurant?._id,
-            }
-          )}
-          onMouseEnter={
-            setHoveredId ? () => setHoveredId(restaurant?._id) : null
-          }
-          onMouseLeave={setHoveredId ? () => setHoveredId(null) : null}
-        >
+        <a target={openInNewTab ? "_blank" : "_self"}>
           <div
             className={classNames(
-              "rounded h-28 sm:h-28 sm:min-w-28 mr-2 lg:mr-3",
-              { "flex items-center justify-center": !loading }
+              "group py-3 px-2 lg:px-3 flex justify-between transition duration-100 xs:rounded-md",
+              {
+                "cursor-pointer": !loading,
+                "bg-[#fefefe] shadow":
+                  !loading && hoveredId !== restaurant?._id,
+                "bg-none shadow-none": loading,
+                "bg-white shadow-md transform -translate-y-[2px]":
+                  !loading && hoveredId === restaurant?._id,
+              }
             )}
-            style={{ minWidth: "29%" }}
+            onMouseEnter={
+              setHoveredId ? () => setHoveredId(restaurant?._id) : null
+            }
+            onMouseLeave={setHoveredId ? () => setHoveredId(null) : null}
           >
-            {image ? (
-              <Image
-                src={image}
-                alt={`${restaurant.name}-photo`}
-                className="w-full h-full object-cover object-center rounded"
-              />
-            ) : loading ? (
-              <Skeleton className="h-full relative bottom-1" height="100%" />
-            ) : (
-              <div className="bg-gray-100 w-full h-full flex items-center justify-center rounded">
-                <Image
-                  forceNextImage
-                  src="/poutinebw.png"
-                  width={64}
-                  height={64}
-                  alt="empty-poutine"
-                  className="opacity-30"
-                />
-              </div>
-            )}
-          </div>
-
-          <div style={{ minWidth: "71%" }}>
-            <h2
+            <div
               className={classNames(
-                "font-semibold text-base lg:text-lg text-teal-600 group-hover:text-teal-500 transition duration-100",
-                { "-mt-1": loading }
+                "rounded h-28 sm:h-28 sm:min-w-28 mr-2 lg:mr-3",
+                { "flex items-center justify-center": !loading }
               )}
+              style={{ minWidth: "29%" }}
             >
-              {restaurant?.name || <Skeleton width="50%" />}
-            </h2>
-
-            {loading ? (
-              <Skeleton width="82%" />
-            ) : (
-              <div className="mb-2 mt-1">
-                <RatingPill
-                  avgRating={restaurant.avgFinalRating || restaurant.avgRating}
-                  reviewCount={restaurant.reviewCount}
-                  isNew
-                  onRate={() => rateRestaurant(restaurant)}
+              {image ? (
+                <Image
+                  src={image}
+                  alt={`${restaurant.name}-photo`}
+                  className="w-full h-full object-cover object-center rounded"
                 />
-              </div>
-            )}
+              ) : loading ? (
+                <Skeleton className="h-full relative bottom-1" height="100%" />
+              ) : (
+                <div className="bg-gray-100 w-full h-full flex items-center justify-center rounded">
+                  <Image
+                    forceNextImage
+                    src="/poutinebw.png"
+                    width={64}
+                    height={64}
+                    alt="empty-poutine"
+                    className="opacity-30"
+                  />
+                </div>
+              )}
+            </div>
 
-            {loading ? (
-              <>
-                <Skeleton width="60%" />
-                <Skeleton width="70%" />
-              </>
-            ) : (
-              <TagSection
-                succursales={restaurant.succursales}
-                categories={restaurant.categories}
-                city={city}
-                priceRange={restaurant.priceRange}
-              />
-            )}
-            {/* <LastComment comment={lastComment} /> */}
+            <div style={{ minWidth: "71%" }}>
+              <h2
+                className={classNames(
+                  "font-semibold text-base lg:text-lg text-teal-600 group-hover:text-teal-500 transition duration-100",
+                  { "-mt-1": loading }
+                )}
+              >
+                {restaurant?.name || <Skeleton width="50%" />}
+              </h2>
+
+              {loading ? (
+                <Skeleton width="82%" />
+              ) : (
+                <div className="mb-2 mt-1">
+                  <RatingPill
+                    avgRating={
+                      restaurant.avgFinalRating || restaurant.avgRating
+                    }
+                    reviewCount={restaurant.reviewCount}
+                    isNew
+                    onRate={() => rateRestaurant(restaurant)}
+                  />
+                </div>
+              )}
+
+              {loading ? (
+                <>
+                  <Skeleton width="60%" />
+                  <Skeleton width="70%" />
+                </>
+              ) : (
+                <TagSection
+                  succursales={restaurant.succursales}
+                  categories={restaurant.categories}
+                  city={city}
+                  priceRange={restaurant.priceRange}
+                />
+              )}
+              {/* <LastComment comment={lastComment} /> */}
+            </div>
           </div>
-        </div>
+        </a>
       </Link>
     </div>
   );

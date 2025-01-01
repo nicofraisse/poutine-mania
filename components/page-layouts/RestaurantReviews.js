@@ -256,8 +256,6 @@ const RestaurantReviews = ({ restaurant }) => {
     `/api/restaurants/${restaurant._id}/reviews`
   );
 
-  console.log(reviews);
-
   const { reload } = useRouter();
   const { rateRestaurant } = useRateRestaurant();
   const { currentUser } = useCurrentUser();

@@ -2,6 +2,7 @@ import nextConnect from "next-connect";
 import { database } from "middleware/database";
 import { generateSlug } from "../../../lib/generateSlug";
 import { getServerSession } from "next-auth";
+import { authOptions } from "../../api/auth/[...nextauth]";
 
 const handler = nextConnect();
 

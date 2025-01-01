@@ -78,7 +78,7 @@ const Edit = () => {
       )
     ) {
       axios
-        .post(`/api/users/${query.id}/soft-delete`)
+        .post(`/api/users/${currentUser._id}/soft-delete`)
         .then(() => {
           toast.success("Ton compte a été supprimé avec succès!");
           setTimeout(() => {

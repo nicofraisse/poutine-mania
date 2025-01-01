@@ -15,8 +15,6 @@ export const LoginFormProvider = ({ children }) => {
   const [redirectUrl, setRedirectUrl] = useState("");
   const [emailToConfirm, setEmailToConfirm] = useState(null);
 
-  console.log({ loginMessage });
-
   const toggleLogin = (open, options) => {
     setLoginOpen(open);
     if (options?.message) {
