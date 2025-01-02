@@ -91,12 +91,20 @@ const Header = ({ toggleMobileSidebar }) => {
     backablePage?.url ? push(backablePage.url) : history.back();
   };
 
-  const handleSignout = () => {
-    signOut({ redirect: true, callbackUrl: "/" }).then(() =>
-      toast.success("Déconnexion réussie")
-    );
-  };
+  const handleSignout = async () => {
+    try {
+      const response = await signOut({ redirect: false, callbackUrl: "/" });
 
+      if (response && response.url) {
+        toast.success("Vous êtes maintenant déconnecté(e).");
+        push(response.url);
+      } else {
+        throw new Error("Signout failed");
+      }
+    } catch (error) {
+      toast.error("Erreur lors de la déconnexion. Veuillez réessayer.");
+    }
+  };
   const isHomepage = pathname === "/";
 
   const handleSearch = () => {

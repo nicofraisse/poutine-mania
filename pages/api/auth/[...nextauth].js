@@ -15,6 +15,11 @@ export const authOptions = {
     secret: process.env.NEXTAUTH_JWT_SECRET,
     encryption: true,
   },
+  events: {
+    signOut: async ({ session }) => {
+      console.log("User signed out:", session);
+    },
+  },
   callbacks: {
     async jwt({ token, user, account }) {
       if (user) {

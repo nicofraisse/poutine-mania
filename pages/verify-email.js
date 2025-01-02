@@ -53,9 +53,13 @@ const VerifyEmail = () => {
       header: "Email vérifié avec succès!",
       paragraph:
         "Ton email a été vérifié avec succès. Tu peux maintenant te connecter à ton compte.",
-
       cta: (
-        <Button variant="primary" height="sm" width="sm" onClick={openLogin}>
+        <Button
+          variant="primary"
+          height="sm"
+          width="sm"
+          onClick={() => openLogin({ redirect: "/" })}
+        >
           Connexion
         </Button>
       ),
