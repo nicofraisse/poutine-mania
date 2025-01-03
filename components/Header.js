@@ -310,7 +310,7 @@ const Header = ({ toggleMobileSidebar }) => {
         rgba(0, 0, 0, 0.25),
         rgba(0, 0, 0, 0.5)
       ),
-      url(https://www.finedininglovers.com/sites/g/files/xknfdk626/files/styles/article_1200_800_fallback/public/2020-12/canadian_poutine%C2%A9iStock.jpg?itok=W6lexIHJ)
+      url(https://res.cloudinary.com/dhqv0jl8c/image/upload/v1735904148/canadian_poutine_iStock.jpg_xgduq8.webp)
     `,
             backgroundSize: "cover",
             backgroundRepeat: "no-repeat",
