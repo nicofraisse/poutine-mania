@@ -1,9 +1,9 @@
 "use client";
 import React, { useMemo } from "react";
-import { motion } from "framer-motion"; // Fixed import path
+import { motion } from "framer-motion";
 import { cn } from "../../lib/utils";
 
-export type TextShimmerProps = {
+interface TextShimmerProps {
   children: string;
   as?: React.ElementType;
   className?: string;
@@ -13,7 +13,7 @@ export type TextShimmerProps = {
   textShadow?: string;
   baseColor?: string;
   shimmerColor?: string;
-};
+}
 
 export function TextShimmer({
   children,
@@ -26,7 +26,7 @@ export function TextShimmer({
   baseColor = "#a1a1aa",
   shimmerColor = "#ffffff",
 }: TextShimmerProps) {
-  const MotionComponent = motion(Component as React.ElementType);
+  const MotionComponent = motion(Component);
 
   const dynamicSpread = useMemo(() => {
     return children.length * spread;
