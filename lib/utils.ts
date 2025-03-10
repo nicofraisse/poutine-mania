@@ -1,8 +1,7 @@
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
-import { ClassValue } from "clsx";
-
-export function cn(...inputs: ClassValue[]) {
+export function cn() {
+  var inputs = Array.prototype.slice.call(arguments);
   return twMerge(clsx(inputs));
 }

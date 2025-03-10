@@ -24,7 +24,7 @@ import { toast } from "react-hot-toast";
 import classNames from "classnames";
 import { SurpriseButton } from "components/SurpriseButton";
 import Skeleton from "react-loading-skeleton";
-import { TextShimmer } from "components/motion-primitives/text-shimmer.tsx";
+import { TextShimmer } from "components/motion-primitives/text-shimmer.js";
 import { motion } from "framer-motion";
 
 const Header = ({ toggleMobileSidebar }) => {
