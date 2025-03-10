@@ -23,7 +23,7 @@ export const SurpriseButton = () => {
       <div className="dice-container">
         <Image alt="poutine-logo" src="/dice.png" width={40} height={40} />
       </div>
-      Surprends-moi
+      Surprends-moi !
     </Button>
   );
 };

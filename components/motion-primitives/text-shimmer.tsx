@@ -1,6 +1,6 @@
 "use client";
-import React, { useMemo, type JSX } from "react";
-import { motion } from "motion/react";
+import React, { useMemo } from "react";
+import { motion } from "framer-motion"; // Fixed import path
 import { cn } from "../../lib/utils";
 
 export type TextShimmerProps = {
@@ -26,9 +26,7 @@ export function TextShimmer({
   baseColor = "#a1a1aa",
   shimmerColor = "#ffffff",
 }: TextShimmerProps) {
-  const MotionComponent = motion.create(
-    Component as keyof JSX.IntrinsicElements
-  );
+  const MotionComponent = motion(Component as React.ElementType);
 
   const dynamicSpread = useMemo(() => {
     return children.length * spread;
@@ -36,19 +34,17 @@ export function TextShimmer({
 
   return (
     <div className={cn("relative inline-block", className)}>
-      {/* Text shadow layer (positioned behind) */}
       <span
         className="absolute inset-0 z-0"
         style={{
           textShadow,
-          color: "transparent", // Make the text itself transparent
+          color: "transparent",
         }}
         aria-hidden="true"
       >
         {children}
       </span>
 
-      {/* Shimmer effect layer (in front) */}
       <MotionComponent
         className="relative z-10 inline-block bg-clip-text text-transparent"
         initial={{ backgroundPosition: "100% 0%" }}
