@@ -1,4 +1,4 @@
-import Spinner from "components/Spinner";
+import { Spinner } from "components/Spinner";
 import { useGet } from "lib/useAxios";
 import { useEffect, useState } from "react";
 import classNames from "classnames";

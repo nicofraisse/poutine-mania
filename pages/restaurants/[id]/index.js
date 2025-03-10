@@ -1,6 +1,6 @@
 import { useGet } from "lib/useAxios";
 import { useRouter } from "next/router";
-import Spinner from "components/Spinner";
+import { Spinner } from "components/Spinner";
 import RestaurantReviews from "components/page-layouts/RestaurantReviews";
 import RestaurantHeader from "components/RestaurantHeader";
 

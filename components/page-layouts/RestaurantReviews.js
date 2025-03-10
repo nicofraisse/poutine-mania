@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useGet } from "../../lib/useAxios";
-import Spinner from "components/Spinner";
+import { Spinner } from "components/Spinner";
 import ReviewCard from "../ReviewCard";
 import { CheckCircle, Info, Star } from "react-feather";
 import { useRateRestaurant } from "components/context/RateRestaurantProvider";

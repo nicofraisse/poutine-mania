@@ -24,6 +24,8 @@ import { toast } from "react-hot-toast";
 import classNames from "classnames";
 import { SurpriseButton } from "components/SurpriseButton";
 import Skeleton from "react-loading-skeleton";
+import { TextShimmer } from "components/motion-primitives/text-shimmer.tsx";
+import { motion } from "framer-motion";
 
 const Header = ({ toggleMobileSidebar }) => {
   const { data: session, status } = useSession();
@@ -124,6 +126,32 @@ const Header = ({ toggleMobileSidebar }) => {
     });
   };
 
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.08, // Faster staggering
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { y: -40, opacity: 0.4 }, // More subtle initial position
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        type: "spring",
+        damping: 12, // More damping for less bounce
+        stiffness: 200, // Higher stiffness for faster movement
+        mass: 0.8, // Less mass for quicker movement
+        duration: 0.4, // Overall shorter duration
+      },
+    },
+  };
+
   return (
     <header
       className="relative max-w-screen md:w-auto bg-indigo-white"
@@ -218,7 +246,7 @@ const Header = ({ toggleMobileSidebar }) => {
                   variant="light"
                   height="sm"
                   width="sm"
-                  className="lg:ml-6 sm:w-52 sm:ml-2"
+                  className="lg:ml-6 sm:w-[220px] sm:ml-2"
                   onClick={() => push("/noter")}
                 >
                   <Edit3 className="xs:mr-2" />{" "}
@@ -307,8 +335,8 @@ const Header = ({ toggleMobileSidebar }) => {
           style={{
             background: `
       linear-gradient(
-        rgba(0, 0, 0, 0.25),
-        rgba(0, 0, 0, 0.5)
+        rgba(0, 0, 0, 0.35),
+        rgba(0, 0, 0, 0.6)
       ),
       url(https://res.cloudinary.com/dhqv0jl8c/image/upload/v1735904148/canadian_poutine_iStock.jpg_xgduq8.webp)
     `,
@@ -323,27 +351,35 @@ const Header = ({ toggleMobileSidebar }) => {
           >
             <ChevronDown size={40} />
           </div>
-          <div className="flex flex-col items-center">
-            <h1
-              className="text-center text-3xl lg:text-4xl 2xl:text-5xl font-semibold text-white"
-              style={{ textShadow: "0px 0px 4px rgba(0, 0, 0, 0.7)" }}
+          <motion.div
+            className="flex flex-col items-center"
+            variants={containerVariants}
+            initial={"hidden"}
+            animate="visible"
+          >
+            <motion.h1
+              className="text-center text-3xl lg:text-4xl 2xl:text-5xl font-semibold"
+              variants={itemVariants}
             >
-              {/* <div
-                className="rounded mb-4 inline-block relative"
-                style={{ textShadow: "0px 0px 4px rgba(0, 0, 0, 0.5)" }}
+              <TextShimmer
+                as="span"
+                waitDuration={2}
+                duration={2.4}
+                spread={5}
+                baseColor="#ffffff"
+                shimmerColor="#e9c367"
+                textShadow="0 2px 4px rgba(0,0,0,0.5)"
               >
-                <div className="text-3xl font-black">
-                  <span className="text-amber-400">POUTINE</span>
-                  <span className="text-orange-400">MANIA</span>
-                </div>
-              </div>,  */}
-              La quête de la poutine ultime.
-            </h1>
-            <div className="relative mt-7 mb-5 w-full sm:w-[500px] md:w-[600px] xl:w-[800px] mx-auto">
+                La quête de la poutine ultime.
+              </TextShimmer>
+            </motion.h1>
+            <motion.div
+              className="relative mt-7 mb-5 w-full sm:w-[500px] md:w-[600px] xl:w-[800px] mx-auto"
+              variants={itemVariants}
+            >
               <RestaurantSearchBar isBanner />
-              {/* <Search className="absolute top-3 left-4 text-slate-500" /> */}
-            </div>
-            <div className="flex items-center">
+            </motion.div>
+            <motion.div className="flex items-center" variants={itemVariants}>
               <Button
                 onClick={handleSearch}
                 width="smd"
@@ -355,8 +391,8 @@ const Header = ({ toggleMobileSidebar }) => {
                 <span className="inline xs:hidden">Carte</span>
               </Button>
               <SurpriseButton />
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
       )}
     </header>

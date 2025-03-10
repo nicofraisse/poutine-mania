@@ -9,7 +9,7 @@ import Form from "components/Form";
 import Field from "components/Field";
 import AutocompleteSelect from "../../components/controls/AutocompleteSelect";
 import CategorySelect from "../../components/controls/CategorySelect";
-import Spinner from "../Spinner";
+import { Spinner } from "../Spinner";
 import { Plus, Trash } from "react-feather";
 import { cloneDeep, isString } from "lodash";
 import classNames from "classnames";

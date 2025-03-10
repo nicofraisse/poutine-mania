@@ -1,4 +1,4 @@
-import Spinner from "components/Spinner";
+import { Spinner } from "components/Spinner";
 import { Image as ImageIcon } from "react-feather";
 import { MapPin } from "react-feather";
 import classNames from "classnames";
@@ -8,7 +8,7 @@ import { Image } from "components/Image";
 
 import { useRouter } from "next/router";
 
-const TopPoutines = ({ restaurants }) => {
+export const TopPoutines = ({ restaurants }) => {
   const { push } = useRouter();
 
   return (
@@ -161,5 +161,3 @@ const TopPoutines = ({ restaurants }) => {
     </div>
   );
 };
-
-export default TopPoutines;

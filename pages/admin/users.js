@@ -1,7 +1,7 @@
 import axios from "axios";
 import React from "react";
 import { useState, useEffect } from "react";
-import Spinner from "../../components/Spinner";
+import { Spinner } from "../../components/Spinner";
 import { useCurrentUser } from "../../lib/useCurrentUser";
 import { useRouter } from "next/dist/client/router";
 import { format } from "date-fns";

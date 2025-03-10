@@ -61,7 +61,7 @@ const Item = ({
   );
 };
 
-const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
+export const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
   const { data: session } = useSession();
   const currentUser = session?.user;
   const requireLogin = useRequireLogin();
@@ -121,12 +121,7 @@ const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
                 <BrandLogo />
               </a>
             </Link>
-            {/* <Item
-              onClick={onClickItem}
-              label="Communauté"
-              icon={Hash}
-              href="/communaute"
-            /> */}
+
             <Item onClick={onClickItem} label="Accueil" icon={Home} href="/" />
             <Item
               onClick={onClickItem}
@@ -140,20 +135,6 @@ const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
               icon={Edit3}
               href="/noter"
             />
-            {/* <Item
-              onClick={onClickItem}
-              label="Derniers avis"
-              icon={Hash}
-              href="/"
-            /> */}
-
-            {/* <Item
-              onClick={onClickItem}
-              label="Mon top poutines"
-              icon={Heart}
-              href="mon-top"
-              disabled
-            /> */}
 
             <Item
               onClick={onClickItem}
@@ -190,13 +171,6 @@ const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
               requireLoginMessage=""
             />
 
-            {/* <Item
-              onClick={onClickItem}
-              icon={BarChart2}
-              label="Statistiques"
-              href="watchlist"
-              requireLogin={!currentUser}
-            /> */}
             {currentUser?.isAdmin && (
               <Item
                 onClick={onClickItem}
@@ -220,5 +194,3 @@ const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
     </>
   );
 };
-
-export default Sidebar;

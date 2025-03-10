@@ -1,6 +1,6 @@
 import React from "react";
 import { useGet } from "../../lib/useAxios";
-import Spinner from "components/Spinner";
+import { Spinner } from "components/Spinner";
 import Link from "next/link";
 import { Image } from "../../components/Image";
 import { MessageCircle } from "react-feather";

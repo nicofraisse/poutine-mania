@@ -1,7 +1,7 @@
 import { SessionProvider } from "next-auth/react";
 import { Toaster } from "react-hot-toast";
 import { RateRestaurantProvider } from "components/context/RateRestaurantProvider";
-import Layout from "../components/layout/Layout";
+import { Layout } from "../components/layout/Layout";
 import "../styles/globals.css";
 import "react-loading-skeleton/dist/skeleton.css";
 import { LoginFormProvider } from "../components/context/LoginFormProvider";

@@ -232,3 +232,33 @@ input[type="range"]::-webkit-slider-thumb {
   margin-left: -5px;
   left: -3px;
 }
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.shimmer-text {
+  background: linear-gradient(
+    90deg,
+    #ffffff 0%,
+    #fff8e1 15%,
+    #ffecb3 30%,
+    #ffd54f 45%,
+    #ffca28 60%,
+    #ffc107 75%,
+    #ffffff 100%
+  );
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 3s linear infinite;
+  display: inline-block;
+  text-shadow: none !important;
+}

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React from "react";
-import Spinner from "../../components/Spinner";
+import { Spinner } from "../../components/Spinner";
 import { useGet } from "../../lib/useAxios";
 
 const Users = () => {

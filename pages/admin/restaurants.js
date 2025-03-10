@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { Trash, Edit } from "react-feather";
 import Link from "next/link";
 import toast from "react-hot-toast";
-import Spinner from "components/Spinner";
+import { Spinner } from "components/Spinner";
 import { format } from "date-fns";
 import { getUrlQueryString } from "lib/getUrlqueryString";
 import { ToggleSwitch } from "components/controls/ToggleSwitch";

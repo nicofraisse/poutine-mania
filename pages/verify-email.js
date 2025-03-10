@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
-import Spinner from "../components/Spinner";
+import { Spinner } from "../components/Spinner";
 import Button from "../components/Button";
 import { useLoginForm } from "../components/context/LoginFormProvider";
 

@@ -202,6 +202,7 @@ export const authOptions = {
           prompt: "consent",
           access_type: "offline",
           response_type: "code",
+          redirect_uri: "https://www.poutinemania.ca/api/auth/callback/google", // Explicitly set redirect URI
         },
       },
     }),

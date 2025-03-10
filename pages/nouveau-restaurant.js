@@ -1,6 +1,6 @@
 import { RestaurantForm } from "components/forms/Restaurant";
 import { useCurrentUser } from "lib/useCurrentUser";
-import Spinner from "../components/Spinner";
+import { Spinner } from "../components/Spinner";
 
 const CreateRestaurant = () => {
   const { currentUser, loading } = useCurrentUser();

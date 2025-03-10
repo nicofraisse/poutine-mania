@@ -1,9 +1,9 @@
 import Header from "../Header";
 import "react-responsive-modal/styles.css";
-import Sidebar from "./Sidebar";
+import { Sidebar } from "./Sidebar";
 import { useEffect, useState } from "react";
 
-const Layout = (props) => {
+export const Layout = (props) => {
   const [showMobileSidebar, setShowMobileSidebar] = useState(false);
   const toggleMobileSidebar = () => {
     setShowMobileSidebar(!showMobileSidebar);
@@ -28,5 +28,3 @@ const Layout = (props) => {
     </div>
   );
 };
-
-export default Layout;

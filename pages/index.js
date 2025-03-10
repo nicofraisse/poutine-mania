@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { RecentActivity } from "../components/layout/RecentActivity";
-import TopPoutines from "../components/layout/TopPoutines";
-import convertObjectIdsToStrings from "../lib/convertObjectIdsToStrings";
+import { TopPoutines } from "../components/layout/TopPoutines";
+import { convertObjectIdsToStrings } from "../lib/convertObjectIdsToStrings";
 import { fetchTopRestaurants } from "./api/restaurants";
 import { throttle } from "lodash";
 import Head from "next/head";

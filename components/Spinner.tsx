@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import React from "react";
 
-const Spinner = ({ color = "#333", className = "w-8", noPadding }) => {
+export const Spinner = ({ color = "#333", className = "w-8", noPadding }) => {
   return (
     <div className={classNames({ "p-3": !noPadding })}>
       <svg
@@ -33,5 +33,3 @@ const Spinner = ({ color = "#333", className = "w-8", noPadding }) => {
     </div>
   );
 };
-
-export default Spinner;

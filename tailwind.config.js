@@ -5,6 +5,17 @@ module.exports = {
   ],
   theme: {
     extend: {
+      extend: {
+        animation: {
+          shimmer: "shimmer 3s linear infinite",
+        },
+        keyframes: {
+          shimmer: {
+            "0%": { backgroundPosition: "200% 0" },
+            "100%": { backgroundPosition: "0 0" },
+          },
+        },
+      },
       fontFamily: {
         chelsea: ["var(--font-chelsea)"],
         poppins: ['"Poppins"', "sans-serif"],
