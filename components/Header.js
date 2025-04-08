@@ -5,7 +5,6 @@ import {
   ArrowLeft,
   ChevronDown,
   Edit3,
-  Map,
   Menu,
   Search,
   User,
@@ -22,11 +21,9 @@ import { useRouter } from "next/router";
 import { useRestaurantSearch } from "./context/RestaurantSearchProvider";
 import { toast } from "react-hot-toast";
 import classNames from "classnames";
-import { SurpriseButton } from "components/SurpriseButton";
 import Skeleton from "react-loading-skeleton";
 import { TextShimmer } from "components/motion-primitives/text-shimmer.js";
 import { motion } from "framer-motion";
-import { FeaturesIntro } from "./FeaturesIntro";
 
 const Header = ({ toggleMobileSidebar }) => {
   const { data: session, status } = useSession();
@@ -40,7 +37,10 @@ const Header = ({ toggleMobileSidebar }) => {
   const headerRef = useRef();
   const { push, pathname, query } = useRouter();
   const { openLogin } = useLoginForm();
-  const { nonDebouncedValue, setSearchValue } = useRestaurantSearch();
+  const {
+    // nonDebouncedValue,
+    setSearchValue,
+  } = useRestaurantSearch();
   const currentUser = session?.user;
 
   const BACKABLE_PAGE_PROPS = {
@@ -110,14 +110,14 @@ const Header = ({ toggleMobileSidebar }) => {
   };
   const isHomepage = pathname === "/";
 
-  const handleSearch = () => {
-    const trimmedSearchValue = nonDebouncedValue?.trim();
-    push(
-      trimmedSearchValue
-        ? `/restaurants?search=${encodeURIComponent(trimmedSearchValue)}`
-        : `/restaurants`
-    );
-  };
+  // const handleSearch = () => {
+  //   const trimmedSearchValue = nonDebouncedValue?.trim();
+  //   push(
+  //     trimmedSearchValue
+  //       ? `/restaurants?search=${encodeURIComponent(trimmedSearchValue)}`
+  //       : `/restaurants`
+  //   );
+  // };
 
   const handleArrowClick = () => {
     window.scrollTo({

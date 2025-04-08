@@ -1,7 +1,6 @@
 import classNames from "classnames";
 import { formatRating } from "../lib/formatRating";
 import { ratingColors } from "data/ratingColors";
-import { Star } from "react-feather";
 import Color from "color";
 import { getRatingColor } from "../data/ratingColors";
 

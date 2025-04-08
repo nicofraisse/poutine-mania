@@ -3,7 +3,6 @@ import { useGet } from "lib/useAxios";
 import { useState } from "react";
 import classNames from "classnames";
 import ProfileReviewCard from "../ProfileReviewCard";
-import Button from "../Button";
 
 export function RecentActivity({ heightClass, isScrollable }) {
   const [limit] = useState(5);
@@ -14,7 +13,6 @@ export function RecentActivity({ heightClass, isScrollable }) {
     `/api/reviews?limit=${limit}&page=${page}&sort=date:desc`
   );
 
-  // Update allReviews when new reviews are loaded
   if (reviews && !allReviews.includes(reviews[0])) {
     setAllReviews((prevAllReviews) => [...prevAllReviews, ...reviews]);
   }

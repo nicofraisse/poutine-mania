@@ -10,7 +10,7 @@ import { useLoginForm } from "../components/context/LoginFormProvider";
 import { FeaturesIntro } from "../components/FeaturesIntro";
 
 const HomePage = ({ restaurants }) => {
-  const [isScrollableActivity, setIsScrollableActivity] = useState(false);
+  const [, setIsScrollableActivity] = useState(false);
   const activityHeaderRef = useRef(null);
   const { openLogin } = useLoginForm();
 
