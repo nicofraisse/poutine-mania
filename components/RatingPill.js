@@ -9,7 +9,6 @@ const RatingPill = ({
   avgRating,
   reviewCount,
   single,
-  isStar,
   isNew,
   onRate,
   isDarkBackground,
@@ -25,10 +24,7 @@ const RatingPill = ({
         hideNewRatingInfo={hideNewRatingInfo}
       />
     );
-  if (isStar)
-    return (
-      <StarRating avgRating={avgRating} reviewCount={reviewCount} showOutOf />
-    );
+
   return (
     <div
       className={classNames(
@@ -155,24 +151,6 @@ const NewRatingPill = ({
             {"Aucun avis"}
           </div>
         ))}
-    </div>
-  );
-};
-
-const StarRating = ({ avgRating, reviewCount }) => {
-  return (
-    <div className="flex items-center my-1">
-      <Star
-        fill={reviewCount > 0 ? "#ffcb6b" : "white"}
-        color={reviewCount > 0 ? "#ffcb6b" : "#aaa"}
-        size={22}
-      />
-      {reviewCount > 0 && (
-        <span className="font-bold text-lg text-slate-700 ml-1">
-          {formatRating(avgRating)}
-        </span>
-      )}
-      <span className="mx-2 text-gray-500">({reviewCount} avis)</span>
     </div>
   );
 };

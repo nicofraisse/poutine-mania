@@ -26,6 +26,7 @@ import { SurpriseButton } from "components/SurpriseButton";
 import Skeleton from "react-loading-skeleton";
 import { TextShimmer } from "components/motion-primitives/text-shimmer.js";
 import { motion } from "framer-motion";
+import { FeaturesIntro } from "./FeaturesIntro";
 
 const Header = ({ toggleMobileSidebar }) => {
   const { data: session, status } = useSession();
@@ -132,22 +133,22 @@ const Header = ({ toggleMobileSidebar }) => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.08, // Faster staggering
+        staggerChildren: 0.08,
       },
     },
   };
 
   const itemVariants = {
-    hidden: { y: -40, opacity: 0.4 }, // More subtle initial position
+    hidden: { y: -40, opacity: 0.4 },
     visible: {
       y: 0,
       opacity: 1,
       transition: {
         type: "spring",
-        damping: 12, // More damping for less bounce
-        stiffness: 200, // Higher stiffness for faster movement
-        mass: 0.8, // Less mass for quicker movement
-        duration: 0.4, // Overall shorter duration
+        damping: 12,
+        stiffness: 200,
+        mass: 0.8,
+        duration: 0.4,
       },
     },
   };
@@ -246,14 +247,11 @@ const Header = ({ toggleMobileSidebar }) => {
                   variant="light"
                   height="sm"
                   width="sm"
-                  className="lg:ml-6 sm:w-[220px] sm:ml-2"
+                  className="lg:ml-6 sm:w-[220px] sm:ml-2 sm:hidden"
                   onClick={() => push("/noter")}
                 >
                   <Edit3 className="xs:mr-2" />{" "}
                   <span className="hidden xs:block">Noter</span>
-                  <span className="hidden sm:inline grow shrink-0 -ml-2">
-                    &nbsp;une poutine
-                  </span>
                 </Button>
               )}
 
@@ -331,7 +329,7 @@ const Header = ({ toggleMobileSidebar }) => {
       </div>
       {isHomepage && (
         <div
-          className="w-full h-screen sm:max-h-[440px] flex items-center justify-center bg-cover bg-center py-40 px-4 mb-6"
+          className="w-full h-screen sm:max-h-[440px] flex items-center justify-center bg-cover bg-center py-40 px-4"
           style={{
             background: `
       linear-gradient(
@@ -368,18 +366,46 @@ const Header = ({ toggleMobileSidebar }) => {
                 spread={5}
                 baseColor="#ffffff"
                 shimmerColor="#e9c367"
-                textShadow="0 2px 4px rgba(0,0,0,0.5)"
+                textShadow="0px 1px 3px rgba(0,0,0,1)"
               >
                 La quête de la poutine ultime.
               </TextShimmer>
             </motion.h1>
+            <motion.h2
+              className="text-center text-xl mt-4"
+              variants={itemVariants}
+            >
+              <TextShimmer
+                as="span"
+                waitDuration={2}
+                duration={2.4}
+                // disable for now
+                spread={0}
+                baseColor="#ffffff"
+                shimmerColor="#e9c367"
+                textShadow="0px 1px 3px rgba(0,0,0,1)"
+              >
+                Note tes poutines préférées et trouve les trésors cachés près de
+                chez toi!
+              </TextShimmer>
+            </motion.h2>
             <motion.div
-              className="relative mt-7 mb-5 w-full sm:w-[500px] md:w-[600px] xl:w-[800px] mx-auto"
+              className="relative mt-7 mb-5 w-full sm:w-[500px] md:w-[600px] xl:w-[700px] mx-auto flex"
               variants={itemVariants}
             >
               <RestaurantSearchBar isBanner />
+              {/* <Button
+                onClick={handleSearch}
+                width="smd"
+                height="smd"
+                className="ml-3 shadow-md"
+                style={{ borderRadius: 1000 }}
+              >
+                <Map className="mr-2 xs:mr-3" />
+                <span className="hidden xs:inline">Explorer</span>
+              </Button> */}
             </motion.div>
-            <motion.div className="flex items-center" variants={itemVariants}>
+            {/* <motion.div className="flex items-center" variants={itemVariants}>
               <Button
                 onClick={handleSearch}
                 width="smd"
@@ -391,7 +417,7 @@ const Header = ({ toggleMobileSidebar }) => {
                 <span className="inline xs:hidden">Carte</span>
               </Button>
               <SurpriseButton />
-            </motion.div>
+            </motion.div> */}
           </motion.div>
         </div>
       )}

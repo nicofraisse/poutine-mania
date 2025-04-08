@@ -79,6 +79,7 @@ const Button = ({
   height = "md",
   className,
   disabled,
+  rounded = false,
   ...props
 }) => {
   const renderContent = () => {
@@ -115,14 +116,19 @@ const Button = ({
         textColorClass[variant],
         heightClass[height],
         widthClass[width],
-        "rounded-lg font-bold select-none relative transition-all duration-150",
+
+        "font-bold select-none relative transition-all duration-150",
         "active:scale-95",
-        "before:content-[''] before:absolute before:inset-0 before:rounded-lg before:bg-black before:opacity-0 before:transition-opacity before:duration-150 hover:before:opacity-20",
+        "before:content-[''] before:absolute before:inset-0 before:bg-black before:opacity-0 before:transition-opacity before:duration-150 hover:before:opacity-20",
         {
           "before:-m-0.5": hasBorder[variant],
           "opacity-50 cursor-not-allowed": disabled,
           "opacity-80": loading,
           "opacity-100": !loading,
+          "rounded-full": rounded,
+          "before:rounded-full": rounded,
+          "rounded-lg": !rounded,
+          "before:rounded-lg": !rounded,
         },
         className
       )}

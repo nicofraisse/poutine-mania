@@ -1,28 +1,26 @@
 import { Spinner } from "components/Spinner";
 import { useGet } from "lib/useAxios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import classNames from "classnames";
 import ProfileReviewCard from "../ProfileReviewCard";
+import Button from "../Button";
 
 export function RecentActivity({ heightClass, isScrollable }) {
-  const [paginationSkip, setPaginationSkip] = useState(0);
+  const [limit] = useState(5);
+  const [page, setPage] = useState(1);
   const [allReviews, setAllReviews] = useState([]);
 
   const { data: reviews, loading } = useGet(
-    `/api/reviews?skip=${paginationSkip}`
+    `/api/reviews?limit=${limit}&page=${page}&sort=date:desc`
   );
 
-  useEffect(() => {
-    if (reviews) {
-      setAllReviews((prevAllReviews) => [...prevAllReviews, ...reviews]);
-    }
-  }, [reviews]);
+  // Update allReviews when new reviews are loaded
+  if (reviews && !allReviews.includes(reviews[0])) {
+    setAllReviews((prevAllReviews) => [...prevAllReviews, ...reviews]);
+  }
 
-  const handleScroll = (e) => {
-    const { offsetHeight, scrollTop, scrollHeight } = e.target;
-    if (offsetHeight + scrollTop >= scrollHeight - 10) {
-      setPaginationSkip(allReviews.length);
-    }
+  const handleLoadMore = () => {
+    setPage(page + 1);
   };
 
   return (
@@ -34,23 +32,30 @@ export function RecentActivity({ heightClass, isScrollable }) {
           "overflow-y-scroll": isScrollable,
         }
       )}
-      onScroll={handleScroll}
     >
-      {(loading && paginationSkip === 0 ? [{}, {}, {}, {}] : allReviews).map(
+      {(loading && page === 1 ? [{}, {}, {}, {}, {}] : allReviews).map(
         (review, i) => (
           <ProfileReviewCard
-            loading={loading && paginationSkip === 0}
+            loading={loading && page === 1}
             review={review}
             key={i}
             isIndex
           />
         )
       )}
-      <div className="h-[70px]">
-        {loading && (
-          <div className="flex justify-center">
-            <Spinner />
-          </div>
+      <div className="flex justify-center items-center">
+        {loading ? (
+          <Spinner />
+        ) : (
+          reviews?.length === limit && (
+            <button
+              onClick={handleLoadMore}
+              className="border-none outline-none underline text-gray-600"
+              // variant="secondary"
+            >
+              Voir plus
+            </button>
+          )
         )}
       </div>
     </div>

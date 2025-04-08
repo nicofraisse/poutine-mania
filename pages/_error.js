@@ -1,12 +1,9 @@
-// pages/_error.js
 import ServerError from "./500";
 
 function CustomError({ statusCode, serverError }) {
   if (statusCode === 500) {
     return <ServerError errorLog={serverError} />;
   }
-
-  // handle other errors here or return a default error component
 
   return <p>Une erreur est survenue: {statusCode}</p>;
 }

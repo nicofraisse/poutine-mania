@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useRestaurantSearch } from "./context/RestaurantSearchProvider";
 import { useGet } from "../lib/useAxios";
 import { getUrlQueryString } from "../lib/getUrlqueryString";
-import { MapPin, Search, XCircle } from "react-feather";
+import { Map, MapPin, Search, XCircle } from "react-feather";
 import { Image } from "./Image";
 import { Image as ImageIcon } from "react-feather";
 import classNames from "classnames";
@@ -149,12 +149,12 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit, isBanner }, ref) => {
       onFocus={handleFocus}
       onBlur={handleBlur}
     >
-      <div className={"relative"}>
+      <div className="relative">
         <input
           className={classNames("w-full", {
             "border-2 border-slate-300 rounded-md py-[8px] px-10 text-sm font-bold ":
               !isBanner,
-            "py-3 px-12 rounded-full border-slate-300 shadow-md": isBanner,
+            "py-4 px-12 rounded-full border-slate-300 shadow-md": isBanner,
           })}
           placeholder="Rechercher une poutinerie"
           value={nonDebouncedValue ?? ""}
@@ -163,13 +163,28 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit, isBanner }, ref) => {
             setSearchValue(e.target.value);
           }}
           ref={inputRef}
-        />
+        ></input>
+
+        {isBanner && (
+          <div className="absolute right-1 top-1 hidden xs:block">
+            <Button
+              onClick={handleSearch}
+              width="smd"
+              height="smd"
+              className="ml-3 shadow-md"
+              rounded
+            >
+              <Map className="mr-2 xs:mr-3" />
+              <span className="hidden xs:inline">Explorer</span>
+            </Button>
+          </div>
+        )}
 
         <Search
           className={classNames({
             "absolute top-2 left-2 text-slate-400 cursor-pointer hover:text-slate-500 transition duration-300":
               !isBanner,
-            "absolute top-3 left-4 text-slate-500": isBanner,
+            "absolute top-4 left-4 text-slate-500": isBanner,
           })}
           onClick={handleSearch}
         />
