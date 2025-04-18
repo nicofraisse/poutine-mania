@@ -194,7 +194,7 @@ export const fetchTopRestaurants = async () => {
     },
     {
       $match: {
-        reviewCount: { $gte: 2 },
+        reviewCount: { $gte: 3 },
         approved: true,
       },
     },
