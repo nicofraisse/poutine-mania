@@ -242,7 +242,7 @@ const Header = ({ toggleMobileSidebar }) => {
                   <Search />
                 </Button>
               )}
-              {!backablePage?.hideRateButton && (
+              {!isHomepage && !backablePage?.hideRateButton && (
                 <Button
                   variant="light"
                   height="sm"
@@ -321,24 +321,35 @@ const Header = ({ toggleMobileSidebar }) => {
                   >
                     <User className="text-white" size={30} />
                   </div>
-                  <div className="hidden sm:flex pt-1">
+                  <div
+                    className={classNames("hidden sm:flex", {
+                      "pt-1": isHomepage,
+                    })}
+                  >
                     <Button
-                      variant="transparent"
-                      height="smd"
-                      width="smd"
+                      variant={isHomepage ? "transparent" : "secondary"}
+                      height={isHomepage ? "smd" : "sm"}
+                      width={isHomepage ? "smd" : "sm"}
                       onClick={openLogin}
+                      style={{ flexShrink: 0 }}
                     >
                       Se connecter
                     </Button>
-                    <Button
-                      variant="primary"
-                      height="smd"
-                      width="smd"
-                      className="ml-3"
-                      onClick={openSignup}
+                    <span
+                      className={classNames({
+                        "hidden md:inline": !isHomepage,
+                      })}
                     >
-                      S&apos;inscrire
-                    </Button>
+                      <Button
+                        variant="primary"
+                        height={isHomepage ? "smd" : "sm"}
+                        width={isHomepage ? "smd" : "sm"}
+                        className="ml-3"
+                        onClick={openSignup}
+                      >
+                        S&apos;inscrire
+                      </Button>
+                    </span>
                   </div>
                 </div>
               )}
