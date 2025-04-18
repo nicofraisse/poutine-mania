@@ -36,7 +36,7 @@ const Header = ({ toggleMobileSidebar }) => {
   const headerSearchbarRef = useRef();
   const headerRef = useRef();
   const { push, pathname, query } = useRouter();
-  const { openLogin } = useLoginForm();
+  const { openLogin, openSignup } = useLoginForm();
   const {
     // nonDebouncedValue,
     setSearchValue,
@@ -315,11 +315,30 @@ const Header = ({ toggleMobileSidebar }) => {
               ) : (
                 <div className="relative mx-4 lg:mx-5 z-20">
                   <div
-                    className="h-[44px] w-[44px] bg-gray-400 rounded-full cursor-pointer hover:opacity-80 flex items-center justify-center"
+                    className="h-[44px] w-[44px] bg-gray-400 rounded-full cursor-pointer hover:opacity-80 flex items-center justify-center sm:hidden"
                     onClick={openLogin}
                     ref={toggleRef}
                   >
                     <User className="text-white" size={30} />
+                  </div>
+                  <div className="hidden sm:flex pt-1">
+                    <Button
+                      variant="light"
+                      height="smd"
+                      width="smd"
+                      onClick={openLogin}
+                    >
+                      Se connecter
+                    </Button>
+                    <Button
+                      variant="primary"
+                      height="smd"
+                      width="smd"
+                      className="ml-3"
+                      onClick={openSignup}
+                    >
+                      S&apos;inscrire
+                    </Button>
                   </div>
                 </div>
               )}

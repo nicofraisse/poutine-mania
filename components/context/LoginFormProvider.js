@@ -39,7 +39,7 @@ export const LoginFormProvider = ({ children }) => {
   return (
     <LoginFormContext.Provider
       value={{
-        openLogin: ({ message, redirect }) =>
+        openLogin: ({ message, redirect } = {}) =>
           toggleLogin(true, { message, redirect }),
         openSignup: (redirect) => toggleSignup(true, redirect),
         closeLogin: () => toggleLogin(false),
