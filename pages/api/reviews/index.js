@@ -4,8 +4,9 @@ const handler = async (req, res) => {
   const client = await connectToDatabase();
   const db = await client.db();
 
-  const skip =
-    req.query.skip && /^\d+$/.test(req.query.skip) ? Number(req.query.skip) : 0;
+  const limit = /^\d+$/.test(req.query.limit) ? +req.query.limit : 5;
+  const page = /^\d+$/.test(req.query.page) ? +req.query.page : 1;
+  const skip = (page - 1) * limit;
 
   const data = await db
     .collection("reviews")
@@ -26,21 +27,10 @@ const handler = async (req, res) => {
           as: "user",
         },
       },
-      {
-        $sort: {
-          createdAt: -1,
-        },
-      },
-      {
-        $skip: skip,
-      },
-      {
-        $limit: 5,
-      },
-
-      {
-        $unwind: "$user",
-      },
+      { $sort: { createdAt: -1 } },
+      { $skip: skip },
+      { $limit: limit },
+      { $unwind: "$user" },
     ])
     .toArray();
 

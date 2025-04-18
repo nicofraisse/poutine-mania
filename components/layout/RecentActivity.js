@@ -18,7 +18,7 @@ export function RecentActivity({ heightClass, isScrollable }) {
   }
 
   const handleLoadMore = () => {
-    setPage(page + 1);
+    setPage((p) => p + 1);
   };
 
   return (
