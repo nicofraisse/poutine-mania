@@ -52,9 +52,9 @@ export const RestaurantsFilters = ({
   );
 
   const priceOptions = [
-    { label: "Moins de 7$", value: 1 },
-    { label: "Entre 7$ et 9$", value: 2 },
-    { label: "Plus de 9$", value: 3 },
+    { label: "Moins de 8$", value: 1 },
+    { label: "Entre 8$ et 10$", value: 2 },
+    { label: "Plus de 10$", value: 3 },
   ];
 
   const handleCategorySelect = (category) => {
