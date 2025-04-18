@@ -165,7 +165,6 @@ export const RateRestaurantNew = ({
       removeCookies("reviewInProgress");
       removeCookies("reviewRestaurantInProgress");
 
-      // Update sidebar data
       if (!currentUser.eatenlist.includes(restaurantId)) {
         setSidebarEatenlistAmount(sidebarEatenlistAmount + 1);
       }
@@ -173,7 +172,6 @@ export const RateRestaurantNew = ({
         setSidebarWatchlistAmount(sidebarWatchlistAmount - 1);
       }
 
-      // Redirect to rate page with success query param
       onSubmit && onSubmit();
     } catch (e) {
       toast.error(e.message);

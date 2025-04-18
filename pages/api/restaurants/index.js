@@ -50,7 +50,6 @@ handler.get(async (req, res) => {
 
   let { rating, categories, price } = req.query;
 
-  // convert category and price back to array, if they are not nullish
   categories = categories ? categories.split(",") : [];
   price = price ? price.split(",").map(Number) : [];
 
@@ -63,7 +62,6 @@ handler.get(async (req, res) => {
   const ratingMatch =
     rating > 0 ? { avgRating: { $gte: Number(rating) } } : undefined;
 
-  // Define rating fields like in the restaurant ID endpoint
   const ratingFields = [
     "finalRating",
     "friesRating",
@@ -72,7 +70,6 @@ handler.get(async (req, res) => {
     "portionRating",
   ];
 
-  // Create the avgSection object
   const avgSection = ratingFields.reduce(
     (acc, field) => ({
       ...acc,
@@ -94,12 +91,10 @@ handler.get(async (req, res) => {
     {
       $addFields: {
         reviewCount: { $size: "$reviews" },
-        // Keep the original avgRating for compatibility
         avgRating: { $avg: "$reviews.finalRating" },
       },
     },
     {
-      // Add the detailed average ratings
       $addFields: avgSection,
     },
     {
@@ -154,7 +149,6 @@ export const fetchTopRestaurants = async () => {
   const client = await connectToDatabase();
   const db = await client.db();
 
-  // Define rating fields
   const ratingFields = [
     "finalRating",
     "friesRating",
@@ -163,7 +157,6 @@ export const fetchTopRestaurants = async () => {
     "portionRating",
   ];
 
-  // Create the avgSection object
   const avgSection = ratingFields.reduce(
     (acc, field) => ({
       ...acc,
@@ -189,7 +182,6 @@ export const fetchTopRestaurants = async () => {
       },
     },
     {
-      // Add the detailed average ratings
       $addFields: avgSection,
     },
     {
