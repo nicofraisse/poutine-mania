@@ -6,6 +6,7 @@ import ReactSelect from "react-select";
 import { useCallback, useState } from "react";
 import Color from "color";
 import { getRatingColor } from "../data/ratingColors";
+import { RESTAURANT_CATEGORIES } from "../lib/constants";
 
 export const RestaurantsFilters = ({
   filtersRef,
@@ -54,16 +55,6 @@ export const RestaurantsFilters = ({
     { label: "Moins de 7$", value: 1 },
     { label: "Entre 7$ et 9$", value: 2 },
     { label: "Plus de 9$", value: 3 },
-  ];
-
-  const categoryOptions = [
-    "Restaurant",
-    "Diner",
-    "Bar",
-    "Pub",
-    "Fast-food",
-    "Auberge",
-    "Casse-croûte",
   ];
 
   const handleCategorySelect = (category) => {
@@ -211,7 +202,7 @@ export const RestaurantsFilters = ({
           {localCategoryFilter.length > 0 && `(${localCategoryFilter.length})`}
         </div>
         <div className="flex flex-wrap">
-          {categoryOptions.map((category) => (
+          {RESTAURANT_CATEGORIES.map((category) => (
             <Pill
               key={category}
               onClick={() => handleCategorySelect(category)}

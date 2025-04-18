@@ -1,6 +1,7 @@
 import { useField, useFormikContext } from "formik";
 import Select from "react-select";
 import { isString } from "lodash";
+import { RESTAURANT_CATEGORIES } from "../../lib/constants";
 
 const CategorySelect = ({ value, ...props }) => {
   const [field] = useField(props);
@@ -10,15 +11,7 @@ const CategorySelect = ({ value, ...props }) => {
     setFieldValue(field.name, data);
   };
 
-  const options = [
-    "Restaurant",
-    "Diner",
-    "Bar",
-    "Pub",
-    "Fast-food",
-    "Auberge",
-    "Casse-croûte",
-  ].map((o) => {
+  const options = RESTAURANT_CATEGORIES.map((o) => {
     return { label: o, value: o };
   });
 
