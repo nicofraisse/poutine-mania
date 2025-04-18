@@ -6,7 +6,7 @@ import ReactSelect from "react-select";
 import { useCallback, useState } from "react";
 import Color from "color";
 import { getRatingColor } from "../data/ratingColors";
-import { RESTAURANT_CATEGORIES } from "../lib/constants";
+import { RESTAURANT_CATEGORIES, RESTAURANT_PRICES } from "../lib/constants";
 
 export const RestaurantsFilters = ({
   filtersRef,
@@ -50,12 +50,6 @@ export const RestaurantsFilters = ({
   const [localRatingFilter, setLocalRatingFilter] = useState(
     initialStates.localRatingFilter
   );
-
-  const priceOptions = [
-    { label: "Moins de 8$", value: 1 },
-    { label: "Entre 8$ et 10$", value: 2 },
-    { label: "Plus de 10$", value: 3 },
-  ];
 
   const handleCategorySelect = (category) => {
     if (localCategoryFilter.includes(category)) {
@@ -218,7 +212,7 @@ export const RestaurantsFilters = ({
           {localPriceFilter.length > 0 && `(${localPriceFilter.length})`}
         </div>
         <div className="flex flex-wrap">
-          {priceOptions.map((o) => (
+          {RESTAURANT_PRICES.map((o) => (
             <Pill
               key={o.value}
               onClick={() => handlePriceSelect(o.value)}

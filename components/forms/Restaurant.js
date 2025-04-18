@@ -16,6 +16,7 @@ import classNames from "classnames";
 import PillSelect from "../controls/PillSelect";
 import PhoneInput from "components/controls/PhoneInput";
 import { useCurrentUser } from "../../lib/useCurrentUser";
+import { RESTAURANT_PRICES } from "../../lib/constants";
 
 export const RestaurantForm = ({ type }) => {
   const { query, push } = useRouter();
@@ -140,11 +141,7 @@ export const RestaurantForm = ({ type }) => {
             name="priceRange"
             label="Prix de la poutine régulière"
             control={PillSelect}
-            options={[
-              { label: "Moins de 7$", value: 1 },
-              { label: "Entre 7$ et 9$", value: 2 },
-              { label: "Plus de 9$", value: 3 },
-            ]}
+            options={RESTAURANT_PRICES}
             value={values.priceRange}
           />
 
