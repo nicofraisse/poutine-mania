@@ -3,10 +3,8 @@ import { sendVerificationEmail } from "../../../lib/sendVerificationEmail";
 import crypto from "crypto";
 
 const createNewValidationToken = async (userId, db) => {
-  // Create a new verification token
   const newToken = crypto.randomBytes(32).toString("hex");
 
-  // Update the user's verification token in the database
   await db
     .collection("users")
     .updateOne({ _id: userId }, { $set: { verificationToken: newToken } });
