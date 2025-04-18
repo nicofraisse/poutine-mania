@@ -21,7 +21,6 @@ const RestaurantIntrouvable = ({ hideBorders }) => {
   const { push } = useRouter();
 
   const handleClickAdd = (e) => {
-    e.stopPropagation();
     if (!currentUser) {
       openLogin({ message: <LoginMessage />, redirect: "/nouveau-restaurant" });
     } else {
@@ -49,7 +48,7 @@ const RestaurantIntrouvable = ({ hideBorders }) => {
         size="sm"
         height="sm"
         className="min-w-[120px] text-light text-sm mx:mt-0"
-        onClick={(e) => handleClickAdd(e)}
+        onClick={handleClickAdd}
         type="button"
       >
         <Plus className="mr-1 text-gray -ml-1" size={16} />

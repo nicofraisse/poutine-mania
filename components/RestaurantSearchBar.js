@@ -204,6 +204,7 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit, isBanner }, ref) => {
       </div>
       {!isRestaurantsPath && showSearchSuggestions && (
         <div
+          onMouseDown={(e) => e.preventDefault()}
           className={classNames(
             "absolute z-50 w-full bg-white border shadow-lg left-0 px-1 xs:px-2 sm:px-3 py-2",
             {
