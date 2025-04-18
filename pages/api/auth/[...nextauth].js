@@ -8,13 +8,10 @@ import { generateSlug } from "../../../lib/generateSlug";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 export const authOptions = {
-  session: {
-    strategy: "jwt",
-  },
-  jwt: {
-    secret: process.env.NEXTAUTH_JWT_SECRET,
-    encryption: true,
-  },
+  secret: process.env.NEXTAUTH_SECRET,
+  session: { strategy: "jwt" },
+  jwt: { secret: process.env.NEXTAUTH_SECRET, encryption: true },
+
   events: {
     signOut: async ({ session }) => {
       console.log("User signed out:", session);
