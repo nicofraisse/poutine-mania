@@ -323,7 +323,7 @@ const Header = ({ toggleMobileSidebar }) => {
                   </div>
                   <div className="hidden sm:flex pt-1">
                     <Button
-                      variant="light"
+                      variant="transparent"
                       height="smd"
                       width="smd"
                       onClick={openLogin}
@@ -362,6 +362,13 @@ const Header = ({ toggleMobileSidebar }) => {
             backgroundPosition: "center center",
           }}
         >
+          <div
+            className="absolute top-0 right-0 w-full h-full pointer-events-none"
+            style={{
+              background:
+                "linear-gradient(to bottom left,rgba(0,0,0,0.75) 0%,rgba(0,0,0,0.2) 30%, rgba(0,0,0,0) 60%)",
+            }}
+          />
           <div
             className="arrow bounce cursor-pointer block sm:hidden"
             onClick={handleArrowClick}

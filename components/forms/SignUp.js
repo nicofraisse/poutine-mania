@@ -158,7 +158,7 @@ const SignUp = ({ onSubmit }) => {
           <div className="text-sm">
             Vous avez déjà un compte?{" "}
             <span
-              className="font-bold cursor-pointer hover:underline"
+              className="font-black cursor-pointer underline text-teal-700 hover:text-teal-600"
               onClick={handleSwitchForm}
             >
               Connexion

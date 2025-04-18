@@ -11,6 +11,7 @@ export const VariantColor = {
   lightLink: "lightLink",
   danger: "danger",
   blue: "blue",
+  transparent: "transparent",
 };
 
 const bgColorClass = {
@@ -22,6 +23,7 @@ const bgColorClass = {
   [VariantColor.white2]: "bg-gradient-to-tr from-gray-200 to-white",
   [VariantColor.lightLink]: "bg-none",
   [VariantColor.danger]: "bg-gradient-to-tr from-red-600 to-red-400",
+  [VariantColor.transparent]: "bg-gray-400 bg-opacity-50",
 };
 
 const hasBorder = {
@@ -33,6 +35,7 @@ const hasBorder = {
   [VariantColor.white2]: true,
   [VariantColor.lightLink]: false,
   [VariantColor.danger]: false,
+  [VariantColor.transparent]: false,
 };
 
 const borderClass = {
@@ -43,6 +46,7 @@ const borderClass = {
   [VariantColor.white]: "border-2 border-gray-500",
   [VariantColor.white2]: "border-2 border-gray-300",
   [VariantColor.lightLink]: "",
+  [VariantColor.danger]: "",
 };
 
 const textColorClass = {
@@ -54,6 +58,7 @@ const textColorClass = {
   [VariantColor.white2]: "text-gray-500",
   [VariantColor.lightLink]: "text-gray-500 hover:text-gray-600",
   [VariantColor.danger]: "text-white",
+  [VariantColor.transparent]: "text-white",
 };
 
 const heightClass = {

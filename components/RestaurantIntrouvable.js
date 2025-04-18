@@ -20,7 +20,7 @@ const RestaurantIntrouvable = ({ hideBorders }) => {
   const { openLogin } = useLoginForm();
   const { push } = useRouter();
 
-  const handleClickAdd = (e) => {
+  const handleClickAdd = () => {
     if (!currentUser) {
       openLogin({ message: <LoginMessage />, redirect: "/nouveau-restaurant" });
     } else {
