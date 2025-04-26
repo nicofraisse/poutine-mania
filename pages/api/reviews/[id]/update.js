@@ -47,10 +47,13 @@ export default async function handler(req, res) {
 
       // 4. Handle file uploads
       const photosToUpload = Object.keys(files)
-        .filter((k) => k.startsWith("photos["]))
+        .filter((k) => k.startsWith("photos["))
         .map((k) => files[k]);
 
-      const existingPublicIds = Array.from({ length: 5 }, (_, i) => fields[`photos[${i}]`]).filter(Boolean);
+      const existingPublicIds = Array.from(
+        { length: 5 },
+        (_, i) => fields[`photos[${i}]`]
+      ).filter(Boolean);
       const newPublicIds = await uploadToCloudinary(photosToUpload);
 
       // 5. Build update doc
@@ -74,10 +77,9 @@ export default async function handler(req, res) {
       };
 
       // 6. Update
-      const result = await db.collection("reviews").updateOne(
-        { _id: reviewId },
-        { $set: updateDoc }
-      );
+      const result = await db
+        .collection("reviews")
+        .updateOne({ _id: reviewId }, { $set: updateDoc });
 
       res.status(200).json(result);
     } catch (e) {
