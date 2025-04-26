@@ -1,13 +1,17 @@
 import { ObjectId } from "mongodb";
-import { connectToDatabase } from "../../../../lib/db";
+import { connectToDatabase } from "lib/db";
+import { isAdmin } from "../../../../lib/middleware/isAdmin";
 
-const handler = async (req, res) => {
+async function handler(req, res) {
   const client = await connectToDatabase();
-  const db = await client.db();
+  const db = client.db();
+
   const deletedRestaurant = await db
     .collection("restaurants")
-    .deleteOne({ _id: ObjectId(req.query.id) });
-  res.status(200).json(deletedRestaurant);
-};
+    .deleteOne({ _id: new ObjectId(req.query.id) });
 
-export default handler;
+  client.close();
+  return res.status(200).json(deletedRestaurant);
+}
+
+export default isAdmin(handler);

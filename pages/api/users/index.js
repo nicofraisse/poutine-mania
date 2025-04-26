@@ -1,20 +1,12 @@
 import nextConnect from "next-connect";
 import { database } from "middleware/database";
-import { authOptions } from "../auth/[...nextauth]";
-import { getServerSession } from "next-auth";
+import { isAdmin } from "../../../lib/middleware/isAdmin";
 
 const handler = nextConnect();
 
 handler.use(database);
 
 handler.get(async (req, res) => {
-  const session = await getServerSession(req, res, authOptions);
-
-  if (!session?.user || !session.user.isAdmin) {
-    res.status(401).json({ message: "Unauthorized" });
-    return;
-  }
-
   const users = await req.db
     .collection("users")
     .aggregate([
@@ -57,4 +49,4 @@ handler.get(async (req, res) => {
   res.status(200).json(users);
 });
 
-export default handler;
+export default isAdmin(handler);

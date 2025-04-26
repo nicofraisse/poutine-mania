@@ -1,35 +1,52 @@
 import { ObjectId } from "mongodb";
-import { connectToDatabase } from "lib/db";
+import { getServerSession } from "next-auth/next";
+import { connectToDatabase } from "../../../../lib/db";
+import { authOptions } from "../../auth/[...nextauth]";
 
-const handler = async (req, res) => {
+export default async function handler(req, res) {
+  const session = await getServerSession(req, res, authOptions);
+  if (!session) {
+    return res.status(401).json({ error: "Not authenticated" });
+  }
+
+  const { _id: sessionUserId, isAdmin } = session.user;
+
   const client = await connectToDatabase();
-  const db = await client.db();
+  const db = client.db();
+
+  const reviewId = new ObjectId(req.query.id);
+  const review = await db.collection("reviews").findOne({ _id: reviewId });
+
+  if (!review) {
+    client.close();
+    return res.status(404).json({ error: "Review not found" });
+  }
+
+  const ownerId = review.userId;
+  console.log({ ownerId, sessionUserId });
+  if (!isAdmin && ownerId.toString() !== sessionUserId.toString()) {
+    client.close();
+    return res.status(403).json({ error: "Not allowed" });
+  }
 
   const deletedReview = await db
     .collection("reviews")
-    .deleteOne({ _id: ObjectId(req.query.id) });
+    .deleteOne({ _id: reviewId });
 
-  const user = await db
-    .collection("users")
-    .findOne({ _id: ObjectId(req.query.userId) });
+  const userObjId = new ObjectId(ownerId);
+  const user = await db.collection("users").findOne({ _id: userObjId });
 
-  let updatedEatenlist = user.eatenlist;
-
+  let updatedEatenlist = user.eatenlist || [];
   if (req.query.deleteFromEatenlist === "true") {
     updatedEatenlist = updatedEatenlist.filter(
       (r) => r !== req.query.restaurantId
     );
   }
 
-  await db.collection("users").updateOne(
-    { _id: ObjectId(req.query.userId) },
-    {
-      $set: {
-        eatenlist: updatedEatenlist,
-      },
-    }
-  );
-  res.status(200).json(deletedReview);
-};
+  await db
+    .collection("users")
+    .updateOne({ _id: userObjId }, { $set: { eatenlist: updatedEatenlist } });
 
-export default handler;
+  client.close();
+  res.status(200).json(deletedReview);
+}

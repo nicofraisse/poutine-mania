@@ -4,6 +4,7 @@ import nextConnect from "next-connect";
 import { database } from "middleware/database";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]";
+import { isAdmin } from "../../../../lib/middleware/isAdmin";
 
 const handler = nextConnect();
 handler.use(database);
@@ -14,22 +15,18 @@ handler.post(async (req, res) => {
   const session = await getServerSession(req, res, authOptions);
 
   try {
-    if (session?.user.isAdmin) {
-      const updatedUser = await db.collection("users").updateOne(
-        { _id: ObjectId(req.query.id) },
-        {
-          $set: {
-            isAdmin: req.body.isAdmin,
-          },
-        }
-      );
-      res.status(200).json(updatedUser);
-    } else {
-      res.status(403).json("unauthorized");
-    }
+    const updatedUser = await db.collection("users").updateOne(
+      { _id: ObjectId(req.query.id) },
+      {
+        $set: {
+          isAdmin: req.body.isAdmin,
+        },
+      }
+    );
+    res.status(200).json(updatedUser);
   } catch (e) {
     res.status(500).json(e.message);
   }
 });
 
-export default handler;
+export default isAdmin(handler);

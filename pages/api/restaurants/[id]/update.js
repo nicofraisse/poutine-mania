@@ -1,4 +1,5 @@
 import { connectToDatabase } from "lib/db";
+import { isAdmin } from "../../../../lib/middleware/isAdmin";
 
 const handler = async (req, res) => {
   const client = await connectToDatabase();
@@ -19,4 +20,4 @@ const handler = async (req, res) => {
   res.status(200).json(updatedRestaurant);
 };
 
-export default handler;
+export default isAdmin(handler);
