@@ -1,5 +1,6 @@
 import nextConnect from "next-connect";
 import { database } from "middleware/database";
+import { getPublicUser } from "../../../lib/publicUser";
 
 const handler = nextConnect();
 
@@ -13,7 +14,12 @@ handler.get(async (req, res) => {
     .aggregate([{ $sample: { size: 1 } }])
     .next();
 
-  res.status(200).json(restaurant);
+  const cleaned = {
+    ...restaurant,
+    creator: getPublicUser(restaurant.creator),
+  };
+
+  res.status(200).json(cleaned);
 });
 
 export default handler;

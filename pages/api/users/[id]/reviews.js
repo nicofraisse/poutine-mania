@@ -1,6 +1,7 @@
 import nextConnect from "next-connect";
 import { ObjectId } from "mongodb";
 import { database } from "middleware/database";
+import { mapToPublicUser } from "../../../../lib/publicUser";
 
 const handler = nextConnect();
 handler.use(database);
@@ -35,7 +36,16 @@ handler.get(async (req, res) => {
     .toArray();
 
   const results = data.filter((d) => d.restaurants.length !== 0);
-  res.status(200).json(results);
+
+  const cleaned = results.map((review) => ({
+    ...review,
+    restaurants: review.restaurants.map((restaurant) => ({
+      ...restaurant,
+      creator: mapToPublicUser(restaurant.creator),
+    })),
+  }));
+
+  res.status(200).json(cleaned);
 });
 
 export default handler;

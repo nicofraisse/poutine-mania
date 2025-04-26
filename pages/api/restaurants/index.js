@@ -1,6 +1,8 @@
 import nextConnect from "next-connect";
 import { connectToDatabase } from "../../../lib/db";
 import { database } from "../../../middleware/database";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../auth/[...nextauth]";
 
 const getAvgSection = (field) => ({
   $avg: {
@@ -31,34 +33,24 @@ const getAvgSection = (field) => ({
 });
 
 const handler = nextConnect();
-
 handler.use(database);
 
 handler.get(async (req, res) => {
   const db = req.db;
 
-  let result;
+  const session = await getServerSession(req, res, authOptions);
+  const isAdmin = session?.user?.isAdmin;
 
   const { search, sort, order, limit, minReviewCount, noUnapproved } =
     req.query;
-
-  const approvedMatch = noUnapproved
-    ? {
-        approved: true,
-      }
-    : undefined;
-
+  const approvedMatch = noUnapproved ? { approved: true } : undefined;
   let { rating, categories, price } = req.query;
-
   categories = categories ? categories.split(",") : [];
   price = price ? price.split(",").map(Number) : [];
-
   const categoryMatch = categories.length
     ? { categories: { $in: categories } }
     : undefined;
-
   const priceMatch = price.length ? { priceRange: { $in: price } } : undefined;
-
   const ratingMatch =
     rating > 0 ? { avgRating: { $gte: Number(rating) } } : undefined;
 
@@ -69,7 +61,6 @@ handler.get(async (req, res) => {
     "sauceRating",
     "portionRating",
   ];
-
   const avgSection = ratingFields.reduce(
     (acc, field) => ({
       ...acc,
@@ -116,6 +107,7 @@ handler.get(async (req, res) => {
     },
   ];
 
+  let result;
   if (search) {
     result = await db
       .collection("restaurants")
@@ -125,9 +117,7 @@ handler.get(async (req, res) => {
             autocomplete: {
               query: search,
               path: "name",
-              fuzzy: {
-                maxEdits: 1,
-              },
+              fuzzy: { maxEdits: 1 },
             },
           },
         },
@@ -140,7 +130,10 @@ handler.get(async (req, res) => {
       .aggregate(baseAggregator)
       .toArray();
   }
-  res.status(200).json(result);
+  // eslint-disable-next-line no-unused-vars
+  const output = isAdmin ? result : result.map(({ creator, ...rest }) => rest);
+
+  res.status(200).json(output);
 });
 
 export default handler;

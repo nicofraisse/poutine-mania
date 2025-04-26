@@ -1,4 +1,5 @@
 import { connectToDatabase } from "../../../../lib/db";
+import { mapToPublicUser } from "../../../../lib/publicUser";
 
 const getAvgSection = (field) => ({
   $avg: {
@@ -72,7 +73,14 @@ const handler = async (req, res) => {
     ])
     .toArray();
 
-  res.status(200).json(data[0]);
+  const restaurant = data[0];
+
+  const cleaned = {
+    ...restaurant,
+    creator: mapToPublicUser(restaurant.creator),
+  };
+
+  res.status(200).json(cleaned);
 };
 
 export default handler;

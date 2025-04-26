@@ -2,6 +2,7 @@ import { ObjectId } from "mongodb";
 import nextConnect from "next-connect";
 import { database } from "middleware/database";
 import _ from "lodash";
+import { getPublicUser } from "../../../../lib/publicUser";
 
 const handler = nextConnect();
 handler.use(database);
@@ -9,13 +10,12 @@ handler.use(database);
 handler.get(async (req, res) => {
   const db = req.db;
 
-  const user = await db.collection("users").findOne({ slug: req.query.id });
+  const user = await getPublicUser(db, { slug: req.query.id });
 
   if (!user) {
     return res.status(404).json({ error: "User not found" });
   }
 
-  // Get all user reviews
   const reviews = await db
     .collection("reviews")
     .find({ userId: new ObjectId(user._id) })

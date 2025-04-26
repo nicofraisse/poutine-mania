@@ -2,6 +2,7 @@ const { MongoClient, ObjectId } = require("mongodb");
 const { generateSlug } = require("../lib/generateSlug");
 
 async function createSlugsForAllUsers() {
+  // Use actual uri when needed
   const client = await MongoClient.connect("process.env.MONGO_URI", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -20,6 +21,10 @@ async function createSlugsForAllUsers() {
       await db
         .collection("users")
         .updateOne({ _id: ObjectId(user._id) }, { $set: { slug: slug } });
+
+      console.log(
+        `Updated slug for user name "${user.name}" of id "${user._id}" with slug "${slug}"`
+      );
     }
 
     console.log("Slug creation/update process completed!");

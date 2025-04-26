@@ -22,7 +22,7 @@ handler.post(async (req, res) => {
     categories: req.body.categories,
     createdAt: new Date(),
     approved: !!session.user.isAdmin,
-    creator: session.user,
+    creatorId: session.user._id,
     slug,
   });
 
