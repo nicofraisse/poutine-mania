@@ -35,7 +35,7 @@ const Image = ({ alt, src, forceNextImage, quality = 20, ...props }) => {
     }
     return (
       <NextImage
-        src={src}
+        src={src.replace("http://", "https://")}
         alt="image"
         fill={true}
         {...{
