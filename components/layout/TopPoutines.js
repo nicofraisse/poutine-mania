@@ -70,6 +70,8 @@ export const TopPoutines = ({ restaurants }) => {
                       </Link>
                     </div>
                   </div>
+                  {console.log("img", image)}
+
                   {image ? (
                     <Image
                       src={image}

@@ -29,6 +29,7 @@ const Image = ({ alt, src, forceNextImage, quality = 20, ...props }) => {
           publicId={src}
           alt={alt}
           quality={quality}
+          secure="true"
           {...props}
         />
       );
