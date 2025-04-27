@@ -7,6 +7,7 @@ import Button from "components/Button";
 import { useLoginForm } from "../context/LoginFormProvider";
 import { signIn } from "next-auth/react";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 const SignUp = ({ onSubmit }) => {
   const { openLogin, closeSignup } = useLoginForm();
@@ -172,6 +173,18 @@ const SignUp = ({ onSubmit }) => {
           >
             Je m&apos;inscris
           </Button>
+          <div className="text-xs text-slate-500 text-center mt-6">
+            En créant un compte, j&apos;accepte les{" "}
+            <Link
+              className="text-teal-600 hover:text-teal-700 font-bold"
+              href="/conditions-generales"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Conditions générales d&apos;utilisation et Politique de
+              confidentialité.
+            </Link>
+          </div>
         </>
       )}
     </Form>
