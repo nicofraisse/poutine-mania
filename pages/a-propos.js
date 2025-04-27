@@ -7,7 +7,7 @@ const APropos = () => {
   return (
     <>
       <Head>
-        <title>À Propos - PoutineMania</title>
+        <title>À Propos | Poutine Mania</title>
         <meta
           name="description"
           content={
@@ -51,7 +51,9 @@ const APropos = () => {
             </a>
           </div>
 
-          <div className="mb-4 sm:mt-12 mt-8">© Poutine Mania | 2022-2023</div>
+          <div className="mb-4 sm:mt-12 mt-8">
+            © Poutine Mania | 2022-{new Date().getFullYear()}
+          </div>
         </div>
       </div>
     </>

@@ -12,9 +12,9 @@ export const TopPoutines = ({ restaurants }) => {
   return (
     <div className="max-w-4xl">
       <div className="sm:py-1 px-5 md:py-2 lg:px-6 text-center lg:pt-6">
-        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold my-4">
+        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold my-4">
           Top 10 meilleures poutines
-        </h1>
+        </h2>
         <h2>
           Selon les votes de notre communauté, voici les meilleures poutines à
           absolument essayer!

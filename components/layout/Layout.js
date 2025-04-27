@@ -11,6 +11,9 @@ const SiteMapForSeo = () => (
           <a href="/">Accueil</a>
         </li>
         <li>
+          <a href="/noter">Noter</a>
+        </li>
+        <li>
           <a href="/restaurants">Restaurants</a>
         </li>
         <li>

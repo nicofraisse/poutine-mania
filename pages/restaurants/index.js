@@ -14,6 +14,7 @@ import RestaurantIntrouvable from "components/RestaurantIntrouvable";
 import { flatten } from "lodash";
 import Skeleton from "react-loading-skeleton";
 import { RestaurantsFilters } from "../../components/RestaurantsFilters";
+import Head from "next/head";
 
 const sortTypes = [
   { label: "Popularité", value: "reviewCount" },
@@ -68,90 +69,99 @@ const Restaurants = () => {
     restaurants && flatten(restaurants.map((r) => r.succursales));
 
   return (
-    <RestaurantCardHoverProvider>
-      <div className="flex w-full flex-col md:flex-row-reverse h-screen-minus-navbar">
-        <div className="grow md:w-1/2 min-h-1/2vh max-h-1/2vh md:min-h-screen-minus-navbar md:max-h-screen-minus-navbar">
-          <Map restaurants={restaurants} />
-        </div>
-        <div
-          className={classNames(
-            "pt-5 md:w-1/2 md:max-w-[480px] scrollbar-hide min-h-full",
-            {
-              "md:overflow-y-auto": restaurants,
-              "overflow-hidden": !restaurants,
-            }
-          )}
-        >
-          <div className="px-3 mb-3 lg:mb-0 flex justify-between items-start w-full">
-            {!restaurants ? (
-              <Skeleton
-                width="300px"
-                height="24px"
-                className="relative top-2"
-              />
-            ) : (
-              <h2
-                className="font-bold text-slate-500 md:text-lg flex items-center h-12 mr-2"
-                style={{ lineHeight: 1.3 }}
-              >
-                {restaurants.length > 0 ? (
-                  <>
-                    {restaurants.length} poutinerie
-                    {restaurants.length > 1 && "s"} • {allSuccursales.length}{" "}
-                    adresse
-                    {allSuccursales.length > 1 && "s"}{" "}
-                  </>
-                ) : (
-                  "0 résultats "
-                )}
-                {searchValue && `pour "${searchValue}"`}{" "}
-                {searchValue && (
-                  <button
-                    className="p-1 bg-gray-50 transition duration-150 hover:bg-gray-100 ml-1 rounded"
-                    onClick={() => push("/restaurants")}
-                  >
-                    <X size={18} />
-                  </button>
-                )}
-              </h2>
-            )}
-
-            <RestaurantsFilters
-              filtersRef={filtersRef}
-              restaurants={restaurants}
-              filtersOpen={filtersOpen}
-              setFiltersOpen={setFiltersOpen}
-              setSortType={setSortType}
-              setSortOrder={setSortOrder}
-              sortOrders={sortOrders}
-              sortTypes={sortTypes}
-              priceFilter={priceFilter}
-              setPriceFilter={setPriceFilter}
-              categoryFilter={categoryFilter}
-              setCategoryFilter={setCategoryFilter}
-              ratingFilter={ratingFilter}
-              setRatingFilter={setRatingFilter}
-              onApplyFilters={onApplyFilters}
-            />
+    <>
+      <Head>
+        <title>Restaurants | Poutine Mania</title>
+        <meta
+          name="description"
+          content="Parcourez la carte interactive de poutineries au Québec. Filtrez par note, prix ou catégorie pour dénicher la poutine parfaite près de chez vous."
+        />
+      </Head>
+      <RestaurantCardHoverProvider>
+        <div className="flex w-full flex-col md:flex-row-reverse h-screen-minus-navbar">
+          <div className="grow md:w-1/2 min-h-1/2vh max-h-1/2vh md:min-h-screen-minus-navbar md:max-h-screen-minus-navbar">
+            <Map restaurants={restaurants} />
           </div>
+          <div
+            className={classNames(
+              "pt-5 md:w-1/2 md:max-w-[480px] scrollbar-hide min-h-full",
+              {
+                "md:overflow-y-auto": restaurants,
+                "overflow-hidden": !restaurants,
+              }
+            )}
+          >
+            <div className="px-3 mb-3 lg:mb-0 flex justify-between items-start w-full">
+              {!restaurants ? (
+                <Skeleton
+                  width="300px"
+                  height="24px"
+                  className="relative top-2"
+                />
+              ) : (
+                <h2
+                  className="font-bold text-slate-500 md:text-lg flex items-center h-12 mr-2"
+                  style={{ lineHeight: 1.3 }}
+                >
+                  {restaurants.length > 0 ? (
+                    <>
+                      {restaurants.length} poutinerie
+                      {restaurants.length > 1 && "s"} • {allSuccursales.length}{" "}
+                      adresse
+                      {allSuccursales.length > 1 && "s"}{" "}
+                    </>
+                  ) : (
+                    "0 résultats "
+                  )}
+                  {searchValue && `pour "${searchValue}"`}{" "}
+                  {searchValue && (
+                    <button
+                      className="p-1 bg-gray-50 transition duration-150 hover:bg-gray-100 ml-1 rounded"
+                      onClick={() => push("/restaurants")}
+                    >
+                      <X size={18} />
+                    </button>
+                  )}
+                </h2>
+              )}
 
-          {(restaurants || [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}]).map(
-            (r, i) => (
-              <div className="block my-2 xs:mx-3" key={i}>
-                <RestaurantCard restaurant={r} />
-                <div className="w-full border-b border-gray-100"></div>
-              </div>
-            )
-          )}
-          <div className="h-5"></div>
-          {restaurants && (
-            <div className="sticky bottom-0">
-              <RestaurantIntrouvable />
+              <RestaurantsFilters
+                filtersRef={filtersRef}
+                restaurants={restaurants}
+                filtersOpen={filtersOpen}
+                setFiltersOpen={setFiltersOpen}
+                setSortType={setSortType}
+                setSortOrder={setSortOrder}
+                sortOrders={sortOrders}
+                sortTypes={sortTypes}
+                priceFilter={priceFilter}
+                setPriceFilter={setPriceFilter}
+                categoryFilter={categoryFilter}
+                setCategoryFilter={setCategoryFilter}
+                ratingFilter={ratingFilter}
+                setRatingFilter={setRatingFilter}
+                onApplyFilters={onApplyFilters}
+              />
             </div>
-          )}
+
+            {(restaurants || [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}]).map(
+              (r, i) => (
+                <div className="block my-2 xs:mx-3" key={i}>
+                  <RestaurantCard restaurant={r} />
+                  <div className="w-full border-b border-gray-100"></div>
+                </div>
+              )
+            )}
+            <div className="h-5"></div>
+            {restaurants && (
+              <div className="sticky bottom-0">
+                <RestaurantIntrouvable />
+              </div>
+            )}
+          </div>
         </div>
-      </div>
-    </RestaurantCardHoverProvider>
+      </RestaurantCardHoverProvider>
+    </>
   );
 };
 

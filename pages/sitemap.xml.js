@@ -4,6 +4,7 @@ function generateSiteMap(restaurants) {
   return `<?xml version="1.0" encoding="UTF-8"?>
   <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url><loc>${BASE_URI}</loc></url>
+    <url><loc>${BASE_URI}/noter</loc></url>
     <url><loc>${BASE_URI}/restaurants</loc></url>
     <url><loc>${BASE_URI}/a-propos</loc></url>
 

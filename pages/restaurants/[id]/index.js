@@ -63,7 +63,8 @@ const Index = ({ SEO }) => {
     <>
       <Head>
         <title>
-          {SEO?.restaurantName.toUpperCase()} - Avis sur leur poutine
+          {SEO?.restaurantName.toUpperCase()} - Avis sur leur poutine | Poutine{" "}
+          Mania
         </title>
         {/* Generic */}
         <meta

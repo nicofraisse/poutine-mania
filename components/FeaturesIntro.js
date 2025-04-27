@@ -9,9 +9,9 @@ export const FeaturesIntro = () => {
       <div className="absolute -bottom-10 left-1/4 w-28 h-28 bg-amber-300 opacity-20 rounded-full"></div> */}
 
       <div className="relative z-10 mx-auto">
-        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold mb-6 text-center">
+        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold mb-6 text-center">
           Comment ça fonctionne?
-        </h1>
+        </h2>
         <div className="flex flex-wrap justify-center gap-8">
           <div className="flex flex-col items-center bg-white rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 border-t-4 border-amber-500 p-6 group w-full max-w-[460px] md:max-w-[358px]">
             <div className="bg-gradient-to-br from-amber-100 to-amber-200 rounded-full p-4 mb-5 group-hover:bg-amber-300 transition-colors duration-300">
