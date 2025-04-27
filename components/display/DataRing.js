@@ -11,16 +11,22 @@ export const DataRing = ({ icon, percent, iconWidth, noRatings }) => {
   const [percentValue, setPercentValue] = useState(0);
 
   useEffect(() => {
-    ringRef.current.classList.remove("opacity-0");
-    const radius = ringRef.current.r.baseVal.value;
-    const circumference = radius * 2 * Math.PI;
-    ringRef.current.style.strokeDasharray = `${circumference} ${circumference}`;
-    const offset = circumference - (percent / 100) * circumference;
-    ringRef.current.style.strokeDashoffset = 180;
+    const circle = ringRef.current;
+    const radius = circle.r.baseVal.value;
+    const circumference = 2 * Math.PI * radius;
+    circle.style.strokeDasharray = `${circumference} ${circumference}`;
+    circle.style.transition = "none";
+    circle.style.strokeDashoffset = `${circumference}`;
+    circle.getBoundingClientRect();
+    circle.style.transition = "";
+    const targetOffset = circumference - (percent / 100) * circumference;
     setTimeout(() => {
-      ringRef.current.style.strokeDashoffset = offset;
-    });
+      circle.style.strokeDashoffset = `${targetOffset}`;
+    }, 0);
+    circle.classList.remove("opacity-0");
   }, [percent]);
+
+  console.log({ percentValue, percent });
 
   useEffect(() => {
     if (percentValue < percent) {
