@@ -3,6 +3,24 @@ import "react-responsive-modal/styles.css";
 import { Sidebar } from "./Sidebar";
 import { useEffect, useState } from "react";
 
+const SiteMapForSeo = () => (
+  <noscript>
+    <nav aria-label="Liens principeaux du site">
+      <ul style={{ margin: 0, padding: 0, listStyle: "none" }}>
+        <li>
+          <a href="/">Accueil</a>
+        </li>
+        <li>
+          <a href="/restaurants">Restaurants</a>
+        </li>
+        <li>
+          <a href="/a-propos">À propos</a>
+        </li>
+      </ul>
+    </nav>
+  </noscript>
+);
+
 export const Layout = (props) => {
   const [showMobileSidebar, setShowMobileSidebar] = useState(false);
   const toggleMobileSidebar = () => {
@@ -17,6 +35,7 @@ export const Layout = (props) => {
   }, []);
   return (
     <div className="flex text-slate-700">
+      <SiteMapForSeo />
       <Sidebar
         showMobileSidebar={showMobileSidebar}
         toggleMobileSidebar={toggleMobileSidebar}

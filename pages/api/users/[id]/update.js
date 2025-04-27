@@ -67,6 +67,7 @@ handler.patch(async (req, res) => {
             name,
             bio: bio || "",
             image: newPublicIds[0] || target.image,
+            updatedAt: new Date(),
           },
         }
       );

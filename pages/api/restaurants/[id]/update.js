@@ -14,6 +14,7 @@ const handler = async (req, res) => {
         priceRange: req.body.priceRange,
         succursales: req.body.succursales,
         categories: req.body.categories,
+        updatedAt: new Date(),
       },
     }
   );

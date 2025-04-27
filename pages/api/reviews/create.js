@@ -50,6 +50,7 @@ const handler = async (req, res) => {
           userId: new ObjectId(session.user._id),
           photos: publicIds,
           createdAt: new Date(),
+          updatedAt: new Date(),
         });
 
         const data = await db.collection("reviews").find({}).toArray();

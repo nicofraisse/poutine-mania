@@ -21,6 +21,7 @@ handler.post(async (req, res) => {
     succursales: req.body.succursales,
     categories: req.body.categories,
     createdAt: new Date(),
+    updatedAt: new Date(),
     approved: !!session.user.isAdmin,
     creatorId: session.user._id,
     slug,

@@ -74,6 +74,7 @@ export default async function handler(req, res) {
         portionRating: portionRating ? Number(portionRating) : undefined,
         comment: comment || "",
         photos: [...existingPublicIds, ...newPublicIds],
+        updatedAt: new Date(),
       };
 
       // 6. Update
