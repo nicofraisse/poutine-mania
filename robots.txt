@@ -1,10 +1,4 @@
-# Sitemap
 Sitemap: https://poutinemania.ca/sitemap.xml
-
-# Block all crawlers for /admin
 User-agent: *
 Disallow: /admin/
-
-# Allow all awlers
-User-agent: *
-Allow: /
+Disallow: /api/
