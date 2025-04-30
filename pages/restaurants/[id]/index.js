@@ -83,6 +83,8 @@ const Index = ({ SEO }) => {
       "@type": "AggregateRating",
       ratingValue: SEO.averageRating,
       reviewCount: SEO.reviewCount,
+      bestRating: "10",
+      worstRating: "1",
     },
   };
 
