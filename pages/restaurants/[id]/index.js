@@ -21,6 +21,7 @@ const Index = ({ SEO }) => {
   const { data: restaurant, loading } = useGet(`/api/restaurants/${query.id}`, {
     skip: !query.id,
   });
+
   const [showMap, setShowMap] = useState(false);
   const { currentUser } = useCurrentUser();
 
@@ -59,9 +60,38 @@ const Index = ({ SEO }) => {
 
   const isSkeleton = !restaurant || loading;
 
+  const seoUrl = `${process.env.NEXT_PUBLIC_APP_URL}/restaurants/${SEO.slug}`;
+  const seoImageUrl = SEO.mainPhoto
+    ? `https://res.cloudinary.com/${process.env.CLOUD_NAME}/image/upload/q_50/${SEO.mainPhoto}`
+    : "";
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Restaurant",
+    name: SEO.restaurantName,
+    image: seoImageUrl,
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: SEO.address,
+    },
+    url: seoUrl,
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: SEO.averageRating,
+      reviewCount: SEO.reviewCount,
+    },
+  };
+
   return (
     <>
       <Head>
+        <script
+          key="restaurant-schema"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(jsonLd),
+          }}
+        />
         <title>
           {SEO?.restaurantName.toUpperCase()} - Avis sur leur poutine | Poutine{" "}
           Mania
@@ -71,14 +101,7 @@ const Index = ({ SEO }) => {
           name="description"
           content={`Lire les avis sur le restaurant ${SEO?.restaurantName} au Québec, et partagez le vôtre.`}
         />
-        <meta
-          name="image"
-          content={
-            SEO?.mainPhoto
-              ? `https://res.cloudinary.com/${process.env.CLOUD_NAME}/image/upload/q_50/${SEO.mainPhoto}`
-              : ""
-          }
-        />
+        <meta name="image" content={SEO?.mainPhoto ? seoImageUrl : ""} />
         {/* Open Graph / Facebook */}
         <meta property="fb:app_id" content="572135587608476" />
         <meta property="og:type" content="website" />
@@ -216,13 +239,44 @@ export async function getStaticProps({ params }) {
     .collection("restaurants")
     .findOne({ slug: params.id });
 
+  const validUserIds = await db.collection("users").distinct("_id");
+
+  const reviews = await db
+    .collection("reviews")
+    .find({
+      restaurantId: restaurant._id,
+      userId: { $in: validUserIds },
+    })
+    .toArray();
+
+  const reviewCount = reviews.length;
+
+  const reviewsWithFinalRating = reviews.filter(
+    (review) =>
+      typeof review.finalRating === "number" &&
+      review.finalRating >= 0 &&
+      review.finalRating <= 10
+  );
+
+  const averageRating =
+    reviewsWithFinalRating.reduce((acc, review) => {
+      return acc + review.finalRating;
+    }, 0) / reviewsWithFinalRating.length || null;
+
+  const address = restaurant.succursales?.[0]?.address?.place_name || "";
+
   return {
     props: {
       SEO: {
         restaurantName: restaurant.name,
         mainPhoto: restaurant.mainPhotos?.[0] || null,
+        reviewCount,
+        averageRating,
+        address,
+        slug: restaurant.slug,
       },
     },
+    revalidate: 60,
   };
 }
 

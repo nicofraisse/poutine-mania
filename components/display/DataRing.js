@@ -26,8 +26,6 @@ export const DataRing = ({ icon, percent, iconWidth, noRatings }) => {
     circle.classList.remove("opacity-0");
   }, [percent]);
 
-  console.log({ percentValue, percent });
-
   useEffect(() => {
     if (percentValue < percent) {
       setTimeout(() => {
