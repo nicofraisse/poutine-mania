@@ -17,10 +17,14 @@ import { connectToDatabase } from "lib/db";
 import toast from "react-hot-toast";
 
 const Index = ({ SEO }) => {
-  const { query, reload, push } = useRouter();
+  const { query, reload, push, isFallback } = useRouter();
   const { data: restaurant, loading } = useGet(`/api/restaurants/${query.id}`, {
     skip: !query.id,
   });
+
+  if (isFallback) {
+    return <Spinner />;
+  }
 
   const [showMap, setShowMap] = useState(false);
   const { currentUser } = useCurrentUser();
@@ -60,7 +64,7 @@ const Index = ({ SEO }) => {
 
   const isSkeleton = !restaurant || loading;
 
-  const seoUrl = `${process.env.NEXT_PUBLIC_APP_URL}/restaurants/${SEO.slug}`;
+  const seoUrl = `${process.env.NEXT_PUBLIC_APP_URL}/restaurants/${SEO?.slug}`;
   const seoImageUrl = SEO.mainPhoto
     ? `https://res.cloudinary.com/${process.env.CLOUD_NAME}/image/upload/q_50/${SEO.mainPhoto}`
     : "";
@@ -185,7 +189,9 @@ const Index = ({ SEO }) => {
                 <div>
                   <button
                     className="p-1 bg-gray-200 rounded xs:shadow hover:bg-gray-100 mx-2"
-                    onClick={() => push(`/restaurants/${restaurant.slug}/edit`)}
+                    onClick={() =>
+                      push(`/restaurants/${restaurant?.slug}/edit`)
+                    }
                   >
                     <Edit size={20} />
                   </button>
@@ -226,7 +232,7 @@ export async function getStaticPaths() {
     .toArray();
 
   return {
-    paths: restaurants.map((r) => `/restaurants/${r.slug}`),
+    paths: restaurants.map((r) => `/restaurants/${r?.slug}`),
     fallback: true,
   };
 }
@@ -265,6 +271,10 @@ export async function getStaticProps({ params }) {
 
   const address = restaurant.succursales?.[0]?.address?.place_name || "";
 
+  if (!restaurant) {
+    return { notFound: true };
+  }
+
   return {
     props: {
       SEO: {
@@ -273,7 +283,7 @@ export async function getStaticProps({ params }) {
         reviewCount,
         averageRating,
         address,
-        slug: restaurant.slug,
+        slug: restaurant?.slug,
       },
     },
     revalidate: 60,
