@@ -1,6 +1,5 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-import FacebookProvider from "next-auth/providers/facebook";
 import { capitalize } from "lodash";
 import { verifyPassword } from "lib/auth";
 import { connectToDatabase } from "lib/db";
@@ -13,7 +12,6 @@ export const authOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   adapter: MongoDBAdapter(clientPromise),
   session: { strategy: "jwt" },
-  allowDangerousEmailAccountLinking: true,
   jwt: { secret: process.env.NEXTAUTH_SECRET, encryption: true },
   callbacks: {
     async jwt({ token, user, account }) {
@@ -197,13 +195,14 @@ export const authOptions = {
           prompt: "consent",
           access_type: "offline",
           response_type: "code",
+          redirect_uri: "https://www.poutinemania.ca/api/auth/callback/google",
         },
       },
     }),
-    FacebookProvider({
-      clientId: process.env.FACEBOOK_CLIENT_ID,
-      clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-    }),
+    // FacebookProvider({
+    //   clientId: process.env.FACEBOOK_CLIENT_ID,
+    //   clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
+    // }),
   ],
 };
 
