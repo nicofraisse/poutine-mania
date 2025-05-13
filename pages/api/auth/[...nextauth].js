@@ -13,6 +13,7 @@ export const authOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   adapter: MongoDBAdapter(clientPromise),
   session: { strategy: "jwt" },
+  allowDangerousEmailAccountLinking: true,
   jwt: { secret: process.env.NEXTAUTH_SECRET, encryption: true },
   callbacks: {
     async jwt({ token, user, account }) {
