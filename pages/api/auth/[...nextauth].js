@@ -6,15 +6,18 @@ import { verifyPassword } from "lib/auth";
 import { connectToDatabase } from "lib/db";
 import { generateSlug } from "../../../lib/generateSlug";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
+import clientPromise from "../../../lib/dbPromise";
 
 export const authOptions = {
   secret: process.env.NEXTAUTH_SECRET,
+  adapter: MongoDBAdapter(clientPromise),
   session: { strategy: "jwt" },
   jwt: { secret: process.env.NEXTAUTH_SECRET, encryption: true },
   callbacks: {
     async jwt({ token, user, account }) {
       if (user) {
-        token.userId = user._id;
+        token.userId = user._id ?? user.id;
         token.email = user.email;
         token.name = user.name;
         token.isAdmin = user.isAdmin;
@@ -193,7 +196,7 @@ export const authOptions = {
           prompt: "consent",
           access_type: "offline",
           response_type: "code",
-          redirect_uri: "https://www.poutinemania.ca/api/auth/callback/google", // Explicitly set redirect URI
+          redirect_uri: `${process.env.NEXTAUTH_URL}/api/auth/callback/google`,
         },
       },
     }),
