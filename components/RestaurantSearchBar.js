@@ -140,7 +140,7 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit, isBanner }, ref) => {
   };
   const urlArray = asPath.split("/");
   const isRestaurantsPath =
-    urlArray[urlArray.length - 1].includes("restaurants");
+    urlArray[urlArray.length - 1]?.includes("restaurants");
 
   return (
     <form

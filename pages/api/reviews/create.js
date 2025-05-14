@@ -82,7 +82,7 @@ const handler = async (req, res) => {
         let updatedEatenlist = session.user.eatenlist;
         let updatedWatchlist = session.user.watchlist;
 
-        if (!updatedEatenlist.includes(restaurantId)) {
+        if (!updatedEatenlist?.includes(restaurantId)) {
           updatedEatenlist.push(restaurantId);
         }
 

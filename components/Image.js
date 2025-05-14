@@ -22,7 +22,7 @@ const Image = ({ alt, src, forceNextImage, quality = 20, ...props }) => {
     );
 
   if (typeof src === "string") {
-    if (!src.includes("http")) {
+    if (!src?.includes("http")) {
       return (
         <CloudinaryImage
           cloudName={process.env.CLOUD_NAME}

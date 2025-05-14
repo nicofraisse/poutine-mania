@@ -87,7 +87,7 @@ const ImageUpload = ({
             "": !roundedFull,
           })}
         >
-          {src.includes("data") ? (
+          {src?.includes("data") ? (
             <img
               src={src}
               alt="upload"

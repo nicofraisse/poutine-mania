@@ -165,10 +165,10 @@ export const RateRestaurantNew = ({
       removeCookies("reviewInProgress");
       removeCookies("reviewRestaurantInProgress");
 
-      if (!currentUser.eatenlist.includes(restaurantId)) {
+      if (!currentUser.eatenlist?.includes(restaurantId)) {
         setSidebarEatenlistAmount(sidebarEatenlistAmount + 1);
       }
-      if (currentUser.watchlist.includes(restaurantId)) {
+      if (currentUser.watchlist?.includes(restaurantId)) {
         setSidebarWatchlistAmount(sidebarWatchlistAmount - 1);
       }
 

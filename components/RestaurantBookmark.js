@@ -28,7 +28,7 @@ const RestaurantBookmark = ({ restaurant }) => {
 
   useEffect(() => {
     if (currentUser && !isSkeleton)
-      setIsEaten(currentUser.eatenlist.includes(restaurant._id));
+      setIsEaten(currentUser.eatenlist?.includes(restaurant._id));
   }, [currentUser, restaurant, isSkeleton]);
 
   const handleToggleFromEatenlist = (restaurant) => {
