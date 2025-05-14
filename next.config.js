@@ -2,7 +2,7 @@ const path = require("path");
 const { redirects } = require("./data/redirects");
 
 module.exports = {
-  webpack: (config, options) => {
+  webpack: (config) => {
     config.resolve.alias["components"] = path.join(__dirname, "components");
     config.resolve.alias["context"] = path.join(__dirname, "context");
     config.resolve.alias["data"] = path.join(__dirname, "data");
@@ -45,7 +45,20 @@ module.exports = {
     MAPBOX_API_KEY: process.env.MAPBOX_API_KEY,
   },
   async redirects() {
-    return redirects;
+    return [
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "poutinemania.com" }],
+        destination: "https://poutinemania.ca/:path*",
+        permanent: true,
+      },
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "www.poutinemania.com" }],
+        destination: "https://poutinemania.ca/:path*",
+        permanent: true,
+      },
+    ];
   },
   async rewrites() {
     return [
