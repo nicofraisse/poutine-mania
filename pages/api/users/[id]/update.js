@@ -31,9 +31,12 @@ handler.patch(async (req, res) => {
   }
 
   // 3) must be admin OR editing your own profile
-  const youAreOwner = session.user.userId === target._id.toString();
-  if (!session.user.isAdmin && !youAreOwner) {
-    return res.status(403).json({ message: "Not allowed" });
+  const currentUserIsOwner =
+    session.user._id.toString() === target._id.toString();
+  if (!session.user.isAdmin && !currentUserIsOwner) {
+    return res.status(403).json({
+      message: "Vous n'avez pas les permissions d'effectuer cette action",
+    });
   }
 
   // 4) Parse multipart

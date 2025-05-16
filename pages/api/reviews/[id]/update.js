@@ -15,7 +15,6 @@ export default async function handler(req, res) {
   if (!session) {
     return res.status(401).json({ error: "Not authenticated" });
   }
-  const { userId: sessionUserId, isAdmin } = session.user;
 
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
@@ -41,7 +40,7 @@ export default async function handler(req, res) {
       }
 
       const ownerId = review.userId.toString();
-      if (!isAdmin && ownerId !== sessionUserId.toString()) {
+      if (!session.user.isAdmin && ownerId !== session.user._id.toString()) {
         return res.status(403).json({ error: "Not allowed" });
       }
 

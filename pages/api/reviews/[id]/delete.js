@@ -9,8 +9,6 @@ export default async function handler(req, res) {
     return res.status(401).json({ error: "Not authenticated" });
   }
 
-  const { _id: sessionUserId, isAdmin } = session.user;
-
   const client = await connectToDatabase();
   const db = client.db();
 
@@ -23,8 +21,11 @@ export default async function handler(req, res) {
   }
 
   const ownerId = review.userId;
-  console.log({ ownerId, sessionUserId });
-  if (!isAdmin && ownerId.toString() !== sessionUserId.toString()) {
+
+  if (
+    !session.user.isAdmin &&
+    ownerId.toString() !== session.user._id.toString()
+  ) {
     client.close();
     return res.status(403).json({ error: "Not allowed" });
   }
