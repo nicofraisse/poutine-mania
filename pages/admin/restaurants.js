@@ -61,6 +61,8 @@ const Restaurants = () => {
 
   if (!currentUser && !currentUserLoading) push("/404");
 
+  console.log(restaurants);
+
   if (currentUser?.isAdmin)
     return (
       <div className="w-full min-h-screen-minus-navbar p-6 max-w-lg">

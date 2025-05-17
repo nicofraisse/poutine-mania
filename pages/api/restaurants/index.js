@@ -107,6 +107,21 @@ handler.get(async (req, res) => {
     },
   ];
 
+  const userLookupStage = {
+    $lookup: {
+      from: "users",
+      localField: "creatorId",
+      foreignField: "_id",
+      as: "creator",
+    },
+  };
+  const unwindCreatorStage = {
+    $unwind: {
+      path: "$creator",
+      preserveNullAndEmptyArrays: true,
+    },
+  };
+
   let result;
   if (search) {
     result = await db
@@ -122,12 +137,14 @@ handler.get(async (req, res) => {
           },
         },
         ...baseAggregator,
+        userLookupStage,
+        unwindCreatorStage,
       ])
       .toArray();
   } else {
     result = await db
       .collection("restaurants")
-      .aggregate(baseAggregator)
+      .aggregate([...baseAggregator, userLookupStage, unwindCreatorStage])
       .toArray();
   }
   // eslint-disable-next-line no-unused-vars

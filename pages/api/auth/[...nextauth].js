@@ -7,12 +7,34 @@ import { generateSlug } from "../../../lib/generateSlug";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import clientPromise from "../../../lib/dbPromise";
+import { ObjectId } from "mongodb";
+
+const baseAdapter = MongoDBAdapter(clientPromise);
 
 export const authOptions = {
   secret: process.env.NEXTAUTH_SECRET,
-  adapter: MongoDBAdapter(clientPromise),
   session: { strategy: "jwt" },
   jwt: { secret: process.env.NEXTAUTH_SECRET, encryption: true },
+  adapter: {
+    ...baseAdapter,
+    async createUser(userData) {
+      const user = await baseAdapter.createUser(userData);
+
+      const client = await connectToDatabase();
+      const db = client.db();
+      const _id = typeof user.id === "string" ? new ObjectId(user.id) : user.id;
+
+      await db
+        .collection("users")
+        .updateOne(
+          { _id },
+          { $set: { createdAt: new Date(), updatedAt: new Date() } }
+        );
+      client.close();
+
+      return { ...user, createdAt: new Date(), updatedAt: new Date() };
+    },
+  },
   callbacks: {
     async jwt({ token, user, account }) {
       if (user) {
@@ -195,8 +217,8 @@ export const authOptions = {
           prompt: "consent",
           access_type: "offline",
           response_type: "code",
-          // redirect_uri: `${process.env.NEXTAUTH_URL}/api/auth/callback/google`, // should try this again
-          redirect_uri: "https://www.poutinemania.ca/api/auth/callback/google",
+          redirect_uri: `${process.env.NEXTAUTH_URL}/api/auth/callback/google`, // should try this again
+          // redirect_uri: "https://www.poutinemania.ca/api/auth/callback/google",
         },
       },
     }),
