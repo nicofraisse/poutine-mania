@@ -14,6 +14,7 @@ const Users = () => {
   const [loading, setLoading] = useState(true);
   const { currentUser, loading: currentUserLoading } = useCurrentUser();
   const { push } = useRouter();
+  console.log(users);
 
   useEffect(() => {
     axios
@@ -104,7 +105,9 @@ const Users = () => {
                 {user.emailVerified ? "✅" : "❌"}
               </td>
               <td className="border-b border-slate-100 p-2 pl-8 text-slate-500 max-w-60 truncate">
-                {upperFirst(user.connectedAccount?.providerId) || "-"}
+                {user.connectedAccount
+                  ? upperFirst(user.connectedAccount?.provider) || "?"
+                  : "-"}
               </td>
               <td className="border-b border-slate-100 p-2 pl-8 text-slate-500 max-w-60 truncate">
                 {user.name}
