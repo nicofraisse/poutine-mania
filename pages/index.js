@@ -8,6 +8,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useLoginForm } from "../components/context/LoginFormProvider";
 import { FeaturesIntro } from "../components/FeaturesIntro";
+import DefaultSEO from "../components/DefaultSeo";
 
 const HomePage = ({ restaurants }) => {
   const [, setIsScrollableActivity] = useState(false);
@@ -48,6 +49,7 @@ const HomePage = ({ restaurants }) => {
           name="description"
           content="Note tes poutines préférées en critiquant les frites, le fromage et la sauce. Explore la carte pour dénicher la poutine ultime du Québec !"
         />
+        <DefaultSEO />
       </Head>
 
       <FeaturesIntro />
