@@ -17,7 +17,6 @@ import PillSelect from "../controls/PillSelect";
 import PhoneInput from "components/controls/PhoneInput";
 import { useCurrentUser } from "../../lib/useCurrentUser";
 import { RESTAURANT_PRICES } from "../../lib/constants";
-import { normalizeUrl } from "../../lib/normalizeUrl";
 
 export const RestaurantForm = ({ type }) => {
   const { query, push } = useRouter();
