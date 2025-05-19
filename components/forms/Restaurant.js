@@ -17,6 +17,7 @@ import PillSelect from "../controls/PillSelect";
 import PhoneInput from "components/controls/PhoneInput";
 import { useCurrentUser } from "../../lib/useCurrentUser";
 import { RESTAURANT_PRICES } from "../../lib/constants";
+import { normalizeUrl } from "../../lib/normalizeUrl";
 
 export const RestaurantForm = ({ type }) => {
   const { query, push } = useRouter();
@@ -50,7 +51,6 @@ export const RestaurantForm = ({ type }) => {
       axios
         .post("/api/restaurants/create", submitValues)
         .then(({ data }) => {
-          setSubmitting(false);
           toast.success("Succès");
 
           push(
@@ -59,20 +59,21 @@ export const RestaurantForm = ({ type }) => {
               : `/restaurants/${data.restaurant.slug}`
           );
         })
-        .catch((err) => toast.error(err.message));
+        .catch((err) => toast.error(err.response.data.error ?? err.message))
+        .finally(() => setSubmitting(false));
     } else if (type === "update") {
       axios
         .post(`/api/restaurants/${query.id}/update`, submitValues)
         .then(() => {
           toast.success("Succès");
-          setSubmitting(false);
           push(
             currentUser.isAdmin
               ? `/admin/restaurants`
               : `/restaurants/${restaurant.slug}`
           );
         })
-        .catch((err) => toast.error(err.message));
+        .catch((err) => toast.error(err.response.data.error ?? err.message))
+        .finally(() => setSubmitting(false));
     }
   };
 

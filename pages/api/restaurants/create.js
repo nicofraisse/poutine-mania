@@ -3,6 +3,7 @@ import { database } from "middleware/database";
 import { generateSlug } from "../../../lib/generateSlug";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../api/auth/[...nextauth]";
+import { normalizeUrl } from "../../../lib/normalizeUrl";
 
 const handler = nextConnect();
 
@@ -13,6 +14,10 @@ handler.post(async (req, res) => {
   const session = await getServerSession(req, res, authOptions);
 
   const slug = await generateSlug(req.body.name, db, "restaurants");
+
+  if (req.body.website && !normalizeUrl(req.body.website)) {
+    return res.status(400).json({ error: "L'URL du site est invalide" });
+  }
 
   const { insertedId } = await db.collection("restaurants").insertOne({
     name: req.body.name,

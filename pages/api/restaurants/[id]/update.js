@@ -1,9 +1,14 @@
 import { connectToDatabase } from "lib/db";
 import { isAdmin } from "../../../../lib/middleware/isAdmin";
+import { normalizeUrl } from "../../../../lib/normalizeUrl";
 
 const handler = async (req, res) => {
   const client = await connectToDatabase();
   const db = await client.db();
+
+  if (req.body.website && !normalizeUrl(req.body.website)) {
+    return res.status(400).json({ error: "L'URL du site est invalide" });
+  }
 
   const updatedRestaurant = await db.collection("restaurants").updateOne(
     { slug: req.query.id },

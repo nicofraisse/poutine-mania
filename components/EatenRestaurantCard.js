@@ -85,7 +85,7 @@ export const EatenRestaurantCard = ({ restaurant }) => {
             ) : (
               <Link
                 legacyBehavior
-                href={`/restaurants/${restaurant?._id}/noter`}
+                href={`/restaurants/${restaurant?.slug}/noter`}
                 passHref
               >
                 <Button height="xs" className="text-normal" variant="light">
@@ -165,7 +165,7 @@ export const EatenRestaurantCard = ({ restaurant }) => {
             </>
           )}
         </div>
-      </div>{" "}
+      </div>
       <ImageModal
         isOpen={imgModalOpen !== false}
         onClose={() => setImgModalOpen(false)}

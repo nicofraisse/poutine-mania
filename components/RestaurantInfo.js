@@ -2,6 +2,7 @@ import { ExternalLink, MapPin, PhoneCall } from "react-feather";
 import ShowPageMap from "components/ShowPageMap";
 import { formatAddress } from "lib/formatAddress";
 import Skeleton from "react-loading-skeleton";
+import { normalizeUrl } from "../lib/normalizeUrl";
 
 export const RestaurantInfo = ({ showMap, restaurant, setShowMap }) => {
   const isSkeleton = !restaurant;
@@ -44,11 +45,11 @@ export const RestaurantInfo = ({ showMap, restaurant, setShowMap }) => {
             <ExternalLink className="mr-2 inline shrink-0" size={20} />
             <a
               target="_blank"
-              href={restaurant.website}
+              href={normalizeUrl(restaurant.website)}
               className="underline"
               rel="noreferrer"
             >
-              {restaurant.website}
+              {normalizeUrl(restaurant.website)}
             </a>
           </div>
         )

@@ -217,8 +217,8 @@ export const authOptions = {
           prompt: "consent",
           access_type: "offline",
           response_type: "code",
-          redirect_uri: `${process.env.NEXTAUTH_URL}/api/auth/callback/google`, // should try this again
-          // redirect_uri: "https://www.poutinemania.ca/api/auth/callback/google",
+          // redirect_uri: `${process.env.NEXTAUTH_URL}/api/auth/callback/google`, // should try this again
+          redirect_uri: "https://www.poutinemania.ca/api/auth/callback/google",
         },
       },
     }),
