@@ -1,5 +1,3 @@
-import Head from "next/head";
-
 export default function DefaultSEO() {
   const image = `${process.env.NEXT_PUBLIC_APP_URL}/poutine-mania-og-image.png`;
   const url = process.env.NEXT_PUBLIC_APP_URL;
@@ -8,7 +6,7 @@ export default function DefaultSEO() {
   const title = "Poutine Mania - Note tes poutines préférées!";
 
   return (
-    <Head>
+    <>
       <meta name="image" content={image} />
       <meta property="fb:app_id" content="572135587608476" />
       <meta property="og:type" content="website" />
@@ -20,6 +18,6 @@ export default function DefaultSEO() {
       <meta property="twitter:title" content={title} />
       <meta property="twitter:description" content={description} />
       <meta property="twitter:image" content={image} />
-    </Head>
+    </>
   );
 }
