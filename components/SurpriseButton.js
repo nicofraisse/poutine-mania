@@ -1,9 +1,11 @@
 import { useRouter } from "next/router";
 import Button from "./Button";
 import Image from "next/image";
+import { useTranslation } from "next-i18next";
 
 export const SurpriseButton = () => {
   const router = useRouter();
+  const { t } = useTranslation();
 
   const handleClick = async () => {
     const response = await fetch("/api/restaurants/surprise");
@@ -23,7 +25,7 @@ export const SurpriseButton = () => {
       <div className="dice-container">
         <Image alt="poutine-logo" src="/dice.png" width={40} height={40} />
       </div>
-      Surprends-moi !
+      {t("button.surpriseMe")}
     </Button>
   );
 };

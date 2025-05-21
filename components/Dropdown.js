@@ -9,7 +9,8 @@ const Dropdown = ({ children, isOpen, setIsOpen, toggleRef }) => {
       if (
         ref.current &&
         !ref.current.contains(e.target) &&
-        !e.target.contains(toggleRef.current)
+        toggleRef.current &&
+        !toggleRef.current.contains(e.target)
       ) {
         setIsOpen(false);
       }

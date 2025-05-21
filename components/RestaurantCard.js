@@ -7,11 +7,13 @@ import { Image } from "./Image";
 import Link from "next/link";
 import { useRateRestaurant } from "./context/RateRestaurantProvider";
 import Skeleton from "react-loading-skeleton";
+import { useTranslation } from "next-i18next";
 
 const RestaurantCard = ({ restaurant, openInNewTab }) => {
   const loading = Object.keys(restaurant).length === 0;
   const { setHoveredId, hoveredId } = useRestaurantCardHover();
   const { rateRestaurant } = useRateRestaurant();
+  const { t } = useTranslation();
 
   const city =
     restaurant.succursales &&
@@ -69,7 +71,7 @@ const RestaurantCard = ({ restaurant, openInNewTab }) => {
                     src="/poutinebw.png"
                     width={64}
                     height={64}
-                    alt="empty-poutine"
+                    alt={t("restaurantCard.emptyAlt")}
                     className="opacity-30"
                   />
                 </div>
@@ -114,7 +116,6 @@ const RestaurantCard = ({ restaurant, openInNewTab }) => {
                   priceRange={restaurant.priceRange}
                 />
               )}
-              {/* <LastComment comment={lastComment} /> */}
             </div>
           </div>
         </a>
@@ -134,6 +135,8 @@ export const TagSection = ({
   darkBackground,
   noAddress,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <>
       <div
@@ -151,7 +154,7 @@ export const TagSection = ({
         •{" "}
         {categories?.map((c, i) => (
           <span key={i} className="">
-            {c}
+            {t(`restaurantCategories.[${c}]`)}
             {i === categories.length - 1 ? " • " : "/"}
           </span>
         )) || <Skeleton />}
@@ -172,7 +175,9 @@ export const TagSection = ({
             (succursales &&
               (succursales.length === 1
                 ? succursales[0].address.place_name.split(", Q")[0]
-                : `${succursales.length} adresses au Québec`))}
+                : t("restaurantCard.addressCount", {
+                    count: succursales.length,
+                  })))}
         </div>
       )}
     </>

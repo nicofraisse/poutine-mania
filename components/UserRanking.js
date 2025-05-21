@@ -7,8 +7,10 @@ import Tooltip from "rc-tooltip";
 import Link from "next/link";
 import Skeleton from "react-loading-skeleton";
 import { EmptyState } from "components/EmptyState";
+import { useTranslation } from "next-i18next";
 
 const UserRanking = ({ reviews, loading }) => {
+  const { t } = useTranslation();
   const reviewedRestaurants = reviews?.map((review) => {
     return { ...review.restaurants[0], review };
   });
@@ -84,7 +86,7 @@ const UserRanking = ({ reviews, loading }) => {
                       {r?.categories?.[0]}
                       <span className="hidden sm:inline">
                         {r?.succursales?.length > 1 ? ", " : " à "}
-                        {r?.succursales && formatCity(r)}
+                        {r?.succursales && formatCity(r, t)}
                       </span>
                     </>
                   )}

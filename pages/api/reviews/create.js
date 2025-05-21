@@ -78,7 +78,6 @@ const handler = async (req, res) => {
           );
         }
 
-        // Create updated eatenlist
         let updatedEatenlist = session.user.eatenlist;
         let updatedWatchlist = session.user.watchlist;
 
@@ -88,7 +87,6 @@ const handler = async (req, res) => {
 
         updatedWatchlist = updatedWatchlist.filter((r) => r !== restaurantId);
 
-        // Update user's eatenlist
         await db.collection("users").updateOne(
           { _id: ObjectId(session.user._id) },
           {
@@ -111,7 +109,7 @@ const handler = async (req, res) => {
 
 export const config = {
   api: {
-    bodyParser: false, // required to parse multipart/form-data
+    bodyParser: false,
   },
 };
 

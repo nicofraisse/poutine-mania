@@ -5,6 +5,7 @@ import Modal from "react-responsive-modal";
 import Login from "../forms/Login";
 import SignUp from "../forms/SignUp";
 import { EmailConfirmation } from "../EmailConfirmation";
+import { useTranslation } from "next-i18next";
 
 const LoginFormContext = createContext({});
 
@@ -14,6 +15,7 @@ export const LoginFormProvider = ({ children }) => {
   const [loginMessage, setLoginMessage] = useState(null);
   const [redirectUrl, setRedirectUrl] = useState("");
   const [emailToConfirm, setEmailToConfirm] = useState(null);
+  const { t } = useTranslation();
 
   const toggleLogin = (open, options) => {
     setLoginOpen(open);
@@ -56,7 +58,9 @@ export const LoginFormProvider = ({ children }) => {
       >
         <div className="flex flex-col items-center">
           {loginMessage || (
-            <h2 className="font-black text-3xl text-center pb-3">Connexion</h2>
+            <h2 className="font-black text-3xl text-center pb-3">
+              {t("login.title")}
+            </h2>
           )}
           <Login
             onSubmit={() => toggleLogin(false)}
@@ -84,7 +88,7 @@ export const LoginFormProvider = ({ children }) => {
         ) : (
           <>
             <h2 className="font-black text-3xl text-center pb-3 pt-5">
-              Créer mon compte
+              {t("signup.title")}
             </h2>
             <SignUp onSubmit={handleShowConfirmation} redirect={redirectUrl} />
           </>

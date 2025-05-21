@@ -18,10 +18,12 @@ import { useSidebarData } from "components/context/SidebarDataProvider";
 import Modal from "react-responsive-modal";
 import { useRequireLogin } from "../../lib/useRequireLogin";
 import Link from "next/link";
+import { useTranslation } from "next-i18next";
 
 const ReviewStats = ({ reviews, restaurant }) => {
   const { currentUser } = useCurrentUser();
   const requireLogin = useRequireLogin();
+  const { t } = useTranslation();
 
   const counts = countBy(reviews, (r) => Math.floor(r.finalRating));
   const reviewStats = [...Array(11)].map((_, i) => counts[i] || 0);
@@ -60,16 +62,16 @@ const ReviewStats = ({ reviews, restaurant }) => {
         setIsEaten(!isEaten);
         toast.success(
           isEaten ? (
-            "Supprimé des poutines mangées!"
+            t("restaurant.reviews.deleteFromEatenlistSuccess")
           ) : (
             <>
-              Ajouté aux
+              {t("restaurant.reviews.addToEatenlistSuccess.part1")}
               <Link legacyBehavior href="/mes-poutines">
                 <span className="underline text-blue-500 ml-1 cursor-pointer">
-                  poutines mangées
+                  {t("restaurant.reviews.addToEatenlistSuccess.part2")}
                 </span>
               </Link>
-              !
+              {t("restaurant.reviews.addToEatenlistSuccess.part3")}
             </>
           )
         );
@@ -102,16 +104,16 @@ const ReviewStats = ({ reviews, restaurant }) => {
         setIsWatch(!isWatch);
         toast.success(
           isWatch ? (
-            "Supprimé des poutines à essayer!"
+            t("restaurant.reviews.deleteFromWatchlistSuccess")
           ) : (
             <>
-              Ajouté aux
+              {t("restaurant.reviews.addToWatchlistSuccess.part1")}
               <Link legacyBehavior href="/a-essayer">
                 <span className="underline text-blue-500 ml-1 cursor-pointer">
-                  poutines à essayer
+                  {t("restaurant.reviews.addToWatchlistSuccess.part2")}
                 </span>
               </Link>
-              !
+              {t("restaurant.reviews.addToWatchlistSuccess.part3")}
             </>
           )
         );
@@ -147,11 +149,11 @@ const ReviewStats = ({ reviews, restaurant }) => {
           <h2 className="inline px-1 pl-1 mr-5 text-gray-700">
             {reviews.length > 0 ? (
               <span className="text-lg sm:text-xl">
-                Avis ({reviews.length})
+                {t("restaurant.reviews.title")} ({reviews.length})
               </span>
             ) : (
               <p className="mb-2 text-sm">
-                Soyez la première personne à laisser un avis!
+                {t("restaurant.reviews.noReviews")}
               </p>
             )}
           </h2>
@@ -164,9 +166,10 @@ const ReviewStats = ({ reviews, restaurant }) => {
                   handleAddToWatchlist,
                   <div className="px-4 sm:w-[380px] ">
                     <div className="py-2 px-3 my-2 bg-blue-100 text-gray-700 rounded">
-                      {/* <Info size={18} className='text-gray-700 inline mr-2' /> */}
-                      <b>connecte-toi</b> pour ajouter cette poutine à ta liste
-                      à essayer!
+                      <b>
+                        {t("restaurant.reviews.loginToAddToWatchlist.part1")}
+                      </b>{" "}
+                      {t("restaurant.reviews.loginToAddToWatchlist.part2")}
                     </div>
                   </div>
                 )
@@ -174,7 +177,6 @@ const ReviewStats = ({ reviews, restaurant }) => {
               className={classNames(
                 "inline-flex mr-2 items-center px-4 shrink-0 text-sm sm:text-md h-[35px] sm:h-[40px]",
                 {
-                  // "bg-gray-50": !isWatch,
                   "border-yellow-400 text-yellow-500": isWatch,
                   "text-gray-300 bg-gray-100": isEaten,
                 }
@@ -189,7 +191,7 @@ const ReviewStats = ({ reviews, restaurant }) => {
                   "fill-yellow-400 text-yellow-400": isWatch,
                 })}
               />
-              <span>À Essayer</span>
+              <span>{t("button.addToWatchlist")}</span>
             </Button>
             <Button
               height="sm"
@@ -199,8 +201,10 @@ const ReviewStats = ({ reviews, restaurant }) => {
                   <div className="px-4 sm:w-[380px] ">
                     <div className="py-2 px-3 my-2 bg-blue-100 border--200 text-gray-700 rounded borer">
                       {/* <Info size={18} className='text-gray-700 inline mr-2' /> */}
-                      <b>connecte-toi</b> pour ajouter cette poutine à ta liste
-                      de poutines mangées!
+                      <b>
+                        {t("restaurant.reviews.loginToAddToEatenlist.part1")}
+                      </b>{" "}
+                      {t("restaurant.reviews.loginToAddToEatenlist.part2")}
                     </div>
                   </div>
                 )
@@ -217,7 +221,7 @@ const ReviewStats = ({ reviews, restaurant }) => {
               loading={isEatenLoading}
             >
               <CheckCircle className="mr-2 sm:text-lg w-4 sm:w-5" />
-              <span>J&apos;ai mangé</span>
+              <span>{t("button.iAte")}</span>
             </Button>
           </div>
         </div>
@@ -261,6 +265,7 @@ const RestaurantReviews = ({ restaurant }) => {
   const { currentUser } = useCurrentUser();
   const [reviewToDelete, setReviewToDelete] = useState(null);
   const [deleteFromEatenlist, setDeleteFromEatenlist] = useState(false);
+  const { t } = useTranslation();
   const isOnlyReview = currentUser
     ? reviews?.filter((r) => r.userId === currentUser._id)?.length === 1
     : false;
@@ -302,10 +307,12 @@ const RestaurantReviews = ({ restaurant }) => {
         }}
       >
         <div className="sm:w-xs p-2">
-          <div className="text-3xl font-black mb-3">Supprimer l&apos;avis?</div>
+          <div className="text-3xl font-black mb-3">
+            {t("restaurant.reviews.delete.confirmTitle")}
+          </div>
           <div className="text-slate-400 mb-4 border border-slate-300 text-sm bg-slate-50 p-2 rounded my-2 flex items-center">
             <Info className="inline mr-2" size={16} />
-            <span>Cette action est irréversible.</span>
+            <span>{t("restaurant.reviews.delete.confirmDescription")}</span>
           </div>
           {isOnlyReview && (
             <div>
@@ -317,7 +324,7 @@ const RestaurantReviews = ({ restaurant }) => {
                 className="mr-2"
               />
               <label htmlFor="deleteFromEatenlist">
-                Supprimer des poutines mangées
+                {t("restaurant.reviews.delete.eatenlist")}
               </label>
             </div>
           )}
@@ -328,7 +335,7 @@ const RestaurantReviews = ({ restaurant }) => {
               variant="light"
               onClick={() => setReviewToDelete(null)}
             >
-              Annuler
+              {t("button.cancel")}
             </Button>
             <Button
               height="sm"
@@ -337,7 +344,7 @@ const RestaurantReviews = ({ restaurant }) => {
               className="ml-3"
               onClick={handleDelete}
             >
-              Supprimer
+              {t("button.delete")}
             </Button>
           </div>
         </div>

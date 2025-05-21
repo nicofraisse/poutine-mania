@@ -4,21 +4,23 @@ import { MapPin } from "react-feather";
 import classNames from "classnames";
 import Link from "next/link";
 import { Image } from "components/Image";
+import { formatAddress } from "lib/formatAddress";
 
 import { IngredientRatingPills } from "../IngredientRatingPills";
 import { formatRating } from "../../lib/formatRating";
+import { useTranslation } from "next-i18next";
+import { useRouter } from "next/router";
 
 export const TopPoutines = ({ restaurants }) => {
+  const { t } = useTranslation();
+  const router = useRouter();
   return (
     <div className="max-w-4xl">
       <div className="sm:py-1 px-5 md:py-2 lg:px-6 text-center lg:pt-6">
         <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold my-4">
-          Top 10 meilleures poutines
+          {t("home.topPoutines.title")}
         </h2>
-        <h2>
-          Selon les votes de notre communauté, voici les meilleures poutines à
-          absolument essayer!
-        </h2>
+        <h3>{t("home.topPoutines.subtitle")}</h3>
       </div>
 
       <div className="sm:shadow-lg sm:border-white sm:border-4 rounded-lg sm:mb-16 xl:mb-20 mt-6">
@@ -35,7 +37,7 @@ export const TopPoutines = ({ restaurants }) => {
                   }
                 )}
                 onClick={() => {
-                  window.location.href = `/restaurants/${r.slug}`;
+                  router.push(`/restaurants/${r.slug}`);
                 }}
               >
                 <div className="inline-flex flex-col xs:flex-row items-center">
@@ -129,9 +131,7 @@ export const TopPoutines = ({ restaurants }) => {
                     /> */}
                     <div className="text-sm text-gray-400">
                       <MapPin size={16} className="inline mt-[-2px]" />{" "}
-                      {r.succursales.length === 1
-                        ? r.succursales[0].address.place_name.split(", Q")[0]
-                        : `${r.succursales.length} adresses au Québec`}
+                      {formatAddress(r, t, { short: true })}
                     </div>
                     <IngredientRatingPills
                       avgCheeseRating={r.avgCheeseRating}

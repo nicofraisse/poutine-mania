@@ -13,27 +13,25 @@ import classNames from "classnames";
 import { RatingSection } from "./ReviewCard";
 import { ImageModal } from "./ImageModal";
 import Skeleton from "react-loading-skeleton";
+import { useTranslation } from "next-i18next";
 
 export const ProfileReviewCard = ({ review, isIndex, userName, loading }) => {
   const [imgModalOpen, setImgModalOpen] = useState(false);
   const { currentUser } = useCurrentUser();
   const { reload } = useRouter();
   const { rateRestaurant } = useRateRestaurant();
+  const { t } = useTranslation();
 
   const handleEdit = (review) => {
     rateRestaurant(review.restaurants[0], review);
   };
 
   const handleDelete = async (id) => {
-    if (
-      window.confirm(
-        "Ês-tu sûr(e) de vouloir supprimer l'avis? Cette action est irréversible."
-      )
-    ) {
+    if (window.confirm(t("profileReviewCard.confirmDelete"))) {
       await axios
         .delete(`/api/reviews/${id}/delete?userId=${review.user._id}`)
         .then(() => {
-          toast.success("Supprimé!");
+          toast.success(t("profileReviewCard.deleteSuccess"));
           reload(window.location.pathname);
         })
         .catch((e) => toast.error(e.message));
@@ -73,7 +71,7 @@ export const ProfileReviewCard = ({ review, isIndex, userName, loading }) => {
             <div className="h-6 min-w-6 max-w-6 block relative top-[13px] translate-y-[-13px] translate-x-[-6px]">
               {review.user?.image ? (
                 <Image
-                  alt="user-image"
+                  alt={t("profileReviewCard.userImageAlt")}
                   src={review.user.image}
                   className="h-6 min-w-6 max-w-6 rounded-full object-cover object-center"
                   quality={10}
@@ -98,21 +96,22 @@ export const ProfileReviewCard = ({ review, isIndex, userName, loading }) => {
                       {review?.user?.name?.slice(0, 32)}
                     </span>
                   </Link>{" "}
-                  a{" "}
+                  {t("profileReviewCard.has")}{" "}
                 </>
               ) : (
                 <>
                   <Edit3 className="mr-1 sm:mr-2 inline -mt-1 w-4 h-4 sm:w-5 sm:h-5" />
                   {currentUser && currentUser._id === review.userId
-                    ? "Tu as"
-                    : `${userName} a`}
+                    ? t("profileReviewCard.youHave")
+                    : `${userName} ${t("profileReviewCard.has")}`}
                   &nbsp;
                 </>
               )}
-              noté{" "}
+              {t("profileReviewCard.rated")}{" "}
               <Link
                 legacyBehavior
                 href={`/restaurants/${review.restaurants[0].slug}`}
+                passHref
               >
                 <a className="text-teal-500 font-bold hover:text-teal-600">
                   {review.restaurants[0].name}
@@ -120,7 +119,7 @@ export const ProfileReviewCard = ({ review, isIndex, userName, loading }) => {
               </Link>
             </span>
             <span className="inline sm:hidden xl:inline text-slate-300 right-0 text-xs ml-1 font-normal relative sm:top-[4px] xl:top-0">
-              <span className="">- </span>{" "}
+              <span>- </span>
               {formatDate(review.createdAt, "d MMMM yyyy", true)}
             </span>
           </span>
@@ -162,7 +161,7 @@ export const ProfileReviewCard = ({ review, isIndex, userName, loading }) => {
                 >
                   <Image
                     src={photo}
-                    alt="poutine-user-photo"
+                    alt={t("profileReviewCard.poutinePhotoAlt")}
                     className="object-cover object-center absolute top-0 left-0 w-full h-full"
                     quality={50}
                   />
@@ -177,13 +176,13 @@ export const ProfileReviewCard = ({ review, isIndex, userName, loading }) => {
               className="text-sm text-slate-400 hover:text-slate-500"
               onClick={() => handleEdit(review)}
             >
-              Modifier
+              {t("profileReviewCard.edit")}
             </button>
             <button
               className="text-sm text-slate-400 hover:text-slate-500"
               onClick={() => handleDelete(review._id)}
             >
-              Supprimer
+              {t("profileReviewCard.delete")}
             </button>
           </div>
         )}
@@ -192,7 +191,7 @@ export const ProfileReviewCard = ({ review, isIndex, userName, loading }) => {
         isOpen={imgModalOpen !== false}
         onClose={() => setImgModalOpen(false)}
         images={review.photos}
-        user={review?.user?.name || "Inconnu"}
+        user={review?.user?.name || t("profileReviewCard.unknown")}
         restaurant={review.restaurants[0].name}
         initialIndex={imgModalOpen}
       />

@@ -4,6 +4,7 @@ import { RateRestaurantProvider } from "components/context/RateRestaurantProvide
 import { Layout } from "../components/layout/Layout";
 import "../styles/globals.css";
 import "react-loading-skeleton/dist/skeleton.css";
+import { appWithTranslation } from "next-i18next";
 import { LoginFormProvider } from "../components/context/LoginFormProvider";
 import { RestaurantSearchProvider } from "../components/context/RestaurantSearchProvider";
 import { CookiesProvider } from "react-cookie";
@@ -40,4 +41,4 @@ function App({ Component, pageProps }) {
   );
 }
 
-export default App;
+export default appWithTranslation(App);

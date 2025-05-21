@@ -6,12 +6,14 @@ import Form from "components/Form";
 import Field from "components/Field";
 import { useLoginForm } from "../context/LoginFormProvider";
 import { useEffect, useState } from "react";
+import { useTranslation } from "next-i18next";
 
 const Login = ({ onSubmit, redirect, setEmailToConfirm }) => {
   const { openSignup, closeLogin } = useLoginForm();
+  const { t } = useTranslation();
 
-  const [isEmbeddedBrowser, setIsEmbeddedBrowser] = useState();
-  const [showEmbeddedBrrowserError, setShowEmbeddedBrrowserError] =
+  const [isEmbeddedBrowser, setIsEmbeddedBrowser] = useState(false);
+  const [showEmbeddedBrowserError, setShowEmbeddedBrowserError] =
     useState(false);
 
   useEffect(() => {
@@ -57,22 +59,31 @@ const Login = ({ onSubmit, redirect, setEmailToConfirm }) => {
     })
       .then((data) => {
         if (data.error) {
-          const error = data.error;
+          console.log("error", data.error, JSON.stringify(data));
+          const error = JSON.parse(data.error);
 
           if (error?.code === "EMAIL_NOT_VALIDATED") {
             setEmailToConfirm(values.email);
           } else {
-            toast.error(error);
+            toast.error(t(error.messageKey ?? "defaultError"));
+            console.error(
+              "Sign in error:",
+              error.message,
+              "raw",
+              error,
+              "data",
+              data
+            );
           }
         } else {
-          toast.success("Vous êtes maintenant connecté(e).");
+          toast.success(t("login.successMessage"));
           onSubmit && onSubmit();
         }
         formikBag.setSubmitting(false);
       })
       .catch((e) => {
         console.error("Sign in error:", e.message, "raw", e);
-        toast.error("Une erreur s'est produite");
+        toast.error(t("login.genericError"));
         formikBag.setSubmitting(false);
       });
   };
@@ -84,7 +95,7 @@ const Login = ({ onSubmit, redirect, setEmailToConfirm }) => {
 
   const handleGoogleSignin = () => {
     if (isEmbeddedBrowser) {
-      setShowEmbeddedBrrowserError(true);
+      setShowEmbeddedBrowserError(true);
       return;
     }
     signIn("google", options);
@@ -95,8 +106,8 @@ const Login = ({ onSubmit, redirect, setEmailToConfirm }) => {
       initialValues={{ email: "", password: "" }}
       onSubmit={handleSubmit}
       validationSchema={Yup.object({
-        email: Yup.string().min(1).required("Requis"),
-        password: Yup.string().min(1).required("Requis"),
+        email: Yup.string().min(1).required(t("login.required")),
+        password: Yup.string().min(1).required(t("login.required")),
       })}
       className="sm:w-[380px] p-4"
     >
@@ -106,7 +117,7 @@ const Login = ({ onSubmit, redirect, setEmailToConfirm }) => {
             type="button"
             variant="white"
             className="w-full mb-4"
-            onClick={() => handleGoogleSignin()}
+            onClick={handleGoogleSignin}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -142,48 +153,31 @@ const Login = ({ onSubmit, redirect, setEmailToConfirm }) => {
                 d="M48 48L17 24l-4-3 35-10z"
               />
             </svg>
-            Continuer avec Google
+            {t("login.continueWithGoogle")}
           </Button>
-          {showEmbeddedBrrowserError && (
+          {showEmbeddedBrowserError && (
             <div className="text-xs text-red-500">
-              Pour vous connecter avec Google, vous devez ouvrir cette page dans
-              le navigateur de votre smartphone (Safari ou Chrome).
+              {t("login.googleEmbeddedError")}
             </div>
           )}
-          {/* <Button
-            type="button"
-            variant={VariantColor.blue}
-            className="px-5 w-full text-white"
-            onClick={() => signInNewWindow("facebook", options, false)}
-          >
-            <svg
-              width="32px"
-              height="32px"
-              viewBox="0 0 512 512"
-              id="Layer_1"
-              data-name="Layer 1"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="white"
-              className="mr-3"
-            >
-              <path d="M480,257.35c0-123.7-100.3-224-224-224s-224,100.3-224,224c0,111.8,81.9,204.47,189,221.29V322.12H164.11V257.35H221V208c0-56.13,33.45-87.16,84.61-87.16,24.51,0,50.15,4.38,50.15,4.38v55.13H327.5c-27.81,0-36.51,17.26-36.51,35v42h62.12l-9.92,64.77H291V478.66C398.1,461.85,480,369.18,480,257.35Z" />
-            </svg>
-            Continuer avec Facebook
-          </Button> */}
           <div className="w-full flex items-center justify-between my-6">
-            <div className="grow bg-gray-300 h-[1px]"></div>
-            <div className="text-gray-500 px-3 text-sm">OU</div>
-            <div className="grow bg-gray-300 h-[1px]"></div>
+            <div className="grow bg-gray-300 h-[1px]" />
+            <div className="text-gray-500 px-3 text-sm">{t("login.or")}</div>
+            <div className="grow bg-gray-300 h-[1px]" />
           </div>
-          <Field name="email" label="Adress courriel" />
-          <Field name="password" type="password" label="Mot de passe" />
+          <Field name="email" label={t("login.emailLabel")} />
+          <Field
+            name="password"
+            type="password"
+            label={t("login.passwordLabel")}
+          />
           <div className="text-sm">
-            Vous n&apos;avez pas de compte?{" "}
+            {t("login.noAccount")}
             <span
               className="font-black cursor-pointer underline text-teal-700 hover:text-teal-600"
               onClick={handleSwitchForm}
             >
-              Inscription
+              {t("login.signupLink")}
             </span>
           </div>
           <Button
@@ -192,7 +186,7 @@ const Login = ({ onSubmit, redirect, setEmailToConfirm }) => {
             className="mt-6 w-full"
             loading={isSubmitting}
           >
-            Connexion
+            {t("login.submit")}
           </Button>
         </>
       )}

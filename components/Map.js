@@ -13,6 +13,7 @@ import Color from "color";
 import { Image as CloudImage } from "components/Image";
 import { TagSection } from "./RestaurantCard";
 import { useRestaurantSearch } from "components/context/RestaurantSearchProvider";
+import { useTranslation } from "next-i18next";
 
 const MarkerAndPopup = ({
   restaurant,
@@ -27,8 +28,8 @@ const MarkerAndPopup = ({
   mapRef,
   viewState,
 }) => {
-  // const [showPopup, setShowPopup] = useState(false)
   const { hoveredId } = useRestaurantCardHover();
+  const { locale } = useRouter();
 
   const isHovered = hoveredId === restaurant._id;
 
@@ -159,7 +160,8 @@ const MarkerAndPopup = ({
         >
           <div
             onClick={() =>
-              !isShowPage && window.open(`/restaurants/${restaurant.slug}`)
+              !isShowPage &&
+              window.open(`/${locale}/restaurants/${restaurant.slug}`)
             }
           >
             {image && !isShowPage && (
@@ -220,6 +222,8 @@ const MarkerAndPopup = ({
 const MapMap = ({ restaurants, isShowPage }) => {
   const [userCoordinates, setUserCoordinates] = useState();
   const { query } = useRouter();
+  const { t } = useTranslation();
+
   const DEFAULT_COORDINATES = useMemo(() => {
     return {
       latitude: 45.53,
@@ -372,19 +376,19 @@ const MapMap = ({ restaurants, isShowPage }) => {
             className="bg-teal-500 hover:bg-teal-700 mr-1 text-white font-bold py-2 px-4 rounded mb-2"
             onClick={() => handleLocationButtonClick("Montreal")}
           >
-            Montreal
+            {t("map.place.montreal")}
           </button>
           <button
             className="bg-cyan-500 hover:bg-cyan-700 mr-1 text-white font-bold py-2 px-4 rounded mb-2"
             onClick={() => handleLocationButtonClick("QuebecCity")}
           >
-            Quebec City
+            {t("map.place.quebecCity")}
           </button>
           <button
             className="bg-stone-500 hover:bg-stone-700 mr-1 text-white font-bold py-2 px-4 rounded"
             onClick={() => handleLocationButtonClick("QuebecRegion")}
           >
-            Quebec Région
+            {t("map.place.quebecRegion")}
           </button>
         </div>
 
@@ -439,7 +443,7 @@ const MapMap = ({ restaurants, isShowPage }) => {
                   }
                 )}
               >
-                Vous êtes ici
+                {t("map.youAreHere")}
               </div>
             </Marker>
           </div>

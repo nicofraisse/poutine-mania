@@ -6,10 +6,10 @@ async function handler(req, res) {
     return;
   }
 
-  const { token } = req.body;
+  const { token, locale } = req.body;
 
   if (!token) {
-    res.status(422).json({ message: "Token invalide." });
+    res.status(422).json({ messageKey: "backend.verifyEmail.invalidToken" });
     return;
   }
 
@@ -21,7 +21,7 @@ async function handler(req, res) {
     .findOne({ verificationToken: token });
 
   if (!user) {
-    res.status(422).json({ message: "Token invalide." });
+    res.status(422).json({ messageKey: "backend.verifyEmail.invalidToken" });
     client.close();
     return;
   }
@@ -33,9 +33,9 @@ async function handler(req, res) {
       { $set: { emailVerified: true }, $unset: { verificationToken: "" } }
     );
 
-  res.status(200).json({ message: "Email vérifié avec succès!" });
-
-  await sendWelcomeEmail(user.email, user.name);
+  res.status(200).json({ messageKey: "backend.verifyEmail.success" });
+  const lang = locale === "en" ? "en" : "fr";
+  await sendWelcomeEmail(user.email, user.name, lang);
   client.close();
 }
 

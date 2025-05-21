@@ -1,33 +1,24 @@
 import { useMemo, useState } from "react";
-
+import { useTranslation } from "next-i18next";
+import { useRouter } from "next/router";
+import Head from "next/head";
+import classNames from "classnames";
+import { X } from "react-feather";
 import Map from "components/Map";
 import RestaurantCard from "components/RestaurantCard";
+import RestaurantIntrouvable from "components/RestaurantIntrouvable";
+import { RestaurantsFilters } from "components/RestaurantsFilters";
 import { useRestaurantSearch } from "components/context/RestaurantSearchProvider";
 import { useGet } from "lib/useAxios";
-import { RestaurantCardHoverProvider } from "components/context/RestaurantCardHoverProvider";
-import { X } from "react-feather";
-import useClickOutside from "lib/useClickOutside";
-import classNames from "classnames";
 import { getUrlQueryString } from "lib/getUrlqueryString";
-import { useRouter } from "next/router";
-import RestaurantIntrouvable from "components/RestaurantIntrouvable";
+import useClickOutside from "lib/useClickOutside";
+import { RestaurantCardHoverProvider } from "components/context/RestaurantCardHoverProvider";
 import { flatten } from "lodash";
 import Skeleton from "react-loading-skeleton";
-import { RestaurantsFilters } from "../../components/RestaurantsFilters";
-import Head from "next/head";
-
-const sortTypes = [
-  { label: "Popularité", value: "reviewCount" },
-  { label: "Nom", value: "name" },
-  { label: "Note moyenne", value: "avgRating" },
-];
-
-const sortOrders = [
-  { label: "Décroissant", value: -1 },
-  { label: "Croissant", value: 1 },
-];
+import { withI18n } from "../../lib/withI18n";
 
 const Restaurants = () => {
+  const { t } = useTranslation();
   const { searchValue } = useRestaurantSearch();
   const [sortType, setSortType] = useState("reviewCount");
   const [sortOrder, setSortOrder] = useState(-1);
@@ -38,49 +29,54 @@ const Restaurants = () => {
   const filtersRef = useClickOutside(() => setFiltersOpen(false));
   const { push } = useRouter();
 
-  const onApplyFilters = (priceFilter, categoryFilter, ratingFilter) => {
-    setPriceFilter(priceFilter);
-    setCategoryFilter(categoryFilter);
-    setRatingFilter(ratingFilter);
+  const sortTypes = [
+    { label: t("restaurants.sortTypes.popularity"), value: "reviewCount" },
+    { label: t("restaurants.sortTypes.name"), value: "name" },
+    { label: t("restaurants.sortTypes.avgRating"), value: "avgRating" },
+  ];
+  const sortOrders = [
+    { label: t("restaurants.sortOrders.desc"), value: -1 },
+    { label: t("restaurants.sortOrders.asc"), value: 1 },
+  ];
+
+  const onApplyFilters = (pf, cf, rf) => {
+    setPriceFilter(pf);
+    setCategoryFilter(cf);
+    setRatingFilter(rf);
   };
 
-  const url = useMemo(() => {
-    return `/api/restaurants${getUrlQueryString({
-      search: searchValue && encodeURIComponent(searchValue.trim()),
-      sort: sortType,
-      order: sortOrder,
-      noUnapproved: true,
-      rating: ratingFilter,
-      categories: categoryFilter?.length ? categoryFilter : undefined,
-      price: priceFilter?.length ? priceFilter : undefined,
-    })}`;
-  }, [
-    searchValue,
-    sortType,
-    sortOrder,
-    ratingFilter,
-    categoryFilter,
-    priceFilter,
-  ]);
+  const url = useMemo(
+    () =>
+      `/api/restaurants${getUrlQueryString({
+        search: searchValue && encodeURIComponent(searchValue.trim()),
+        sort: sortType,
+        order: sortOrder,
+        noUnapproved: true,
+        rating: ratingFilter,
+        categories: categoryFilter?.length ? categoryFilter : undefined,
+        price: priceFilter?.length ? priceFilter : undefined,
+      })}`,
+    [
+      searchValue,
+      sortType,
+      sortOrder,
+      ratingFilter,
+      categoryFilter,
+      priceFilter,
+    ]
+  );
 
   const { data: restaurants } = useGet(url);
-
   const allSuccursales =
     restaurants && flatten(restaurants.map((r) => r.succursales));
 
   return (
     <>
       <Head>
-        <title>Restaurants | Poutine Mania</title>
-        <meta
-          name="description"
-          content="Parcourez la carte interactive de poutineries au Québec. Filtrez par note, prix ou catégorie pour dénicher la poutine parfaite près de chez vous."
-        />
+        <title>{t("restaurants.pageTitle")}</title>
+        <meta name="description" content={t("restaurants.metaDescription")} />
       </Head>
-      {/* H1 for seo */}
-      <h1 className="hidden">
-        Carte des poutineries - Tous les restaurants à poutine au Québec
-      </h1>
+      <h1 className="hidden">{t("restaurants.h1")}</h1>
       <RestaurantCardHoverProvider>
         <div className="flex w-full flex-col md:flex-row-reverse h-screen-minus-navbar">
           <div className="grow md:w-1/2 min-h-1/2vh max-h-1/2vh md:min-h-screen-minus-navbar md:max-h-screen-minus-navbar">
@@ -109,15 +105,33 @@ const Restaurants = () => {
                 >
                   {restaurants.length > 0 ? (
                     <>
-                      {restaurants.length} poutinerie
-                      {restaurants.length > 1 && "s"} • {allSuccursales.length}{" "}
-                      adresse
-                      {allSuccursales.length > 1 && "s"}{" "}
+                      {restaurants.length > 1
+                        ? t("restaurants.resultsCount_plural", {
+                            count: restaurants.length,
+                          })
+                        : t("restaurants.resultsCount", {
+                            count: restaurants.length,
+                          })}{" "}
+                      •{" "}
+                      {allSuccursales.length > 1
+                        ? t("restaurants.succursalesCount_plural", {
+                            count: allSuccursales.length,
+                          })
+                        : t("restaurants.succursalesCount", {
+                            count: allSuccursales.length,
+                          })}
                     </>
                   ) : (
-                    "0 résultats "
+                    t("restaurants.noResults")
                   )}
-                  {searchValue && `pour "${searchValue}"`}{" "}
+                  {searchValue && (
+                    <>
+                      {" "}
+                      {t("restaurants.forSearch", {
+                        search: searchValue,
+                      })}
+                    </>
+                  )}
                   {searchValue && (
                     <button
                       className="p-1 bg-gray-50 transition duration-150 hover:bg-gray-100 ml-1 rounded"
@@ -128,7 +142,6 @@ const Restaurants = () => {
                   )}
                 </h2>
               )}
-
               <RestaurantsFilters
                 filtersRef={filtersRef}
                 restaurants={restaurants}
@@ -147,16 +160,15 @@ const Restaurants = () => {
                 onApplyFilters={onApplyFilters}
               />
             </div>
-
             {(restaurants || [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}]).map(
               (r, i) => (
                 <div className="block my-2 xs:mx-3" key={i}>
                   <RestaurantCard restaurant={r} />
-                  <div className="w-full border-b border-gray-100"></div>
+                  <div className="w-full border-b border-gray-100" />
                 </div>
               )
             )}
-            <div className="h-5"></div>
+            <div className="h-5" />
             {restaurants && (
               <div className="sticky bottom-0">
                 <RestaurantIntrouvable />
@@ -169,4 +181,5 @@ const Restaurants = () => {
   );
 };
 
+export const getStaticProps = withI18n();
 export default Restaurants;

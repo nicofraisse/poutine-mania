@@ -13,17 +13,17 @@ async function handler(req, res) {
   const data = req.body;
 
   try {
-    const { email, name, password } = data;
+    const { email, name, password, locale } = data;
 
     if (!email || !isValidEmail(email)) {
       res.status(422).json({
-        message: "Le format de l'adresse courriel est invalide.",
+        messageKey: "backend.signup.invalidEmailFormat",
       });
       return;
     }
     if (!password || password.trim().length < 6) {
       res.status(422).json({
-        message: "Le mot de passe doit faire au moins 6 caractères.",
+        messageKey: "backend.signup.passwordTooShort6Characters",
       });
       return;
     }
@@ -35,14 +35,13 @@ async function handler(req, res) {
     const existingUser = await db.collection("users").findOne({ email: email });
 
     if (existingUser) {
-      res.status(422).json({ message: "Ce courriel est déjà utilisé!" });
+      res.status(422).json({ messageKey: "backend.signup.emailTaken" });
       client.close();
       return;
     }
 
     const hashedPassword = await hashPassword(password);
 
-    // Create a verification token
     const verificationToken = crypto.randomBytes(32).toString("hex");
 
     const slug = await generateSlug(req.body.name, db, "users");
@@ -60,11 +59,13 @@ async function handler(req, res) {
       slug,
     });
 
-    await sendVerificationEmail(email, verificationToken);
+    const lang = locale === "fr" ? "fr" : "en";
+
+    console.log("locale", locale, lang);
+    await sendVerificationEmail(email, verificationToken, lang);
 
     res.status(201).json({
-      message:
-        "Utilisateur créé! Vérifiez votre e-mail pour confirmer votre compte.",
+      messageKey: "backend.signup.success",
     });
     client.close();
   } catch (e) {

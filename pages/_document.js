@@ -1,9 +1,36 @@
 import Document, { Html, Head, Main, NextScript } from "next/document";
 
 export default class MyDocument extends Document {
+  static async getInitialProps(ctx) {
+    const initialProps = await Document.getInitialProps(ctx);
+    const locale = ctx.locale || "fr";
+    return { ...initialProps, locale };
+  }
+
   render() {
+    const { locale } = this.props;
+    const siteName = "Poutine Mania";
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL;
+    const siteUrl = locale === "en" ? `${baseUrl}/en` : baseUrl;
+    const searchTarget =
+      locale === "en"
+        ? `${baseUrl}/en/restaurants?search={search_term_string}`
+        : `${baseUrl}/restaurants?search={search_term_string}`;
+
+    const jsonLd = {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      url: siteUrl,
+      name: siteName,
+      potentialAction: {
+        "@type": "SearchAction",
+        target: searchTarget,
+        "query-input": "required name=search_term_string",
+      },
+    };
+
     return (
-      <Html lang="fr">
+      <Html lang={locale}>
         <Head>
           {/* ---- Global Metadata ---- */}
           <meta charSet="utf-8" />
@@ -24,41 +51,22 @@ export default class MyDocument extends Document {
             crossOrigin="anonymous"
           />
           {/* @Todo (Optional) Preload most-critical font file if self-hosted */}
-          {/*
-          <link
-            rel="preload"
-            as="font"
-            href="/fonts/DM-Sans.woff2"
-            type="font/woff2"
-            crossOrigin="anonymous"
-          />
-          */}
 
           {/* ---- JSON-LD Structured Data ---- */}
           <script
             type="application/ld+json"
             dangerouslySetInnerHTML={{
-              __html: JSON.stringify({
-                "@context": "https://schema.org",
-                "@type": "WebSite",
-                url: "https://poutinemania.ca/",
-                name: "Poutinemania",
-                potentialAction: {
-                  "@type": "SearchAction",
-                  target:
-                    "https://poutinemania.ca/restaurants?search={search_term_string}",
-                  "query-input": "required name=search_term_string",
-                },
-              }),
+              __html: JSON.stringify(jsonLd),
             }}
           />
+
+          {/* ---- Cloudflare Insights ---- */}
           <script
             defer
             src="https://static.cloudflareinsights.com/beacon.min.js"
             data-cf-beacon='{"token": "4ad878b9015b4f1a96f9c29b75d86221"}'
           />
         </Head>
-
         <body>
           <Main />
           <NextScript />

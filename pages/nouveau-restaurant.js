@@ -1,6 +1,7 @@
 import { RestaurantForm } from "components/forms/Restaurant";
 import { useCurrentUser } from "lib/useCurrentUser";
 import { Spinner } from "../components/Spinner";
+import { withI18n } from "../lib/withI18n";
 
 const CreateRestaurant = () => {
   const { currentUser, loading } = useCurrentUser();
@@ -21,5 +22,6 @@ const CreateRestaurant = () => {
     </div>
   );
 };
+export const getStaticProps = withI18n();
 
 export default CreateRestaurant;

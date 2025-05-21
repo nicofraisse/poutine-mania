@@ -5,9 +5,12 @@ import { useCurrentUser } from "../lib/useCurrentUser";
 import RestaurantBookmark from "../components/RestaurantBookmark";
 
 import { EmptyState } from "../components/EmptyState";
+import { useTranslation } from "next-i18next";
+import { withI18n } from "../lib/withI18n";
 
 const MesPoutines = () => {
   const { currentUser } = useCurrentUser();
+  const { t } = useTranslation();
 
   const { data: restaurants } = useGet(
     `/api/users/${currentUser?._id}/get-watchlist`,
@@ -17,7 +20,7 @@ const MesPoutines = () => {
   return (
     <div className="p-5 mx-auto max-w-lg">
       <h1 className="text-2xl font-black mb-5 mt-3 text-center sm:text-start">
-        À essayer
+        {t("watchlist.title")}
       </h1>
       <div className="flex flex-wrap items-start justify-center sm:justify-start">
         {restaurants?.length === 0 ? (
@@ -31,5 +34,7 @@ const MesPoutines = () => {
     </div>
   );
 };
+
+export const getStaticProps = withI18n();
 
 export default MesPoutines;

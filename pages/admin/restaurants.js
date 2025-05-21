@@ -11,12 +11,14 @@ import { getUrlQueryString } from "lib/getUrlqueryString";
 import { ToggleSwitch } from "components/controls/ToggleSwitch";
 import { useCurrentUser } from "lib/useCurrentUser";
 import { formatCity, formatCountry } from "lib/formatAddress";
+import { useTranslation } from "next-i18next";
+import { withI18n } from "../../lib/withI18n";
 
 const Restaurants = () => {
   const [restaurants, setRestaurants] = useState([]);
   const [loading, setLoading] = useState(true);
   const { currentUser, loading: currentUserLoading } = useCurrentUser();
-
+  const { t } = useTranslation();
   const { push, reload } = useRouter();
 
   useEffect(() => {
@@ -112,7 +114,7 @@ const Restaurants = () => {
                   {r.name}
                 </td>
                 <td className="border-b border-slate-100 p-2 pl-8 text-slate-500">
-                  {formatCity(r)}, {formatCountry(r)}
+                  {formatCity(r, t)}, {formatCountry(r, t)}
                 </td>
                 <td className="border-b border-slate-100 p-2 pl-8 text-slate-500">
                   {r.creator?.email || "?"}
@@ -146,3 +148,5 @@ const Restaurants = () => {
 };
 
 export default Restaurants;
+
+export const getStaticProps = withI18n();

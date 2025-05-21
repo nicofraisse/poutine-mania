@@ -1,0 +1,475 @@
+{
+  "about": {
+    "contactButton": "Contact",
+    "footer": "© Poutine Mania | 2022-{{year}}",
+    "heading": "À Propos",
+    "intro1": "Bienvenue sur la référence des amateurs de poutine! Ici, découvre, évalue et partage tes poutines favorites dans ton quartier ou ailleurs.",
+    "intro2": "De notre première bouchée à Montréal jusqu'aux plus profondes contrées québécoises, nous sommes devenus de véritables passionnés de poutine et avons créé ce site pour vous aider à trouver votre prochaine expérience culinaire. Merci de nous rejoindre dans cette aventure gourmande!",
+    "intro3": "Pour toutes <0>questions</0>, <1>suggestions d'amélioration</1>, <2>problèmes à signaler</2>, ou si tu veux simplement discuter de poutine, n'hésite pas à nous contacter en cliquant sur le bouton ci-dessous.",
+    "metaDescription": "Bienvenue sur la référence des amateurs de poutine! Ici, découvrez, évaluez et partagez vos poutines favorites dans votre quartier ou ailleurs.",
+    "title": "À Propos | Poutine Mania"
+  },
+  "addressCount": "{{count}} adresses",
+  "addressCountQuebec": "{{count}} adresses au Québec",
+  "backend": {
+    "nextauth": {
+      "emailNotValidates": "Votre compte n'est pas encore activé, veuillez cliquer sur le lien que nous vous avons envoyé par courriel.",
+      "invalidCredentials": "Le courriel ou mot de passe est invalide",
+      "useAnotherProvider": "Ce compte est déjà lié à un autre fournisseur d'authentification. Veuillez vous connecter avec ce fournisseur.",
+      "useGoogleProvider": "Cliquer sur \"Continuer avec Google\" pour vous connecter à ce compte."
+    },
+    "sendVerificationEmail": {
+      "emailAlreadyVerified": "Email déjà vérifié.",
+      "emailSent": "Email envoyé.",
+      "invalidToken": "Token invalide.",
+      "methodNotAllowed": "Méthode non autorisée."
+    },
+    "signup": {
+      "created": "Utilisateur créé ! Vérifiez votre e-mail pour confirmer votre compte.",
+      "emailTaken": "Ce courriel est déjà utilisé !",
+      "invalidEmail": "Le format de l'adresse courriel est invalide.",
+      "invalidEmailFormat": "Le format de l'adresse courriel est invalide.",
+      "passwordTooShort6Characters": "Le mot de passe doit faire au moins 6 caractères.",
+      "shortPassword": "Le mot de passe doit faire au moins 6 caractères.",
+      "success": "Utilisateur créé! Vérifiez votre e-mail pour confirmer votre compte."
+    },
+    "verifyEmail": {
+      "invalidToken": "Token invalide.",
+      "success": "Email vérifié avec succès!"
+    }
+  },
+  "button": {
+    "add": "Ajouter",
+    "addToWatchlist": "À essayer",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "explore": "Explorer",
+    "iAte": "J'ai mangé",
+    "login": "Se connecter",
+    "rate": "Noter",
+    "signup": "S'inscrire",
+    "submit": "Valider",
+    "surpriseMe": "Surprends-moi !",
+    "viewMore": "Voir plus"
+  },
+  "dropdown": {
+    "myProfile": "Mon profil",
+    "signOut": "Déconnexion"
+  },
+  "eatenRestaurantCard": {
+    "noComment": "Pas de commentaire",
+    "onDate": "- le {{date}}",
+    "photoAlt": "photo utilisateur de poutine",
+    "rate": "Noter"
+  },
+  "eatenlist": {
+    "filter": {
+      "notRated": "Pas encore notées ({{count}})",
+      "rated": "Notées ({{count}})"
+    },
+    "filterLabel": "Afficher mes poutines:",
+    "title": "Mes poutines mangées"
+  },
+  "emptyState": {
+    "defaultTitle": "Aucune poutine trouvée",
+    "discoverButton": "Découvrir des poutines",
+    "emptyAlt": "empty-poutine",
+    "rateButton": "Noter une poutine"
+  },
+  "header": {
+    "backablePage": {
+      "home": "Retour à l'accueil",
+      "rateAnother": "Noter un autre restaurant",
+      "restaurants": "Tous les restaurants"
+    }
+  },
+  "hero": {
+    "subtitle": "Note tes poutines préférées et trouve les trésors cachés près de chez toi!",
+    "title": "La quête de la poutine ultime."
+  },
+  "home": {
+    "featuresIntro": {
+      "feature1": {
+        "description": "Note chaque poutine selon la qualité des frites, du fromage et de la sauce pour une évaluation précise.",
+        "title": "Évaluation unique"
+      },
+      "feature2": {
+        "description": "Trouve facilement les meilleures adresses de poutine près de toi grâce à notre carte interactive.",
+        "title": "Carte interactive"
+      },
+      "feature3": {
+        "description": "Fais découvrir tes meilleures trouvailles à la communauté et deviens un influenceur de la poutine.",
+        "title": "Partage tes coups de cœur"
+      },
+      "title": "Comment ça fonctionne?"
+    },
+    "recentActivity": {
+      "title": "Derniers avis"
+    },
+    "topPoutines": {
+      "subtitle": "Selon les votes de notre communauté, voici les meilleures poutines à absolument essayer!",
+      "title": "Top 10 meilleures poutines"
+    }
+  },
+  "ingredient": {
+    "cheese": "Fromage",
+    "fries": "Frites",
+    "sauce": "Sauce"
+  },
+  "login": {
+    "continueWithGoogle": "Continuer avec Google",
+    "emailLabel": "Adress courriel",
+    "genericError": "Une erreur s'est produite",
+    "googleEmbeddedError": "Pour vous connecter avec Google, vous devez ouvrir cette page dans le navigateur de votre smartphone (Safari ou Chrome).",
+    "noAccount": "Vous n'avez pas de compte? ",
+    "or": "OU",
+    "passwordLabel": "Mot de passe",
+    "required": "Requis",
+    "signupLink": "Inscription",
+    "submit": "Connexion",
+    "successMessage": "Vous êtes maintenant connecté(e).",
+    "title": "Connexion"
+  },
+  "loginMessage": {
+    "strong": "Connecte-toi",
+    "text": "pour ajouter un restaurant."
+  },
+  "map": {
+    "place": {
+      "montreal": "Montréal",
+      "quebecCity": "Québec City",
+      "quebecRegion": "Région du Québec"
+    },
+    "youAreHere": "Vous êtes ici"
+  },
+  "profileReviewCard": {
+    "confirmDelete": "Ês-tu sûr(e) de vouloir supprimer l'avis? Cette action est irréversible.",
+    "delete": "Supprimer",
+    "deleteSuccess": "Supprimé!",
+    "edit": "Modifier",
+    "has": "a",
+    "poutinePhotoAlt": "photo de poutine utilisateur",
+    "rated": "noté",
+    "unknown": "Inconnu",
+    "userImageAlt": "image utilisateur",
+    "youHave": "Tu as"
+  },
+  "rateRestaurant": {
+    "alreadyRated": "Déjà noté",
+    "button": {
+      "submit": "Publier"
+    },
+    "error": {
+      "chooseOneRating": "Vous devez choisir au moins une note sur 10",
+      "commentTooShort": "Le commentaire est trop court (au moins {{min}} caractères)",
+      "mustRateOrComment": "Veuillez noter la poutine ou ajouter un commentaire pour publier l'avis."
+    },
+    "field": {
+      "cheeseLabel": "🧀 Fromage",
+      "comment": "Commentaire",
+      "friesLabel": "🍟 Frites",
+      "photos": "Photos",
+      "portionLabel": "🤑 Rapport portion/prix",
+      "sauceLabel": "🍯 Sauce"
+    },
+    "finalRatingLabel": "Note finale :",
+    "heading": {
+      "editReview": "Modifier ton avis"
+    },
+    "inputPlaceholder": "Quelle poutine voulez-vous noter ?",
+    "metaDescription": "Évaluez la poutine de votre choix en un instant : frites, fromage, sauce, et rapport portion/prix. Partagez votre avis et aidez les autres à trouver le meilleur restaurant à poutine !",
+    "noResults": "Aucun résultat pour \"{{query}}\"",
+    "other": " autre",
+    "pageTitle": "Noter une poutine | Poutine Mania",
+    "rating": "{{rating}}/10",
+    "submitSuccessMessage": "Merci d'avoir noté cette poutine. Ton avis compte ! Chaque note que tu donnes aide la communauté à trouver les meilleures poutines locales.",
+    "submitSuccessTitle": "Avis publié !",
+    "title": "Noter une poutine",
+    "titleOther": "Noter une autre poutine",
+    "titleQuestion": "Que penses-tu de leur poutine ?",
+    "toast": {
+      "modified": "Modifié !",
+      "published": "Avis publié !"
+    },
+    "validation": {
+      "commentMin": "Dites-nous en un peu plus 😥 (au moins {{min}} caractères)",
+      "number": "La valeur doit être un nombre"
+    },
+    "viewYourReview": "Voir ton avis"
+  },
+  "ratingPill": {
+    "noReviews": "Aucun avis",
+    "reviewCount": "{{count}} avis",
+    "reviewCount_plural": "{{count}} avis"
+  },
+  "ratingSection": {
+    "cheese": "Fromage",
+    "fries": "Frites",
+    "portion": "Portion",
+    "sauce": "Sauce",
+    "service": "Service"
+  },
+  "restaurant": {
+    "pendingApproval": "Ce restaurant est en cours de vérification par un membre de notre équipe. En attendant, vous pouvez écrire un avis sur leur poutine, il sera visible par le reste de la communauté aussitôt que le restaurant est approuvé!",
+    "reviews": {
+      "addToEatenlistSuccess.part1": "Ajouté aux",
+      "addToEatenlistSuccess.part2": "poutines mangées",
+      "addToEatenlistSuccess.part3": "!",
+      "addToWatchlistSuccess.part1": "Ajouté aux",
+      "addToWatchlistSuccess.part2": "poutines à essayer",
+      "addToWatchlistSuccess.part3": "!",
+      "delete": {
+        "confirmDescription": "Cette action est irréversible.",
+        "confirmTitle": "Supprimer l'avis?",
+        "eatenList": "Supprimer des poutines mangées"
+      },
+      "deleteFromEatenlistSuccess": "Supprimé des poutines mangées!",
+      "deleteFromWatchlistSuccess": "Supprimé des poutines à essayer!",
+      "loginToAddToEatenlist.part1": "Connecte-toi",
+      "loginToAddToEatenlist.part2": "pour ajouter cette poutine à ta liste de poutines mangées!",
+      "loginToAddToWatchlist.part1": "Connecte-toi",
+      "loginToAddToWatchlist.part2": "pour ajouter cette poutine à ta liste de poutines à essayer!",
+      "noReviews": "Soyez la première personne à laisser un avis!",
+      "title": "Avis"
+    }
+  },
+  "restaurantBookmark": {
+    "addedToEatenPrefix": "Ajouté aux ",
+    "addedToEatenSuffix": " !",
+    "cancel": "Annuler",
+    "confirmRemoveWatchlist": "Supprimer des poutines à essayer ?",
+    "eaten": "Mangé !",
+    "eatenLink": "poutines mangées",
+    "error": "Erreur",
+    "iAte": "J'ai mangé",
+    "notInterested": "Pas intéressé(e)",
+    "placeholderAlt": "image de remplacement",
+    "removedFromEaten": "Supprimé des poutines mangées !",
+    "removedFromWatchlist": "Supprimé des poutines à essayer !"
+  },
+  "restaurantCard": {
+    "addressCount": "{{count}} addresses in Quebec",
+    "emptyAlt": "empty-poutine"
+  },
+  "restaurantCategories": {
+    "[Auberge]": "Auberge",
+    "[Bar]": "Bar",
+    "[Casse-croûte]": "Casse-croûte",
+    "[Diner]": "Dîner",
+    "[Fast-food]": "Restauration rapide",
+    "[Fromagerie]": "Fromagerie",
+    "[Pub]": "Pub",
+    "[Restaurant]": "Restaurant"
+  },
+  "restaurantForm": {
+    "addSuccursaleButton": "Ajouter une succursale",
+    "addressLabel": "Adresse",
+    "categoriesLabel": "Catégorie(s)",
+    "phoneLabel": "Numéro de téléphone (optionnel)",
+    "restaurantLabel": "Nom du restaurant",
+    "succuresalesLabel": "Succursales",
+    "validation": {
+      "address": "Veuillez indiquer l'adresse de ce restaurant",
+      "categories": "Vous devez ajouter au moins 1 catégorie",
+      "emptyAddressAlert": "Adresse vide!",
+      "name": {
+        "max": "Le nom doit faire au plus 50 caractères",
+        "min": "Le nom doit faire au moins 1 caractère"
+      },
+      "someFieldsMissing": "Veuillez remplir tous les champs obligatoires"
+    },
+    "websiteLabel": "Site web (optionnel)"
+  },
+  "restaurantIntrouvable": {
+    "add": "Ajouter",
+    "title": "Restaurant introuvable ?"
+  },
+  "restaurantPrices": {
+    "1": "Moins de 8$",
+    "2": "Entre 8$ et 10$",
+    "3": "Plus de 10$"
+  },
+  "restaurantSearchbar": {
+    "multipleBranches": "{{count}} adresses au Québec",
+    "placeholder": "Rechercher une poutinerie...",
+    "search": "Rechercher",
+    "viewAllRestaurants": "Voir tous les restaurants",
+    "viewResultsFor": "Voir tous les résultats pour «{{term}}»"
+  },
+  "restaurants": {
+    "forSearch": "pour \"{{search}}\"",
+    "h1": "Carte des poutineries - Tous les restaurants à poutine au Québec",
+    "metaDescription": "Parcourez la carte interactive de poutineries au Québec. Filtrez par note, prix ou catégorie pour dénicher la poutine parfaite près de chez vous.",
+    "noResults": "0 résultats",
+    "pageTitle": "Carte des poutines | Poutine Mania",
+    "resultsCount": "{{count}} poutinerie",
+    "resultsCount_plural": "{{count}} poutineries",
+    "sortOrders": {
+      "asc": "Croissant",
+      "desc": "Décroissant"
+    },
+    "sortTypes": {
+      "avgRating": "Note moyenne",
+      "name": "Nom",
+      "popularity": "Popularité"
+    },
+    "succursalesCount": "{{count}} adresse",
+    "succursalesCount_plural": "{{count}} adresses"
+  },
+  "restaurantsFilters": {
+    "applyFilters": "Valider",
+    "categoryTitle": "Catégorie",
+    "filters": "Filtres",
+    "orderPlaceholder": "Ordre",
+    "priceTitle": "Prix de la poutine classique",
+    "ratingTitle": "Note minimale",
+    "resetFilters": "Réinitialiser",
+    "sortByPlaceholder": "Trier par...",
+    "sortByTitle": "Tri par"
+  },
+  "reviewCard": {
+    "noComment": "Aucun commentaire",
+    "poutinePhotoAlt": "photo de poutine utilisateur",
+    "reviewCount": "{{count}} avis",
+    "userImageAlt": "image utilisateur"
+  },
+  "reviewOverview": {
+    "countNoTerm": "Aucun",
+    "countReviewsTerm": "avis",
+    "countReviewsTerm_plural": "avis",
+    "rateTheirPoutine": "Noter leur poutine"
+  },
+  "seo": {
+    "description": "Découvrez, notez et partagez les meilleures poutines au Québec sur Poutine Mania.",
+    "home.description": "Note tes poutines préférées en critiquant les frites, le fromage et la sauce. Explore la carte pour dénicher la poutine ultime du Québec !",
+    "home.title": "Poutine Mania – La communauté de la poutine",
+    "restaurant.description": "Lire les avis sur le restaurant {{name}} au Québec, et partagez le vôtre.",
+    "restaurant.ogDescription": "Lire les avis sur le restaurant {{name}} au Québec, et partagez le vôtre.",
+    "restaurant.ogTitle": "{{name}} - Avis sur leur poutine",
+    "restaurant.title": "{{name}} - Avis sur leur poutine | Poutine Mania",
+    "restaurant.twitterDescription": "Lire les avis sur le restaurant {{name}} au Québec, et partagez le vôtre.",
+    "restaurant.twitterTitle": "{{name}} - Avis sur leur poutine",
+    "title": "Poutine Mania – Note tes poutines préférées !"
+  },
+  "sidebar": {
+    "about": "À Propos",
+    "admin": "Admin",
+    "eaten": "Mangées",
+    "home": "Accueil",
+    "message": {
+      "loginToEaten": "<0>Connecte-toi</0> pour accéder à ta liste de poutines mangées !",
+      "loginToTry": "<0>Connecte-toi</0> pour accéder à ta liste de poutines à essayer !"
+    },
+    "profile": "Mon profil",
+    "rate": "Noter une poutine",
+    "restaurants": "Carte des poutines",
+    "toTry": "À essayer"
+  },
+  "signup": {
+    "continueWithGoogle": "Continuer avec Google",
+    "emailLabel": "Adresse courriel",
+    "embeddedBrowserError": "Pour vous connecter avec Google, vous devez ouvrir cette page dans le navigateur de votre smartphone (Safari ou Chrome).",
+    "haveAccountPart1": "Vous avez déjà un compte?",
+    "login": "Connexion",
+    "or": "OU",
+    "passwordLabel": "Mot de passe",
+    "required": "Requis",
+    "signupButton": "Je m’inscris",
+    "termsLink": "Conditions générales d’utilisation et Politique de confidentialité",
+    "termsPart1": "En créant un compte, j’accepte les ",
+    "title": "Créer mon compte",
+    "usernameLabel": "Nom d’utilisateur",
+    "usernamePlaceholder": "Nom"
+  },
+  "sitemap": {
+    "about": "À propos",
+    "home": "Accueil",
+    "navLabel": "Liens principaux du site",
+    "rate": "Noter",
+    "restaurants": "Restaurants"
+  },
+  "toast": {
+    "defaultError": "Une erreur est survenue. Veuillez réessayer.",
+    "logout": {
+      "error": "Erreur lors de la déconnexion. Veuillez réessayer.",
+      "success": "Vous êtes maintenant déconnecté(e)."
+    }
+  },
+  "userProfile": {
+    "edit": {
+      "backToProfile": "Retour à mon profil",
+      "bio": "",
+      "changePasswordHeading": "Changer mon mot de passe",
+      "confirmDelete": "Es-tu sûr(e) de vouloir supprimer ton compte ainsi que toutes les données qui lui sont associées ? Cette action est irréversible.",
+      "deleteAccount": "Supprimer mon compte",
+      "editInfoHeading": "Modifier mes informations",
+      "linkedAccountInfo": "Ton compte est lié à ton profil {{provider}} dont le courriel associé est {{email}}.",
+      "newPassword": "Nouveau mot de passe",
+      "oldPassword": "Ancien mot de passe",
+      "required": "Requis",
+      "save": "Enregistrer",
+      "toast": {
+        "deleteError": "Une erreur est survenue.",
+        "deleteSuccess": "Ton compte a été supprimé avec succès !",
+        "error": "Une erreur est survenue. Veuillez réessayer",
+        "passwordSuccess": "Mot de passe mis à jour avec succès !",
+        "updateInfoSuccess": "Informations mises à jour avec succès !"
+      },
+      "username": "Nom d’utilisateur"
+    },
+    "emptyState": {
+      "title": "Aucune poutine mangée"
+    },
+    "profileHeader": {
+      "admin": "Admin",
+      "editProfile": "Modifier mon profil",
+      "favoriteLabel": "Poutine préférée",
+      "imageAlt": "Photo de profil",
+      "lastEatenLabel": "Dernière poutine mangée",
+      "leastFavoriteLabel": "Poutine la moins aimée",
+      "levelConnoisseur": "Connaisseur",
+      "levelExpert": "Expert",
+      "levelNovice": "Novice"
+    },
+    "tab1": {
+      "description": "Classement",
+      "title": "🏅"
+    },
+    "tab2": {
+      "description": "Derniers avis",
+      "title": "✍️"
+    }
+  },
+  "validation": {
+    "required": "Requis"
+  },
+  "verifyEmail": {
+    "emailConfirmation": {
+      "description": "Pour activer ton compte, clique sur le lien de confirmation dans le courriel que nous venons de t'envoyer à l'adresse fournie:",
+      "header": "Tu y es presque!",
+      "resendPart1": "Si tu n'as pas reçu notre courriel de validation, merci de vérifier tes courriels indésirables, et ",
+      "resendPart2": "clique ici",
+      "resendPart3": "pour le renvoyer.",
+      "resendSuccess": "Courriel envoyé!"
+    },
+    "failResponse": {
+      "cta": "Renvoyer un courriel",
+      "header": "Token invalide 😢",
+      "paragraph": "Désolé, le lien de vérification de l'email est invalide ou expiré.",
+      "sent": "Envoyé !"
+    },
+    "successResponse": {
+      "cta": "Connexion",
+      "header": "Email vérifié avec succès!",
+      "paragraph": "Ton email a été vérifié avec succès. Tu peux maintenant te connecter à ton compte."
+    },
+    "toast": {
+      "error": "Une erreur est survenue: ",
+      "loading": "Envoi...",
+      "success": "Courriel envoyé!"
+    }
+  },
+  "watchlist": {
+    "title": "À essayer"
+  }
+}

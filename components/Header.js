@@ -24,9 +24,13 @@ import classNames from "classnames";
 import Skeleton from "react-loading-skeleton";
 import { TextShimmer } from "components/motion-primitives/text-shimmer.js";
 import { motion } from "framer-motion";
+import { LanguageSwitch } from "./LanguageSwitch";
+import { useTranslation } from "next-i18next";
 
 const Header = ({ toggleMobileSidebar }) => {
   const { data: session, status } = useSession();
+  const { t } = useTranslation();
+
   const loading = status === "loading";
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [showSearchBar, setShowSearchBar] = useState(false);
@@ -37,28 +41,26 @@ const Header = ({ toggleMobileSidebar }) => {
   const headerRef = useRef();
   const { push, pathname, query } = useRouter();
   const { openLogin, openSignup } = useLoginForm();
-  const {
-    // nonDebouncedValue,
-    setSearchValue,
-  } = useRestaurantSearch();
+  const { setSearchValue } = useRestaurantSearch();
   const currentUser = session?.user;
 
   const BACKABLE_PAGE_PROPS = {
     "/noter": {
       url: "/",
-      buttonText: "Retour à l'accueil",
+      buttonText: t("header.backablePage.home"),
+
       hideSearch: true,
       hideRateButton: true,
       hideLogo: true,
     },
     "/restaurants/[id]": {
       url: "/restaurants",
-      buttonText: "Tous les restaurants",
+      buttonText: t("header.backablePage.restaurants"),
       hideRateButton: true,
     },
     "/restaurants/[id]/noter": {
       url: query.fromList ? "/noter" : `/restaurants/${query.id}`,
-      buttonText: query.fromList ? "Noter un autre restaurant" : "",
+      buttonText: query.fromList ? t("header.backablePage.restaurants") : "",
       hideSearch: true,
       hideRateButton: true,
       hideLogo: true,
@@ -99,25 +101,16 @@ const Header = ({ toggleMobileSidebar }) => {
       const response = await signOut({ redirect: false, callbackUrl: "/" });
 
       if (response && response.url) {
-        toast.success("Vous êtes maintenant déconnecté(e).");
+        toast.success(t("toast.logout.success"));
         push(response.url);
       } else {
-        throw new Error("Signout failed");
+        throw new Error();
       }
     } catch (error) {
-      toast.error("Erreur lors de la déconnexion. Veuillez réessayer.");
+      toast.error(t("toast.logout.error"));
     }
   };
   const isHomepage = pathname === "/";
-
-  // const handleSearch = () => {
-  //   const trimmedSearchValue = nonDebouncedValue?.trim();
-  //   push(
-  //     trimmedSearchValue
-  //       ? `/restaurants?search=${encodeURIComponent(trimmedSearchValue)}`
-  //       : `/restaurants`
-  //   );
-  // };
 
   const handleArrowClick = () => {
     window.scrollTo({
@@ -127,7 +120,6 @@ const Header = ({ toggleMobileSidebar }) => {
     });
   };
 
-  // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -161,9 +153,8 @@ const Header = ({ toggleMobileSidebar }) => {
       <div
         className={classNames(
           "flex justify-between items-center pl-4 z-10 py-3",
-
           {
-            "absolute top-0 left-0 w-full": isHomepage,
+            "absolute top-0 left-0 w-full z-50": isHomepage,
             "bg-neutral-50": !isHomepage,
           }
         )}
@@ -251,20 +242,27 @@ const Header = ({ toggleMobileSidebar }) => {
                   onClick={() => push("/noter")}
                 >
                   <Edit3 className="xs:mr-2" />{" "}
-                  <span className="hidden xs:block">Noter</span>
+                  <span className="hidden xs:block">{t("button.rate")}</span>
                 </Button>
               )}
-
+              <div
+                className={classNames("relative flex", {
+                  "pt-1 mr-3": isHomepage,
+                  "mx-2": !isHomepage,
+                })}
+              >
+                <LanguageSwitch isHomepage={isHomepage} />
+              </div>
               {loading && !currentUser ? (
                 <Skeleton
                   circle
-                  className="mx-4 lg:mx-5 z-20"
+                  className="mr-4 lg:mr-5 z-20"
                   width={44}
                   height={44}
                   containerClassName="flex"
                 />
               ) : currentUser ? (
-                <div className="relative mx-4 lg:mx-5 z-30">
+                <div className="relative mr-4 lg:mr-5 z-30">
                   <div
                     className="h-[44px] w-[44px] bg-gray-400 rounded-full cursor-pointer hover:brightness-110 transition duration-150 flex items-center justify-center shadow"
                     onClick={() => setDropdownOpen(!dropdownOpen)}
@@ -299,7 +297,7 @@ const Header = ({ toggleMobileSidebar }) => {
                         passHref
                       >
                         <div className="hover:bg-gray-100 rounded-t-lg px-3 py-2 text-gray-700 cursor-pointer">
-                          Mon profil
+                          {t("dropdown.myProfile")}
                         </div>
                       </Link>
 
@@ -307,13 +305,13 @@ const Header = ({ toggleMobileSidebar }) => {
                         className="hover:bg-gray-100 px-3 py-2 rounded-b-lg text-gray-700 cursor-pointer"
                         onClick={handleSignout}
                       >
-                        Déconnexion
+                        {t("dropdown.signOut")}
                       </div>
                     </div>
                   </Dropdown>
                 </div>
               ) : (
-                <div className="relative mx-4 lg:mx-5 z-20">
+                <div className="relative mr-4 lg:mr-5 z-20">
                   <div
                     className="h-[44px] w-[44px] bg-gray-400 rounded-full cursor-pointer hover:opacity-80 flex items-center justify-center sm:hidden"
                     onClick={openLogin}
@@ -333,7 +331,7 @@ const Header = ({ toggleMobileSidebar }) => {
                       onClick={openLogin}
                       style={{ flexShrink: 0 }}
                     >
-                      Se connecter
+                      {t("button.login")}
                     </Button>
                     <span
                       className={classNames({
@@ -347,7 +345,7 @@ const Header = ({ toggleMobileSidebar }) => {
                         className="ml-3"
                         onClick={openSignup}
                       >
-                        S&apos;inscrire
+                        {t("button.signup")}
                       </Button>
                     </span>
                   </div>
@@ -405,7 +403,7 @@ const Header = ({ toggleMobileSidebar }) => {
                 shimmerColor="#e9c367"
                 textShadow="0px 1px 3px rgba(0,0,0,1)"
               >
-                La quête de la poutine ultime.
+                {t("hero.title")}
               </TextShimmer>
             </motion.h1>
             <motion.h2
@@ -416,14 +414,12 @@ const Header = ({ toggleMobileSidebar }) => {
                 as="span"
                 waitDuration={2}
                 duration={2.4}
-                // disable for now
                 spread={0}
                 baseColor="#ffffff"
                 shimmerColor="#e9c367"
                 textShadow="0px 1px 3px rgba(0,0,0,1)"
               >
-                Note tes poutines préférées et trouve les trésors cachés près de
-                chez toi!
+                {t("hero.subtitle")}
               </TextShimmer>
             </motion.h2>
             <motion.div

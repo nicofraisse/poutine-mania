@@ -5,15 +5,18 @@ import { useRouter } from "next/router";
 import { Spinner } from "../components/Spinner";
 import Button from "../components/Button";
 import { useLoginForm } from "../components/context/LoginFormProvider";
+import { useTranslation } from "next-i18next";
+import { withI18n } from "../lib/withI18n";
 
 const VerifyEmail = () => {
   const [verificationState, setVerificationState] = useState();
   const [showResend, setShowResend] = useState(true);
   const [sending, setSending] = useState(false);
   const { openLogin } = useLoginForm();
-  const { query } = useRouter();
+  const { query, locale } = useRouter();
   const token = query?.token;
   const email = query?.email;
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (token) {
@@ -24,7 +27,7 @@ const VerifyEmail = () => {
   const sendEmailPromise = useCallback(() => {
     return new Promise((resolve, reject) => {
       axios
-        .put("/api/auth/send-verification-email", { email })
+        .put("/api/auth/send-verification-email", { email, locale })
         .then((response) => {
           resolve(response.data);
         })
@@ -38,9 +41,14 @@ const VerifyEmail = () => {
     setSending(true);
 
     await toast.promise(sendEmailPromise(), {
-      loading: <b>Envoi...</b>,
-      success: <b>Courriel envoyé!</b>,
-      error: (e) => <b>Une erreur s&apos;est produite: {e.message}</b>,
+      loading: <b>{t("verifyEmail.toast.loading")}</b>,
+      success: <b>{t("verifyEmail.toast.success")}</b>,
+      error: (e) => (
+        <b>
+          {t("verifyEmail.toast.error")}
+          {e.messageKey ? t(e.messageKey) : e.message}
+        </b>
+      ),
     });
 
     setSending(false);
@@ -49,9 +57,8 @@ const VerifyEmail = () => {
 
   const texts = {
     success: {
-      header: "Email vérifié avec succès!",
-      paragraph:
-        "Ton email a été vérifié avec succès. Tu peux maintenant te connecter à ton compte.",
+      header: t("verifyEmail.successResponse.header"),
+      paragraph: t("verifyEmail.successResponse.paragraph"),
       cta: (
         <Button
           variant="primary"
@@ -59,14 +66,13 @@ const VerifyEmail = () => {
           width="sm"
           onClick={() => openLogin({ redirect: "/" })}
         >
-          Connexion
+          {t("verifyEmail.successResponse.cta")}
         </Button>
       ),
     },
     fail: {
-      header: "Token invalide 😢",
-      paragraph:
-        "Désolé, le lien de vérification de l'email est invalide ou expiré.",
+      header: t("verifyEmail.failResponse.header"),
+      paragraph: t("verifyEmail.failResponse.paragraph"),
       cta: showResend ? (
         <Button
           onClick={resendVerificationEmail}
@@ -75,17 +81,17 @@ const VerifyEmail = () => {
           height="sm"
           width="sm"
         >
-          Renvoyer un courriel
+          {t("verifyEmail.failResponse.cta")}
         </Button>
       ) : (
-        "Envoyé!"
+        t("verifyEmail.failResponse.sent")
       ),
     },
   };
 
   const handleVerifyEmail = async () => {
     try {
-      await axios.post("/api/auth/verify-email", { token });
+      await axios.post("/api/auth/verify-email", { token, locale });
       setVerificationState("success");
     } catch (error) {
       setVerificationState("fail");
@@ -109,4 +115,5 @@ const VerifyEmail = () => {
   return <Spinner />;
 };
 
+export const getStaticProps = withI18n();
 export default VerifyEmail;

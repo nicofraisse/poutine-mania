@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-
 import Link from "next/link";
 import { Image } from "../components/Image";
 import { MessageCircle } from "react-feather";
-
 import Color from "color";
 import { ratingColors } from "../data/ratingColors";
 import { formatRating } from "../lib/formatRating";
@@ -13,10 +11,12 @@ import { flatten } from "lodash";
 import { ImageModal } from "./ImageModal";
 import Skeleton from "react-loading-skeleton";
 import { useCurrentUser } from "../lib/useCurrentUser";
+import { useTranslation } from "next-i18next";
 
 export const EatenRestaurantCard = ({ restaurant }) => {
   const { currentUser } = useCurrentUser();
   const [imgModalOpen, setImgModalOpen] = useState(false);
+  const { t } = useTranslation();
   const isSkeleton = restaurant ? Object.keys(restaurant).length === 0 : {};
   const photos = isSkeleton
     ? []
@@ -30,24 +30,6 @@ export const EatenRestaurantCard = ({ restaurant }) => {
         key={restaurant?._id}
         className="pt-5 rounded mb-2 items-start relative"
       >
-        {/* <div className="bg-gray-100 rounded-sm h-12 w-12 sm:h-16 sm:w-16 mr-2 lg:mr-3 flex items-center justify-center ">
-                  {restaurant.mainPhotos?.length > 0 ? (
-                    <Image
-                      src={restaurant.mainPhotos[0]}
-                      alt={`${restaurant.name}-photo`}
-                      className="h-12 w-12 sm:h-16 sm:w-16 object-cover object-center rounded-sm"
-                    />
-                  ) : (
-                    <ImageIcon
-                      className="text-gray-300"
-                      size={48}
-                      alt="placeholder"
-                    />
-                  )}
-                </div> */}
-        {/* <div className="text-3xl text-stone-300 mr-6 font-bold absolute left-[500px]">
-                  03/05/2021
-                </div> */}
         <div className="flex justify-between px-3 sm:px-0">
           {isSkeleton ? (
             <Skeleton width={180} height={20} />
@@ -89,23 +71,12 @@ export const EatenRestaurantCard = ({ restaurant }) => {
                 passHref
               >
                 <Button height="xs" className="text-normal" variant="light">
-                  Noter
+                  {t("eatenRestaurantCard.rate")}
                 </Button>
               </Link>
             )}
           </div>
         </div>
-        {/* <TagSection
-                    priceRange={restaurant.priceRange}
-                    categories={restaurant.categories}
-                    // succursales={restaurant.succursales}
-                    city={
-                      restaurant.succursales[0].address?.context?.find((el) =>
-                        el.id?.includes("neighborhood")
-                      )?.text
-                    }
-                    noAddress
-                  /> */}
 
         <p className="px-3 sm:px-0" style={{ lineHeight: 1.4 }}>
           {isSkeleton ? (
@@ -123,15 +94,17 @@ export const EatenRestaurantCard = ({ restaurant }) => {
                     {restaurant.reviews.find((rev) => rev.comment).comment}
                     <span className="text-stone-400 text-xs">
                       {" "}
-                      - le{" "}
-                      {formatDate(
-                        restaurant.reviews.find((rev) => rev.comment).createdAt,
-                        "dd/MM/yyyy"
-                      )}
+                      {t("eatenRestaurantCard.onDate", {
+                        date: formatDate(
+                          restaurant.reviews.find((rev) => rev.comment)
+                            .createdAt,
+                          "dd/MM/yyyy"
+                        ),
+                      })}
                     </span>
                   </>
                 ) : (
-                  "Pas de commentaire"
+                  t("eatenRestaurantCard.noComment")
                 )}
               </span>
             </>
@@ -146,18 +119,16 @@ export const EatenRestaurantCard = ({ restaurant }) => {
             </div>
           ) : (
             <>
-              {photos.map((photo, index) => {
-                return (
-                  <Image
-                    key={photo}
-                    src={photo}
-                    alt="poutine-user-photo"
-                    className="cursor-pointer rounded mr-3 mt-3 max-h-[140px] max-w-[240px] object-cover"
-                    onClick={() => setImgModalOpen(index)}
-                    quality={20}
-                  />
-                );
-              })}
+              {photos.map((photo, index) => (
+                <Image
+                  key={photo}
+                  src={photo}
+                  alt={t("eatenRestaurantCard.photoAlt")}
+                  className="cursor-pointer rounded mr-3 mt-3 max-h-[140px] max-w-[240px] object-cover"
+                  onClick={() => setImgModalOpen(index)}
+                  quality={20}
+                />
+              ))}
               <div className="min-w-[50px]"></div>
               {photos.length > 0 && (
                 <div className="absolute h-[140px] bottom-0 right-[-1px] w-[50px] bg-gradient-to-r from-transparent to-neutral-50"></div>

@@ -6,7 +6,9 @@ import ReactSelect from "react-select";
 import { useCallback, useState } from "react";
 import Color from "color";
 import { getRatingColor } from "../data/ratingColors";
-import { RESTAURANT_CATEGORIES, RESTAURANT_PRICES } from "../lib/constants";
+import { RESTAURANT_CATEGORIES } from "../lib/constants";
+import { useTranslation } from "next-i18next";
+import { useRestaurantPriceOptions } from "../lib/useRestaurantPrices";
 
 export const RestaurantsFilters = ({
   filtersRef,
@@ -24,7 +26,10 @@ export const RestaurantsFilters = ({
   ratingFilter: initialRatingFilter,
   setRatingFilter,
 }) => {
-  // Save initial states to reset later
+  const { t } = useTranslation();
+
+  const priceOptions = useRestaurantPriceOptions();
+
   const initialStates = {
     localPriceFilter: initialPriceFilter || [],
     localCategoryFilter: initialCategoryFilter || [],
@@ -33,7 +38,6 @@ export const RestaurantsFilters = ({
     sortOrder: sortOrders[0],
   };
 
-  // local state for sorting
   const [localSortType, setLocalSortType] = useState(
     initialStates.sortType.value
   );
@@ -71,6 +75,28 @@ export const RestaurantsFilters = ({
     setLocalRatingFilter(Number(event.target.value));
   };
 
+  const areFiltersApplied = useCallback(() => {
+    return (
+      localPriceFilter.length > 0 ||
+      localCategoryFilter.length > 0 ||
+      localRatingFilter > 0
+    );
+  }, [localPriceFilter, localCategoryFilter, localRatingFilter]);
+
+  const [filtersApplied, setFiltersApplied] = useState(false);
+
+  const filtersCount = () =>
+    [
+      localPriceFilter.length > 0,
+      localCategoryFilter.length > 0,
+      localRatingFilter > 0,
+    ].filter(Boolean).length;
+
+  const someLocalFilters =
+    localCategoryFilter.length > 0 ||
+    localPriceFilter.length > 0 ||
+    localRatingFilter > 0;
+
   const handleApplyFilters = () => {
     setPriceFilter(localPriceFilter);
     setCategoryFilter(localCategoryFilter);
@@ -85,45 +111,20 @@ export const RestaurantsFilters = ({
     setLocalPriceFilter([]);
     setLocalCategoryFilter([]);
     setLocalRatingFilter(0);
-    setSortType(sortTypes[0].value);
-    setSortOrder(sortOrders[0].value);
+    setLocalSortType(sortTypes[0].value);
+    setLocalSortOrder(sortOrders[0].value);
     setFiltersApplied(false);
   };
 
   const discardAppliedFilters = (e) => {
-    // Prevent the event from bubbling up to the parent elements
     e.stopPropagation();
-
     resetFilters();
     setPriceFilter([]);
     setCategoryFilter([]);
     setRatingFilter(0);
     setSortType(sortTypes[0].value);
     setSortOrder(sortOrders[0].value);
-    setFiltersApplied(false);
   };
-
-  const areFiltersApplied = useCallback(() => {
-    return (
-      localPriceFilter.length > 0 ||
-      localCategoryFilter.length > 0 ||
-      localRatingFilter > 0
-    );
-  }, [localPriceFilter, localCategoryFilter, localRatingFilter]);
-
-  const [filtersApplied, setFiltersApplied] = useState(false);
-
-  const filtersCount = () => {
-    return [
-      localPriceFilter.length > 0,
-      localCategoryFilter.length > 0,
-      localRatingFilter > 0,
-    ].filter((v) => v).length;
-  };
-  const someLocalFilters =
-    localCategoryFilter.length > 0 ||
-    localPriceFilter.length > 0 ||
-    localRatingFilter > 0;
 
   return (
     <div className="relative" ref={filtersRef}>
@@ -137,12 +138,10 @@ export const RestaurantsFilters = ({
             "bg-slate-500 text-white hover:bg-slate-700 text-sm":
               filtersApplied,
           })}
-          onClick={() => {
-            setFiltersOpen(!filtersOpen);
-          }}
+          onClick={() => setFiltersOpen(!filtersOpen)}
         >
           {!filtersApplied && <Sliders className="mr-2" size={20} />}
-          <span className="text-sm">Filtres</span>
+          <span className="text-sm">{t("restaurantsFilters.filters")}</span>
           {filtersApplied && (
             <div className="flex items-center">
               <span className="mx-1">({filtersCount()})</span>
@@ -171,17 +170,19 @@ export const RestaurantsFilters = ({
         )}
       >
         <div className="mb-4 flex items-center justify-between">
-          <div className="text-sm font-bold text-gray-500 mr-2">Tri par</div>
+          <div className="text-sm font-bold text-gray-500 mr-2">
+            {t("restaurantsFilters.sortByTitle")}
+          </div>
           <div className="flex items-center">
             <ReactSelect
-              placeholder="Trier par..."
+              placeholder={t("restaurantsFilters.sortByPlaceholder")}
               options={sortTypes}
               className="mr-2 text-sm min-w-32"
               onChange={({ value }) => setLocalSortType(value)}
               defaultValue={initialStates.sortType}
             />
             <ReactSelect
-              placeholder="Ordre"
+              placeholder={t("restaurantsFilters.orderPlaceholder")}
               options={sortOrders}
               className="text-sm min-w-32"
               onChange={({ value }) => setLocalSortOrder(value)}
@@ -189,10 +190,11 @@ export const RestaurantsFilters = ({
             />
           </div>
         </div>
-        <div className="w-full border-b border-gray mt-5 mb-4"></div>
+
+        <div className="w-full border-b border-gray mt-5 mb-4" />
 
         <div className="mt-3 text-sm font-bold text-gray-500 mb-2">
-          Catégorie{" "}
+          {t("restaurantsFilters.categoryTitle")}{" "}
           {localCategoryFilter.length > 0 && `(${localCategoryFilter.length})`}
         </div>
         <div className="flex flex-wrap">
@@ -200,7 +202,7 @@ export const RestaurantsFilters = ({
             <Pill
               key={category}
               onClick={() => handleCategorySelect(category)}
-              caption={category}
+              caption={t(`restaurantCategories.[${category}]`)}
               isSelected={localCategoryFilter.includes(category)}
               color={"blue"}
             />
@@ -208,11 +210,11 @@ export const RestaurantsFilters = ({
         </div>
 
         <div className="text-sm font-bold text-gray-500 mb-2 mt-4">
-          Prix de la poutine classique{" "}
+          {t("restaurantsFilters.priceTitle")}{" "}
           {localPriceFilter.length > 0 && `(${localPriceFilter.length})`}
         </div>
         <div className="flex flex-wrap">
-          {RESTAURANT_PRICES.map((o) => (
+          {priceOptions.map((o) => (
             <Pill
               key={o.value}
               onClick={() => handlePriceSelect(o.value)}
@@ -224,7 +226,7 @@ export const RestaurantsFilters = ({
         </div>
 
         <div className="mt-3 text-sm font-bold text-gray-500 mb-1">
-          Note minimale
+          {t("restaurantsFilters.ratingTitle")}
         </div>
         <div className="flex items-center mb-2">
           <input
@@ -251,7 +253,9 @@ export const RestaurantsFilters = ({
             <span className="text-slate-500 ml-[2px] block -mb-[2px]">/10</span>
           </div>
         </div>
-        <div className="w-full border-b border-gray mt-5 mb-4"></div>
+
+        <div className="w-full border-b border-gray mt-5 mb-4" />
+
         <div className="flex justify-between items-center mb-1">
           <Button
             height="sm"
@@ -263,7 +267,7 @@ export const RestaurantsFilters = ({
             onClick={resetFilters}
             disabled={!someLocalFilters}
           >
-            <X className="mr-3" /> Réinitialiser
+            <X className="mr-3" /> {t("restaurantsFilters.resetFilters")}
           </Button>
 
           <Button
@@ -271,9 +275,10 @@ export const RestaurantsFilters = ({
             width="sm"
             variant="light"
             className="w-1/2 ml-3"
-            onClick={handleApplyFilters} // apply the filters when clicked
+            onClick={handleApplyFilters}
           >
-            <Check size={22} className="mr-3" /> Valider
+            <Check size={22} className="mr-3" />{" "}
+            {t("restaurantsFilters.applyFilters")}
           </Button>
         </div>
       </div>

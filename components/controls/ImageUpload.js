@@ -5,6 +5,7 @@ import { useField, useFormikContext } from "formik";
 import classNames from "classnames";
 import { compressImage } from "lib/compressImage";
 import { isArray, isString } from "lodash";
+import { useTranslation } from "next-i18next";
 
 const ImageUpload = ({
   roundedFull,
@@ -15,6 +16,7 @@ const ImageUpload = ({
   const [imageSrcs, setImageSrcs] = useState([]);
   const [field] = useField(props);
   const [dragging, setDragging] = useState(false);
+  const { t } = useTranslation();
 
   const { setFieldValue } = useFormikContext();
 
@@ -149,7 +151,7 @@ const ImageUpload = ({
                 }
               )}
             >
-              <Camera /> Ajouter
+              <Camera /> {t("button.add")}
             </div>
           </button>
         </div>

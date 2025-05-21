@@ -19,90 +19,7 @@ import { MIN_COMMENT_CHARS } from "../../data/minCommentLength";
 import { AlmostThere } from "../display/messages/AlmostThere";
 import { useLoginForm } from "../context/LoginFormProvider";
 import classNames from "classnames";
-
-const ratingFields = [
-  {
-    name: "friesRating",
-    label: (
-      <>
-        <span className="text-xl relative top-[1px] mr-[7px]">🍟</span>Frites
-      </>
-    ),
-  },
-  {
-    name: "cheeseRating",
-    label: (
-      <>
-        <span className="text-xl relative top-[1px] mr-[7px]">🧀</span>Fromage
-      </>
-    ),
-  },
-  {
-    name: "sauceRating",
-    label: (
-      <>
-        <span className="text-xl relative top-[1px] mr-[7px]">🍯</span>Sauce
-      </>
-    ),
-  },
-  {
-    name: "portionRating",
-    label: (
-      <>
-        <span className="text-xl relative top-[1px] mr-[7px]">🤑</span>Rapport
-        portion/prix
-      </>
-    ),
-  },
-];
-
-const buildRatingValidation = (label) =>
-  Yup.number(label)
-    .transform((value) => (isNaN(value) ? null : value))
-    .typeError("Amount must be a number")
-    .min(0)
-    .max(10)
-    .nullable();
-
-const validationSchema = Yup.object({
-  friesRating: buildRatingValidation("Choisissez une note"),
-  cheeseRating: buildRatingValidation("Choisissez une note"),
-  sauceRating: buildRatingValidation("Choisissez une note"),
-  portionRating: buildRatingValidation("Choisissez une note"),
-  title: Yup.string().min(3),
-  comment: Yup.string().min(
-    MIN_COMMENT_CHARS,
-    `Dites-nous en un peu plus 😥 (au moins ${MIN_COMMENT_CHARS} caractères)`
-  ),
-  photos: Yup.array().nullable(),
-});
-
-const FinalRating = ({ avgRating }) =>
-  avgRating > 0 && (
-    <div className="flex items-center text-gray-500 border-gray-300 rounded my-6 bg-gray-100 p-6 justify-center">
-      <div className="mr-2">Note finale:</div>
-      <div>
-        <span
-          className="py-[2px] px-[8px] bg-green-200 rounded mr-2 text-xl sm:text-2xl text-white flex items-center font-bold shadow-lg"
-          style={{
-            backgroundColor: Color(ratingColors[Math.floor(avgRating)])
-              .darken(0.3)
-              .desaturate(0.3),
-          }}
-        >
-          {formatRating(avgRating) || "?"}
-          <span className="text-white font-normal text-sm sm:text-base text-opacity-80 ml-[2px] -mb-[2px]">
-            /10
-          </span>
-        </span>
-      </div>
-    </div>
-  );
-
-const ErrorMessage = ({ condition, message }) => {
-  if (!condition) return null;
-  return <div className="text-red-600 text-sm">{message}</div>;
-};
+import { useTranslation, Trans } from "next-i18next";
 
 export const RateRestaurantNew = ({
   onSubmit,
@@ -110,6 +27,7 @@ export const RateRestaurantNew = ({
   existingReview,
   loading,
 }) => {
+  const { t } = useTranslation();
   const { currentUser } = useCurrentUser();
   const {
     sidebarWatchlistAmount,
@@ -118,8 +36,53 @@ export const RateRestaurantNew = ({
     setSidebarEatenlistAmount,
   } = useSidebarData();
   const { openLogin } = useLoginForm();
-
   const [cookies, setCookies, removeCookies] = useCookies();
+
+  const buildRatingValidation = () =>
+    Yup.number()
+      .transform((value) => (isNaN(value) ? null : value))
+      .typeError(t("rateRestaurant.validation.number"))
+      .min(0)
+      .max(10)
+      .nullable();
+
+  const validationSchema = Yup.object({
+    friesRating: buildRatingValidation(),
+    cheeseRating: buildRatingValidation(),
+    sauceRating: buildRatingValidation(),
+    portionRating: buildRatingValidation(),
+    title: Yup.string().min(3),
+    comment: Yup.string().min(
+      MIN_COMMENT_CHARS,
+      t("rateRestaurant.validation.commentMin", { min: MIN_COMMENT_CHARS })
+    ),
+    photos: Yup.array().nullable(),
+  });
+
+  const ratingFields = [
+    {
+      name: "friesRating",
+      label: <Trans i18nKey="rateRestaurant.field.friesLabel">🍟 Frites</Trans>,
+    },
+    {
+      name: "cheeseRating",
+      label: (
+        <Trans i18nKey="rateRestaurant.field.cheeseLabel">🧀 Fromage</Trans>
+      ),
+    },
+    {
+      name: "sauceRating",
+      label: <Trans i18nKey="rateRestaurant.field.sauceLabel">🍯 Sauce</Trans>,
+    },
+    {
+      name: "portionRating",
+      label: (
+        <Trans i18nKey="rateRestaurant.field.portionLabel">
+          🤑 Rapport portion/prix
+        </Trans>
+      ),
+    },
+  ];
 
   const handleSubmit = async (values) => {
     if (!currentUser) {
@@ -144,7 +107,9 @@ export const RateRestaurantNew = ({
     const url = existingReview
       ? `/api/reviews/${existingReview._id}/update`
       : "/api/reviews/create";
-    const toastMessage = existingReview ? "Modifié!" : "Avis publié!";
+    const toastMessage = existingReview
+      ? t("rateRestaurant.toast.modified")
+      : t("rateRestaurant.toast.published");
 
     const formData = new FormData();
     for (const key in submitValues) {
@@ -177,6 +142,7 @@ export const RateRestaurantNew = ({
       toast.error(e.message);
     }
   };
+
   const initialValues = existingReview ||
     (cookies.reviewRestaurantInProgress === restaurantId &&
       cookies.reviewInProgress) || {
@@ -189,7 +155,7 @@ export const RateRestaurantNew = ({
       photos: [],
     };
 
-  if (!cookies) return;
+  if (!cookies) return null;
 
   return (
     <Form
@@ -203,7 +169,7 @@ export const RateRestaurantNew = ({
       {({ isSubmitting, values, errors, touched }) => {
         const nbFilledFields = ratingFields
           .map((field) => values[field.name])
-          .filter((v) => v).length;
+          .filter(Boolean).length;
         const avgRating =
           nbFilledFields > 0
             ? ratingFields
@@ -219,7 +185,7 @@ export const RateRestaurantNew = ({
           <>
             {existingReview && (
               <h2 className="font-black text-2xl mb-5 text-center">
-                Modifier ton avis
+                {t("rateRestaurant.heading.editReview")}
               </h2>
             )}
             {ratingFields.map((field) => (
@@ -237,27 +203,29 @@ export const RateRestaurantNew = ({
             <Field
               className="sm:mb-5"
               name="comment"
-              label="Commentaire"
+              label={t("rateRestaurant.field.comment")}
               type="textarea"
             />
             <Field
               name="photos"
               control={ImageUpload}
-              isMulti={true}
-              label="Photos"
+              isMulti
+              label={t("rateRestaurant.field.photos")}
             />
 
             <ErrorMessage
-              condition={errors.rating && touched.rating}
-              message="Vous devez choisir au moins une note sur 10"
+              condition={nbFilledFields === 0 && touched.comment}
+              message={t("rateRestaurant.error.chooseOneRating")}
             />
             <ErrorMessage
               condition={errors.comment && touched.comment}
-              message={`Le commentaire est trop court (au moins ${MIN_COMMENT_CHARS} caractères)`}
+              message={t("rateRestaurant.error.commentTooShort", {
+                min: MIN_COMMENT_CHARS,
+              })}
             />
             <ErrorMessage
               condition={disableSubmitBtn && touched.comment}
-              message={`Veuillez noter la poutine ou ajouter un commentaire pour publier l'avis.`}
+              message={t("rateRestaurant.error.mustRateOrComment")}
             />
 
             <div className="flex items-center justify-center pt-6 pb-3 mt-6 border-t">
@@ -269,7 +237,7 @@ export const RateRestaurantNew = ({
                 disabled={disableSubmitBtn}
               >
                 <Check className="mr-2" size={18} />
-                Publier
+                {t("rateRestaurant.button.submit")}
               </Button>
             </div>
           </>
@@ -278,3 +246,36 @@ export const RateRestaurantNew = ({
     </Form>
   );
 };
+
+const FinalRating = ({ avgRating }) => {
+  const { t } = useTranslation();
+  return (
+    avgRating > 0 && (
+      <div className="flex items-center text-gray-500 border-gray-300 rounded my-6 bg-gray-100 p-6 justify-center">
+        <div className="mr-2">{t("rateRestaurant.finalRatingLabel")}</div>
+        <div>
+          <span
+            className="py-[2px] px-[8px] bg-green-200 rounded mr-2 text-xl sm:text-2xl text-white flex items-center font-bold shadow-lg"
+            style={{
+              backgroundColor: Color(ratingColors[Math.floor(avgRating)])
+                .darken(0.3)
+                .desaturate(0.3),
+            }}
+          >
+            {formatRating(avgRating) || "?"}
+            <span className="text-white font-normal text-sm sm:text-base text-opacity-80 ml-[2px] -mb-[2px]">
+              /10
+            </span>
+          </span>
+        </div>
+      </div>
+    )
+  );
+};
+
+const ErrorMessage = ({ condition, message }) => {
+  if (!condition) return null;
+  return <div className="text-red-600 text-sm">{message}</div>;
+};
+
+export default RateRestaurantNew;

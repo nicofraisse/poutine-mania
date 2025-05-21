@@ -3,11 +3,13 @@ import { useGet } from "lib/useAxios";
 import { useState } from "react";
 import classNames from "classnames";
 import ProfileReviewCard from "../ProfileReviewCard";
+import { useTranslation } from "next-i18next";
 
 export function RecentActivity({ heightClass, isScrollable }) {
   const [limit] = useState(5);
   const [page, setPage] = useState(1);
   const [allReviews, setAllReviews] = useState([]);
+  const { t } = useTranslation();
 
   const { data: reviews, loading } = useGet(
     `/api/reviews?limit=${limit}&page=${page}&sort=date:desc`
@@ -49,9 +51,8 @@ export function RecentActivity({ heightClass, isScrollable }) {
             <button
               onClick={handleLoadMore}
               className="border-none outline-none underline text-gray-600"
-              // variant="secondary"
             >
-              Voir plus
+              {t("button.viewMore")}
             </button>
           )
         )}

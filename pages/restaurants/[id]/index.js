@@ -3,10 +3,8 @@ import { useRouter } from "next/router";
 import { Spinner } from "components/Spinner";
 import RestaurantReviews from "components/page-layouts/RestaurantReviews";
 import RestaurantHeader from "components/RestaurantHeader";
-
 import { Edit, Info, Trash } from "react-feather";
 import { useEffect, useState } from "react";
-
 import { ReviewOverview } from "components/ReviewOverview";
 import { RestaurantInfo } from "components/RestaurantInfo";
 import { ToggleSwitch } from "components/controls/ToggleSwitch";
@@ -15,12 +13,16 @@ import { useCurrentUser } from "lib/useCurrentUser";
 import Head from "next/head";
 import { connectToDatabase } from "lib/db";
 import toast from "react-hot-toast";
+import { withI18n } from "../../../lib/withI18n";
+import { i18n } from "../../../next-i18next.config";
+import { useTranslation } from "next-i18next";
 
 const Index = ({ SEO }) => {
-  const { query, reload, push, isFallback } = useRouter();
+  const { query, reload, push, isFallback, locale } = useRouter();
   const { data: restaurant, loading } = useGet(`/api/restaurants/${query.id}`, {
     skip: !query.id,
   });
+  const { t } = useTranslation();
 
   if (isFallback) {
     return <Spinner />;
@@ -64,29 +66,11 @@ const Index = ({ SEO }) => {
 
   const isSkeleton = !restaurant || loading;
 
-  const seoUrl = `${process.env.NEXT_PUBLIC_APP_URL}/restaurants/${SEO?.slug}`;
+  const localePrefix = locale === "en" ? "/en" : "";
+  const seoUrl = `${process.env.NEXT_PUBLIC_APP_URL}${localePrefix}/restaurants/${SEO.slug}`;
   const seoImageUrl = SEO.mainPhoto
     ? `https://res.cloudinary.com/${process.env.CLOUD_NAME}/image/upload/q_50/${SEO.mainPhoto}`
     : "";
-
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Restaurant",
-    name: SEO.restaurantName,
-    image: seoImageUrl,
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: SEO.address,
-    },
-    url: seoUrl,
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: SEO.averageRating,
-      reviewCount: SEO.reviewCount,
-      bestRating: "10",
-      worstRating: "1",
-    },
-  };
 
   return (
     <>
@@ -95,65 +79,72 @@ const Index = ({ SEO }) => {
           key="restaurant-schema"
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(jsonLd),
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Restaurant",
+              name: SEO.restaurantName,
+              image: seoImageUrl,
+              address: {
+                "@type": "PostalAddress",
+                streetAddress: SEO.address,
+              },
+              url: seoUrl,
+              aggregateRating: {
+                "@type": "AggregateRating",
+                ratingValue: SEO.averageRating,
+                reviewCount: SEO.reviewCount,
+                bestRating: "10",
+                worstRating: "1",
+              },
+            }),
           }}
         />
+
         <title>
-          {SEO?.restaurantName.toUpperCase()} - Avis sur leur poutine | Poutine{" "}
-          Mania
+          {t("seo.restaurant.title", {
+            name: SEO.restaurantName.toUpperCase(),
+          })}
         </title>
-        {/* Generic */}
         <meta
           name="description"
-          content={`Lire les avis sur le restaurant ${SEO?.restaurantName} au Québec, et partagez le vôtre.`}
+          content={t("seo.restaurant.description", {
+            name: SEO.restaurantName,
+          })}
         />
-        <meta name="image" content={SEO?.mainPhoto ? seoImageUrl : ""} />
-        {/* Open Graph / Facebook */}
+        <meta name="image" content={seoImageUrl} />
+
         <meta property="fb:app_id" content="572135587608476" />
         <meta property="og:type" content="website" />
-
-        <meta
-          property="og:url"
-          content={process.env.NEXT_PUBLIC_APP_URL + "/restaurants/" + query.id}
-        />
+        <meta property="og:url" content={seoUrl} />
         <meta
           property="og:title"
-          content={`${SEO?.restaurantName.toUpperCase()} - Avis sur leur poutine`}
+          content={t("seo.restaurant.ogTitle", {
+            name: SEO.restaurantName.toUpperCase(),
+          })}
         />
         <meta
           property="og:description"
-          content={`Lire les avis sur le restaurant ${SEO?.restaurantName} au Québec, et partagez le vôtre.`}
+          content={t("seo.restaurant.ogDescription", {
+            name: SEO.restaurantName,
+          })}
         />
-        <meta
-          property="og:image"
-          content={
-            SEO?.mainPhoto
-              ? `https://res.cloudinary.com/${process.env.CLOUD_NAME}/image/upload/q_50/${SEO?.mainPhoto}`
-              : ""
-          }
-        />
-        {/* Twitter */}
+        <meta property="og:image" content={seoImageUrl} />
+
         <meta property="twitter:card" content="summary_large_image" />
-        <meta
-          property="twitter:url"
-          content={process.env.NEXT_PUBLIC_APP_URL + "/restaurants/" + query.id}
-        />
+        <meta property="twitter:url" content={seoUrl} />
         <meta
           property="twitter:title"
-          content={`${SEO?.restaurantName.toUpperCase()} - Avis sur leur poutine`}
+          content={t("seo.restaurant.twitterTitle", {
+            name: SEO.restaurantName.toUpperCase(),
+          })}
         />
         <meta
           property="twitter:description"
-          content={`Lire les avis sur le restaurant ${SEO?.restaurantName} au Québec, et partagez le vôtre.`}
+          content={t("seo.restaurant.twitterDescription", {
+            name: SEO.restaurantName,
+          })}
         />
-        <meta
-          property="twitter:image"
-          content={
-            SEO?.mainPhoto
-              ? `https://res.cloudinary.com/${process.env.CLOUD_NAME}/image/upload/q_50/${SEO?.mainPhoto}.jpg`
-              : ""
-          }
-        />
+        <meta property="twitter:image" content={seoImageUrl} />
       </Head>
       <div className="bg-[#fafafa] min-h-screen-minus-navbar">
         <RestaurantHeader restaurant={restaurant} />
@@ -162,12 +153,7 @@ const Index = ({ SEO }) => {
             {!isSkeleton && !restaurant.approved && (
               <div className="p-2 lg:p-5 sm:w-auto bg-yellow-50 xs:shadow-md rounded-lg text-sm flex mb-4">
                 <Info className="inline-block min-w-8 mt-1 mr-2" size={20} />
-                <p className="flex-shrink">
-                  Ce restaurant est en cours de vérification par un membre de
-                  notre équipe. En attendant, vous pouvez écrire un avis sur
-                  leur poutine, il sera visible par le reste de la communauté
-                  aussitôt que le restaurant est approuvé!
-                </p>
+                <p className="flex-shrink">{t("restaurant.pendingApproval")}</p>
               </div>
             )}
             {isSkeleton ? (
@@ -226,26 +212,36 @@ const Index = ({ SEO }) => {
 
 export async function getStaticPaths() {
   const client = await connectToDatabase();
-  const db = await client.db();
-
+  const db = client.db();
   const restaurants = await db
     .collection("restaurants")
     .find({ approved: true })
     .toArray();
 
+  const paths = restaurants.flatMap((r) =>
+    i18n.locales.map((loc) => ({
+      params: { id: String(r.slug) },
+      locale: loc,
+    }))
+  );
+
   return {
-    paths: restaurants.map((r) => `/restaurants/${r?.slug}`),
-    fallback: true,
+    paths,
+    fallback: "blocking",
   };
 }
 
-export async function getStaticProps({ params }) {
+export const getStaticProps = withI18n(async ({ params }) => {
   const client = await connectToDatabase();
   const db = await client.db();
 
   const restaurant = await db
     .collection("restaurants")
     .findOne({ slug: params.id });
+
+  if (!restaurant) {
+    return { notFound: true };
+  }
 
   const validUserIds = await db.collection("users").distinct("_id");
 
@@ -267,15 +263,12 @@ export async function getStaticProps({ params }) {
   );
 
   const averageRating =
-    reviewsWithFinalRating.reduce((acc, review) => {
-      return acc + review.finalRating;
-    }, 0) / reviewsWithFinalRating.length || null;
+    reviewsWithFinalRating.reduce(
+      (acc, review) => acc + review.finalRating,
+      0
+    ) / reviewsWithFinalRating.length || null;
 
   const address = restaurant.succursales?.[0]?.address?.place_name || "";
-
-  if (!restaurant) {
-    return { notFound: true };
-  }
 
   return {
     props: {
@@ -285,11 +278,11 @@ export async function getStaticProps({ params }) {
         reviewCount,
         averageRating,
         address,
-        slug: restaurant?.slug,
+        slug: restaurant.slug,
       },
     },
     revalidate: 60,
   };
-}
+});
 
 export default Index;

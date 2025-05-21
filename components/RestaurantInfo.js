@@ -3,9 +3,11 @@ import ShowPageMap from "components/ShowPageMap";
 import { formatAddress } from "lib/formatAddress";
 import Skeleton from "react-loading-skeleton";
 import { normalizeUrl } from "../lib/normalizeUrl";
+import { useTranslation } from "next-i18next";
 
 export const RestaurantInfo = ({ showMap, restaurant, setShowMap }) => {
   const isSkeleton = !restaurant;
+  const { t } = useTranslation();
   return (
     <>
       {showMap &&
@@ -23,7 +25,7 @@ export const RestaurantInfo = ({ showMap, restaurant, setShowMap }) => {
         <div className="flex items-center mb-4">
           <>
             <MapPin className="mr-2 inline shrink-0" size={20} />
-            <span>{formatAddress(restaurant)}</span>
+            <span>{formatAddress(restaurant, t)}</span>
           </>
         </div>
       )}

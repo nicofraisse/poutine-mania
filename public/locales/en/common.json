@@ -1,0 +1,475 @@
+{
+  "about": {
+    "contactButton": "Contact",
+    "footer": "© Poutine Mania | 2022-{{year}}",
+    "heading": "About",
+    "intro1": "Welcome to the poutine lovers’ reference! Here, discover, rate, and share your favorite poutines in your neighborhood or beyond.",
+    "intro2": "From our first bite in Montreal to the farthest reaches of Quebec, we’ve become true poutine enthusiasts and created this site to help you find your next culinary experience. Thank you for joining us on this delicious journey!",
+    "intro3": "For any <0>questions</0>, <1>improvement suggestions</1>, <2>issues to report</2>, or if you just want to chat about poutine, feel free to contact us by clicking the button below.",
+    "metaDescription": "Welcome to the poutine lovers’ reference! Here, discover, rate, and share your favorite poutines in your neighborhood or beyond.",
+    "title": "About | Poutine Mania"
+  },
+  "addressCount": "{{count}} addresses",
+  "addressCountQuebec": "{{count}} addresses in Quebec",
+  "backend": {
+    "nextauth": {
+      "emailNotValidates": "Your account is not yet activated. Please click the link we sent you by email.",
+      "invalidCredentials": "Invalid email or password",
+      "useAnotherProvider": "This account is already linked to another authentication provider. Please log in with that provider.",
+      "useGoogleProvider": "Click on \"Continue with Google\" to log in to this account."
+    },
+    "sendVerificationEmail": {
+      "emailAlreadyVerified": "Email déjà vérifié.",
+      "emailSent": "Email envoyé.",
+      "invalidToken": "Token invalide.",
+      "methodNotAllowed": "Méthode non autorisée."
+    },
+    "signup": {
+      "created": "User created! Check your email to confirm your account.",
+      "emailTaken": "This email is already in use!",
+      "invalidEmail": "The email address format is invalid.",
+      "invalidEmailFormat": "The email address format is invalid.",
+      "passwordTooShort6Characters": "Password must be at least 6 characters long.",
+      "shortPassword": "Password must be at least 6 characters long.",
+      "success": "User created! Check your email to confirm your account.",
+      "title": "Create my account"
+    },
+    "verifyEmail": {
+      "invalidToken": "Invalid token.",
+      "success": "Email verified successfully!"
+    }
+  },
+  "button": {
+    "add": "Add",
+    "addToWatchlist": "Want to try",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "explore": "Explore",
+    "iAte": "I ate it",
+    "login": "Log in",
+    "rate": "Rate",
+    "signup": "Sign up",
+    "submit": "Submit",
+    "surpriseMe": "Surprise me!",
+    "viewMore": "View more"
+  },
+  "dropdown": {
+    "myProfile": "My profile",
+    "signOut": "Sign out"
+  },
+  "eatenRestaurantCard": {
+    "noComment": "No comment",
+    "onDate": "- on {{date}}",
+    "photoAlt": "user poutine photo",
+    "rate": "Rate"
+  },
+  "eatenlist": {
+    "filter": {
+      "notRated": "Not yet rated ({{count}})",
+      "rated": "Rated ({{count}})"
+    },
+    "filterLabel": "Show my poutines:",
+    "title": "My eaten poutines"
+  },
+  "emptyState": {
+    "defaultTitle": "No poutines found",
+    "discoverButton": "Discover poutines",
+    "emptyAlt": "empty-poutine",
+    "rateButton": "Rate a poutine"
+  },
+  "header": {
+    "backablePage": {
+      "home": "Back to homepage",
+      "rateAnother": "Rate another restaurant",
+      "restaurants": "All restaurants"
+    }
+  },
+  "hero": {
+    "subtitle": "Rate your favorite poutines and find hidden gems near you!",
+    "title": "The ultimate poutine quest."
+  },
+  "home": {
+    "featuresIntro": {
+      "feature1": {
+        "description": "Rate each poutine by fries, cheese, and sauce quality for an accurate evaluation.",
+        "title": "Unique rating"
+      },
+      "feature2": {
+        "description": "Easily find the best poutine spots near you with our interactive map.",
+        "title": "Interactive map"
+      },
+      "feature3": {
+        "description": "Share your top finds with the community and become a poutine influencer.",
+        "title": "Share your favorites"
+      },
+      "title": "How it works"
+    },
+    "recentActivity": {
+      "title": "Latest reviews"
+    },
+    "topPoutines": {
+      "subtitle": "According to community votes, here are the top poutines you must try!",
+      "title": "Top 10 poutines"
+    }
+  },
+  "ingredient": {
+    "cheese": "Cheese",
+    "fries": "Fries",
+    "sauce": "Sauce"
+  },
+  "login": {
+    "continueWithGoogle": "Continue with Google",
+    "emailLabel": "Email address",
+    "genericError": "An error occurred",
+    "googleEmbeddedError": "To sign in with Google, you need to open this page in your phone’s browser (Safari or Chrome).",
+    "noAccount": "Don't have an account? ",
+    "or": "OR",
+    "passwordLabel": "Password",
+    "required": "Required",
+    "signupLink": "Sign up",
+    "submit": "Sign in",
+    "successMessage": "You are now signed in.",
+    "title": "Log In"
+  },
+  "loginMessage": {
+    "strong": "Log in",
+    "text": "to add a restaurant."
+  },
+  "map": {
+    "place": {
+      "montreal": "Montreal",
+      "quebecCity": "Quebec City",
+      "quebecRegion": "Québec Province"
+    },
+    "youAreHere": "You are here"
+  },
+  "profileReviewCard": {
+    "confirmDelete": "Are you sure you want to delete this review? This action is irreversible.",
+    "delete": "Delete",
+    "deleteSuccess": "Deleted!",
+    "edit": "Edit",
+    "has": "",
+    "poutinePhotoAlt": "user poutine photo",
+    "rated": "rated",
+    "unknown": "Unknown",
+    "userImageAlt": "user image",
+    "youHave": "You"
+  },
+  "rateRestaurant": {
+    "alreadyRated": "Déjà noté",
+    "button": {
+      "submit": "Submit"
+    },
+    "error": {
+      "chooseOneRating": "You must choose at least one rating out of 10",
+      "commentTooShort": "Comment is too short (at least {{min}} characters)",
+      "mustRateOrComment": "Please rate the poutine or add a comment to publish."
+    },
+    "field": {
+      "cheeseLabel": "🧀 Cheese",
+      "comment": "Comment",
+      "friesLabel": "🍟 Fries",
+      "photos": "Photos",
+      "portionLabel": "🤑 Value for money",
+      "sauceLabel": "🍯 Sauce"
+    },
+    "finalRatingLabel": "Final rating:",
+    "heading": {
+      "editReview": "Edit your review"
+    },
+    "inputPlaceholder": "Which poutine would you like to rate?",
+    "metaDescription": "Rate your chosen poutine in an instant: fries, cheese, sauce, and portion/price ratio. Share your review and help others find the best poutine restaurant!",
+    "noResults": "No results for \"{{query}}\"",
+    "other": " different",
+    "pageTitle": "Rate a poutine | Poutine Mania",
+    "rating": "{{rating}}/10",
+    "submitSuccessMessage": "Thanks for rating this poutine. Your review matters! Each rating you give helps the community find the best local poutines.",
+    "submitSuccessTitle": "Review submitted!",
+    "title": "Rate a poutine",
+    "titleOther": "Rate another poutine",
+    "titleQuestion": "What do you think of this poutine?",
+    "toast": {
+      "modified": "Modified!",
+      "published": "Review published!"
+    },
+    "validation": {
+      "commentMin": "Tell us a bit more 😥 (at least {{min}} characters)",
+      "number": "Must be a number"
+    },
+    "viewYourReview": "See your review"
+  },
+  "ratingPill": {
+    "noReviews": "No reviews",
+    "reviewCount": "{{count}} review",
+    "reviewCount_plural": "{{count}} reviews"
+  },
+  "ratingSection": {
+    "cheese": "Cheese",
+    "fries": "Fries",
+    "portion": "Portion",
+    "sauce": "Sauce",
+    "service": "Service"
+  },
+  "restaurant": {
+    "pendingApproval": "This restaurant is currently being reviewed by a member of our team. In the meantime, you can write a review of their poutine—it will be visible to the community as soon as the restaurant is approved!",
+    "reviews": {
+      "addToEatenlistSuccess.part1": "Added to",
+      "addToEatenlistSuccess.part2": "eaten poutines",
+      "addToEatenlistSuccess.part3": "!",
+      "addToWatchlistSuccess.part1": "Added to",
+      "addToWatchlistSuccess.part2": "poutines to try",
+      "addToWatchlistSuccess.part3": "!",
+      "delete": {
+        "confirmDescription": "This action is irreversible.",
+        "confirmTitle": "Delete review?",
+        "eatenList": "Remove from eaten poutines"
+      },
+      "deleteFromEatenlistSuccess": "Removed from eaten poutines!",
+      "deleteFromWatchlistSuccess": "Removed from poutines to try!",
+      "loginToAddToEatenlist.part1": "Log in",
+      "loginToAddToEatenlist.part2": "to add this poutine to your eaten list!",
+      "loginToAddToWatchlist.part1": "Log in",
+      "loginToAddToWatchlist.part2": "to add this poutine to your try list!",
+      "noReviews": "Be the first to leave a review!",
+      "title": "Reviews"
+    }
+  },
+  "restaurantBookmark": {
+    "addedToEatenPrefix": "Added to ",
+    "addedToEatenSuffix": "!",
+    "cancel": "Cancel",
+    "confirmRemoveWatchlist": "Remove from poutines to try?",
+    "eaten": "Eaten!",
+    "eatenLink": "eaten poutines",
+    "error": "Error",
+    "iAte": "I ate it",
+    "notInterested": "Not interested",
+    "placeholderAlt": "placeholder image",
+    "removedFromEaten": "Removed from eaten poutines!",
+    "removedFromWatchlist": "Removed from poutines to try!"
+  },
+  "restaurantCard": {
+    "addressCount": "{{count}} addresses in Quebec",
+    "emptyAlt": "empty-poutine"
+  },
+  "restaurantCategories": {
+    "[Auberge]": "Auberge",
+    "[Bar]": "Bar",
+    "[Casse-croûte]": "Snack bar",
+    "[Diner]": "Diner",
+    "[Fast-food]": "Fast-food",
+    "[Fromagerie]": "Cheese shop",
+    "[Pub]": "Pub",
+    "[Restaurant]": "Restaurant"
+  },
+  "restaurantForm": {
+    "addSuccursaleButton": "Add branch address",
+    "addressLabel": "Address",
+    "categoriesLabel": "Category(ies)",
+    "phoneLabel": "Phone number (optional)",
+    "restaurantLabel": "Restaurant name",
+    "succuresalesLabel": "Branches",
+    "validation": {
+      "address": "Please provide the address of this restaurant",
+      "categories": "You must add at least one category",
+      "emptyAddressAlert": "Empty address!",
+      "name": {
+        "max": "The name must be at most 50 characters long",
+        "min": "The name must be at least 1 character long"
+      },
+      "someFieldsMissing": "Please fill in all required fields"
+    },
+    "websiteLabel": "Website (optional)"
+  },
+  "restaurantIntrouvable": {
+    "add": "Add",
+    "title": "Restaurant not found?"
+  },
+  "restaurantPrices": {
+    "1": "Under $8",
+    "2": "$8 – $10",
+    "3": "Over $10"
+  },
+  "restaurantSearchbar": {
+    "multipleBranches": "{{count}} locations in Quebec",
+    "placeholder": "Search for a poutinerie...",
+    "search": "Search",
+    "viewAllRestaurants": "View all restaurants",
+    "viewResultsFor": "View all results for “{{term}}”"
+  },
+  "restaurants": {
+    "forSearch": "for \"{{search}}\"",
+    "h1": "Poutine Map – All poutine restaurants in Quebec",
+    "metaDescription": "Browse the interactive map of poutine spots in Quebec. Filter by rating, price, or category to find the perfect poutine near you.",
+    "noResults": "0 results",
+    "pageTitle": "Poutine Map | Poutine Mania",
+    "resultsCount": "{{count}} poutine place",
+    "resultsCount_plural": "{{count}} poutine places",
+    "sortOrders": {
+      "asc": "Ascending",
+      "desc": "Descending"
+    },
+    "sortTypes": {
+      "avgRating": "Average rating",
+      "name": "Name",
+      "popularity": "Popularity"
+    },
+    "succursalesCount": "{{count}} location",
+    "succursalesCount_plural": "{{count}} locations"
+  },
+  "restaurantsFilters": {
+    "applyFilters": "Apply",
+    "categoryTitle": "Category",
+    "filters": "Filters",
+    "orderPlaceholder": "Order",
+    "priceTitle": "Classic poutine price",
+    "ratingTitle": "Minimum rating",
+    "resetFilters": "Reset",
+    "sortByPlaceholder": "Sort by...",
+    "sortByTitle": "Sort by"
+  },
+  "reviewCard": {
+    "noComment": "No comment",
+    "poutinePhotoAlt": "user poutine photo",
+    "reviewCount": "{{count}} reviews",
+    "userImageAlt": "user image"
+  },
+  "reviewOverview": {
+    "countNoTerm": "No",
+    "countReviewsTerm": "review",
+    "countReviewsTerm_plural": "reviews",
+    "rateTheirPoutine": "Rate their poutine"
+  },
+  "seo": {
+    "description": "Discover, rate, and share the best poutines in Quebec on Poutine Mania.",
+    "home.description": "Note tes poutines préférées en critiquant les frites, le fromage et la sauce. Explore la carte pour dénicher la poutine ultime du Québec !",
+    "home.title": "Poutine Mania – La communauté de la poutine",
+    "restaurant.description": "Read reviews for {{name}} in Quebec, and share yours.",
+    "restaurant.ogDescription": "Read reviews for {{name}} in Quebec, and share yours.",
+    "restaurant.ogTitle": "{{name}} - Reviews of Their Poutine",
+    "restaurant.title": "{{name}} - Reviews of Their Poutine | Poutine Mania",
+    "restaurant.twitterDescription": "Read reviews for {{name}} in Quebec, and share yours.",
+    "restaurant.twitterTitle": "{{name}} - Reviews of Their Poutine",
+    "title": "Poutine Mania – Rate your favorite poutines!"
+  },
+  "sidebar": {
+    "about": "About",
+    "admin": "Admin",
+    "eaten": "Eaten",
+    "home": "Home",
+    "message": {
+      "loginToEaten": "<0>Log in</0> to access your eaten poutines list!",
+      "loginToTry": "<0>Log in</0> to access your to-try poutines list!"
+    },
+    "profile": "My profile",
+    "rate": "Rate a poutine",
+    "restaurants": "Poutine map",
+    "toTry": "To try"
+  },
+  "signup": {
+    "continueWithGoogle": "Continue with Google",
+    "emailLabel": "Email address",
+    "embeddedBrowserError": "To sign in with Google, you need to open this page in your smartphone’s browser (Safari or Chrome).",
+    "haveAccountPart1": "Already have an account?",
+    "login": "Log in",
+    "or": "OR",
+    "passwordLabel": "Password",
+    "required": "Required",
+    "signupButton": "Sign up",
+    "termsLink": "Terms of Service and Privacy Policy",
+    "termsPart1": "By creating an account, I accept the ",
+    "usernameLabel": "Username",
+    "usernamePlaceholder": "Name"
+  },
+  "sitemap": {
+    "about": "About",
+    "home": "Home",
+    "navLabel": "Main site links",
+    "rate": "Rate",
+    "restaurants": "Restaurants"
+  },
+  "toast": {
+    "defaultError": "An unexpected error occurred. Please try again.",
+    "logout": {
+      "error": "Error logging out. Please try again .",
+      "success": "You have been logged out."
+    }
+  },
+  "userProfile": {
+    "edit": {
+      "backToProfile": "Back to my profile",
+      "bio": "",
+      "changePasswordHeading": "Change my password",
+      "confirmDelete": "Are you sure you want to delete your account and all associated data? This action is irreversible.",
+      "deleteAccount": "Delete my account",
+      "editInfoHeading": "Edit my information",
+      "linkedAccountInfo": "Your account is linked to your {{provider}} profile with the email {{email}}.",
+      "newPassword": "New password",
+      "oldPassword": "Old password",
+      "required": "Required",
+      "save": "Save",
+      "toast": {
+        "deleteError": "An error occurred.",
+        "deleteSuccess": "Your account has been deleted successfully!",
+        "error": "An error occurred. Please try again",
+        "passwordSuccess": "Password updated successfully!",
+        "updateInfoSuccess": "Information updated successfully!"
+      },
+      "username": "Username"
+    },
+    "emptyState": {
+      "title": "No poutines eaten"
+    },
+    "profileHeader": {
+      "admin": "Admin",
+      "editProfile": "Edit my profile",
+      "favoriteLabel": "Favorite poutine",
+      "imageAlt": "Profile photo",
+      "lastEatenLabel": "Last eaten poutine",
+      "leastFavoriteLabel": "Least favorite poutine",
+      "levelConnoisseur": "Connoisseur",
+      "levelExpert": "Expert",
+      "levelNovice": "Novice"
+    },
+    "tab1": {
+      "description": "Ranking",
+      "title": "🏅"
+    },
+    "tab2": {
+      "description": "Latest reviews",
+      "title": "✍️"
+    }
+  },
+  "validation": {
+    "required": "Required"
+  },
+  "verifyEmail": {
+    "emailConfirmation": {
+      "description": "To activate your account, click on the confirmation link in the email we just sent to the provided address: ",
+      "header": "You're almost there!",
+      "resendPart1": "If you didn't receive our confirmation email, please check your spam folder and ",
+      "resendPart2": "click here",
+      "resendPart3": "to resend it.",
+      "resendSuccess": "Email sent!"
+    },
+    "failResponse": {
+      "cta": "Resend email",
+      "header": "Invalid token 😢",
+      "paragraph": "Sorry, the email verification link is invalid or has expired.",
+      "sent": "Sent!"
+    },
+    "successResponse": {
+      "cta": "Login",
+      "header": "Email successfully verified!",
+      "paragraph": "Your email has been successfully verified. You can now log in to your account."
+    },
+    "toast": {
+      "error": "An error occurred: ",
+      "loading": "Sending...",
+      "success": "Email sent!"
+    }
+  },
+  "watchlist": {
+    "title": "To try"
+  }
+}

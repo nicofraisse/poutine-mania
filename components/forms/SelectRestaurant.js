@@ -7,8 +7,11 @@ import { formatRating } from "../../lib/formatRating";
 import classNames from "classnames";
 import { formatAddress } from "../../lib/formatAddress";
 import { Image } from "components/Image";
+import { useTranslation } from "next-i18next";
 
 const SelectRestaurant = ({ restaurants, userRatedRestaurants }) => {
+  const { t } = useTranslation();
+
   return (
     <>
       {restaurants?.map((restaurant) => {
@@ -16,6 +19,8 @@ const SelectRestaurant = ({ restaurants, userRatedRestaurants }) => {
           (review) => review.restaurantId === restaurant._id
         );
         const image = restaurant.reviews?.find((r) => r.photos?.[0])?.photos[0];
+        const ratingValue =
+          alreadyRated && formatRating(alreadyRated.finalRating);
 
         return (
           <Link
@@ -46,17 +51,15 @@ const SelectRestaurant = ({ restaurants, userRatedRestaurants }) => {
                     className="h-12 min-w-12 max-w-12 object-cover object-center rounded-sm"
                   />
                   <div className="pl-3">
-                    <div className={classNames("font-bold text-sm", {})}>
-                      {restaurant.name}
-                    </div>
-                    <div className={classNames("text-xs text-gray-400", {})}>
-                      {formatAddress(restaurant)}
+                    <div className="font-bold text-sm">{restaurant.name}</div>
+                    <div className="text-xs text-gray-400">
+                      {formatAddress(restaurant, t)}
                     </div>
                   </div>
                 </div>
                 {alreadyRated ? (
-                  <div className="flex items-center  text-xs">
-                    <em>Déjà noté</em>
+                  <div className="flex items-center text-xs">
+                    <em>{t("rateRestaurant.alreadyRated")}</em>
                     <div
                       className="px-1 bg-green-200 rounded mr-2 text-gray-700 text-sm font-bold flex items-center justify-center mx-2"
                       style={{
@@ -64,7 +67,7 @@ const SelectRestaurant = ({ restaurants, userRatedRestaurants }) => {
                           ratingColors[round(alreadyRated.finalRating)],
                       }}
                     >
-                      {formatRating(alreadyRated.finalRating)}/10
+                      {t("rateRestaurant.rating", { rating: ratingValue })}
                     </div>
                   </div>
                 ) : (

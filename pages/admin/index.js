@@ -1,6 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import Button from "../../components/Button";
+import { withI18n } from "../../lib/withI18n";
 
 const index = () => {
   return (
@@ -23,3 +24,4 @@ const index = () => {
 };
 
 export default index;
+export const getStaticProps = withI18n();
