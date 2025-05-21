@@ -6,38 +6,39 @@ import UserRanking from "../../../components/UserRanking";
 import { useGet } from "../../../lib/useAxios";
 import UserLastReviews from "components/UserLastReviews";
 import { EmptyState } from "components/EmptyState";
+import { useTranslation } from "next-i18next";
+import { withI18n } from "../../../lib/withI18n";
 
-const Tab = ({ isSelected, handleSelectTab, title, description }) => {
-  return (
-    <div
-      className={classNames(
-        "w-32 h-20 mr-2 cursor-pointer select-none z-0 flex flex-col justify-center items-center group",
-        {
-          "bg-white rounded-t border-t border-r border-l text-slate-600 font-black":
-            isSelected,
-          "bg-transparent border border-transparent text-slate-400 font-normal":
-            !isSelected,
-        }
-      )}
-      onClick={handleSelectTab}
-    >
-      <div className="text-center">
-        <span className="text-2xl" style={{ fontSize: 28 }}>
-          {title}
-        </span>
-        <div
-          className={classNames("text-sm group-hover:text-slate-500", {
-            "mt-[1px]": isSelected,
-          })}
-        >
-          {description}
-        </div>
+const Tab = ({ isSelected, handleSelectTab, title, description }) => (
+  <div
+    className={classNames(
+      "w-32 h-20 mr-2 cursor-pointer select-none z-0 flex flex-col justify-center items-center group",
+      {
+        "bg-white rounded-t border-t border-r border-l text-slate-600 font-black":
+          isSelected,
+        "bg-transparent border border-transparent text-slate-400 font-normal":
+          !isSelected,
+      }
+    )}
+    onClick={handleSelectTab}
+  >
+    <div className="text-center">
+      <span className="text-2xl" style={{ fontSize: 28 }}>
+        {title}
+      </span>
+      <div
+        className={classNames("text-sm group-hover:text-slate-500", {
+          "mt-[1px]": isSelected,
+        })}
+      >
+        {description}
       </div>
     </div>
-  );
-};
+  </div>
+);
 
 const User = () => {
+  const { t } = useTranslation();
   const { query } = useRouter();
   const { data: user } = useGet(`/api/users/${query.id}`, { skip: !query.id });
   const [selectedTab, handleSetSelectedTab] = useState(1);
@@ -48,12 +49,12 @@ const User = () => {
 
   const tabs = [
     {
-      title: "🏅",
-      description: "Classement",
+      title: t("userProfile.tab1.title"),
+      description: t("userProfile.tab1.description"),
     },
     {
-      title: "✍️",
-      description: "Derniers avis",
+      title: t("userProfile.tab2.title"),
+      description: t("userProfile.tab2.description"),
     },
   ];
 
@@ -80,7 +81,7 @@ const User = () => {
           )}
         >
           {!reviewsLoading && reviews?.length === 0 ? (
-            <EmptyState hideButton title="Aucune poutine mangée" />
+            <EmptyState hideButton title={t("userProfile.emptyState.title")} />
           ) : (
             <UserRanking reviews={reviews} loading={reviewsLoading} />
           )}
@@ -99,5 +100,13 @@ const User = () => {
     </div>
   );
 };
+export const getStaticProps = withI18n();
+
+export function getStaticPaths() {
+  return {
+    paths: [],
+    fallback: "blocking",
+  };
+}
 
 export default User;

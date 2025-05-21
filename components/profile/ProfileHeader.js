@@ -6,15 +6,22 @@ import { Image } from "../Image";
 import Skeleton from "react-loading-skeleton";
 import { Linkify } from "../Linkify.js";
 import classNames from "classnames";
-
-// eslint-disable-next-line
-const cooltext =
-  "Et ainsi, je me suis tourné vers le Seigneur et j&apos;ai prié pour trouver un sens à ma vie. Et la poutine fut ma réponse divine, la bénédiction culinaire qui me guide sur ce chemin sacré.";
+import { useTranslation } from "next-i18next";
 
 const ProfileHeader = ({ user }) => {
+  const { t } = useTranslation();
   const { currentUser } = useCurrentUser();
 
   const isSkeleton = !user;
+  const eatenCount = user?.eatenlist?.length || 0;
+
+  const levelKey =
+    eatenCount < 5
+      ? "levelNovice"
+      : eatenCount < 15
+      ? "levelConnoisseur"
+      : "levelExpert";
+
   return (
     <div className="text-slate-700 border bg-white py-6 px-4 sm:p-7 rounded mb-6">
       <div className="flex items-center flex-col sm:flex-row">
@@ -26,7 +33,7 @@ const ProfileHeader = ({ user }) => {
             />
           ) : user.image ? (
             <Image
-              alt="user-image"
+              alt={t("userProfile.profileHeader.imageAlt")}
               quality={50}
               src={user.image}
               className="rounded-full object-cover flex-shrink-0 object-center w-full h-full"
@@ -52,13 +59,10 @@ const ProfileHeader = ({ user }) => {
                   passHref
                 >
                   <button className="text-base font-bold bg-blue-400 px-6 py-2 rounded-full text-white inline-block">
-                    Modifier mon profil
+                    {t("userProfile.profileHeader.editProfile")}
                   </button>
                 </Link>
               ) : (
-                // <button className="mr-auto text-base font-bold bg-blue-400 px-6 py-2 rounded-full text-white inline-block">
-                //   Suivre
-                // </button>
                 ""
               )}
             </div>
@@ -74,15 +78,11 @@ const ProfileHeader = ({ user }) => {
               <>
                 {user.isAdmin && (
                   <div className="text-sm border border-yellow-600 text-yellow-600 px-3 py-1 rounded mr-2">
-                    Admin
+                    {t("userProfile.profileHeader.admin")}
                   </div>
                 )}
                 <div className="text-sm text-slate-500 bg-slate-100 border border-slate-100 px-3 py-1 rounded mr-2">
-                  {user.eatenlist.length < 5
-                    ? "Novice"
-                    : user.eatenlist.length < 15
-                    ? "Connaisseur"
-                    : "Expert"}
+                  {t(`userProfile.profileHeader.${levelKey}`)}
                 </div>
               </>
             )}
@@ -99,7 +99,7 @@ const ProfileHeader = ({ user }) => {
                   passHref
                 >
                   <button className="text-base font-bold bg-blue-400 px-6 py-2 rounded-full text-white inline-block">
-                    Modifier mon profil
+                    {t("userProfile.profileHeader.editProfile")}
                   </button>
                 </Link>
               )
@@ -143,7 +143,7 @@ const ProfileHeader = ({ user }) => {
                   😋 {user.profileStats.lastEatenRestaurant.name}
                 </div>
                 <div className="text-xs sm:text-sm text-slate-400">
-                  Dernière poutine mangée
+                  {t("userProfile.profileHeader.lastEatenLabel")}
                 </div>
               </>
             )
@@ -159,7 +159,7 @@ const ProfileHeader = ({ user }) => {
                   ❤️ {user.profileStats.favoriteRestaurant.name}
                 </div>
                 <div className="text-xs sm:text-sm text-slate-400">
-                  Poutine préférée
+                  {t("userProfile.profileHeader.favoriteLabel")}
                 </div>
               </>
             )
@@ -175,7 +175,7 @@ const ProfileHeader = ({ user }) => {
                   💔 {user.profileStats.leastFavoriteRestaurant.name}
                 </div>
                 <div className="text-xs sm:text-sm text-slate-400">
-                  Poutine la moins aimée
+                  {t("userProfile.profileHeader.leastFavoriteLabel")}
                 </div>
               </>
             )

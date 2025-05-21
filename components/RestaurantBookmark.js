@@ -10,8 +10,10 @@ import { toast } from "react-hot-toast";
 import { Image } from "./Image";
 import { useSidebarData } from "components/context/SidebarDataProvider";
 import Skeleton from "react-loading-skeleton";
+import { useTranslation } from "next-i18next";
 
 const RestaurantBookmark = ({ restaurant }) => {
+  const { t } = useTranslation();
   const [isEatenLoading, setIsEatenLoading] = useState(false);
   const [isWatchDeleting, setIsWatchDeleting] = useState(false);
   const [isEaten, setIsEaten] = useState(true);
@@ -42,21 +44,25 @@ const RestaurantBookmark = ({ restaurant }) => {
       .then(() => {
         setIsEatenLoading(false);
         setIsEaten(!isEaten);
-        toast.success(
-          isEaten ? (
-            "Supprimé des poutines mangées!"
-          ) : (
+
+        if (isEaten) {
+          toast.success(t("restaurantBookmark.removedFromEaten"));
+        } else {
+          const prefix = t("restaurantBookmark.addedToEatenPrefix");
+          const linkText = t("restaurantBookmark.eatenLink");
+          const suffix = t("restaurantBookmark.addedToEatenSuffix");
+          toast.success(
             <>
-              Ajouté aux
+              {prefix}
               <Link legacyBehavior href="/mes-poutines">
-                <span className="underline text-blue-500 ml-1 cursor-pointer">
-                  poutines mangées
-                </span>
+                <a className="underline text-blue-500 ml-1 cursor-pointer">
+                  {linkText}
+                </a>
               </Link>
-              !
+              {suffix}
             </>
-          )
-        );
+          );
+        }
 
         setSidebarWatchlistAmount(
           isEaten ? sidebarWatchlistAmount + 1 : sidebarWatchlistAmount - 1
@@ -66,18 +72,12 @@ const RestaurantBookmark = ({ restaurant }) => {
         );
 
         if (!isEaten) {
-          setTimeout(() => {
-            setDisapear(true);
-          }, 2000);
-        }
-        if (!isEaten) {
-          setTimeout(() => {
-            setVanish(true);
-          }, 3000);
+          setTimeout(() => setDisapear(true), 2000);
+          setTimeout(() => setVanish(true), 3000);
         }
       })
       .catch((e) => {
-        toast.error("error", e.message);
+        toast.error(`${t("restaurantBookmark.error")}: ${e.message}`);
         setIsEatenLoading(false);
       });
   };
@@ -85,7 +85,7 @@ const RestaurantBookmark = ({ restaurant }) => {
   const handleDeleteFromWatchlist = () => {
     setIsWatchDeleting(true);
 
-    if (window.confirm("Supprimer des poutines à essayer?")) {
+    if (window.confirm(t("restaurantBookmark.confirmRemoveWatchlist"))) {
       axios
         .post(`/api/users/${currentUser._id}/update-watchlist`, {
           type: "remove",
@@ -93,15 +93,15 @@ const RestaurantBookmark = ({ restaurant }) => {
         })
         .then(() => {
           setIsWatchDeleting(false);
-          toast.success("Supprimé des poutines à essayer!");
+          toast.success(t("restaurantBookmark.removedFromWatchlist"));
           setDisapear(true);
           setTimeout(() => {
             setVanish(true);
             setSidebarWatchlistAmount(sidebarWatchlistAmount - 1);
-          }, [1000]);
+          }, 1000);
         })
         .catch((e) => {
-          toast.error("error", e.message);
+          toast.error(`${t("restaurantBookmark.error")}: ${e.message}`);
           setIsWatchDeleting(false);
         });
     }
@@ -136,7 +136,11 @@ const RestaurantBookmark = ({ restaurant }) => {
             quality={20}
           />
         ) : (
-          <ImageIcon className="text-gray-300" size={48} alt="placeholder" />
+          <ImageIcon
+            className="text-gray-300"
+            size={48}
+            alt={t("restaurantBookmark.placeholderAlt")}
+          />
         )}
       </div>
 
@@ -161,11 +165,9 @@ const RestaurantBookmark = ({ restaurant }) => {
             </a>
           </Link>
         )}
+
         <div
-          className={classNames({
-            "mb-4": !isSkeleton,
-            "opacity-50": isEaten,
-          })}
+          className={classNames({ "mb-4": !isSkeleton, "opacity-50": isEaten })}
         >
           {isSkeleton ? (
             <>
@@ -186,10 +188,9 @@ const RestaurantBookmark = ({ restaurant }) => {
             />
           )}
         </div>
+
         <div className="flex items-center justify-around">
-          {isSkeleton ? (
-            ""
-          ) : (
+          {isSkeleton ? null : (
             <Button
               height="sm"
               onClick={
@@ -198,7 +199,6 @@ const RestaurantBookmark = ({ restaurant }) => {
               className={classNames(
                 "inline-flex hover:bg-white hover:text-green-600 hover:border-green-600 transition-all items-center text-green-500 bg-white border-green-500 px-4 shrink-0 text-sm sm:text-md h-[35px] sm:h-[40px]",
                 {
-                  "": !isEaten,
                   "text-green-400 bg-green-50 hover:bg-green-50 border-none pointer-events-none":
                     isEaten,
                 }
@@ -209,30 +209,15 @@ const RestaurantBookmark = ({ restaurant }) => {
               {!isEaten && (
                 <CheckCircle className="mr-2 sm:text-lg w-4 sm:w-5" />
               )}
-              <span>{isEaten ? "Mangé!" : "J'ai mangé"}</span>
+              <span>
+                {isEaten
+                  ? t("restaurantBookmark.eaten")
+                  : t("restaurantBookmark.iAte")}
+              </span>
             </Button>
           )}
-          {/* <Button
-            height="sm"
-            variant={VariantColor.white2}
-            className="text-xs "
-          >
-            <XCircle className="mr-1 sm:text-lg w-3 sm:w-4 font-" /> Pas
-            intéressé
-          </Button> */}
-          {/* <Link legacyBehavior href={`/restaurants/${restaurant.slug}/noter`} passHref>
-            <Button
-              height="sm"
-              className={classNames(
-                "inline-flex items-center px-4 shrink-0 text-sm sm:text-md h-[35px] sm:h-[40px]"
-              )}
-              variant="white"
-            >
-              <Edit className="mr-2 sm:text-lg w-4 sm:w-5" />
-              <span>Noter</span>
-            </Button>
-          </Link> */}
         </div>
+
         {isSkeleton ? (
           <Skeleton width="45%" height={40} className="mt-2 mb-7" />
         ) : (
@@ -244,11 +229,15 @@ const RestaurantBookmark = ({ restaurant }) => {
             onClick={() =>
               isEaten
                 ? handleToggleFromEatenlist(restaurant)
-                : handleDeleteFromWatchlist(restaurant)
+                : handleDeleteFromWatchlist()
             }
           >
             {!isEaten && <XCircle className="mr-1 sm:text-lg w-3 sm:w-4" />}
-            <span>{isEaten ? "Annuler" : "Pas intéressé(e)"}</span>
+            <span>
+              {isEaten
+                ? t("restaurantBookmark.cancel")
+                : t("restaurantBookmark.notInterested")}
+            </span>
           </button>
         )}
       </div>

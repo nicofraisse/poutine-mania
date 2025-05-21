@@ -8,13 +8,16 @@ import { useLoginForm } from "../context/LoginFormProvider";
 import { signIn } from "next-auth/react";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useTranslation } from "next-i18next";
+import { useRouter } from "next/router";
 
 const SignUp = ({ onSubmit }) => {
   const { openLogin, closeSignup } = useLoginForm();
   const [isEmbeddedBrowser, setIsEmbeddedBrowser] = useState();
-
-  const [showEmbeddedBrrowserError, setShowEmbeddedBrrowserError] =
+  const [showEmbeddedBrowserError, setShowEmbeddedBrowserError] =
     useState(false);
+  const { t } = useTranslation();
+  const { locale } = useRouter();
 
   useEffect(() => {
     const userAgent = navigator.userAgent;
@@ -47,12 +50,16 @@ const SignUp = ({ onSubmit }) => {
 
   const handleSubmit = (values, formikBag) => {
     axios
-      .post("/api/auth/signup", values)
+      .post("/api/auth/signup", { ...values, locale })
       .then(() => {
         onSubmit(values.email);
       })
       .catch((e) => {
-        toast.error(e?.response?.data?.message || e.message);
+        toast.error(
+          e?.response?.data?.messageKey
+            ? t(e?.response?.data?.messageKey)
+            : e?.response?.data?.message || e.message
+        );
         formikBag.setSubmitting(false);
       });
   };
@@ -64,10 +71,21 @@ const SignUp = ({ onSubmit }) => {
 
   const handleGoogleSignin = () => {
     if (isEmbeddedBrowser) {
-      setShowEmbeddedBrrowserError(true);
+      setShowEmbeddedBrowserError(true);
       return;
     }
     signIn("google");
+  };
+
+  const openTermsPopup = (e) => {
+    e.preventDefault();
+    const url =
+      locale === "fr" ? "/conditions-generales" : "/terms-and-conditions";
+    window.open(
+      url,
+      "termsPopup",
+      "width=600,height=700,toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes"
+    );
   };
 
   return (
@@ -75,9 +93,9 @@ const SignUp = ({ onSubmit }) => {
       initialValues={{ name: "", email: "", password: "" }}
       onSubmit={handleSubmit}
       validationSchema={Yup.object({
-        name: Yup.string().min(1).required("Requis"),
-        email: Yup.string().min(1).required("Requis"),
-        password: Yup.string().min(1).required("Requis"),
+        name: Yup.string().min(1).required(t("signup.required")),
+        email: Yup.string().min(1).required(t("signup.required")),
+        password: Yup.string().min(1).required(t("signup.required")),
       })}
       className="mx-auto w-[320px] sm:w-[380px] p-4"
     >
@@ -90,6 +108,8 @@ const SignUp = ({ onSubmit }) => {
             onClick={handleGoogleSignin}
           >
             <svg
+              xmlns="http://www.w3.org/2000/svg"
+              xmlnsXlink="http://www.w3.org/1999/xlink"
               viewBox="0 0 48 48"
               width="32px"
               height="32px"
@@ -121,69 +141,66 @@ const SignUp = ({ onSubmit }) => {
                 d="M48 48L17 24l-4-3 35-10z"
               />
             </svg>
-            Continuer avec Google
+            {t("signup.continueWithGoogle")}
           </Button>
-          {showEmbeddedBrrowserError && (
+
+          {showEmbeddedBrowserError && (
             <div className="text-xs text-red-500">
-              Pour vous connecter avec Google, vous devez ouvrir cette page dans
-              le navigateur de votre smartphone (Safari ou Chrome).
+              {t("signup.embeddedBrowserError")}
             </div>
           )}
-          {/* <Button
-            type="button"
-            variant={VariantColor.blue}
-            className="px-5 w-full text-white"
-            onClick={() => signIn("facebook")}
-          >
-            <svg
-              width="32px"
-              height="32px"
-              viewBox="0 0 512 512"
-              id="Layer_1"
-              data-name="Layer 1"
-              fill="white"
-              className="mr-3"
-            >
-              <path d="M480,257.35c0-123.7-100.3-224-224-224s-224,100.3-224,224c0,111.8,81.9,204.47,189,221.29V322.12H164.11V257.35H221V208c0-56.13,33.45-87.16,84.61-87.16,24.51,0,50.15,4.38,50.15,4.38v55.13H327.5c-27.81,0-36.51,17.26-36.51,35v42h62.12l-9.92,64.77H291V478.66C398.1,461.85,480,369.18,480,257.35Z" />
-            </svg>
-            Continuer avec Facebook
-          </Button> */}
+
           <div className="w-full flex items-center justify-between my-6">
             <div className="grow bg-gray-300 h-[1px]"></div>
-            <div className="text-gray-500 px-3 text-sm">OU</div>
+            <div className="text-gray-500 px-3 text-sm">{t("signup.or")}</div>
             <div className="grow bg-gray-300 h-[1px]"></div>
           </div>
-          <Field name="name" label="Nom d'utilisateur" placeholder="Nom" />
-          <Field name="email" label="Adresse courriel" />
-          <Field name="password" type="password" label="Mot de passe" />
+
+          <Field
+            name="name"
+            label={t("signup.usernameLabel")}
+            placeholder={t("signup.usernamePlaceholder")}
+          />
+          <Field name="email" label={t("signup.emailLabel")} />
+          <Field
+            name="password"
+            type="password"
+            label={t("signup.passwordLabel")}
+          />
+
           <div className="text-sm">
-            Vous avez déjà un compte?{" "}
+            {t("signup.haveAccountPart1")}&nbsp;
             <span
               className="font-black cursor-pointer underline text-teal-700 hover:text-teal-600"
               onClick={handleSwitchForm}
             >
-              Connexion
+              {t("signup.login")}
             </span>
           </div>
+
           <Button
             type="submit"
             variant="primary"
             className="mt-6 w-full"
             loading={isSubmitting}
           >
-            Je m&apos;inscris
+            {t("signup.signupButton")}
           </Button>
+
           <div className="text-xs text-slate-500 text-center mt-6">
-            En créant un compte, j&apos;accepte les{" "}
-            <Link
+            {t("signup.termsPart1")}
+            <a
+              href={
+                locale === "fr"
+                  ? "/conditions-generales"
+                  : "/terms-and-conditions"
+              }
+              onClick={openTermsPopup}
               className="text-teal-600 hover:text-teal-700 font-bold"
-              href="/conditions-generales"
-              target="_blank"
-              rel="noopener noreferrer"
             >
-              Conditions générales d&apos;utilisation et Politique de
-              confidentialité.
-            </Link>
+              {t("signup.termsLink")}
+            </a>
+            .
           </div>
         </>
       )}

@@ -1,7 +1,8 @@
 const path = require("path");
-const { redirects } = require("./data/redirects");
+const { i18n } = require("./next-i18next.config");
 
 module.exports = {
+  i18n,
   webpack: (config) => {
     config.resolve.alias["components"] = path.join(__dirname, "components");
     config.resolve.alias["context"] = path.join(__dirname, "context");

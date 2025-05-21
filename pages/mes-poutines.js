@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import { useGet } from "../lib/useAxios";
 import { useCurrentUser } from "../lib/useCurrentUser";
+import { useTranslation } from "next-i18next";
 
 import { EatenRestaurantCard } from "../components/EatenRestaurantCard";
 import Skeleton from "react-loading-skeleton";
 import { EmptyState } from "../components/EmptyState";
+import { withI18n } from "../lib/withI18n";
 
 const MesPoutines = () => {
   const { currentUser } = useCurrentUser();
+  const { t } = useTranslation();
   const [currentTab, setCurrentTab] = useState({ rated: true, notRated: true });
 
   const { data: restaurants, loading } = useGet(
@@ -40,26 +43,9 @@ const MesPoutines = () => {
   return (
     <div className="sm:p-5 max-w-md mx-auto overflow-x-hidden">
       <h1 className="text-2xl font-black mb-5 mt-3 px-3 sm:px-0">
-        Mes poutines mangées
+        {t("eatenlist.title")}
       </h1>
-      {/* <Link legacyBehavior href={"/noter"} passHref>
-        <div
-          className="mt-0s w-[220px] inline-flex mr-1 justify-center items-center py-2 px-2 bg-gray-50 border-gray-100 border-2 rounded-full text-neutral-400 cursor-pointer select-none hover:text-neutral-500 hover:border-neutral-300 transition-colors duration-200
-        "
-        >
-          <Plus className="mr-2" size={20} />
-          Ajouter des poutines
-        </div>
-      </Link> */}
-      {/* <Link legacyBehavior href={"/noter"} passHref>
-        <div
-          className="mt-0s w-[150px] inline-flex justify-center items-center py-2 px-2 bg-gray-50 border-gray-100 border-2 rounded-full text-neutral-400 cursor-pointer select-none hover:text-neutral-500 hover:border-neutral-300 transition-colors duration-200
-        "
-        >
-          <Link legacyBehaviorIcon className="mr-2" size={20} />
-          Partager
-        </div>
-      </Link> */}
+
       {restaurants?.length === 0 && !loading ? (
         <div className="flex flex-wrap items-start justify-center sm:justify-start">
           <EmptyState rateCTA />
@@ -73,7 +59,7 @@ const MesPoutines = () => {
             </>
           ) : (
             <>
-              <div className="font-bold mb-1">Afficher mes poutines:</div>
+              <div className="font-bold mb-1">{t("eatenlist.filterLabel")}</div>
               <div className="flex space-x-4">
                 <div className="flex items-center">
                   <input
@@ -88,7 +74,7 @@ const MesPoutines = () => {
                     }
                   />
                   <label htmlFor="rated" className="ml-2">
-                    Notées ({ratedCount})
+                    {t("eatenlist.filter.rated", { count: ratedCount })}
                   </label>
                 </div>
                 <div className="flex items-center">
@@ -104,7 +90,9 @@ const MesPoutines = () => {
                     }
                   />
                   <label htmlFor="notRated" className="ml-2">
-                    Pas encore notées ({notRatedCount})
+                    {t("eatenlist.filter.notRated", {
+                      count: notRatedCount,
+                    })}
                   </label>
                 </div>
               </div>
@@ -112,6 +100,7 @@ const MesPoutines = () => {
           )}
         </div>
       )}
+
       <div className="p-1">
         {(filteredRestaurants() || [{}, {}, {}, {}]).map((r) => {
           return <EatenRestaurantCard key={r?._id} restaurant={r} />;
@@ -120,5 +109,7 @@ const MesPoutines = () => {
     </div>
   );
 };
+
+export const getStaticProps = withI18n();
 
 export default MesPoutines;

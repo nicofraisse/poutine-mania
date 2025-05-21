@@ -9,24 +9,29 @@ import Link from "next/link";
 import Color from "color";
 import classNames from "classnames";
 import { ImageModal } from "./ImageModal";
+import { useTranslation } from "next-i18next";
 
 export const RatingSection = ({ review, showDate = true }) => {
+  const { t } = useTranslation();
+
   const miniRatings = (
     <div className="text-xs sm:text-sm inline-flex text-slate-500 bg-slate-50 rounded px-1 mb-2 py-1 sm:p-0 sm:m-0 sm:bg-transparent">
       {review.friesRating && (
         <div className="mr-[4px]">
-          Frites <span className="text-orange-500">{review.friesRating}</span>
+          {t("ratingSection.fries")}{" "}
+          <span className="text-orange-500">{review.friesRating}</span>
         </div>
       )}
       {review.cheeseRating && (
         <div className="mr-[4px]">
-          {review.friesRating && "·"} Fromage{" "}
+          {review.friesRating && "·"} {t("ratingSection.cheese")}{" "}
           <span className="text-orange-500">{review.cheeseRating}</span>
         </div>
       )}
       {review.sauceRating && (
         <div className="mr-[4px]">
-          {(review.friesRating || review.cheeseRating) && "·"} Sauce{" "}
+          {(review.friesRating || review.cheeseRating) && "·"}{" "}
+          {t("ratingSection.sauce")}{" "}
           <span className="text-orange-500">{review.sauceRating}</span>
         </div>
       )}
@@ -34,7 +39,7 @@ export const RatingSection = ({ review, showDate = true }) => {
         <div className="mr-[4px]">
           {(review.friesRating || review.cheeseRating || review.sauceRating) &&
             "·"}{" "}
-          Portion{" "}
+          {t("ratingSection.portion")}{" "}
           <span className="text-orange-500">{review.portionRating}</span>
         </div>
       )}
@@ -45,7 +50,7 @@ export const RatingSection = ({ review, showDate = true }) => {
             review.sauceRating ||
             review.portionRating) &&
             "·"}{" "}
-          Service{" "}
+          {t("ratingSection.service")}{" "}
           <span className="text-orange-500">{review.serviceRating}</span>
         </div>
       )}
@@ -73,7 +78,6 @@ export const RatingSection = ({ review, showDate = true }) => {
           >
             {formatRating(review.finalRating)}
             <span className="text-white font-normal text-xs text-opacity-80 ml-[2px] -mb-[2px]">
-              {" "}
               /10
             </span>
           </span>
@@ -110,6 +114,7 @@ export const ReviewCard = ({
 }) => {
   const [imgModalOpen, setImgModalOpen] = useState(false);
   const { currentUser } = useCurrentUser();
+  const { t } = useTranslation();
 
   return (
     <>
@@ -125,7 +130,7 @@ export const ReviewCard = ({
                 <div className="bg-slate-50 relative border h-10 w-10 sm:h-12 sm:w-12 rounded-full text-slate-300 flex items-center justify-center">
                   {review.user.image ? (
                     <Image
-                      alt="user-image"
+                      alt={t("reviewCard.userImageAlt")}
                       src={review.user.image}
                       fill={true}
                       className="rounded-full h-full w-full object-cover object-center"
@@ -140,9 +145,10 @@ export const ReviewCard = ({
                     <div className="sm:text-center ml-3 mr-2 sm:mx-0 text-sm sm:text-sm sm:mt-2 break-words max-w-28">
                       {review.user.name}
                     </div>
-
                     <div className="text-center font-light text-xs text-slate-400">
-                      {review.user.reviews.length} avis
+                      {t("reviewCard.reviewCount", {
+                        count: review.user.reviews.length,
+                      })}
                     </div>
                   </div>
                   <div className="text-slate-500 visible sm:hidden font-light text-xs ml-3">
@@ -164,7 +170,6 @@ export const ReviewCard = ({
           >
             {formatRating(review.finalRating)}
             <span className="text-white font-normal text-xs text-opacity-80 ml-[2px] -mb-[2px]">
-              {" "}
               /10
             </span>
           </span>
@@ -176,7 +181,9 @@ export const ReviewCard = ({
             style={{ width: 0, minWidth: "100%" }}
           >
             {review.comment || (
-              <div className="text-slate-300 mt-2">Aucun commentaire</div>
+              <div className="text-slate-300 mt-2">
+                {t("reviewCard.noComment")}
+              </div>
             )}
           </p>
           <div className="flex flex-wrap mt-3 max-w-[600px]">
@@ -199,7 +206,7 @@ export const ReviewCard = ({
                   >
                     <Image
                       src={photo}
-                      alt="poutine-user-photo"
+                      alt={t("reviewCard.poutinePhotoAlt")}
                       className="object-cover object-center absolute top-0 left-0 w-full h-full"
                     />
                   </div>

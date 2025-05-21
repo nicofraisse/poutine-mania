@@ -2,15 +2,19 @@ import axios from "axios";
 import { useState, useCallback, useEffect } from "react";
 import { Mail } from "react-feather";
 import { toast } from "react-hot-toast";
+import { useTranslation } from "next-i18next";
+import { useRouter } from "next/router";
 
 export const EmailConfirmation = ({ email }) => {
   const [showResend, setShowResend] = useState(true);
   const [sending, setSending] = useState(false);
+  const { t } = useTranslation();
+  const { locale } = useRouter();
 
   const sendEmailPromise = useCallback(() => {
     return new Promise((resolve, reject) => {
       axios
-        .put("/api/auth/send-verification-email", { email })
+        .put("/api/auth/send-verification-email", { email, locale })
         .then((response) => {
           resolve(response.data);
         })
@@ -24,9 +28,14 @@ export const EmailConfirmation = ({ email }) => {
     setSending(true);
 
     await toast.promise(sendEmailPromise(), {
-      loading: <b>Envoi...</b>,
-      success: <b>Courriel envoyé!</b>,
-      error: (e) => <b>Une erreur s&apos;est produite: {e.message}</b>,
+      loading: <b>{t("verifyEmail.toast.loading")}</b>,
+      success: <b>{t("verifyEmail.toast.success")}</b>,
+      error: (e) => (
+        <b>
+          {t("verifyEmail.toast.error")}
+          {e.messageKey ? t(e.messageKey) : e.message}
+        </b>
+      ),
     });
 
     setSending(false);
@@ -34,9 +43,8 @@ export const EmailConfirmation = ({ email }) => {
   }, [sendEmailPromise]);
 
   useEffect(() => {
-    // Unsubscribe the old sendEmailPromise and create a new one when email changes
     return () => {
-      toast.dismiss(); // Dismiss any existing toast messages
+      toast.dismiss();
     };
   }, [email]);
 
@@ -47,12 +55,11 @@ export const EmailConfirmation = ({ email }) => {
       </div>
       <div className="bg-slate-50 border rounded border-slate-200 px-5 py-6">
         <h2 className="font-black text-2xl text-center mb-3 text-slate-500">
-          Tu y es presque!
+          {t("verifyEmail.emailConfirmation.header")}
         </h2>
 
         <div className="max-w-2xs text-md text-slate-500 text-center">
-          Pour activer ton compte, clique sur le lien de confirmation dans le
-          courriel que nous venons de t&apos;envoyer à l&apos;adresse fournie:{" "}
+          {t("verifyEmail.emailConfirmation.description")}{" "}
           {JSON.stringify(email)}
           <br />
         </div>
@@ -61,19 +68,18 @@ export const EmailConfirmation = ({ email }) => {
       <div className="text-xs mt-6 text-slate-500 text-center">
         {showResend ? (
           <>
-            Si tu n&apos;as pas reçu notre courriel de validation, merci de
-            vérifier tes courriels indésirables, et{" "}
+            {t("verifyEmail.emailConfirmation.resendPart1")}
             <button
               className="underline focus:outline-none"
               onClick={resendVerificationEmail}
               disabled={sending && !showResend}
             >
-              clique ici
+              {t("verifyEmail.emailConfirmation.resendPart2")}
             </button>{" "}
-            pour l&apos;envoyer de nouveau.
+            {t("verifyEmail.emailConfirmation.resendPart3")}
           </>
         ) : (
-          <>Courriel envoyé!</>
+          <>{t("verifyEmail.emailConfirmation.resendSuccess")}</>
         )}
       </div>
     </div>

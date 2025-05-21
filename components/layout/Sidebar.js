@@ -17,6 +17,7 @@ import { useRequireLogin } from "../../lib/useRequireLogin";
 import { useSidebarData } from "../context/SidebarDataProvider";
 import { BrandLogo } from "../BrandLogo";
 import { useSession } from "next-auth/react";
+import { Trans, useTranslation } from "next-i18next";
 
 const Item = ({
   label,
@@ -62,6 +63,7 @@ const Item = ({
 };
 
 export const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
+  const { t } = useTranslation();
   const { data: session } = useSession();
   const currentUser = session?.user;
   const requireLogin = useRequireLogin();
@@ -122,16 +124,21 @@ export const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
               </a>
             </Link>
 
-            <Item onClick={onClickItem} label="Accueil" icon={Home} href="/" />
             <Item
               onClick={onClickItem}
-              label="Carte des poutines"
+              label={t("sidebar.home")}
+              icon={Home}
+              href="/"
+            />
+            <Item
+              onClick={onClickItem}
+              label={t("sidebar.restaurants")}
               icon={Map}
               href="/restaurants"
             />
             <Item
               onClick={onClickItem}
-              label="Noter une poutine"
+              label={t("sidebar.rate")}
               icon={Edit3}
               href="/noter"
             />
@@ -139,32 +146,36 @@ export const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
             <Item
               onClick={onClickItem}
               icon={Star}
-              label={`À essayer${getAmountString(sidebarWatchlistAmount)}`}
+              label={`${t("sidebar.toTry")}${getAmountString(
+                sidebarWatchlistAmount
+              )}`}
               href="/a-essayer"
               requireLogin={!currentUser}
               requireLoginMessage={
-                <span>
-                  <b>Connecte-toi</b> pour accéder à ta liste de poutines à
-                  essayer!
-                </span>
+                <Trans
+                  i18nKey="sidebar.message.loginToTry"
+                  components={[<strong key="0" />]}
+                />
               }
             />
             <Item
               onClick={onClickItem}
-              label={`Mangées ${getAmountString(sidebarEatenlistAmount)}`}
+              label={`${t("sidebar.eaten")}${getAmountString(
+                sidebarEatenlistAmount
+              )}`}
               icon={CheckCircle}
               href={`/mes-poutines`}
               requireLogin={!currentUser}
               requireLoginMessage={
-                <span>
-                  <b>Connecte-toi</b> pour accéder à ta liste de poutines
-                  mangées!
-                </span>
+                <Trans
+                  i18nKey="sidebar.message.loginToEaten"
+                  components={[<strong key="0" />]}
+                />
               }
             />
             <Item
               onClick={onClickItem}
-              label="Mon profil"
+              label={t("sidebar.profile")}
               icon={User}
               href={`/profil/${currentUser?.slug}`}
               requireLogin={!currentUser}
@@ -174,7 +185,7 @@ export const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
             {currentUser?.isAdmin && (
               <Item
                 onClick={onClickItem}
-                label="Admin"
+                label={t("sidebar.admin")}
                 icon={Lock}
                 href="/admin"
               />
@@ -184,7 +195,7 @@ export const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
           <div className="sticky bottom-0 pb-3">
             <Item
               onClick={onClickItem}
-              label="À Propos"
+              label={t("sidebar.about")}
               icon={Info}
               href="/a-propos"
             />

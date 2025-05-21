@@ -7,6 +7,7 @@ import Button from "./Button";
 import { Edit3 } from "react-feather";
 import { useRouter } from "next/router";
 import Skeleton from "react-loading-skeleton";
+import { useTranslation } from "next-i18next";
 
 const IngredientRatingRings = ({
   friesRating,
@@ -16,6 +17,7 @@ const IngredientRatingRings = ({
   noCheese,
   noSauce,
 }) => {
+  const { t } = useTranslation();
   return (
     <div className={"flex justify-between"}>
       <div
@@ -31,7 +33,7 @@ const IngredientRatingRings = ({
           noRatings={noFries}
         />
         <div className="text-sm text-center font-bold text-gray-400">
-          Frites
+          {t("ingredient.fries")}
         </div>
       </div>
       <div
@@ -47,7 +49,7 @@ const IngredientRatingRings = ({
           noRatings={noCheese}
         />
         <div className="text-sm text-center font-bold text-gray-400">
-          Fromage
+          {t("ingredient.cheese")}
         </div>
       </div>
       <div
@@ -62,7 +64,9 @@ const IngredientRatingRings = ({
           percent={sauceRating * 10}
           noRatings={noSauce}
         />
-        <div className="text-sm text-center font-bold text-gray-400">Sauce</div>
+        <div className="text-sm text-center font-bold text-gray-400">
+          {t("ingredient.sauce")}
+        </div>
       </div>
     </div>
   );
@@ -71,6 +75,7 @@ const IngredientRatingRings = ({
 export const ReviewOverview = ({ restaurant }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const { push } = useRouter();
+  const { t } = useTranslation();
 
   useEffect(() => {
     setIsLoaded(true);
@@ -114,9 +119,13 @@ export const ReviewOverview = ({ restaurant }) => {
         ) : (
           <div className="text-sm">
             {restaurant.reviews.length === 0
-              ? "Aucun"
+              ? t("reviewOverview.countNoTerm")
               : restaurant.reviews.length}{" "}
-            avis
+            {t(
+              restaurant.reviews.length > 1
+                ? "reviewOverview.countReviewsTerm_plural"
+                : "reviewOverview.countReviewsTerm"
+            )}
           </div>
         )}
       </div>
@@ -147,7 +156,7 @@ export const ReviewOverview = ({ restaurant }) => {
           onClick={() => push(`/restaurants/${restaurant.slug}/noter`)}
         >
           <Edit3 size={20} className="mr-2" />
-          Noter leur poutine
+          {t("reviewOverview.rateTheirPoutine")}
         </Button>
       )}
     </div>

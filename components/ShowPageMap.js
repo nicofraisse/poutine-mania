@@ -11,6 +11,8 @@ import Image from "next/image";
 import Color from "color";
 import { Image as CloudImage } from "components/Image";
 import { TagSection } from "./RestaurantCard";
+import { useTranslation } from "next-i18next";
+import { useRouter } from "next/router";
 
 const MarkerAndPopup = ({
   restaurant,
@@ -23,8 +25,8 @@ const MarkerAndPopup = ({
   isShowPage,
   isSmallMarker,
 }) => {
-  // const [showPopup, setShowPopup] = useState(false)
   const { hoveredId, setHoveredId } = useRestaurantCardHover();
+  const { locale } = useRouter();
 
   const isHovered = hoveredId === restaurant._id;
 
@@ -147,7 +149,8 @@ const MarkerAndPopup = ({
         >
           <div
             onClick={() =>
-              !isShowPage && window.open(`/restaurants/${restaurant.slug}`)
+              !isShowPage &&
+              window.open(`/${locale}/restaurants/${restaurant.slug}`)
             }
           >
             {image && !isShowPage && (
@@ -214,6 +217,7 @@ const MarkerAndPopup = ({
 
 const MapMap = ({ restaurants, isShowPage }) => {
   const [userCoordinates, setUserCoordinates] = useState();
+  const { t } = useTranslation();
   const allCoordinates = flatten(
     restaurants.map((r) => r.succursales.map((s) => s.address.center))
   );
@@ -318,7 +322,7 @@ const MapMap = ({ restaurants, isShowPage }) => {
                   }
                 )}
               >
-                Vous êtes ici
+                {t("map.youAreHere")}
               </div>
             </Marker>
           </div>

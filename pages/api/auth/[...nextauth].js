@@ -1,6 +1,5 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-import { capitalize } from "lodash";
 import { verifyPassword } from "lib/auth";
 import { connectToDatabase } from "lib/db";
 import { generateSlug } from "../../../lib/generateSlug";
@@ -67,8 +66,7 @@ export const authOptions = {
       if (!user?.emailVerified) {
         const error = JSON.stringify({
           code: "EMAIL_NOT_VALIDATED",
-          message:
-            "Votre compte n'est pas encore activé, veuillez cliquer sur le lien que nous vous avons envoyé par courriel.",
+          messageKey: "backend.nextauth.emailNotValidated",
         });
         throw new Error(error);
       }
@@ -167,7 +165,7 @@ export const authOptions = {
 
         if (!user) {
           client.close();
-          throw new Error("Le courriel ou mot de passe est invalide");
+          throw new Error("backend.nextauth.invalidCredentials");
         }
 
         const foundExistingAccount = await client
@@ -178,13 +176,11 @@ export const authOptions = {
         if (foundExistingAccount) {
           client.close();
 
-          throw new Error(
-            JSON.stringify({
-              message: `Cliquez sur "Continuer avec ${capitalize(
-                foundExistingAccount.providerId
-              )}" pour vous connecter à ce compte.`,
-            })
-          );
+          if (foundExistingAccount.provider === "google") {
+            throw new Error("backend.nextauth.useGoogleProvider");
+          } else {
+            throw new Error("backend.nextauth.useAnotherProvider");
+          }
         }
 
         const isValid = await verifyPassword(
@@ -193,7 +189,7 @@ export const authOptions = {
         );
         if (!isValid) {
           client.close();
-          throw new Error("Le courriel ou mot de passe est invalide");
+          throw new Error("backend.nextauth.invalidCredentials");
         }
 
         client.close();

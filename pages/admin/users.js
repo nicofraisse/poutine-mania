@@ -8,6 +8,7 @@ import { format } from "date-fns";
 import { toast } from "react-hot-toast";
 import { upperFirst } from "lodash";
 import { ToggleSwitch } from "components/controls/ToggleSwitch";
+import { withI18n } from "../../lib/withI18n";
 
 const Users = () => {
   const [users, setUsers] = useState([]);
@@ -134,3 +135,5 @@ const Users = () => {
 };
 
 export default Users;
+
+export const getStaticProps = withI18n();

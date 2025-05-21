@@ -11,11 +11,13 @@ import Button from "./Button";
 import { isMobile } from "react-device-detect";
 import { SurpriseButton } from "./SurpriseButton";
 import RestaurantIntrouvable from "./RestaurantIntrouvable";
+import { useTranslation } from "next-i18next";
 
 const RestaurantSearchBar = React.forwardRef(({ onSubmit, isBanner }, ref) => {
   const { push, asPath } = useRouter();
   const { searchValue, setSearchValue, nonDebouncedValue } =
     useRestaurantSearch();
+  const { t } = useTranslation();
   const [showSearchSuggestions, setShowSearchSuggestions] = useState(false);
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
 
@@ -37,76 +39,55 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit, isBanner }, ref) => {
       setShowSearchSuggestions(false);
     }, 200);
 
-    const trimmedSearchValue = e.target?.value?.trim() || searchValue;
+    const trimmed = e.target?.value?.trim() || searchValue;
     push(
-      trimmedSearchValue
-        ? `/restaurants?search=${encodeURIComponent(trimmedSearchValue)}`
+      trimmed
+        ? `/restaurants?search=${encodeURIComponent(trimmed)}`
         : `/restaurants`
     );
-    onSubmit && onSubmit();
+    onSubmit?.();
   };
 
   useEffect(() => {
-    if (isMobile) {
-      const inputElement = inputRef.current;
-      inputElement.addEventListener("touchstart", handleFocus);
-    }
     inputRef.current.addEventListener("keydown", handleKeyDown);
 
-    const handleInputFocus = (e) => {
+    const onFocus = (e) => {
       setShowSearchSuggestions(true);
 
       if (isBanner && isMobile) {
         e.preventDefault();
-        const inputElement = inputRef.current;
-
-        const inputTopPosition =
-          inputElement.getBoundingClientRect().top + window.scrollY;
-        window.scrollTo({
-          top: inputTopPosition - 136,
-          behavior: "smooth",
-        });
-        setTimeout(() => {
-          inputElement.focus();
-        }, 500);
+        const top =
+          inputRef.current.getBoundingClientRect().top + window.scrollY;
+        window.scrollTo({ top: top - 136, behavior: "smooth" });
+        setTimeout(() => inputRef.current.focus(), 500);
       }
     };
 
-    inputRef.current.addEventListener("focus", handleInputFocus);
+    inputRef.current.addEventListener("focus", onFocus);
 
     return () => {
-      if (inputRef.current) {
-        inputRef.current.removeEventListener("keydown", handleKeyDown);
-        inputRef.current.removeEventListener("focus", handleInputFocus);
-      }
+      inputRef.current?.removeEventListener("keydown", handleKeyDown);
+      inputRef.current?.removeEventListener("focus", onFocus);
     };
   }, []);
 
-  useEffect(() => {
-    setHighlightedIndex(-1);
-  }, [searchValue]);
-
+  useEffect(() => setHighlightedIndex(-1), [searchValue]);
   useEffect(() => {
     restaurantsRef.current = restaurants;
   }, [restaurants]);
 
   const handleKeyDown = (e) => {
-    const restaurantsData = restaurantsRef.current;
-
+    const list = restaurantsRef.current || [];
     if (e.key === "ArrowDown") {
       e.preventDefault();
-      setHighlightedIndex((prevIndex) =>
-        prevIndex < (restaurantsData?.length ?? 0) - 1 ? prevIndex + 1 : 0
-      );
+      setHighlightedIndex((i) => (i < list.length - 1 ? i + 1 : 0));
     } else if (e.key === "ArrowUp") {
       e.preventDefault();
-      setHighlightedIndex((prevIndex) =>
-        prevIndex > 0 ? prevIndex - 1 : (restaurantsData?.length ?? 0) - 1
-      );
+      setHighlightedIndex((i) => (i > 0 ? i - 1 : list.length - 1));
     } else if (e.key === "Enter") {
       e.preventDefault();
       if (highlightedIndex > -1) {
-        push(`/restaurants/${restaurants[highlightedIndex].slug}`);
+        push(`/restaurants/${list[highlightedIndex].slug}`);
         setShowSearchSuggestions(false);
       } else {
         handleSearch(e);
@@ -117,36 +98,16 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit, isBanner }, ref) => {
   };
 
   const handleBlur = () => {
-    setTimeout(() => {
-      setShowSearchSuggestions(false);
-    }, 50);
+    setTimeout(() => setShowSearchSuggestions(false), 50);
   };
 
-  const handleFocus = () => {
-    // setShowSearchSuggestions(true);
-    // if (isBanner && isMobile) {
-    //   e.preventDefault();
-    //   const inputElement = inputRef.current;
-    //   const inputTopPosition =
-    //     inputElement.getBoundingClientRect().top + window.scrollY;
-    //   window.scrollTo({
-    //     top: inputTopPosition - 136,
-    //     behavior: "smooth",
-    //   });
-    //   setTimeout(() => {
-    //     inputElement.focus();
-    //   }, 500);
-    // }
-  };
-  const urlArray = asPath.split("/");
-  const isRestaurantsPath =
-    urlArray[urlArray.length - 1]?.includes("restaurants");
+  const parts = asPath.split("/");
+  const isRestaurantsPath = parts[parts.length - 1]?.includes("restaurants");
 
   return (
     <form
       className="relative grow sm:ml-6 mr-1 lg:mx-0"
       ref={ref}
-      onFocus={handleFocus}
       onBlur={handleBlur}
     >
       <div className="relative">
@@ -156,14 +117,14 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit, isBanner }, ref) => {
               !isBanner,
             "py-4 px-12 rounded-full border-slate-300 shadow-md": isBanner,
           })}
-          placeholder="Rechercher une poutinerie"
+          placeholder={t("restaurantSearchbar.placeholder")}
           value={nonDebouncedValue ?? ""}
           onChange={(e) => {
             setShowSearchSuggestions(true);
             setSearchValue(e.target.value);
           }}
           ref={inputRef}
-        ></input>
+        />
 
         {isBanner && (
           <div className="absolute right-1 top-1 hidden xs:block">
@@ -175,7 +136,7 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit, isBanner }, ref) => {
               rounded
             >
               <Map className="mr-2 xs:mr-3" />
-              <span className="hidden xs:inline">Explorer</span>
+              <span className="hidden xs:inline">{t("button.explore")}</span>
             </Button>
           </div>
         )}
@@ -191,7 +152,7 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit, isBanner }, ref) => {
         {nonDebouncedValue.length > 1 && (
           <XCircle
             className={classNames("cursor-pointer", {
-              "absolute top-2 right-2 text-slate-400 cursor-pointer hover:text-slate-500 transition duration-300":
+              "absolute top-2 right-2 text-slate-400 hover:text-slate-500 transition duration-300":
                 !isBanner,
               "absolute top-3 right-4 text-slate-400": isBanner,
             })}
@@ -202,38 +163,30 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit, isBanner }, ref) => {
           />
         )}
       </div>
+
       {!isRestaurantsPath && showSearchSuggestions && (
         <div
           onMouseDown={(e) => e.preventDefault()}
           className={classNames(
             "absolute z-50 w-full bg-white border shadow-lg left-0 px-1 xs:px-2 sm:px-3 py-2",
-            {
-              "rounded-xl": isBanner,
-            }
+            { "rounded-xl": isBanner }
           )}
         >
-          {restaurants?.map((r, index) => {
-            const image = r.reviews?.find((res) => res.photos?.[0])?.photos[0];
-
+          {restaurants?.map((r, idx) => {
+            const img = r.reviews?.find((res) => res.photos?.[0])?.photos[0];
             return (
               <div
                 className={classNames(
                   "p-2 sm:p-3 hover:bg-slate-100 cursor-pointer flex items-center border-b",
-                  {
-                    "bg-slate-100": highlightedIndex === index,
-                  }
+                  { "bg-slate-100": highlightedIndex === idx }
                 )}
                 key={r._id}
-                onMouseDown={() => {
-                  push(`/restaurants/${r.slug}`);
-                }}
-                onMouseEnter={() => {
-                  setHighlightedIndex(index);
-                }}
+                onMouseDown={() => push(`/restaurants/${r.slug}`)}
+                onMouseEnter={() => setHighlightedIndex(idx)}
               >
-                {image ? (
+                {img ? (
                   <Image
-                    src={image}
+                    src={img}
                     alt={`${r.name}-photo`}
                     className="w-10 h-8 sm:w-12 sm:h-10 rounded object-cover object-center"
                   />
@@ -246,21 +199,22 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit, isBanner }, ref) => {
                     />
                   </div>
                 )}
-
                 <div className="pl-3">
                   <div className="text-sm font-bold">{r.name}</div>
-                  <div className="text-xs  text-slate-400">
+                  <div className="text-xs text-slate-400">
                     <MapPin size={12} className="inline mt-[-2px]" />{" "}
                     {r.succursales.length === 1
                       ? r.succursales[0].address.place_name.split(", Q")[0]
-                      : `${r.succursales.length} adresses au Québec`}
+                      : t("restaurantSearchbar.multipleBranches", {
+                          count: r.succursales.length,
+                        })}
                   </div>
                 </div>
               </div>
             );
           })}
           {isBanner ? (
-            <div>
+            <>
               <RestaurantIntrouvable />
               <div className="text-center py-3 flex items-center justify-center text-sm xs:text-base">
                 <Button
@@ -269,20 +223,21 @@ const RestaurantSearchBar = React.forwardRef(({ onSubmit, isBanner }, ref) => {
                   className="mr-3"
                   onClick={handleSearch}
                 >
-                  <Search className="mr-2" /> Rechercher
+                  <Search className="mr-2" />
+                  {t("restaurantSearchbar.search")}
                 </Button>
                 <SurpriseButton />
               </div>
-            </div>
+            </>
           ) : (
             <div
               className="hover:bg-slate-100 cursor-pointer flex items-center text-slate-600 font-light p-4 text-sm sm:text-base"
               onClick={handleSearch}
             >
-              <Search className="text-slate-500 mr-2" size={20} /> Voir tous les{" "}
+              <Search className="text-slate-500 mr-2" size={20} />
               {searchValue.length > 2
-                ? `résultats pour "${searchValue}"`
-                : "restaurants"}
+                ? t("restaurantSearchbar.viewResultsFor", { term: searchValue })
+                : t("restaurantSearchbar.viewAllRestaurants")}
             </div>
           )}
         </div>

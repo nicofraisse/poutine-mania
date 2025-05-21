@@ -1,9 +1,12 @@
 import { useRouter } from "next/router";
 import Button from "./Button";
 import Image from "next/image";
+import { useTranslation } from "next-i18next";
 
 export const EmptyState = ({ title, hideButton, rateCTA }) => {
   const { push } = useRouter();
+  const { t } = useTranslation();
+
   return (
     <div className="px-4">
       <div className="flex border-4 border-slate-200 sm:mx-auto border-dashed rounded-xl w-full flex-col p-10 my-8 text-slate-600 items-center">
@@ -12,12 +15,12 @@ export const EmptyState = ({ title, hideButton, rateCTA }) => {
             src="/poutinebw.png"
             width={100}
             height={100}
-            alt="empty-poutine"
+            alt={t("emptyState.emptyAlt")}
             className="opacity-40"
           />
         </div>
         <div className="font-bold my-5">
-          {title || "Aucune poutine trouvée"}
+          {title || t("emptyState.defaultTitle")}
         </div>
         {!hideButton && (
           <Button
@@ -26,7 +29,9 @@ export const EmptyState = ({ title, hideButton, rateCTA }) => {
             className="py-1 px-3 bg-teal-500 text-white inlint-block"
             onClick={() => push(rateCTA ? "/noter" : "/restaurants")}
           >
-            {rateCTA ? "Noter une poutine" : "Découvrir des poutines"}
+            {rateCTA
+              ? t("emptyState.rateButton")
+              : t("emptyState.discoverButton")}
           </Button>
         )}
       </div>

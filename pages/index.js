@@ -9,11 +9,14 @@ import { useRouter } from "next/router";
 import { useLoginForm } from "../components/context/LoginFormProvider";
 import { FeaturesIntro } from "../components/FeaturesIntro";
 import DefaultSEO from "../components/DefaultSeo";
+import { useTranslation } from "next-i18next";
+import { withI18n } from "../lib/withI18n";
 
 const HomePage = ({ restaurants }) => {
   const [, setIsScrollableActivity] = useState(false);
   const activityHeaderRef = useRef(null);
   const { openLogin } = useLoginForm();
+  const { t } = useTranslation();
 
   useEffect(() => {
     const handleScroll = throttle(() => {
@@ -26,7 +29,7 @@ const HomePage = ({ restaurants }) => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const { query } = useRouter();
+  const { query, locale } = useRouter();
 
   useEffect(() => {
     const { connexion, ...rest } = query;
@@ -45,11 +48,9 @@ const HomePage = ({ restaurants }) => {
     <>
       <Head>
         <title>Poutine Mania – La communauté de la poutine</title>
-        <meta
-          name="description"
-          content="Note tes poutines préférées en critiquant les frites, le fromage et la sauce. Explore la carte pour dénicher la poutine ultime du Québec !"
-        />
-        <DefaultSEO />
+        <title>{t("seo.home.title")}</title>
+        <meta name="description" content={t("seo.home.description")} />
+        <DefaultSEO locale={locale} />
       </Head>
 
       <FeaturesIntro />
@@ -68,14 +69,14 @@ const HomePage = ({ restaurants }) => {
           ref={activityHeaderRef}
           className="text-2xl sm:text-3xl lg:text-4xl font-extrabold my-4 text-center pt-6 pb-4"
         >
-          Derniers avis
+          {t("home.recentActivity.title")}
         </h2>
         <RecentActivity isScrollable={false} />
       </div>
     </>
   );
 };
-export async function getStaticProps() {
+export const getStaticProps = withI18n(async () => {
   const restaurants = await fetchTopRestaurants();
   const serializedRestaurants = convertObjectIdsToStrings(restaurants);
 
@@ -85,6 +86,6 @@ export async function getStaticProps() {
     },
     revalidate: 60,
   };
-}
+});
 
 export default HomePage;

@@ -3,22 +3,23 @@ import { formatRating } from "../lib/formatRating";
 import { ratingColors } from "data/ratingColors";
 import Color from "color";
 import { getRatingColor } from "../data/ratingColors";
+import { useTranslation } from "next-i18next";
 
 const RatingPill = ({
   avgRating,
   reviewCount,
   single,
   isNew,
-  onRate,
   isDarkBackground,
   hideNewRatingInfo,
 }) => {
+  const { t } = useTranslation();
+
   if (isNew)
     return (
       <NewRatingPill
         avgRating={avgRating}
         reviewCount={reviewCount}
-        onRate={onRate}
         isDarkBackground={isDarkBackground}
         hideNewRatingInfo={hideNewRatingInfo}
       />
@@ -43,15 +44,22 @@ const RatingPill = ({
           <span className="font-bold flex items-center">
             {formatRating(avgRating)}/10
           </span>
-          {reviewCount && !single && (
+          {!single && (
             <span className="text-xs text-gray-600 ml-1">
-              {" "}
-              • {reviewCount} avis
+              {" • "}
+              {t(
+                reviewCount > 1
+                  ? "ratingPill.reviewCount_plural"
+                  : "ratingPill.reviewCount",
+                { count: reviewCount }
+              )}
             </span>
           )}
         </>
       ) : (
-        <span className="text-xs text-gray-600">Aucun avis</span>
+        <span className="text-xs text-gray-600">
+          {t("ratingPill.noReviews")}
+        </span>
       )}
     </div>
   );
@@ -63,6 +71,7 @@ const NewRatingPill = ({
   isDarkBackground,
   hideNewRatingInfo,
 }) => {
+  const { t } = useTranslation();
   const color = Color(ratingColors[Math.round(avgRating)]);
 
   return (
@@ -80,11 +89,7 @@ const NewRatingPill = ({
                 style={{
                   backgroundColor: i < avgRating ? color.darken(0.2) : "white",
                   border: `1px solid ${
-                    reviewCount === 0
-                      ? "#ddd"
-                      : i < avgRating
-                      ? color.darken(0.2)
-                      : color.darken(0.2)
+                    reviewCount === 0 ? "#ddd" : color.darken(0.2)
                   }`,
                 }}
               ></div>
@@ -92,15 +97,11 @@ const NewRatingPill = ({
                 <div
                   className="h-full w-[13px] rounded-full -mt-[13px]"
                   style={{
-                    background: `linear-gradient(90deg, ${color.darken(
-                      0.2
-                    )} ${partialFillPercentage}%, white ${partialFillPercentage}%)`,
+                    background: `linear-gradient(90deg, ${color
+                      .darken(0.2)
+                      .toString()} ${partialFillPercentage}%, white ${partialFillPercentage}%)`,
                     border: `1px solid ${
-                      reviewCount === 0
-                        ? "#ddd"
-                        : i < avgRating
-                        ? color.darken(0.2)
-                        : color.darken(0.2)
+                      reviewCount === 0 ? "#ddd" : color.darken(0.2)
                     }`,
                   }}
                 ></div>
@@ -110,7 +111,7 @@ const NewRatingPill = ({
         })}
       </div>
       {!hideNewRatingInfo &&
-        (avgRating ? (
+        (reviewCount > 0 ? (
           <div
             className={classNames(
               "text-sm font-bold mx-2 flex items-center text-center",
@@ -122,23 +123,26 @@ const NewRatingPill = ({
           >
             <div>{formatRating(avgRating)}</div>
             <div
-              className={classNames("font-normal  ml-[1px]", {
+              className={classNames("font-normal ml-[1px]", {
                 "text-white": isDarkBackground,
                 "text-gray-400": !isDarkBackground,
               })}
             >
               /10
             </div>
-            {reviewCount && (
-              <div
-                className={classNames("font-normal text-xs ml-2", {
-                  "text-white": isDarkBackground,
-                  "text-slate-400": !isDarkBackground,
-                })}
-              >
-                {`${reviewCount} avis`}
-              </div>
-            )}
+            <div
+              className={classNames("font-normal text-xs ml-2", {
+                "text-white": isDarkBackground,
+                "text-slate-400": !isDarkBackground,
+              })}
+            >
+              {t(
+                reviewCount > 1
+                  ? "ratingPill.reviewCount_plural"
+                  : "ratingPill.reviewCount",
+                { count: reviewCount }
+              )}
+            </div>
           </div>
         ) : (
           <div
@@ -147,7 +151,7 @@ const NewRatingPill = ({
               "text-gray-400": !isDarkBackground,
             })}
           >
-            {"Aucun avis"}
+            {t("ratingPill.noReviews")}
           </div>
         ))}
     </div>

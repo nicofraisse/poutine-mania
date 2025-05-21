@@ -14,11 +14,13 @@ const createNewValidationToken = async (userId, db) => {
 
 async function handler(req, res) {
   if (req.method !== "PUT") {
-    res.status(405).json({ message: "Method not allowed" });
+    res
+      .status(405)
+      .json({ messageKey: "backend.sendVerificationEmail.methodNotAllowed" });
     return;
   }
 
-  const { email } = req.body;
+  const { email, locale } = req.body;
 
   const client = await connectToDatabase();
   const db = client.db();
@@ -27,24 +29,29 @@ async function handler(req, res) {
     const user = await db.collection("users").findOne({ email });
 
     if (!user) {
-      res.status(404).json({ message: "Courriel invalide" });
+      res
+        .status(404)
+        .json({ messageKey: "backend.sendVerificationEmail.invalidToken" });
       client.close();
       return;
     }
 
     if (user.emailVerified) {
-      res.status(400).json({ message: "Email already validated" });
+      res.status(400).json({
+        messageKey: "backend.sendVerificationEmail.emailAlreadyVerified",
+      });
       client.close();
       return;
     }
 
-    // Create a new validation token and update it in the database
     const newToken = await createNewValidationToken(user._id, db);
 
-    // Send the new validation email with the updated token
-    await sendVerificationEmail(user.email, newToken);
+    const lang = locale === "en" ? "en" : "fr";
+    await sendVerificationEmail(user.email, newToken, lang);
 
-    res.status(200).json({ message: "Validation email sent" });
+    res
+      .status(200)
+      .json({ messageKey: "backend.sendVerificationEmail.emailSent" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   } finally {

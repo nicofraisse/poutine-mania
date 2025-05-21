@@ -1,5 +1,6 @@
 import React from "react";
 import { round } from "lodash";
+import { useTranslation } from "next-i18next";
 
 const Pill = ({ name, value }) => {
   return (
@@ -14,11 +15,13 @@ export const IngredientRatingPills = ({
   avgCheeseRating,
   avgSauceRating,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <div className="flex flex-wrap gap-2 py-2 justify-center xs:justify-start">
-      <Pill name="Frites" value={avgFriesRating} />
-      <Pill name="Fromage" value={avgCheeseRating} />
-      <Pill name="Sauce" value={avgSauceRating} />
+      <Pill name={t("ingredient.fries")} value={avgFriesRating} />
+      <Pill name={t("ingredient.cheese")} value={avgCheeseRating} />
+      <Pill name={t("ingredient.sauce")} value={avgSauceRating} />
     </div>
   );
 };

@@ -16,11 +16,14 @@ import classNames from "classnames";
 import PillSelect from "../controls/PillSelect";
 import PhoneInput from "components/controls/PhoneInput";
 import { useCurrentUser } from "../../lib/useCurrentUser";
-import { RESTAURANT_PRICES } from "../../lib/constants";
+import { useRestaurantPriceOptions } from "../../lib/useRestaurantPrices";
+import { useTranslation } from "next-i18next";
 
 export const RestaurantForm = ({ type }) => {
   const { query, push } = useRouter();
   const { currentUser } = useCurrentUser();
+  const priceOptions = useRestaurantPriceOptions();
+  const { t } = useTranslation();
 
   const [succursales, setSuccursales] = useState([
     { address: "", phoneNumber: "" },
@@ -33,7 +36,7 @@ export const RestaurantForm = ({ type }) => {
   const handleSubmit = (values, { setSubmitting }) => {
     if (succursales.find((s) => !s.address && !s.hide)) {
       setSubmitting(false);
-      window.alert("Adresse vide!");
+      window.alert(t("restaurantForm.validation.emptyAddressAlert"));
       return;
     }
 
@@ -109,6 +112,19 @@ export const RestaurantForm = ({ type }) => {
     });
   }
 
+  //  "validation": {
+  //   "address": "Veuillez indiquer l'adresse de ce restaurant",
+  //   "categories": "Vous devez ajouter au moins 1 catégorie",
+  //   "name": {
+  //     "max": "Le nom doit faire au plus 50 caractères",
+  //     "min": "Le nom doit faire au moins 1 caractère",
+  //     "required": "Requis"
+  //   },
+  //   "website": {
+  //     "url": "Veuillez entrer une URL valide"
+  //   }
+  // }
+
   return (
     <Form
       initialValues={initialValues}
@@ -116,37 +132,39 @@ export const RestaurantForm = ({ type }) => {
       validationSchema={Yup.object({
         name: Yup.string()
           .min(1)
-          .max(50, "Le nom doit faire au plus 50 caractères")
-          .required("Requis"),
+          .max(50, t("restaurantForm.validation.name.max"))
+          .required(t("validation.required")),
         categories: Yup.array()
-          .min(1, "Vous devez ajouter au moins 1 catégorie")
-          .required("Requis"),
+          .min(1, t("restaurantForm.validation.categories"))
+          .required(t("validation.required")),
         website: Yup.string().min(1),
         "address-0": Yup.object()
-          .typeError("Veuillez indiquer l'adresse de ce restaurant")
+          .typeError(t("restaurantForm.validation.address"))
           .required("Requis"),
         "phoneNumber-0": Yup.string().optional(),
-        priceRange: Yup.number().nullable().required("Requis"),
+        priceRange: Yup.number().nullable().required(t("validation.required")),
       })}
     >
       {({ isSubmitting, values, errors, setFieldValue }) => (
         <>
-          <Field name="name" label="Nom du restaurant" />
+          <Field name="name" label={t("restaurantForm.restaurantLabel")} />
           <Field
             name="categories"
             control={CategorySelect}
-            label="Catégorie(s)"
+            label={t("restaurantForm.categoriesLabel")}
           />
           <Field
             name="priceRange"
-            label="Prix de la poutine régulière"
+            label={t("restaurantsFilters.priceTitle")}
             control={PillSelect}
-            options={RESTAURANT_PRICES}
+            options={priceOptions}
             value={values.priceRange}
           />
 
           <div className="bg-gray-50 border p-3 sm:p-4 rounded mb-4">
-            <label className="font-bold mb-2 text-sm block">Succursales</label>
+            <label className="font-bold mb-2 text-sm block">
+              {t("restaurantForm.succursalesLabel")}
+            </label>
             {succursales.map((succursale, index) => (
               <div
                 key={index}
@@ -194,11 +212,11 @@ export const RestaurantForm = ({ type }) => {
                     updateSuccursaleField(value, index, "address");
                   }}
                   control={AutocompleteSelect}
-                  label="Adresse"
+                  label={t("restaurantForm.addressLabel")}
                 />
                 <Field
                   name={`phoneNumber-${index}`}
-                  label="Numéro de téléphone (optionnel)"
+                  label={t("restaurantForm.phoneLabel")}
                   value={succursale.phoneNumber}
                   onChange={(value) =>
                     updateSuccursaleField(value, index, "phoneNumber")
@@ -224,25 +242,23 @@ export const RestaurantForm = ({ type }) => {
               }
             >
               <Plus size={20} className="mr-1" />
-              Ajouter une succursale
+              {t("restaurantForm.addSuccursaleButton")}
             </Button>
           </div>
-          <Field name="website" label="Site web (optionnel)" />
+          <Field name="website" label={t("restaurantForm.websiteLabel")} />
           <div className="flex items-center justify-between">
             <Button
               loading={isSubmitting}
               onClick={() => {
                 if (Object.keys(errors).length > 0) {
-                  toast.error(
-                    "Veuillez remplir tous les champs obligatoires correctement"
-                  );
+                  toast.error(t("restaurantForm.validation.someFieldsMissing"));
                 }
               }}
               className="bg-teal-500-300 px-4 py-1 rounded-lg shadoow w-40"
               type="submit"
               size="sm"
             >
-              Valider
+              {t("button.submit")}
             </Button>
           </div>
         </>
