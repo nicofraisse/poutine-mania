@@ -54,21 +54,21 @@ handler.get(async (req, res) => {
 
   const favoriteRestaurant = favoriteReview
     ? {
-        name: findRestaurantById(favoriteReview.restaurantId).name,
-        finalRating: favoriteReview.averageFinalRating,
+        name: findRestaurantById(favoriteReview.restaurantId)?.name ?? "?",
+        finalRating: favoriteReview.averageFinalRating ?? "?",
       }
     : null;
 
   const leastFavoriteRestaurant = leastFavoriteReview
     ? {
-        name: findRestaurantById(leastFavoriteReview.restaurantId).name,
-        finalRating: leastFavoriteReview.averageFinalRating,
+        name: findRestaurantById(leastFavoriteReview.restaurantId)?.name ?? "?",
+        finalRating: leastFavoriteReview.averageFinalRating ?? "?",
       }
     : null;
 
   const lastEatenRestaurant = lastEatenReview
     ? {
-        name: findRestaurantById(lastEatenReview.restaurantId).name,
+        name: findRestaurantById(lastEatenReview.restaurantId)?.name ?? "?",
         date: lastEatenReview.createdAt,
       }
     : null;

@@ -10,7 +10,7 @@
     "title": "À Propos | Poutine Mania"
   },
   "addressCount": "{{count}} adresses",
-  "addressCountQuebec": "{{count}} adresses au Québec",
+  "addressCountQuebec": "{{count}} adresses",
   "backend": {
     "nextauth": {
       "emailNotValidates": "Votre compte n'est pas encore activé, veuillez cliquer sur le lien que nous vous avons envoyé par courriel.",
@@ -137,8 +137,11 @@
   "map": {
     "place": {
       "montreal": "Montréal",
+      "ottawaGatineau": "Ottawa/Gatineau",
       "quebecCity": "Québec City",
-      "quebecRegion": "Région du Québec"
+      "quebecRegion": "Région du Québec",
+      "toronto": "Toronto",
+      "vancouver": "Vancouver"
     },
     "youAreHere": "Vous êtes ici"
   },
@@ -221,7 +224,7 @@
       "delete": {
         "confirmDescription": "Cette action est irréversible.",
         "confirmTitle": "Supprimer l'avis?",
-        "eatenList": "Supprimer des poutines mangées"
+        "eatenlist": "Supprimer des poutines mangées"
       },
       "deleteFromEatenlistSuccess": "Supprimé des poutines mangées!",
       "deleteFromWatchlistSuccess": "Supprimé des poutines à essayer!",
@@ -248,7 +251,7 @@
     "removedFromWatchlist": "Supprimé des poutines à essayer !"
   },
   "restaurantCard": {
-    "addressCount": "{{count}} addresses in Quebec",
+    "addressCount": "{{count}} addresses",
     "emptyAlt": "empty-poutine"
   },
   "restaurantCategories": {
@@ -257,6 +260,7 @@
     "[Casse-croûte]": "Casse-croûte",
     "[Diner]": "Dîner",
     "[Fast-food]": "Restauration rapide",
+    "[Food-truck]": "Food truck",
     "[Fromagerie]": "Fromagerie",
     "[Pub]": "Pub",
     "[Restaurant]": "Restaurant"
@@ -290,7 +294,7 @@
     "3": "Plus de 10$"
   },
   "restaurantSearchbar": {
-    "multipleBranches": "{{count}} adresses au Québec",
+    "multipleBranches": "{{count}} adresses",
     "placeholder": "Rechercher une poutinerie...",
     "search": "Rechercher",
     "viewAllRestaurants": "Voir tous les restaurants",
@@ -298,8 +302,8 @@
   },
   "restaurants": {
     "forSearch": "pour \"{{search}}\"",
-    "h1": "Carte des poutineries - Tous les restaurants à poutine au Québec",
-    "metaDescription": "Parcourez la carte interactive de poutineries au Québec. Filtrez par note, prix ou catégorie pour dénicher la poutine parfaite près de chez vous.",
+    "h1": "Carte des poutineries - Tous les restaurants à poutine",
+    "metaDescription": "Parcourez la carte interactive de poutineries au Québec et Canada. Filtrez par note, prix ou catégorie pour dénicher la poutine parfaite près de chez vous.",
     "noResults": "0 résultats",
     "pageTitle": "Carte des poutines | Poutine Mania",
     "resultsCount": "{{count}} poutinerie",
@@ -340,16 +344,17 @@
     "rateTheirPoutine": "Noter leur poutine"
   },
   "seo": {
-    "description": "Découvrez, notez et partagez les meilleures poutines au Québec sur Poutine Mania.",
-    "home.description": "Note tes poutines préférées en critiquant les frites, le fromage et la sauce. Explore la carte pour dénicher la poutine ultime du Québec !",
+    "description": "Note ta poutine et découvre les meilleures adresses près de chez toi! Rejoins notre communauté de passionnés de poutine et partage tes coups de cœur.",
+    "home.description": "Note ta poutine en critiquant les frites, le fromage et la sauce. Explore la carte pour trouver la meilleure poutinerie près de chez toi!",
+    "home.ogDescription": "Note ta poutine en critiquant les frites, le fromage et la sauce. Explore la carte pour trouver la meilleure poutinerie près de chez toi!",
     "home.title": "Poutine Mania – La communauté de la poutine",
-    "restaurant.description": "Lire les avis sur le restaurant {{name}} au Québec, et partagez le vôtre.",
-    "restaurant.ogDescription": "Lire les avis sur le restaurant {{name}} au Québec, et partagez le vôtre.",
+    "restaurant.description": "Lire les avis sur la poutine du restaurant {{name}}, et partagez le vôtre.",
+    "restaurant.ogDescription": "Lire les avis sur la poutine du restaurant {{name}}, et partagez le vôtre.",
     "restaurant.ogTitle": "{{name}} - Avis sur leur poutine",
     "restaurant.title": "{{name}} - Avis sur leur poutine | Poutine Mania",
-    "restaurant.twitterDescription": "Lire les avis sur le restaurant {{name}} au Québec, et partagez le vôtre.",
+    "restaurant.twitterDescription": "Lire les avis sur la poutine du restaurant {{name}}, et partagez le vôtre.",
     "restaurant.twitterTitle": "{{name}} - Avis sur leur poutine",
-    "title": "Poutine Mania – Note tes poutines préférées !"
+    "title": "Poutine Mania – Note ta poutine !"
   },
   "sidebar": {
     "about": "À Propos",

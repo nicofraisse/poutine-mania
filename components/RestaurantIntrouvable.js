@@ -22,16 +22,18 @@ const RestaurantIntrouvable = ({ hideBorders }) => {
   const { t } = useTranslation();
   const { currentUser } = useCurrentUser();
   const { openLogin } = useLoginForm();
-  const { push } = useRouter();
+  const { push, locale } = useRouter();
 
   const handleClickAdd = () => {
+    const redirectUrl =
+      locale === "en" ? "/en/nouveau-restaurant" : "/nouveau-restaurant";
     if (!currentUser) {
       openLogin({
         message: <LoginMessage />,
-        redirect: "/nouveau-restaurant",
+        redirect: redirectUrl,
       });
     } else {
-      push("/nouveau-restaurant");
+      push(redirectUrl);
     }
   };
 

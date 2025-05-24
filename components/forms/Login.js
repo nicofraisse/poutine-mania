@@ -7,10 +7,12 @@ import Field from "components/Field";
 import { useLoginForm } from "../context/LoginFormProvider";
 import { useEffect, useState } from "react";
 import { useTranslation } from "next-i18next";
+import { useRouter } from "next/router";
 
 const Login = ({ onSubmit, redirect, setEmailToConfirm }) => {
   const { openSignup, closeLogin } = useLoginForm();
   const { t } = useTranslation();
+  const router = useRouter();
 
   const [isEmbeddedBrowser, setIsEmbeddedBrowser] = useState(false);
   const [showEmbeddedBrowserError, setShowEmbeddedBrowserError] =
@@ -78,6 +80,9 @@ const Login = ({ onSubmit, redirect, setEmailToConfirm }) => {
         } else {
           toast.success(t("login.successMessage"));
           onSubmit && onSubmit();
+          if (redirect) {
+            router.push(redirect);
+          }
         }
         formikBag.setSubmitting(false);
       })

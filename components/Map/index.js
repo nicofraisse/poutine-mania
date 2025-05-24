@@ -6,14 +6,15 @@ import { useRouter } from "next/router";
 import RatingPill from "components/RatingPill";
 import { flatten, minBy, maxBy } from "lodash";
 import { ratingColors } from "data/ratingColors";
-import { useRestaurantCardHover } from "./context/RestaurantCardHoverProvider";
+import { useRestaurantCardHover } from "../context/RestaurantCardHoverProvider";
 import classNames from "classnames";
 import Image from "next/image";
 import Color from "color";
 import { Image as CloudImage } from "components/Image";
-import { TagSection } from "./RestaurantCard";
+import { TagSection } from "../RestaurantCard";
 import { useRestaurantSearch } from "components/context/RestaurantSearchProvider";
 import { useTranslation } from "next-i18next";
+import CitiesNav from "./CitiesNav";
 
 const MarkerAndPopup = ({
   restaurant,
@@ -298,45 +299,69 @@ const MapMap = ({ restaurants, isShowPage }) => {
           position.coords.longitude,
           position.coords.latitude,
         ]);
-        // setViewState({
-        //   latitude: position.coords.latitude,
-        //   longitude: position.coords.longitude,
-        //   zoom: 12.1,
-        // });
       },
       (err) => console.error("position error", err),
       { timeout: 10000, enableHighAccuracy: false }
     );
   }, []);
 
-  const handleLocationButtonClick = (location) => {
-    const locations = {
-      Montreal: {
-        latitude: 45.53,
-        longitude: -73.61,
-        zoom: 10,
-      },
-      QuebecCity: {
-        longitude: -71.23225932890741,
-        latitude: 46.837649627704205,
-        zoom: 9.997052251475678,
-      },
-      QuebecRegion: {
-        longitude: -72.65,
-        latitude: 47.28,
-        zoom: 5.254900910397835,
-      },
-    };
+  // console.log("current zoom and coordinates", {
+  //   zoom: viewState.zoom,
+  //   longitude: viewState.longitude,
+  //   latitude: viewState.latitude,
+  // });
 
-    const locationCoordinates = locations[location];
+  const CITIES = [
+    {
+      key: "Montreal",
+      labelKey: "map.place.montreal",
+      longitude: -73.61,
+      latitude: 45.53,
+      zoom: 10,
+    },
+    {
+      key: "QuebecCity",
+      labelKey: "map.place.quebecCity",
+      longitude: -71.23225932890741,
+      latitude: 46.837649627704205,
+      zoom: 9.997052251475678,
+    },
+    {
+      key: "QuebecRegion",
+      labelKey: "map.place.quebecRegion",
+      longitude: -72.65,
+      latitude: 47.28,
+      zoom: 5.254900910397835,
+    },
+    {
+      key: "OttawaGatineau",
+      labelKey: "map.place.ottawaGatineau",
+      longitude: -75.71570778586975,
+      latitude: 45.43427584637834,
+      zoom: 11.24613836469731,
+    },
+    {
+      key: "Toronto",
+      labelKey: "map.place.toronto",
+      longitude: -79.35013600864059,
+      latitude: 43.80921024117703,
+      zoom: 8.745310331916002,
+    },
+    {
+      key: "Vancouver",
+      labelKey: "map.place.vancouver",
+      zoom: 11.23989981220613,
+      longitude: -123.11667509794782,
+      latitude: 49.266217635230475,
+    },
+  ];
 
-    if (mapRef.current) {
-      mapRef.current.getMap().flyTo({
-        center: [locationCoordinates.longitude, locationCoordinates.latitude],
-        zoom: locationCoordinates.zoom,
-        duration: 2000,
-      });
-    }
+  const handleLocationButtonClick = (city) => {
+    mapRef.current.getMap().flyTo({
+      center: [city.longitude, city.latitude],
+      zoom: city.zoom,
+      duration: 2000,
+    });
   };
 
   return (
@@ -355,13 +380,6 @@ const MapMap = ({ restaurants, isShowPage }) => {
         fadeDuration={1000}
         onMove={(evt) => setViewState(evt.viewState)}
         maxZoom={20}
-        // initialViewState={{
-        //   bounds: [
-        //     [minLongitude, minLatitude],
-        //     [maxLongitude, maxLatitude],
-        //   ],
-        //   fitBoundsOptions: { padding: 60, maxZoom: 13 },
-        // }}
         {...viewState}
         style={{ width: "100%", height: "100%" }}
         mapStyle="mapbox://styles/mapbox/streets-v10"
@@ -371,27 +389,9 @@ const MapMap = ({ restaurants, isShowPage }) => {
             setIsSmallMarker(e.viewState.zoom < POUTINE_LOGO_ZOOM_THRESHOLD);
         }}
       >
-        <div className="absolute top-0 left-0 m-4 z-20">
-          <button
-            className="bg-teal-500 hover:bg-teal-700 mr-1 text-white font-bold py-2 px-4 rounded mb-2"
-            onClick={() => handleLocationButtonClick("Montreal")}
-          >
-            {t("map.place.montreal")}
-          </button>
-          <button
-            className="bg-cyan-500 hover:bg-cyan-700 mr-1 text-white font-bold py-2 px-4 rounded mb-2"
-            onClick={() => handleLocationButtonClick("QuebecCity")}
-          >
-            {t("map.place.quebecCity")}
-          </button>
-          <button
-            className="bg-stone-500 hover:bg-stone-700 mr-1 text-white font-bold py-2 px-4 rounded"
-            onClick={() => handleLocationButtonClick("QuebecRegion")}
-          >
-            {t("map.place.quebecRegion")}
-          </button>
+        <div className="absolute top-0 left-0 right-0 px-1 xl:px-2 m-2 xl:m-3 z-20">
+          <CitiesNav cities={CITIES} onSelect={handleLocationButtonClick} />
         </div>
-
         <NavigationControl position="bottom-right" />
         {restaurants?.map((restaurant, parentIndex) =>
           restaurant?.succursales?.map(({ address }, index) => (
@@ -425,7 +425,7 @@ const MapMap = ({ restaurants, isShowPage }) => {
               }}
               style={{ zIndex: 40 }}
             >
-              <div className="h-8 w-8 bg-white rounded-full shadow flex items-center justify-center z-50">
+              <div className="h-8 w-8 bg-white rounded-full shadow flex items-center justify-center z-10">
                 <div className="h-5 w-5 bg-blue-500 transition animate-pulse scale-105 rounded-full "></div>
               </div>
             </Marker>

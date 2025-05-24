@@ -10,7 +10,7 @@
     "title": "About | Poutine Mania"
   },
   "addressCount": "{{count}} addresses",
-  "addressCountQuebec": "{{count}} addresses in Quebec",
+  "addressCountQuebec": "{{count}} addresses",
   "backend": {
     "nextauth": {
       "emailNotValidates": "Your account is not yet activated. Please click the link we sent you by email.",
@@ -19,10 +19,10 @@
       "useGoogleProvider": "Click on \"Continue with Google\" to log in to this account."
     },
     "sendVerificationEmail": {
-      "emailAlreadyVerified": "Email déjà vérifié.",
-      "emailSent": "Email envoyé.",
-      "invalidToken": "Token invalide.",
-      "methodNotAllowed": "Méthode non autorisée."
+      "emailAlreadyVerified": "This email is already verified.",
+      "emailSent": "Email sent!",
+      "invalidToken": "Invalid token.",
+      "methodNotAllowed": "Method not allowed."
     },
     "signup": {
       "created": "User created! Check your email to confirm your account.",
@@ -138,8 +138,11 @@
   "map": {
     "place": {
       "montreal": "Montreal",
+      "ottawaGatineau": "Ottawa/Gatineau",
       "quebecCity": "Quebec City",
-      "quebecRegion": "Québec Province"
+      "quebecRegion": "Quebec Province",
+      "toronto": "Toronto",
+      "vancouver": "Vancouver"
     },
     "youAreHere": "You are here"
   },
@@ -222,7 +225,7 @@
       "delete": {
         "confirmDescription": "This action is irreversible.",
         "confirmTitle": "Delete review?",
-        "eatenList": "Remove from eaten poutines"
+        "eatenlist": "Remove from eaten poutines"
       },
       "deleteFromEatenlistSuccess": "Removed from eaten poutines!",
       "deleteFromWatchlistSuccess": "Removed from poutines to try!",
@@ -249,7 +252,7 @@
     "removedFromWatchlist": "Removed from poutines to try!"
   },
   "restaurantCard": {
-    "addressCount": "{{count}} addresses in Quebec",
+    "addressCount": "{{count}} addresses",
     "emptyAlt": "empty-poutine"
   },
   "restaurantCategories": {
@@ -258,6 +261,7 @@
     "[Casse-croûte]": "Snack bar",
     "[Diner]": "Diner",
     "[Fast-food]": "Fast-food",
+    "[Food-truck]": "Food truck",
     "[Fromagerie]": "Cheese shop",
     "[Pub]": "Pub",
     "[Restaurant]": "Restaurant"
@@ -291,7 +295,7 @@
     "3": "Over $10"
   },
   "restaurantSearchbar": {
-    "multipleBranches": "{{count}} locations in Quebec",
+    "multipleBranches": "{{count}} locations",
     "placeholder": "Search for a poutinerie...",
     "search": "Search",
     "viewAllRestaurants": "View all restaurants",
@@ -299,8 +303,8 @@
   },
   "restaurants": {
     "forSearch": "for \"{{search}}\"",
-    "h1": "Poutine Map – All poutine restaurants in Quebec",
-    "metaDescription": "Browse the interactive map of poutine spots in Quebec. Filter by rating, price, or category to find the perfect poutine near you.",
+    "h1": "Poutine Map – All poutine restaurants",
+    "metaDescription": "Browse the interactive map of poutine spots in Quebec and Canada. Filter by rating, price, or category to find the perfect poutine near you.",
     "noResults": "0 results",
     "pageTitle": "Poutine Map | Poutine Mania",
     "resultsCount": "{{count}} poutine place",
@@ -341,15 +345,15 @@
     "rateTheirPoutine": "Rate their poutine"
   },
   "seo": {
-    "description": "Discover, rate, and share the best poutines in Quebec on Poutine Mania.",
-    "home.description": "Note tes poutines préférées en critiquant les frites, le fromage et la sauce. Explore la carte pour dénicher la poutine ultime du Québec !",
-    "home.title": "Poutine Mania – La communauté de la poutine",
-    "restaurant.description": "Read reviews for {{name}} in Quebec, and share yours.",
-    "restaurant.ogDescription": "Read reviews for {{name}} in Quebec, and share yours.",
+    "description": "Discover, rate, and share the best poutines on Poutine Mania.",
+    "home.description": "Rate your favorite poutines and find hidden gems near! Explore the poutine map, read reviews, and share your top finds with the community.",
+    "home.title": "Poutine Mania – Rate your favorite poutines!",
+    "restaurant.description": "Check out poutine reviews for {{name}}, and share yours.",
+    "restaurant.ogDescription": "Check out poutine reviews for {{name}}, and share yours.",
     "restaurant.ogTitle": "{{name}} - Reviews of Their Poutine",
     "restaurant.title": "{{name}} - Reviews of Their Poutine | Poutine Mania",
-    "restaurant.twitterDescription": "Read reviews for {{name}} in Quebec, and share yours.",
-    "restaurant.twitterTitle": "{{name}} - Reviews of Their Poutine",
+    "restaurant.twitterDescription": "Check out poutine reviews for {{name}}, and share yours.",
+    "restaurant.twitterTitle": "{{name}} - Reviews of their Poutine",
     "title": "Poutine Mania – Rate your favorite poutines!"
   },
   "sidebar": {

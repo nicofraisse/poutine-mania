@@ -64,7 +64,7 @@ const VerifyEmail = () => {
           variant="primary"
           height="sm"
           width="sm"
-          onClick={() => openLogin({ redirect: "/" })}
+          onClick={() => openLogin({ redirect: locale === "en" ? "/en" : "/" })}
         >
           {t("verifyEmail.successResponse.cta")}
         </Button>
