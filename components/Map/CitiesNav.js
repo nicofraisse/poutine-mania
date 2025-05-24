@@ -4,6 +4,12 @@ import { ChevronLeft, ChevronRight } from "react-feather";
 import { useTranslation } from "next-i18next";
 
 const buttonColors = ["teal", "cyan", "stone"];
+// needed for tailwing purge
+const colorClasses = {
+  teal: "bg-teal-500 hover:bg-teal-700",
+  cyan: "bg-cyan-500 hover:bg-cyan-700",
+  stone: "bg-stone-500 hover:bg-stone-700",
+};
 
 const CitiesNav = ({ onSelect, cities }) => {
   const scrollRef = useRef(null);
@@ -62,8 +68,8 @@ const CitiesNav = ({ onSelect, cities }) => {
               key={city.key}
               onClick={() => onSelect(city)}
               className={classNames(
-                `bg-${color}-500 hover:bg-${color}-700 text-white font-bold py-2 px-4 rounded-md shadow-md`,
-                "flex-shrink-0"
+                `text-white font-bold py-2 px-4 rounded-md shadow-md flex-shrink-0`,
+                colorClasses[color]
               )}
             >
               {t(city.labelKey)}
