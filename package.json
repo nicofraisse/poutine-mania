@@ -7,7 +7,7 @@
     "sitemap:generate": "next-sitemap --config next-sitemap.config.mjs",
     "sitemap:inspect": "node scripts/inspectSitemap.js",
     "build": "next build",
-    "postbuild": "site:generate",
+    "postbuild": "sitemap:generate",
     "start": "next start",
     "prod": "cross-env MONGO_URI=$(grep MONGO_URI .env.production | cut -d '=' -f 2-) next dev",
     "lint": "next lint",
