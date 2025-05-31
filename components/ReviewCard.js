@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { formatRating } from "../lib/formatRating";
-import { formatDate } from "lib/formatDate";
+import { formatDateAgo } from "lib/formatDateAgo";
 import { useCurrentUser } from "lib/useCurrentUser";
 import { ratingColors } from "../data/ratingColors";
 import { Edit, Trash, User } from "react-feather";
@@ -91,7 +91,7 @@ export const RatingSection = ({ review, showDate = true }) => {
 
         {showDate && (
           <span className="text-slate-400 text-[14px] font-normal mr-4">
-            {formatDate(review.createdAt, "d MMMM yyyy", true)}
+            {formatDateAgo(review.createdAt, "d MMMM yyyy", true)}
           </span>
         )}
       </div>
@@ -152,7 +152,7 @@ export const ReviewCard = ({
                     </div>
                   </div>
                   <div className="text-slate-500 visible sm:hidden font-light text-xs ml-3">
-                    {formatDate(review.createdAt, "d MMMM yyyy")}
+                    {formatDateAgo(review.createdAt, "d MMMM yyyy")}
                   </div>
                 </div>
               </div>

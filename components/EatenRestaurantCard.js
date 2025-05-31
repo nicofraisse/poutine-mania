@@ -6,7 +6,7 @@ import Color from "color";
 import { ratingColors } from "../data/ratingColors";
 import { formatRating } from "../lib/formatRating";
 import Button from "../components/Button";
-import { formatDate } from "../lib/formatDate";
+import { formatDateAgo } from "../lib/formatDateAgo";
 import { flatten } from "lodash";
 import { ImageModal } from "./ImageModal";
 import Skeleton from "react-loading-skeleton";
@@ -95,7 +95,7 @@ export const EatenRestaurantCard = ({ restaurant }) => {
                     <span className="text-stone-400 text-xs">
                       {" "}
                       {t("eatenRestaurantCard.onDate", {
-                        date: formatDate(
+                        date: formatDateAgo(
                           restaurant.reviews.find((rev) => rev.comment)
                             .createdAt,
                           "dd/MM/yyyy"

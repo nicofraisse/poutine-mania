@@ -8,7 +8,7 @@ import Color from "color";
 import { ratingColors } from "../../data/ratingColors";
 import { formatRating } from "../../lib/formatRating";
 import Button from "../../components/Button";
-import { formatDate } from "../../lib/formatDate";
+import { formatDateAgo } from "../../lib/formatDateAgo";
 import { flatten } from "lodash";
 
 const EatenList = ({ userId }) => {
@@ -126,7 +126,7 @@ const EatenList = ({ userId }) => {
                           <span className="text-stone-400 text-xs">
                             {" "}
                             - le{" "}
-                            {formatDate(
+                            {formatDateAgo(
                               r.reviews.find((rev) => rev.comment).createdAt,
                               "dd/MM/yyyy"
                             )}

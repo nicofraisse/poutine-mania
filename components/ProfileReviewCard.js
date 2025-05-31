@@ -2,7 +2,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { Edit3, User } from "react-feather";
 import { Image } from "./Image";
-import { formatDate } from "lib/formatDate";
+import { formatDateAgo } from "lib/formatDateAgo";
 
 import { useCurrentUser } from "../lib/useCurrentUser";
 import { useRouter } from "next/router";
@@ -120,12 +120,12 @@ export const ProfileReviewCard = ({ review, isIndex, userName, loading }) => {
             </span>
             <span className="inline sm:hidden xl:inline text-slate-300 right-0 text-xs ml-1 font-normal relative sm:top-[4px] xl:top-0">
               <span>- </span>
-              {formatDate(review.createdAt, "d MMMM yyyy", true)}
+              {formatDateAgo(review.createdAt, "d MMMM yyyy", true)}
             </span>
           </span>
         </div>
         <span className="hidden sm:inline xl:hidden text-slate-300 text-xs ml-1 font-normal relative sm:top-[4px] flex-grow text-right min-w-28">
-          {formatDate(review.createdAt, "d MMMM yyyy", true)}
+          {formatDateAgo(review.createdAt, "d MMMM yyyy", true)}
         </span>
       </div>
       <div className="text-slate-700 mt-2 mb-8 border border-slate-100 shadow rounded-md p-3 sm:p-4 bg-white">

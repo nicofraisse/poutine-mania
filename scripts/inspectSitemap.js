@@ -36,7 +36,7 @@ async function getUrlsFromSitemap(url) {
   return [];
 }
 
-function formatDate(iso) {
+function formatDateAgo(iso) {
   if (!iso) return "";
   const d = new Date(iso);
   const mm = String(d.getMonth() + 1).padStart(2, "0");
@@ -66,7 +66,7 @@ function formatDate(iso) {
       alternates.forEach((a) => {
         if (a.hreflang in langs) langs[a.hreflang] = a.href;
       });
-      table.push([path, langs.fr, langs.en, formatDate(lastmod)]);
+      table.push([path, langs.fr, langs.en, formatDateAgo(lastmod)]);
     }
 
     console.log(table.toString());
