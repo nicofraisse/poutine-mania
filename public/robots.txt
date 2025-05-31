@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://poutinemania.ca
+Host: http://localhost:3000
 
 # Sitemaps
-Sitemap: https://poutinemania.ca/sitemap.xml
+Sitemap: http://localhost:3000/sitemap.xml
