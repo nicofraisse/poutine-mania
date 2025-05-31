@@ -15,6 +15,7 @@ import { TagSection } from "../RestaurantCard";
 import { useRestaurantSearch } from "components/context/RestaurantSearchProvider";
 import { useTranslation } from "next-i18next";
 import CitiesNav from "./CitiesNav";
+import { getMainPhoto } from "../../lib/restaurantMainPhotos";
 
 const MarkerAndPopup = ({
   restaurant,
@@ -53,7 +54,7 @@ const MarkerAndPopup = ({
     theRef.current.parentNode.style.zIndex = isHovered ? 100 : 1;
   }
 
-  const image = restaurant.reviews?.find((r) => r.photos?.[0])?.photos[0];
+  const image = getMainPhoto(restaurant);
   return (
     <div>
       <Marker

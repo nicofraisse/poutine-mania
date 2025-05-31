@@ -13,6 +13,7 @@ import { Image as CloudImage } from "components/Image";
 import { TagSection } from "./RestaurantCard";
 import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
+import { getMainPhoto } from "../lib/restaurantMainPhotos";
 
 const MarkerAndPopup = ({
   restaurant,
@@ -44,7 +45,7 @@ const MarkerAndPopup = ({
     theRef.current.parentNode.style.zIndex = isHovered ? 100 : 1;
   }
 
-  const image = restaurant.reviews?.find((r) => r.photos?.[0])?.photos[0];
+  const image = getMainPhoto(restaurant);
   return (
     <div>
       <Marker

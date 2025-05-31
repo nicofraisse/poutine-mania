@@ -10,6 +10,7 @@ import { IngredientRatingPills } from "../IngredientRatingPills";
 import { formatRating } from "../../lib/formatRating";
 import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
+import { getMainPhoto } from "../../lib/restaurantMainPhotos";
 
 export const TopPoutines = ({ restaurants }) => {
   const { t } = useTranslation();
@@ -26,7 +27,7 @@ export const TopPoutines = ({ restaurants }) => {
       <div className="sm:shadow-lg sm:border-white sm:border-4 rounded-lg sm:mb-16 xl:mb-20 mt-6">
         {restaurants ? (
           restaurants.map((r, i) => {
-            const image = r.reviews?.find((res) => res.photos?.[0])?.photos[0];
+            const image = getMainPhoto(r);
             return (
               <div
                 key={r._id}

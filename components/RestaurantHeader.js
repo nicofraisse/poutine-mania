@@ -1,9 +1,9 @@
 import React from "react";
 import { Image as ImageIcon } from "react-feather";
-import { flatten } from "lodash";
 import { Image } from "./Image";
 import { TagSection } from "./RestaurantCard";
 import Skeleton from "react-loading-skeleton";
+import { getMainPhotos } from "../lib/restaurantMainPhotos";
 
 const RestaurantHeader = ({ restaurant }) => {
   const city =
@@ -20,11 +20,7 @@ const RestaurantHeader = ({ restaurant }) => {
           el.id?.includes("country")
         )?.text);
 
-  const images =
-    restaurant &&
-    flatten(restaurant.reviews.map((r) => r.photos))
-      .filter(Boolean)
-      .filter((i) => i !== "null");
+  const images = getMainPhotos(restaurant);
 
   const isSkeleton = !restaurant;
 

@@ -8,6 +8,7 @@ import Link from "next/link";
 import { useRateRestaurant } from "./context/RateRestaurantProvider";
 import Skeleton from "react-loading-skeleton";
 import { useTranslation } from "next-i18next";
+import { getMainPhoto } from "../lib/restaurantMainPhotos";
 
 const RestaurantCard = ({ restaurant, openInNewTab }) => {
   const loading = Object.keys(restaurant).length === 0;
@@ -26,7 +27,7 @@ const RestaurantCard = ({ restaurant, openInNewTab }) => {
         el.id?.includes("region")
       )?.text);
 
-  const image = restaurant.reviews?.find((r) => r.photos?.[0])?.photos[0];
+  const image = getMainPhoto(restaurant);
 
   return (
     <div>

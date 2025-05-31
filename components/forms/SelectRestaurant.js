@@ -8,6 +8,7 @@ import classNames from "classnames";
 import { formatAddress } from "../../lib/formatAddress";
 import { Image } from "components/Image";
 import { useTranslation } from "next-i18next";
+import { getMainPhoto } from "../../lib/restaurantMainPhotos";
 
 const SelectRestaurant = ({ restaurants, userRatedRestaurants }) => {
   const { t } = useTranslation();
@@ -18,7 +19,7 @@ const SelectRestaurant = ({ restaurants, userRatedRestaurants }) => {
         const alreadyRated = userRatedRestaurants?.find(
           (review) => review.restaurantId === restaurant._id
         );
-        const image = restaurant.reviews?.find((r) => r.photos?.[0])?.photos[0];
+        const image = getMainPhoto(restaurant);
         const ratingValue =
           alreadyRated && formatRating(alreadyRated.finalRating);
 

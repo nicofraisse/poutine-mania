@@ -22,13 +22,13 @@ function App({ Component, pageProps }) {
               <RestaurantSearchProvider>
                 <RateRestaurantProvider>
                   <Layout {...pageProps}>
-                    <div>
+                    <>
                       <Component {...pageProps} />
                       <Toaster
                         position="bottom-right"
                         toastOptions={{ duration: 7000 }}
                       />
-                    </div>
+                    </>
                   </Layout>
                 </RateRestaurantProvider>
               </RestaurantSearchProvider>
