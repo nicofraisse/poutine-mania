@@ -9,4 +9,6 @@ const prodEnvContent = fs.readFileSync(prodEnv, "utf8");
 fs.writeFileSync(devEnv, prodEnvContent);
 fs.writeFileSync(prodEnv, devEnvContent);
 
-console.log("Environment files switched");
+console.log(
+  `Environment variables switched: now using ${prodEnv} in development.`
+);

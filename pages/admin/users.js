@@ -15,7 +15,6 @@ const Users = () => {
   const [loading, setLoading] = useState(true);
   const { currentUser, loading: currentUserLoading } = useCurrentUser();
   const { push } = useRouter();
-  console.log(users);
 
   useEffect(() => {
     axios
