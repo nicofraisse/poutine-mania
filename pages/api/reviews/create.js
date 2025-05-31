@@ -72,6 +72,7 @@ const handler = async (req, res) => {
             { _id: ObjectId(restaurantId) },
             {
               $set: {
+                lastReviewDate: new Date(),
                 mainPhotos: updatedMainPhotos,
               },
             }

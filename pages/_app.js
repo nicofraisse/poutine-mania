@@ -10,6 +10,7 @@ import { RestaurantSearchProvider } from "../components/context/RestaurantSearch
 import { CookiesProvider } from "react-cookie";
 import { SidebarDataProvider } from "../components/context/SidebarDataProvider";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 function App({ Component, pageProps }) {
   return (
@@ -37,6 +38,7 @@ function App({ Component, pageProps }) {
       </CookiesProvider>
 
       <Analytics />
+      <SpeedInsights />
     </>
   );
 }

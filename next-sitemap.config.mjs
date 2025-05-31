@@ -5,7 +5,13 @@ const BASE_URI = process.env.NEXT_PUBLIC_APP_URL || "https://poutinemania.ca";
 export default {
   siteUrl: BASE_URI,
   generateRobotsTxt: true,
-  exclude: ["/admin", "/admin/**", "/api/**", "/oauth-callback"],
+  exclude: [
+    "/admin",
+    "/admin/**",
+    "/api/**",
+    "/oauth-callback",
+    "/", // Prevent duplicate homepage
+  ],
   i18n: {
     locales: ["fr", "en"],
     defaultLocale: "fr",
@@ -15,40 +21,78 @@ export default {
     const res = await fetch(`${BASE_URI}/api/restaurants?noUnapproved=true`);
     const restaurants = await res.json();
 
-    // base static routes
-    const staticPages = ["/", "/noter", "/restaurants", "/a-propos"];
+    // Static pages
+    const staticPages = [
+      { path: "/", priority: 1.0, changefreq: "daily" },
+      { path: "/restaurants", priority: 0.9, changefreq: "daily" },
+      { path: "/noter", priority: 0.7, changefreq: "weekly" },
+      { path: "/a-propos", priority: 0.5, changefreq: "monthly" },
+    ];
 
-    // base dynamic routes
-    const dynamicPaths = restaurants.map(({ slug }) => `/restaurants/${slug}`);
+    // Featured profile pages
+    const profilePages = [
+      { path: "/profil/poutine-jesus", priority: 0.6, changefreq: "weekly" },
+    ];
 
-    const basePaths = [...staticPages, ...dynamicPaths];
+    const restaurantPages = restaurants.map((restaurant) => {
+      const reviewCount = restaurant.reviewCount || 0;
+      let priority = 0.6;
+      if (reviewCount >= 5) priority = 0.8;
+      else if (reviewCount >= 2) priority = 0.7;
+      else if (reviewCount >= 1) priority = 0.65;
 
-    return basePaths.flatMap((basePath) => {
-      // find the matching restaurant to grab updatedAt or default to now()
-      const restaurant = restaurants.find((r) => basePath.endsWith(r.slug));
-      const isoDate = restaurant
-        ? new Date(restaurant.updatedAt).toISOString()
-        : new Date().toISOString();
+      const changefreq = reviewCount >= 5 ? "daily" : "weekly";
 
-      // emit one entry per locale with proper loc, lastmod, and alternates
-      return config.i18n.locales.map((loc) => {
-        const isDefault = loc === config.i18n.defaultLocale;
-        const locPath = isDefault ? basePath : `/${loc}${basePath}`;
+      return {
+        path: `/restaurants/${restaurant.slug}`,
+        priority,
+        changefreq,
+        restaurant,
+      };
+    });
 
-        // build alternateRefs for every locale + x-default
+    const allPages = [...staticPages, ...profilePages, ...restaurantPages];
+
+    return allPages.flatMap((pageConfig) => {
+      const { path, priority, changefreq, restaurant } = pageConfig;
+
+      let lastmod;
+      if (restaurant) {
+        // Use lastReviewDate if available, otherwise fall back to updatedAt, then createdAt
+        const dates = [
+          restaurant.lastReviewDate,
+          restaurant.updatedAt,
+          restaurant.createdAt,
+        ].filter(Boolean);
+        lastmod =
+          dates.length > 0
+            ? new Date(dates[0]).toISOString()
+            : new Date().toISOString();
+      } else {
+        // For static pages, use current date
+        lastmod = new Date().toISOString();
+      }
+
+      // Generate fianl path for each locale
+      return config.i18n.locales.map((locale) => {
+        const isDefault = locale === config.i18n.defaultLocale;
+        const locPath = isDefault ? path : `/${locale}${path}`;
+
         const alternateRefs = config.i18n.locales
           .map((alt) => ({
             hreflang: alt,
             href:
               alt === config.i18n.defaultLocale
-                ? `${BASE_URI}${basePath}`
-                : `${BASE_URI}/${alt}${basePath}`,
+                ? `${BASE_URI}${path}`
+                : `${BASE_URI}/${alt}${path}`,
           }))
-          .concat({ hreflang: "x-default", href: `${BASE_URI}${basePath}` });
+          .concat({ hreflang: "x-default", href: `${BASE_URI}${path}` });
 
         return {
           loc: `${BASE_URI}${locPath}`,
-          lastmod: isoDate,
+          lastmod,
+          priority,
+          changefreq,
           alternateRefs,
         };
       });
