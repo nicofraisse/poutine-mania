@@ -1,12 +1,14 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import classNames from "classnames";
-import { X } from "react-feather";
+import { X, Edit3 } from "react-feather";
+import Modal from "react-responsive-modal";
 import Map from "components/Map";
 import RestaurantCard from "components/RestaurantCard";
 import RestaurantIntrouvable from "components/RestaurantIntrouvable";
+import Button from "components/Button"; // Assuming this component exists
 import { RestaurantsFilters } from "components/RestaurantsFilters";
 import { useRestaurantSearch } from "components/context/RestaurantSearchProvider";
 import { useGet } from "lib/useAxios";
@@ -26,8 +28,37 @@ const Restaurants = () => {
   const [categoryFilter, setCategoryFilter] = useState([]);
   const [ratingFilter, setRatingFilter] = useState(null);
   const [filtersOpen, setFiltersOpen] = useState(false);
+  const [showCreateModal, setShowCreateModal] = useState(false);
   const filtersRef = useClickOutside(() => setFiltersOpen(false));
-  const { push } = useRouter();
+  const router = useRouter();
+  const { push, query } = router;
+
+  // Check for createdRestaurantId query parameter
+  useEffect(() => {
+    if (query.createdRestaurantId) {
+      setShowCreateModal(true);
+    }
+  }, [query.createdRestaurantId]);
+
+  const handleCloseCreateModal = () => {
+    setShowCreateModal(false);
+    // Remove the query parameter from URL
+    const newQuery = { ...query };
+    delete newQuery.createdRestaurantId;
+    push(
+      {
+        pathname: router.pathname,
+        query: newQuery,
+      },
+      undefined,
+      { shallow: true }
+    );
+  };
+
+  const handleRatePoutine = () => {
+    // Handle rate poutine action - you can customize this
+    handleCloseCreateModal();
+  };
 
   const sortTypes = [
     { label: t("restaurants.sortTypes.popularity"), value: "reviewCount" },
@@ -177,6 +208,48 @@ const Restaurants = () => {
           </div>
         </div>
       </RestaurantCardHoverProvider>
+
+      <Modal
+        open={showCreateModal}
+        onClose={handleCloseCreateModal}
+        center
+        classNames={{
+          overlay: "customOverlay",
+          modal: "customModal",
+        }}
+      >
+        <div className="text-center p-6">
+          <div className="mb-4">
+            <h2 className="text-2xl font-bold text-green-600 mb-2">🎉</h2>
+            <h3 className="text-xl font-semibold text-gray-800">
+              {t("restaurants.postCreateModal.header")}
+            </h3>
+            <p className="text-gray-600 mt-2">
+              {t("restaurants.postCreateModal.description")}
+            </p>
+          </div>
+
+          <Button
+            height="smd"
+            className="mx-auto mt-6 block w-48"
+            onClick={() => push(`/restaurants/${query.createdRestaurantId}`)}
+            variant="secondary"
+          >
+            {t("restaurants.postCreateModal.seeRestaurantButton")}
+          </Button>
+          <Button
+            height="smd"
+            className="mx-auto mt-4 block"
+            onClick={() =>
+              push(`/restaurants/${query.createdRestaurantId}/noter`)
+            }
+            variant="primary"
+          >
+            <Edit3 size={20} className="mr-2" />
+            {t("reviewOverview.rateTheirPoutine")}
+          </Button>
+        </div>
+      </Modal>
     </>
   );
 };

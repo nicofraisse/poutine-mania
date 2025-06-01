@@ -7,6 +7,7 @@ import Skeleton from "react-loading-skeleton";
 import { Linkify } from "../Linkify.js";
 import classNames from "classnames";
 import { useTranslation } from "next-i18next";
+import Button from "../../components/Button";
 
 const ProfileHeader = ({ user }) => {
   const { t } = useTranslation();
@@ -58,9 +59,9 @@ const ProfileHeader = ({ user }) => {
                   href={`/profil/${user.slug}/edit`}
                   passHref
                 >
-                  <button className="text-base font-bold bg-blue-400 px-6 py-2 rounded-full text-white inline-block">
+                  <Button variant="blue" height="smd" rounded>
                     {t("userProfile.profileHeader.editProfile")}
-                  </button>
+                  </Button>
                 </Link>
               ) : (
                 ""
@@ -98,9 +99,9 @@ const ProfileHeader = ({ user }) => {
                   href={`/profil/${user.slug}/edit`}
                   passHref
                 >
-                  <button className="text-base font-bold bg-blue-400 px-6 py-2 rounded-full text-white inline-block">
+                  <Button variant="blue" height="smd" rounded>
                     {t("userProfile.profileHeader.editProfile")}
-                  </button>
+                  </Button>
                 </Link>
               )
             )}
@@ -115,7 +116,7 @@ const ProfileHeader = ({ user }) => {
               </>
             ) : (
               <Linkify legacyBehaviorify>
-                {!(user.bio === "undefined") && user.bio}
+                {user.bio !== "undefined" && user.bio}
               </Linkify>
             )}
           </p>

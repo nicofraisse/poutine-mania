@@ -165,7 +165,11 @@ export const authOptions = {
 
         if (!user) {
           client.close();
-          throw new Error("backend.nextauth.invalidCredentials");
+          const error = JSON.stringify({
+            code: "INVALID_CREDENTIALS",
+            messageKey: "backend.nextauth.invalidCredentials",
+          });
+          throw new Error(error);
         }
 
         const foundExistingAccount = await client
@@ -177,9 +181,17 @@ export const authOptions = {
           client.close();
 
           if (foundExistingAccount.provider === "google") {
-            throw new Error("backend.nextauth.useGoogleProvider");
+            const error = JSON.stringify({
+              code: "USE_GOOGLE_PROVIDER",
+              messageKey: "backend.nextauth.useGoogleProvider",
+            });
+            throw new Error(error);
           } else {
-            throw new Error("backend.nextauth.useAnotherProvider");
+            const error = JSON.stringify({
+              code: "USE_ANOTHER_PROVIDER",
+              messageKey: "backend.nextauth.useAnotherProvider",
+            });
+            throw new Error(error);
           }
         }
 
@@ -189,7 +201,11 @@ export const authOptions = {
         );
         if (!isValid) {
           client.close();
-          throw new Error("backend.nextauth.invalidCredentials");
+          const error = JSON.stringify({
+            code: "INVALID_CREDENTIALS",
+            messageKey: "backend.nextauth.invalidCredentials",
+          });
+          throw new Error(error);
         }
 
         client.close();

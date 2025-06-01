@@ -71,11 +71,11 @@ export const RestaurantForm = ({ type }) => {
         .post("/api/restaurants/create", submitValues)
         .then(({ data }) => {
           toast.success("Succès");
-
+          console.log({ data });
           push(
             currentUser.isAdmin
               ? "/admin/restaurants"
-              : `/restaurants/${data.restaurant.slug}`
+              : `/restaurants?createdRestaurantId=${data.restaurant?.slug}`
           );
         })
         .catch((err) => toast.error(err.response.data.error ?? err.message))

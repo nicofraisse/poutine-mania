@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import Image from "next/image";
+import { withI18n } from "../lib/withI18n";
 
 const NotFound = () => {
   const router = useRouter();
@@ -36,5 +37,6 @@ const NotFound = () => {
     </div>
   );
 };
+export const getStaticProps = withI18n();
 
 export default NotFound;

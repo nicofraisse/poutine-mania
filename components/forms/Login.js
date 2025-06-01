@@ -61,21 +61,20 @@ const Login = ({ onSubmit, redirect, setEmailToConfirm }) => {
     })
       .then((data) => {
         if (data.error) {
-          console.log("error", data.error, JSON.stringify(data));
-          const error = JSON.parse(data.error);
+          console.log("error", data.error);
 
-          if (error?.code === "EMAIL_NOT_VALIDATED") {
+          let parsedError;
+          try {
+            parsedError = JSON.parse(data.error);
+          } catch (e) {
+            parsedError = { messageKey: data.error };
+          }
+
+          if (parsedError?.code === "EMAIL_NOT_VALIDATED") {
             setEmailToConfirm(values.email);
           } else {
-            toast.error(t(error.messageKey ?? "defaultError"));
-            console.error(
-              "Sign in error:",
-              error.message,
-              "raw",
-              error,
-              "data",
-              data
-            );
+            const messageKey = parsedError?.messageKey || data.error;
+            toast.error(t(messageKey));
           }
         } else {
           toast.success(t("login.successMessage"));
@@ -87,8 +86,8 @@ const Login = ({ onSubmit, redirect, setEmailToConfirm }) => {
         formikBag.setSubmitting(false);
       })
       .catch((e) => {
-        console.error("Sign in error:", e.message, "raw", e);
-        toast.error(t("login.genericError"));
+        console.log("Sign in error:", JSON.stringify(e));
+        toast.error(t(e.message || "login.genericError"));
         formikBag.setSubmitting(false);
       });
   };

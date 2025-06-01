@@ -269,6 +269,7 @@
     "addSuccursaleButton": "Ajouter une succursale",
     "addressLabel": "Adresse",
     "categoriesLabel": "Catégorie(s)",
+    "newRestaurantHeader": "Ajouter un restaurant",
     "phoneLabel": "Numéro de téléphone (optionnel)",
     "restaurantLabel": "Nom du restaurant",
     "succuresalesLabel": "Succursales",
@@ -306,6 +307,11 @@
     "metaDescription": "Parcourez la carte interactive de poutineries au Québec et Canada. Filtrez par note, prix ou catégorie pour dénicher la poutine parfaite près de chez vous.",
     "noResults": "0 résultats",
     "pageTitle": "Carte des poutines | Poutine Mania",
+    "postCreateModal": {
+      "description": "Votre restaurant a été ajouté avec succès!",
+      "header": "Restaurant créé!",
+      "seeRestaurantButton": "Voir le restaurant"
+    },
     "resultsCount": "{{count}} poutinerie",
     "resultsCount_plural": "{{count}} poutineries",
     "sortOrders": {

@@ -270,6 +270,7 @@
     "addSuccursaleButton": "Add branch address",
     "addressLabel": "Address",
     "categoriesLabel": "Category(ies)",
+    "newRestaurantHeader": "Add a new restaurant",
     "phoneLabel": "Phone number (optional)",
     "restaurantLabel": "Restaurant name",
     "succuresalesLabel": "Branches",
@@ -307,6 +308,11 @@
     "metaDescription": "Browse the interactive map of poutine spots in Quebec and Canada. Filter by rating, price, or category to find the perfect poutine near you.",
     "noResults": "0 results",
     "pageTitle": "Poutine Map | Poutine Mania",
+    "postCreateModal": {
+      "description": "Your restaurant has been successfully added!",
+      "header": "Restaurant created!",
+      "seeRestaurantButton": "View restaurant"
+    },
     "resultsCount": "{{count}} poutine place",
     "resultsCount_plural": "{{count}} poutine places",
     "sortOrders": {

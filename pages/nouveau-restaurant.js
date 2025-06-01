@@ -2,9 +2,11 @@ import { RestaurantForm } from "components/forms/Restaurant";
 import { useCurrentUser } from "lib/useCurrentUser";
 import { Spinner } from "../components/Spinner";
 import { withI18n } from "../lib/withI18n";
+import { useTranslation } from "react-i18next";
 
 const CreateRestaurant = () => {
   const { currentUser, loading } = useCurrentUser();
+  const { t } = useTranslation();
   if (loading) return <Spinner />;
   if (!currentUser) {
     return (
@@ -16,7 +18,7 @@ const CreateRestaurant = () => {
   return (
     <div className="sm:w-[600px] py-2 px-4 sm:py-6 sm:px-8 bg-white my-2 lg:my-6 rounded-md mx-auto xl:ml-10 shadow-md">
       <h1 className="my-3 sm:mt-4 sm:mb-5 font-black text-xl sm:text-2xl">
-        Ajouter un restaurant
+        {t("restaurantForm.newRestaurantHeader")}
       </h1>
       <RestaurantForm type="create" isAdmin={!currentUser.isAdmin} />
     </div>
