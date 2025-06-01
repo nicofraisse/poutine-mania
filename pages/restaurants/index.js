@@ -55,11 +55,6 @@ const Restaurants = () => {
     );
   };
 
-  const handleRatePoutine = () => {
-    // Handle rate poutine action - you can customize this
-    handleCloseCreateModal();
-  };
-
   const sortTypes = [
     { label: t("restaurants.sortTypes.popularity"), value: "reviewCount" },
     { label: t("restaurants.sortTypes.name"), value: "name" },
