@@ -2,15 +2,12 @@ import React from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import { useGet } from "../../../lib/useAxios";
-import { useTranslation } from "next-i18next";
 import { withI18n } from "../../../lib/withI18n";
 import ProfileLayout from "../../../components/profile/ProfileLayout";
 import MapMap from "../../../components/Map";
 import { RestaurantCardHoverProvider } from "../../../components/context/RestaurantCardHoverProvider";
 
 const UserMap = ({ user, restaurants, loading }) => {
-  const { t } = useTranslation();
-
   if (loading) {
     return (
       <div className="h-[600px] bg-gray-100 rounded-lg flex items-center justify-center">
@@ -31,7 +28,7 @@ const UserMap = ({ user, restaurants, loading }) => {
             Aucune poutinerie visitée
           </h3>
           <p className="text-sm">
-            {user?.name || "Cet utilisateur"} n'a pas encore ajouté de
+            {user?.name || "Cet utilisateur"} n&apos;a pas encore ajouté de
             poutineries à sa liste
           </p>
         </div>
@@ -62,7 +59,8 @@ const UserMap = ({ user, restaurants, loading }) => {
             Aucune localisation disponible
           </h3>
           <p className="text-sm">
-            Les poutineries dans la liste n'ont pas d'adresse enregistrée
+            Les poutineries dans la liste n&apos;ont pas d&apos;adresse
+            enregistrée
           </p>
           <p className="text-xs mt-2 text-gray-400">
             {restaurants.length} poutinerie{restaurants.length > 1 ? "s" : ""}{" "}
@@ -136,7 +134,6 @@ const UserMap = ({ user, restaurants, loading }) => {
 };
 
 const UserProfileMap = () => {
-  const { t } = useTranslation();
   const { query } = useRouter();
   const { data: user } = useGet(`/api/users/${query.id}`, { skip: !query.id });
   const { data: restaurants, loading: restaurantsLoading } = useGet(
