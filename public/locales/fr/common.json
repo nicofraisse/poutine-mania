@@ -451,6 +451,11 @@
       "title": "✍️"
     }
   },
+  "userRanking": {
+    "description": "Description",
+    "poutinerie": "Poutinerie",
+    "saNote": "Sa note"
+  },
   "validation": {
     "required": "Requis"
   },

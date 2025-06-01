@@ -2,7 +2,7 @@ import { RestaurantForm } from "components/forms/Restaurant";
 import { useCurrentUser } from "lib/useCurrentUser";
 import { Spinner } from "../components/Spinner";
 import { withI18n } from "../lib/withI18n";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "next-i18next";
 
 const CreateRestaurant = () => {
   const { currentUser, loading } = useCurrentUser();

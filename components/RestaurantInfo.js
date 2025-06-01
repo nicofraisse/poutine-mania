@@ -1,5 +1,5 @@
 import { ExternalLink, MapPin, PhoneCall } from "react-feather";
-import ShowPageMap from "components/ShowPageMap";
+import Map from "components/Map";
 import { formatAddress } from "lib/formatAddress";
 import Skeleton from "react-loading-skeleton";
 import { normalizeUrl } from "../lib/normalizeUrl";
@@ -15,7 +15,12 @@ export const RestaurantInfo = ({ showMap, restaurant, setShowMap }) => {
           <Skeleton className="h-[200px] mb-3" />
         ) : (
           <div className="border h-[200px] mb-4">
-            <ShowPageMap restaurants={[restaurant]} isShowPage />
+            <Map
+              restaurants={[restaurant]}
+              isShowPage={true}
+              showCitiesNav={false}
+              enableSearch={false}
+            />
           </div>
         ))}
 

@@ -1,15 +1,12 @@
 import React from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
-import UserRanking from "../../../components/UserRanking";
 import { useGet } from "../../../lib/useAxios";
-import { EmptyState } from "../../../components/EmptyState";
-import { useTranslation } from "next-i18next";
 import { withI18n } from "../../../lib/withI18n";
+import UserLastReviews from "../../../components/profile/UserLastReviews";
 import ProfileLayout from "../../../components/profile/ProfileLayout";
 
-const UserProfileRankings = () => {
-  const { t } = useTranslation();
+const UserProfileReviews = () => {
   const { query } = useRouter();
   const { data: user } = useGet(`/api/users/${query.id}`, { skip: !query.id });
   const { data: reviews, loading: reviewsLoading } = useGet(
@@ -21,37 +18,33 @@ const UserProfileRankings = () => {
     <>
       <Head>
         <title>
-          {user?.name ? `${user.name} - Top Poutines` : "Profil Utilisateur"}
+          {user?.name ? `${user.name} - Avis et Critiques` : "Avis Utilisateur"}
         </title>
         <meta
           name="description"
-          content={`Découvrez le classement des meilleures poutines selon ${
+          content={`Consultez tous les avis et critiques de poutines de ${
             user?.name || "cet utilisateur"
           }`}
         />
         <meta
           property="og:title"
-          content={`${user?.name || "Utilisateur"} - Top Poutines`}
+          content={`${user?.name || "Utilisateur"} - Avis et Critiques`}
         />
         <meta
           property="og:description"
-          content={`Découvrez le classement des meilleures poutines selon ${
+          content={`Consultez tous les avis et critiques de poutines de ${
             user?.name || "cet utilisateur"
           }`}
         />
         <meta property="og:type" content="profile" />
       </Head>
 
-      {!reviewsLoading && reviews?.length === 0 ? (
-        <EmptyState hideButton title={t("userProfile.emptyState.title")} />
-      ) : (
-        <UserRanking reviews={reviews} loading={reviewsLoading} />
-      )}
+      <UserLastReviews reviews={reviews} user={user} loading={reviewsLoading} />
     </>
   );
 };
 
-UserProfileRankings.getLayout = function getLayout(page) {
+UserProfileReviews.getLayout = function getLayout(page) {
   return <ProfileLayout>{page}</ProfileLayout>;
 };
 
@@ -64,4 +57,4 @@ export function getStaticPaths() {
   };
 }
 
-export default UserProfileRankings;
+export default UserProfileReviews;

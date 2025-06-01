@@ -1,7 +1,7 @@
 import React from "react";
-import ProfileReviewCard from "./ProfileReviewCard";
+import ProfileReviewCard from "../ProfileReviewCard";
 
-const UserLastReviews = ({ reviews, user }) => {
+const UserLastReviews = ({ reviews, user, loading }) => {
   return (
     <div>
       {(reviews || [{}, {}, {}, {}]).map((review, i) => (
@@ -9,7 +9,7 @@ const UserLastReviews = ({ reviews, user }) => {
           review={review}
           key={i}
           userName={user?.name}
-          loading={!reviews}
+          loading={loading || !reviews}
         />
       ))}
     </div>

@@ -10,7 +10,6 @@ async function handler(req, res) {
     .collection("restaurants")
     .deleteOne({ _id: new ObjectId(req.query.id) });
 
-  client.close();
   return res.status(200).json(deletedRestaurant);
 }
 

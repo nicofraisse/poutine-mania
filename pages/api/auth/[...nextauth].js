@@ -29,7 +29,6 @@ export const authOptions = {
           { _id },
           { $set: { createdAt: new Date(), updatedAt: new Date() } }
         );
-      client.close();
 
       return { ...user, createdAt: new Date(), updatedAt: new Date() };
     },
@@ -61,7 +60,6 @@ export const authOptions = {
           { email: user.email },
           { $set: { emailVerified: true } }
         );
-        client.close();
       }
       if (!user?.emailVerified) {
         const error = JSON.stringify({
@@ -146,10 +144,8 @@ export const authOptions = {
           nbReviews: reviews.length,
         };
 
-        client.close();
         return session;
       } else {
-        client.close();
         throw new Error("No session");
       }
     },
@@ -164,7 +160,6 @@ export const authOptions = {
         });
 
         if (!user) {
-          client.close();
           const error = JSON.stringify({
             code: "INVALID_CREDENTIALS",
             messageKey: "backend.nextauth.invalidCredentials",
@@ -178,8 +173,6 @@ export const authOptions = {
           .findOne({ userId: user._id });
 
         if (foundExistingAccount) {
-          client.close();
-
           if (foundExistingAccount.provider === "google") {
             const error = JSON.stringify({
               code: "USE_GOOGLE_PROVIDER",
@@ -200,15 +193,12 @@ export const authOptions = {
           user.password
         );
         if (!isValid) {
-          client.close();
           const error = JSON.stringify({
             code: "INVALID_CREDENTIALS",
             messageKey: "backend.nextauth.invalidCredentials",
           });
           throw new Error(error);
         }
-
-        client.close();
 
         return {
           id: user._id,

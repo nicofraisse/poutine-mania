@@ -27,7 +27,7 @@ async function handler(req, res) {
 
   if (!user) {
     res.status(404).json({ message: "User not found." });
-    client.close();
+
     return;
   }
 
@@ -39,7 +39,7 @@ async function handler(req, res) {
     res
       .status(403)
       .json({ message: "Votre ancien mot de passe n'est pas valide." });
-    client.close();
+
     return;
   }
 
@@ -50,7 +50,6 @@ async function handler(req, res) {
     { $set: { password: hashedPassword } }
   );
 
-  client.close();
   res.status(200).json({ message: "Mot de passe mis à jour!" });
 }
 

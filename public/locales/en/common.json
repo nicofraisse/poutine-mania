@@ -450,6 +450,11 @@
       "title": "✍️"
     }
   },
+  "userRanking": {
+    "description": "Description",
+    "poutinerie": "Poutinerie",
+    "saNote": "Their rating"
+  },
   "validation": {
     "required": "Required"
   },

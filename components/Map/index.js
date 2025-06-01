@@ -6,7 +6,6 @@ import { useRouter } from "next/router";
 import RatingPill from "components/RatingPill";
 import { flatten, minBy, maxBy } from "lodash";
 import { ratingColors } from "data/ratingColors";
-import { useRestaurantCardHover } from "../context/RestaurantCardHoverProvider";
 import classNames from "classnames";
 import Image from "next/image";
 import Color from "color";
@@ -16,6 +15,7 @@ import { useRestaurantSearch } from "components/context/RestaurantSearchProvider
 import { useTranslation } from "next-i18next";
 import CitiesNav from "./CitiesNav";
 import { getMainPhoto } from "../../lib/restaurantMainPhotos";
+import { useRestaurantCardHover } from "../context/RestaurantCardHoverProvider";
 
 const MarkerAndPopup = ({
   restaurant,
@@ -29,8 +29,9 @@ const MarkerAndPopup = ({
   isSmallMarker,
   mapRef,
   viewState,
+  enableFlyTo = false,
 }) => {
-  const { hoveredId } = useRestaurantCardHover();
+  const { hoveredId, setHoveredId } = useRestaurantCardHover();
   const { locale } = useRouter();
 
   const isHovered = hoveredId === restaurant._id;
@@ -40,11 +41,13 @@ const MarkerAndPopup = ({
       closePopup(popupId);
     } else {
       openPopup(popupId);
-      mapRef.current.flyTo({
-        center: [address.center[0], address.center[1]],
-        zoom: viewState.zoom,
-        duration: 1000,
-      });
+      if (enableFlyTo && mapRef?.current && viewState) {
+        mapRef.current.flyTo({
+          center: [address.center[0], address.center[1]],
+          zoom: viewState.zoom,
+          duration: 1000,
+        });
+      }
     }
   };
 
@@ -55,6 +58,9 @@ const MarkerAndPopup = ({
   }
 
   const image = getMainPhoto(restaurant);
+  // Handle both avgFinalRating and avgRating
+  const rating = restaurant.avgFinalRating ?? restaurant.avgRating;
+
   return (
     <div>
       <Marker
@@ -65,8 +71,8 @@ const MarkerAndPopup = ({
       >
         {isSmallMarker ? (
           <div
-            // onMouseEnter={() => !isShowPage && setHoveredId(restaurant._id)}
-            // onMouseLeave={() => !isShowPage && setHoveredId(null)}
+            onMouseEnter={() => !isShowPage && setHoveredId(restaurant._id)}
+            onMouseLeave={() => !isShowPage && setHoveredId(null)}
             data-pin="yes"
             ref={theRef}
             onClick={(e) => {
@@ -74,32 +80,31 @@ const MarkerAndPopup = ({
               togglePopup();
             }}
             className={classNames(
-              "transform -translate-y-1 z-30 hover:scale-150 hover:shadow-md transition dutation-150 w-4 h-4 rounded-full border-white shadow-md border-2",
-              { "scale-150 shadow-md": isHovered }
+              "transform -translate-y-1 z-30 transition dutation-150 w-4 h-4 rounded-full border-white shadow-md border-2",
+              { "scale-150": isHovered }
             )}
             style={{
               backgroundColor:
                 restaurant.reviewCount > 0
-                  ? Color(
-                      ratingColors[Math.floor(restaurant.avgRating)]
-                    ).darken(0.4)
+                  ? Color(ratingColors[Math.floor(rating)]).darken(0.4)
                   : "rgb(160, 160, 160)",
-              // boxShadow: isHovered ? "0px 0px 7px rgba(0, 0, 0, 0.5)" : "",
+              boxShadow: isHovered ? "0px 0px 7px rgba(0, 0, 0, 0.5)" : "",
             }}
           ></div>
         ) : (
           <div
             className={classNames(
-              "transition-transform duration-200 transform hover:scale-125",
+              "transition-transform duration-200",
+              enableFlyTo && "transform hover:scale-125",
               {
                 "scale-125": isHovered,
               }
             )}
           >
             <div
-              className="w-10 h-10 absolute z-10 flex items-center justify-center "
-              // onMouseEnter={() => !isShowPage && setHoveredId(restaurant._id)}
-              // onMouseLeave={() => !isShowPage && setHoveredId(null)}
+              className="w-10 h-10 absolute z-10 flex items-center justify-center"
+              onMouseEnter={() => !isShowPage && setHoveredId(restaurant._id)}
+              onMouseLeave={() => !isShowPage && setHoveredId(null)}
               data-pin="yes"
               onClick={(e) => {
                 e.stopPropagation();
@@ -112,7 +117,10 @@ const MarkerAndPopup = ({
                 width={36}
                 height={36}
                 className={classNames(
-                  "transform scale-75 transition-all duration-100 -translate-y-1 z-30"
+                  "transform scale-75 transition-all duration-100 -translate-y-1 z-30",
+                  !enableFlyTo && {
+                    "scale-100": isHovered,
+                  }
                 )}
                 onClick={() => {
                   togglePopup();
@@ -124,19 +132,21 @@ const MarkerAndPopup = ({
               size={40}
               color={
                 restaurant.reviewCount > 0
-                  ? Color(ratingColors[Math.floor(restaurant.avgRating)])
-                      .darken(0.4)
-                      .hex()
+                  ? Color(ratingColors[Math.floor(rating)]).darken(0.4).hex()
                   : "rgb(205, 205, 205)"
               }
               fill={
                 restaurant.reviewCount > 0
-                  ? Color(
-                      ratingColors[Math.floor(restaurant.avgRating)]
-                    ).saturate(0.5)
+                  ? Color(ratingColors[Math.floor(rating)]).saturate(0.5)
                   : "white"
               }
-              className={"nocircle"}
+              className={classNames(
+                "nocircle",
+                !enableFlyTo && "transition duration-100",
+                {
+                  "transform scale-125": !enableFlyTo && isHovered,
+                }
+              )}
               ref={theRef}
             />
           </div>
@@ -146,7 +156,7 @@ const MarkerAndPopup = ({
         <Popup
           longitude={address.center[0]}
           latitude={address.center[1]}
-          dynamicPosition={true}
+          dynamicPosition={enableFlyTo}
           anchor="bottom"
           offset={isSmallMarker ? 24 : 44}
           closeButton={false}
@@ -181,11 +191,17 @@ const MarkerAndPopup = ({
             >
               {restaurant.name}
             </div>
+            <div
+              className="text-slate-600 mt-1"
+              style={{ fontSize: 11, lineHeight: 1.25 }}
+            >
+              {address.place_name?.replace(", Canada", "")}
+            </div>
             {!isShowPage && (
               <>
                 <div className="max-w-28">
                   <RatingPill
-                    avgRating={restaurant.avgRating}
+                    avgRating={rating}
                     reviewCount={restaurant.reviewCount}
                   />
                 </div>
@@ -205,6 +221,7 @@ const MarkerAndPopup = ({
                 </div>
               </>
             )}
+
             <div
               onClick={(e) => {
                 e.stopPropagation();
@@ -221,10 +238,16 @@ const MarkerAndPopup = ({
   );
 };
 
-const MapMap = ({ restaurants, isShowPage }) => {
+const MapMap = ({
+  restaurants,
+  isShowPage,
+  showCitiesNav = false,
+  enableSearch = false,
+}) => {
   const [userCoordinates, setUserCoordinates] = useState();
   const { query } = useRouter();
   const { t } = useTranslation();
+  const { searchValue } = useRestaurantSearch();
 
   const DEFAULT_COORDINATES = useMemo(() => {
     return {
@@ -233,26 +256,70 @@ const MapMap = ({ restaurants, isShowPage }) => {
       zoom: 10,
     };
   }, []);
-  const { searchValue } = useRestaurantSearch();
 
   const [viewState, setViewState] = useState(DEFAULT_COORDINATES);
+  const [openPopups, setOpenPopups] = useState([]);
+  const [userPopupOpen, setUserPopupOpen] = useState(false);
+
+  const POUTINE_LOGO_ZOOM_THRESHOLD = 12;
+  const mapRef = useRef();
+
+  const allCoordinates = useMemo(() => {
+    if (!restaurants) return [];
+    return flatten(
+      restaurants.map((r) => r.succursales.map((s) => s.address.center))
+    );
+  }, [restaurants]);
+
+  const bounds = useMemo(() => {
+    if (allCoordinates.length === 0) return null;
+    const minLongitude = minBy(allCoordinates, (c) => c[0])?.[0];
+    const minLatitude = minBy(allCoordinates, (c) => c[1])?.[1];
+    const maxLongitude = maxBy(allCoordinates, (c) => c[0])?.[0];
+    const maxLatitude = maxBy(allCoordinates, (c) => c[1])?.[1];
+    return {
+      minLongitude,
+      minLatitude,
+      maxLongitude,
+      maxLatitude,
+    };
+  }, [allCoordinates]);
+
+  const openPopup = (id) => {
+    setOpenPopups([...openPopups, id]);
+  };
+
+  const closePopup = (id) => setOpenPopups(openPopups.filter((p) => p !== id));
+
+  const closeOtherPopups = (id) => {
+    setOpenPopups([id]);
+  };
+
+  const closeAllPopups = () => setOpenPopups([]);
+
+  const [isSmallMarker, setIsSmallMarker] = useState(!isShowPage);
 
   useEffect(() => {
-    if (restaurants) {
-      const allCoordinates = flatten(
-        restaurants.map((r) => r.succursales.map((s) => s.address.center))
-      );
-      const minLongitude = minBy(allCoordinates, (c) => c[0])?.[0];
-      const minLatitude = minBy(allCoordinates, (c) => c[1])?.[1];
-      const maxLongitude = maxBy(allCoordinates, (c) => c[0])?.[0];
-      const maxLatitude = maxBy(allCoordinates, (c) => c[1])?.[1];
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setUserCoordinates([
+          position.coords.longitude,
+          position.coords.latitude,
+        ]);
+      },
+      (err) => console.error("position error", err),
+      { timeout: 10000, enableHighAccuracy: false }
+    );
+  }, []);
 
+  useEffect(() => {
+    if (enableSearch && restaurants && bounds) {
       if (restaurants.length > 0) {
         if (query.search && query.search === searchValue) {
           mapRef.current?.fitBounds(
             [
-              [minLongitude, minLatitude],
-              [maxLongitude, maxLatitude],
+              [bounds.minLongitude, bounds.minLatitude],
+              [bounds.maxLongitude, bounds.maxLatitude],
             ],
             { padding: 50, duration: 1000, maxZoom: 17.5 }
           );
@@ -268,49 +335,14 @@ const MapMap = ({ restaurants, isShowPage }) => {
         }
       }
     }
-  }, [restaurants, query.search, searchValue, DEFAULT_COORDINATES]);
-
-  const [openPopups, setOpenPopups] = useState([]);
-  const [userPopupOpen, setUserPopupOpen] = useState(false);
-
-  const POUTINE_LOGO_ZOOM_THRESHOLD = 12;
-
-  const mapRef = useRef();
-
-  const openPopup = (id) => {
-    setOpenPopups([...openPopups, id]);
-  };
-
-  const closePopup = (id) => setOpenPopups(openPopups.filter((p) => p !== id));
-
-  const closeOtherPopups = (id) => {
-    setOpenPopups([id]);
-  };
-
-  const closeAllPopups = () => setOpenPopups([]);
-
-  const [isSmallMarker, setIsSmallMarker] = useState(
-    viewState.zoom < POUTINE_LOGO_ZOOM_THRESHOLD
-  );
-
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        setUserCoordinates([
-          position.coords.longitude,
-          position.coords.latitude,
-        ]);
-      },
-      (err) => console.error("position error", err),
-      { timeout: 10000, enableHighAccuracy: false }
-    );
-  }, []);
-
-  // console.log("current zoom and coordinates", {
-  //   zoom: viewState.zoom,
-  //   longitude: viewState.longitude,
-  //   latitude: viewState.latitude,
-  // });
+  }, [
+    restaurants,
+    query.search,
+    searchValue,
+    DEFAULT_COORDINATES,
+    enableSearch,
+    bounds,
+  ]);
 
   const CITIES = [
     {
@@ -365,23 +397,38 @@ const MapMap = ({ restaurants, isShowPage }) => {
     });
   };
 
+  const mapProps = showCitiesNav
+    ? {
+        ref: mapRef,
+        onMove: (evt) => setViewState(evt.viewState),
+        ...viewState,
+      }
+    : {
+        initialViewState: bounds
+          ? {
+              bounds: [
+                [bounds.minLongitude, bounds.minLatitude],
+                [bounds.maxLongitude, bounds.maxLatitude],
+              ],
+              fitBoundsOptions: { padding: 60, maxZoom: 13 },
+            }
+          : DEFAULT_COORDINATES,
+      };
+
   return (
     <div
       className={classNames("h-full", {
-        "animate-pulse": !restaurants,
+        "animate-pulse": enableSearch && !restaurants,
       })}
       onClick={(e) => {
         if (e.target.dataset.pin !== "yes") closeAllPopups();
       }}
     >
       <Map
-        ref={mapRef}
         reuseMaps
-        id="mymap"
-        fadeDuration={1000}
-        onMove={(evt) => setViewState(evt.viewState)}
-        maxZoom={20}
-        {...viewState}
+        id={showCitiesNav ? "mymap" : "mymap2"}
+        fadeDuration={showCitiesNav ? 1000 : undefined}
+        maxZoom={showCitiesNav ? 20 : undefined}
         style={{ width: "100%", height: "100%" }}
         mapStyle="mapbox://styles/mapbox/streets-v10"
         mapboxAccessToken={process.env.MAPBOX_API_KEY}
@@ -389,10 +436,13 @@ const MapMap = ({ restaurants, isShowPage }) => {
           if (!isShowPage)
             setIsSmallMarker(e.viewState.zoom < POUTINE_LOGO_ZOOM_THRESHOLD);
         }}
+        {...mapProps}
       >
-        <div className="absolute top-0 left-0 right-0 px-1 xl:px-2 m-2 xl:m-3 z-20">
-          <CitiesNav cities={CITIES} onSelect={handleLocationButtonClick} />
-        </div>
+        {showCitiesNav && (
+          <div className="absolute top-0 left-0 right-0 px-1 xl:px-2 m-2 xl:m-3 z-20">
+            <CitiesNav cities={CITIES} onSelect={handleLocationButtonClick} />
+          </div>
+        )}
         <NavigationControl position="bottom-right" />
         {restaurants?.map((restaurant, parentIndex) =>
           restaurant?.succursales?.map(({ address }, index) => (
@@ -410,6 +460,7 @@ const MapMap = ({ restaurants, isShowPage }) => {
               isSmallMarker={isSmallMarker}
               mapRef={mapRef}
               viewState={viewState}
+              enableFlyTo={showCitiesNav}
             />
           ))
         )}
@@ -426,7 +477,7 @@ const MapMap = ({ restaurants, isShowPage }) => {
               }}
               style={{ zIndex: 40 }}
             >
-              <div className="h-8 w-8 bg-white rounded-full shadow flex items-center justify-center z-10">
+              <div className="h-8 w-8 bg-white rounded-full shadow flex items-center justify-center z-50">
                 <div className="h-5 w-5 bg-blue-500 transition animate-pulse scale-105 rounded-full "></div>
               </div>
             </Marker>

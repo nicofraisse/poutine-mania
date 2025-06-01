@@ -36,7 +36,7 @@ async function handler(req, res) {
 
     if (existingUser) {
       res.status(422).json({ messageKey: "backend.signup.emailTaken" });
-      client.close();
+
       return;
     }
 
@@ -67,7 +67,6 @@ async function handler(req, res) {
     res.status(201).json({
       messageKey: "backend.signup.success",
     });
-    client.close();
   } catch (e) {
     res.status(500).json({ message: e.message });
   }

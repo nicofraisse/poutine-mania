@@ -32,7 +32,6 @@ async function handler(req, res) {
       res
         .status(404)
         .json({ messageKey: "backend.sendVerificationEmail.invalidToken" });
-      client.close();
       return;
     }
 
@@ -40,7 +39,6 @@ async function handler(req, res) {
       res.status(400).json({
         messageKey: "backend.sendVerificationEmail.emailAlreadyVerified",
       });
-      client.close();
       return;
     }
 
@@ -54,8 +52,6 @@ async function handler(req, res) {
       .json({ messageKey: "backend.sendVerificationEmail.emailSent" });
   } catch (error) {
     res.status(500).json({ message: error.message });
-  } finally {
-    client.close();
   }
 }
 

@@ -41,10 +41,10 @@ const UserRanking = ({ reviews, loading }) => {
           <tr>
             <th className="text-sm sm:text-base bg-slate-50 border-b font-bold text-slate-400 text-left rounded-tl-lg w-0"></th>
             <th className="text-sm sm:text-base bg-slate-50 border-b font-bold pr-8 p-4 pl-0 pb-3 text-slate-400 text-left">
-              Poutinerie
+              {t("userRanking.poutinerie")}
             </th>
             <th className="text-sm sm:text-base bg-slate-50 border-b font-bold pr-3 p-4 pl-0 pb-3 text-slate-400 text-left">
-              Description
+              {t("userRanking.description")}
             </th>
             {/* <th className="text-sm sm:text-base bg-slate-50 border-b font-bold p-4 pl-0 pb-3 text-slate-400 text-left">
               Ville
@@ -53,7 +53,7 @@ const UserRanking = ({ reviews, loading }) => {
               Prix
             </th> */}
             <th className="text-sm sm:text-base bg-slate-50 border-b font-bold pr-0 p-4 pl-2 pb-3 text-slate-400 text-left w-20 xs:w-28 sm:w-32 rounded-tr-lg">
-              Sa note
+              {t("userRanking.saNote")}
             </th>
           </tr>
         </thead>

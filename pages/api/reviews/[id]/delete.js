@@ -16,7 +16,6 @@ export default async function handler(req, res) {
   const review = await db.collection("reviews").findOne({ _id: reviewId });
 
   if (!review) {
-    client.close();
     return res.status(404).json({ error: "Review not found" });
   }
 
@@ -26,7 +25,6 @@ export default async function handler(req, res) {
     !session.user.isAdmin &&
     ownerId.toString() !== session.user._id.toString()
   ) {
-    client.close();
     return res.status(403).json({ error: "Not allowed" });
   }
 
@@ -48,6 +46,5 @@ export default async function handler(req, res) {
     .collection("users")
     .updateOne({ _id: userObjId }, { $set: { eatenlist: updatedEatenlist } });
 
-  client.close();
   res.status(200).json(deletedReview);
 }

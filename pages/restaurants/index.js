@@ -106,7 +106,11 @@ const Restaurants = () => {
       <RestaurantCardHoverProvider>
         <div className="flex w-full flex-col md:flex-row-reverse h-screen-minus-navbar">
           <div className="grow md:w-1/2 min-h-1/2vh max-h-1/2vh md:min-h-screen-minus-navbar md:max-h-screen-minus-navbar">
-            <Map restaurants={restaurants} />
+            <Map
+              restaurants={restaurants}
+              showCitiesNav={true}
+              enableSearch={true}
+            />
           </div>
           <div
             className={classNames(

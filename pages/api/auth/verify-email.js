@@ -22,7 +22,7 @@ async function handler(req, res) {
 
   if (!user) {
     res.status(422).json({ messageKey: "backend.verifyEmail.invalidToken" });
-    client.close();
+
     return;
   }
 
@@ -36,7 +36,6 @@ async function handler(req, res) {
   res.status(200).json({ messageKey: "backend.verifyEmail.success" });
   const lang = locale === "en" ? "en" : "fr";
   await sendWelcomeEmail(user.email, user.name, lang);
-  client.close();
 }
 
 export default handler;

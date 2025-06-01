@@ -13,6 +13,8 @@ import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
 function App({ Component, pageProps }) {
+  const getLayout = Component.getLayout || ((page) => page);
+
   return (
     <>
       <CookiesProvider>
@@ -22,13 +24,15 @@ function App({ Component, pageProps }) {
               <RestaurantSearchProvider>
                 <RateRestaurantProvider>
                   <Layout {...pageProps}>
-                    <>
-                      <Component {...pageProps} />
-                      <Toaster
-                        position="bottom-right"
-                        toastOptions={{ duration: 7000 }}
-                      />
-                    </>
+                    {getLayout(
+                      <>
+                        <Component {...pageProps} />
+                        <Toaster
+                          position="bottom-right"
+                          toastOptions={{ duration: 7000 }}
+                        />
+                      </>
+                    )}
                   </Layout>
                 </RateRestaurantProvider>
               </RestaurantSearchProvider>
