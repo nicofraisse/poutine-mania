@@ -145,12 +145,18 @@ const Users = () => {
                 {user.watchlistCount}
               </td>
               <td className="border-b border-slate-100 p-2 pl-8 text-slate-500">
-                <button
-                  className="underline text-blue-600"
-                  onClick={() => handleOpenRestaurants(user._id, user.name)}
-                >
-                  {user.restaurantsCreatedCount}
-                </button>
+                {user.restaurantsCreatedCount > 0 ? (
+                  <button
+                    className="underline text-blue-600"
+                    onClick={() =>
+                      handleOpenRestaurants(user._id, user.name)
+                    }
+                  >
+                    {user.restaurantsCreatedCount}
+                  </button>
+                ) : (
+                  <span>{user.restaurantsCreatedCount}</span>
+                )}
               </td>
             </tr>
           ))}
@@ -167,7 +173,14 @@ const Users = () => {
         <ul className="space-y-1">
           {restaurants.map((r) => (
             <li key={r._id} className="flex justify-between">
-              <span>{r.name}</span>
+              <a
+                href={`/restaurants/${r.slug}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline text-blue-600"
+              >
+                {r.name}
+              </a>
               <span>{r.approved ? "✅" : "❌"}</span>
             </li>
           ))}
