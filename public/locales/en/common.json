@@ -374,6 +374,7 @@
     "profile": "My profile",
     "rate": "Rate a poutine",
     "restaurants": "Poutine map",
+    "ranking": "Ranking",
     "toTry": "To try"
   },
   "signup": {
@@ -482,6 +483,22 @@
       "error": "An error occurred: ",
       "loading": "Sending...",
       "success": "Email sent!"
+    }
+  },
+  "ranking": {
+    "title": "Ranking",
+    "pageTitle": "Best Poutine Rankings | Poutine Mania",
+    "metaDescription": "Browse the community ranking of the best poutines in Quebec and Canada.",
+    "montreal": {
+      "heading": "Best poutine in Montreal",
+      "pageTitle": "Best poutine in Montreal | Poutine Mania",
+      "metaDescription": "See our ranking of the best poutine in Montreal.",
+      "intro": "Check our reviews to find where to eat the best poutine in Montreal."
+    },
+    "quebecCity": {
+      "heading": "Best poutine in Quebec City",
+      "pageTitle": "Best poutine in Quebec City | Poutine Mania",
+      "metaDescription": "Discover the top poutine spots in Quebec City."
     }
   },
   "watchlist": {
