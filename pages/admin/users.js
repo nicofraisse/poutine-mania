@@ -9,10 +9,15 @@ import { toast } from "react-hot-toast";
 import { upperFirst } from "lodash";
 import { ToggleSwitch } from "components/controls/ToggleSwitch";
 import { withI18n } from "../../lib/withI18n";
+import Modal from "react-responsive-modal";
+import { X } from "react-feather";
 
 const Users = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [restaurants, setRestaurants] = useState([]);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalUser, setModalUser] = useState("");
   const { currentUser, loading: currentUserLoading } = useCurrentUser();
   const { push } = useRouter();
 
@@ -38,6 +43,17 @@ const Users = () => {
       .post(`/api/users/${id}/make-admin`, { isAdmin })
       .then(() => {
         toast.success(isAdmin ? "Made admin!" : "Unmade admin!");
+      })
+      .catch((e) => toast.error(e.message));
+  };
+
+  const handleOpenRestaurants = async (id, name) => {
+    await axios
+      .get(`/api/users/${id}/restaurants`)
+      .then(({ data }) => {
+        setRestaurants(data);
+        setModalUser(name);
+        setModalOpen(true);
       })
       .catch((e) => toast.error(e.message));
   };
@@ -83,6 +99,9 @@ const Users = () => {
             <th className="bg-slate-100 border-b font-medium p-4 pl-8 pb-3 text-slate-500 text-left">
               Watched
             </th>
+            <th className="bg-slate-100 border-b font-medium p-4 pl-8 pb-3 text-slate-500 text-left">
+              Restaurants Created
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -125,10 +144,35 @@ const Users = () => {
               <td className="border-b border-slate-100 p-2 pl-8 text-slate-500">
                 {user.watchlistCount}
               </td>
+              <td className="border-b border-slate-100 p-2 pl-8 text-slate-500">
+                <button
+                  className="underline text-blue-600"
+                  onClick={() => handleOpenRestaurants(user._id, user.name)}
+                >
+                  {user.restaurantsCreatedCount}
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
+      <Modal
+        classNames={{ overlay: "customOverlay", modal: "customModal" }}
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        closeIcon={<X />}
+        center
+      >
+        <h2 className="text-lg font-bold mb-4">Restaurants created by {modalUser}</h2>
+        <ul className="space-y-1">
+          {restaurants.map((r) => (
+            <li key={r._id} className="flex justify-between">
+              <span>{r.name}</span>
+              <span>{r.approved ? "✅" : "❌"}</span>
+            </li>
+          ))}
+        </ul>
+      </Modal>
     </div>
   );
 };
