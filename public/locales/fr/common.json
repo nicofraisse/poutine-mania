@@ -104,7 +104,8 @@
       "title": "Comment ça fonctionne?"
     },
     "recentActivity": {
-      "title": "Derniers avis"
+      "title": "Derniers avis",
+      "noMoreReviews": "Aucun autre avis à charger"
     },
     "topPoutines": {
       "subtitle": "Selon les votes de notre communauté, voici les meilleures poutines à absolument essayer!",

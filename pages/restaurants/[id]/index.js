@@ -566,9 +566,10 @@ export const getStaticProps = withI18n(async ({ params }) => {
           : null,
         slug: restaurant.slug,
         topReviews: topReviews.map((review) => ({
-          ...review,
+          comment: review.comment,
           rating: review.finalRating,
           createdAt: review.createdAt.toISOString(),
+          authorName: review.authorName,
         })),
         topRatingText,
         priceRange: restaurant.priceRange || "$$",

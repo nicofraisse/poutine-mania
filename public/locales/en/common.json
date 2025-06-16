@@ -105,7 +105,8 @@
       "title": "How it works"
     },
     "recentActivity": {
-      "title": "Latest reviews"
+      "title": "Latest reviews",
+      "noMoreReviews": "No more reviews to load"
     },
     "topPoutines": {
       "subtitle": "According to community votes, here are the top poutines you must try!",

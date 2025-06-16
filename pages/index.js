@@ -7,7 +7,6 @@ import { throttle } from "lodash";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useLoginForm } from "../components/context/LoginFormProvider";
-// import { FeaturesIntro } from "../components/FeaturesIntro";
 import DefaultSEO from "../components/DefaultSeo";
 import { useTranslation } from "next-i18next";
 import { withI18n } from "../lib/withI18n";
