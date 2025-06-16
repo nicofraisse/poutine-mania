@@ -75,6 +75,7 @@ const Index = ({ SEO }) => {
   return (
     <>
       <Head>
+        {/* Restaurant Schema */}
         <script
           key="restaurant-schema"
           type="application/ld+json"
@@ -83,49 +84,182 @@ const Index = ({ SEO }) => {
               "@context": "https://schema.org",
               "@type": "Restaurant",
               name: SEO.restaurantName,
-              image: seoImageUrl,
+              image: SEO.allPhotos?.map(photo => `https://res.cloudinary.com/${process.env.CLOUD_NAME}/image/upload/q_80/${photo}`) || [],
               address: {
                 "@type": "PostalAddress",
                 streetAddress: SEO.address,
+                addressLocality: SEO.city,
+                addressRegion: SEO.province || "QC",
+                addressCountry: "CA"
               },
               url: seoUrl,
-              aggregateRating: {
+              telephone: SEO.phone,
+              priceRange: SEO.priceRange || "$$",
+              servesCuisine: ["Canadian", "Quebec", "Poutine"],
+              aggregateRating: SEO.averageRating ? {
                 "@type": "AggregateRating",
-                ratingValue: SEO.averageRating,
+                ratingValue: Number(SEO.averageRating).toFixed(1),
                 reviewCount: SEO.reviewCount,
                 bestRating: "10",
                 worstRating: "1",
+              } : undefined,
+              review: SEO.topReviews?.map(review => ({
+                "@type": "Review",
+                author: {
+                  "@type": "Person",
+                  name: review.authorName
+                },
+                datePublished: review.createdAt,
+                reviewBody: review.comment,
+                reviewRating: {
+                  "@type": "Rating",
+                  ratingValue: review.rating,
+                  bestRating: "10",
+                  worstRating: "1"
+                }
+              })) || [],
+              hasMenu: {
+                "@type": "Menu",
+                hasMenuSection: {
+                  "@type": "MenuSection",
+                  name: "Poutines",
+                  hasMenuItem: {
+                    "@type": "MenuItem",
+                    name: "Poutine",
+                    description: `Famous poutine at ${SEO.restaurantName}`,
+                    offers: {
+                      "@type": "Offer",
+                      priceCurrency: "CAD"
+                    }
+                  }
+                }
+              }
+            }),
+          }}
+        />
+        
+        {/* LocalBusiness Schema for better local SEO */}
+        <script
+          key="local-business-schema"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "LocalBusiness",
+              "@id": seoUrl,
+              name: SEO.restaurantName,
+              image: SEO.allPhotos?.map(photo => `https://res.cloudinary.com/${process.env.CLOUD_NAME}/image/upload/q_80/${photo}`) || [],
+              url: seoUrl,
+              address: {
+                "@type": "PostalAddress",
+                streetAddress: SEO.address,
+                addressLocality: SEO.city,
+                addressRegion: SEO.province || "QC",
+                addressCountry: "CA"
               },
+              geo: SEO.coordinates ? {
+                "@type": "GeoCoordinates",
+                latitude: SEO.coordinates.lat,
+                longitude: SEO.coordinates.lng
+              } : undefined,
+              aggregateRating: SEO.averageRating ? {
+                "@type": "AggregateRating",
+                ratingValue: Number(SEO.averageRating).toFixed(1),
+                reviewCount: SEO.reviewCount,
+                bestRating: "10",
+                worstRating: "1"
+              } : undefined
+            }),
+          }}
+        />
+        
+        {/* FAQ Schema for common poutine questions */}
+        <script
+          key="faq-schema"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              mainEntity: [
+                {
+                  "@type": "Question",
+                  name: t("faq.bestPoutine.question", { restaurant: SEO.restaurantName }),
+                  acceptedAnswer: {
+                    "@type": "Answer",
+                    text: t("faq.bestPoutine.answer", { 
+                      restaurant: SEO.restaurantName,
+                      rating: SEO.averageRating ? Number(SEO.averageRating).toFixed(1) : "N/A",
+                      reviews: SEO.reviewCount
+                    })
+                  }
+                },
+                {
+                  "@type": "Question",
+                  name: t("faq.poutinePrice.question", { restaurant: SEO.restaurantName }),
+                  acceptedAnswer: {
+                    "@type": "Answer",
+                    text: t("faq.poutinePrice.answer", { restaurant: SEO.restaurantName })
+                  }
+                },
+                {
+                  "@type": "Question",
+                  name: t("faq.poutineReviews.question", { restaurant: SEO.restaurantName }),
+                  acceptedAnswer: {
+                    "@type": "Answer",
+                    text: t("faq.poutineReviews.answer", { 
+                      restaurant: SEO.restaurantName,
+                      reviews: SEO.reviewCount,
+                      rating: SEO.averageRating ? Number(SEO.averageRating).toFixed(1) : "N/A"
+                    })
+                  }
+                }
+              ]
             }),
           }}
         />
 
         <title>
-          {t("seo.restaurant.title", {
-            name: SEO.restaurantName.toUpperCase(),
+          {t(SEO.averageRating ? "seo.restaurant.titleWithRating" : "seo.restaurant.title", {
+            name: SEO.restaurantName,
+            rating: SEO.averageRating ? Number(SEO.averageRating).toFixed(1) : null,
+            reviews: SEO.reviewCount
           })}
         </title>
         <meta
           name="description"
-          content={t("seo.restaurant.description", {
+          content={t(SEO.averageRating ? "seo.restaurant.descriptionWithRating" : "seo.restaurant.description", {
             name: SEO.restaurantName,
+            rating: SEO.averageRating ? Number(SEO.averageRating).toFixed(1) : null,
+            reviews: SEO.reviewCount,
+            address: SEO.city || SEO.address?.split(',')[1]?.trim(),
+            topRatingText: SEO.topRatingText || ""
           })}
         />
         <meta name="image" content={seoImageUrl} />
+        <meta name="keywords" content={`${SEO.restaurantName}, poutine, ${SEO.city}, restaurant, reviews, rating, fries, cheese, gravy, Quebec, Canada${SEO.averageRating ? `, ${Number(SEO.averageRating).toFixed(1)} stars` : ''}`} />
+        <meta name="author" content="Poutine Mania" />
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+        <link rel="canonical" href={seoUrl} />
 
         <meta property="fb:app_id" content="572135587608476" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={seoUrl} />
         <meta
           property="og:title"
-          content={t("seo.restaurant.ogTitle", {
-            name: SEO.restaurantName.toUpperCase(),
+          content={t(SEO.averageRating ? "seo.restaurant.ogTitleWithRating" : "seo.restaurant.ogTitle", {
+            name: SEO.restaurantName,
+            rating: SEO.averageRating ? Number(SEO.averageRating).toFixed(1) : null,
+            reviews: SEO.reviewCount
           })}
         />
         <meta
           property="og:description"
-          content={t("seo.restaurant.ogDescription", {
+          content={t(SEO.averageRating ? "seo.restaurant.ogDescriptionWithRating" : "seo.restaurant.ogDescription", {
             name: SEO.restaurantName,
+            rating: SEO.averageRating ? Number(SEO.averageRating).toFixed(1) : null,
+            reviews: SEO.reviewCount,
+            address: SEO.city || SEO.address?.split(',')[1]?.trim()
           })}
         />
         <meta property="og:image" content={seoImageUrl} />
@@ -134,14 +268,19 @@ const Index = ({ SEO }) => {
         <meta property="twitter:url" content={seoUrl} />
         <meta
           property="twitter:title"
-          content={t("seo.restaurant.twitterTitle", {
-            name: SEO.restaurantName.toUpperCase(),
+          content={t(SEO.averageRating ? "seo.restaurant.twitterTitleWithRating" : "seo.restaurant.twitterTitle", {
+            name: SEO.restaurantName,
+            rating: SEO.averageRating ? Number(SEO.averageRating).toFixed(1) : null,
+            reviews: SEO.reviewCount
           })}
         />
         <meta
           property="twitter:description"
-          content={t("seo.restaurant.twitterDescription", {
+          content={t(SEO.averageRating ? "seo.restaurant.twitterDescriptionWithRating" : "seo.restaurant.twitterDescription", {
             name: SEO.restaurantName,
+            rating: SEO.averageRating ? Number(SEO.averageRating).toFixed(1) : null,
+            reviews: SEO.reviewCount,
+            address: SEO.city || SEO.address?.split(',')[1]?.trim()
           })}
         />
         <meta property="twitter:image" content={seoImageUrl} />
@@ -269,16 +408,81 @@ export const getStaticProps = withI18n(async ({ params }) => {
     ) / reviewsWithFinalRating.length || null;
 
   const address = restaurant.succursales?.[0]?.address?.place_name || "";
+  const coordinates = restaurant.succursales?.[0]?.address?.coordinates || null;
+  const city = restaurant.succursales?.[0]?.address?.context?.find(c => c.id?.includes('place'))?.text || "";
+  const province = restaurant.succursales?.[0]?.address?.context?.find(c => c.id?.includes('region'))?.text || "";
+  const phone = restaurant.succursales?.[0]?.phoneNumber || "";
+  
+  // Get top 3 reviews for structured data
+  const topReviews = await db
+    .collection("reviews")
+    .aggregate([
+      {
+        $match: {
+          restaurantId: restaurant._id,
+          userId: { $in: validUserIds },
+          comment: { $exists: true, $ne: "" },
+          finalRating: { $gte: 7 } // Only good reviews for SEO
+        }
+      },
+      {
+        $lookup: {
+          from: "users",
+          localField: "userId",
+          foreignField: "_id",
+          as: "user"
+        }
+      },
+      {
+        $unwind: "$user"
+      },
+      {
+        $project: {
+          comment: 1,
+          finalRating: 1,
+          createdAt: 1,
+          authorName: { $ifNull: ["$user.name", "Anonymous"] }
+        }
+      },
+      { $sort: { finalRating: -1, createdAt: -1 } },
+      { $limit: 3 }
+    ])
+    .toArray();
+
+  // Generate compelling rating text for SEO
+  let topRatingText = "";
+  if (averageRating >= 8.5) {
+    topRatingText = "Excellent poutine";
+  } else if (averageRating >= 7.5) {
+    topRatingText = "Great poutine";
+  } else if (averageRating >= 6.5) {
+    topRatingText = "Good poutine";
+  }
 
   return {
     props: {
       SEO: {
         restaurantName: restaurant.name,
         mainPhoto: restaurant.mainPhotos?.[0] || null,
+        allPhotos: restaurant.mainPhotos || [],
         reviewCount,
         averageRating,
         address,
+        city,
+        province,
+        phone,
+        coordinates: coordinates ? {
+          lat: coordinates[1],
+          lng: coordinates[0]
+        } : null,
         slug: restaurant.slug,
+        topReviews: topReviews.map(review => ({
+          ...review,
+          rating: review.finalRating,
+          createdAt: review.createdAt.toISOString()
+        })),
+        topRatingText,
+        priceRange: restaurant.priceRange || "$$"
       },
     },
     revalidate: 60,

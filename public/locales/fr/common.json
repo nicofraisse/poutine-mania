@@ -354,13 +354,33 @@
     "home.description": "Note ta poutine en critiquant les frites, le fromage et la sauce. Explore la carte pour trouver la meilleure poutinerie près de chez toi!",
     "home.ogDescription": "Note ta poutine en critiquant les frites, le fromage et la sauce. Explore la carte pour trouver la meilleure poutinerie près de chez toi!",
     "home.title": "Poutine Mania – La communauté de la poutine",
-    "restaurant.description": "Lire les avis sur la poutine du restaurant {{name}}, et partagez le vôtre.",
-    "restaurant.ogDescription": "Lire les avis sur la poutine du restaurant {{name}}, et partagez le vôtre.",
-    "restaurant.ogTitle": "{{name}} - Avis sur leur poutine",
-    "restaurant.title": "{{name}} - Avis sur leur poutine | Poutine Mania",
-    "restaurant.twitterDescription": "Lire les avis sur la poutine du restaurant {{name}}, et partagez le vôtre.",
-    "restaurant.twitterTitle": "{{name}} - Avis sur leur poutine",
+    "restaurant.description": "Avis poutine {{name}}{{address}} à {{address}}{{/address}}. {{rating}}{{reviews}} Photos, notes détaillées des experts poutine. Voir notes frites, fromage & sauce. Ajoutez votre avis!",
+    "restaurant.descriptionWithRating": "⭐ {{rating}}/10 ({{reviews}} avis) - Avis poutine {{name}}{{address}} à {{address}}{{/address}}. {{topRatingText}} avec photos, notes détaillées des experts. Ajoutez votre avis!",
+    "restaurant.ogDescription": "Découvrez photos, avis détaillés et notes pour la poutine de {{name}}. Notez les frites, fromage, sauce et expérience. {{reviews}} avis d'experts!",
+    "restaurant.ogDescriptionWithRating": "{{rating}}/10 étoiles de {{reviews}} amateurs de poutine! Découvrez photos, avis détaillés et notes pour la poutine de {{name}}. Notez les frites, fromage, sauce et expérience.",
+    "restaurant.ogTitle": "Avis Poutine {{name}}",
+    "restaurant.ogTitleWithRating": "Avis Poutine {{name}} - {{rating}}⭐ ({{reviews}} avis)",
+    "restaurant.title": "Avis Poutine {{name}} | Poutine Mania",
+    "restaurant.titleWithRating": "Avis Poutine {{name}} - {{rating}}/10 ⭐ ({{reviews}} avis) | Poutine Mania",
+    "restaurant.twitterDescription": "Avis et photos poutine {{name}}. Découvrez ce que pensent les experts des frites, fromage et sauce! {{reviews}} avis détaillés.",
+    "restaurant.twitterDescriptionWithRating": "{{rating}}/10 ⭐ Avis et photos poutine {{name}}. Découvrez ce que pensent les experts des frites, fromage et sauce!",
+    "restaurant.twitterTitle": "Poutine {{name}}",
+    "restaurant.twitterTitleWithRating": "Poutine {{name}} - {{rating}}/10 ⭐",
     "title": "Poutine Mania – Note ta poutine !"
+  },
+  "faq": {
+    "bestPoutine": {
+      "question": "Est-ce que {{restaurant}} fait de la bonne poutine?",
+      "answer": "{{restaurant}} a une note poutine de {{rating}}/10 basée sur {{reviews}} avis détaillés d'amateurs de poutine. Les utilisateurs notent les frites, fromage, sauce et expérience globale pour t'aider à décider."
+    },
+    "poutinePrice": {
+      "question": "Combien coûte la poutine chez {{restaurant}}?",
+      "answer": "Les prix de poutine chez {{restaurant}} varient selon la taille et garnitures. Consultez les avis et photos des utilisateurs sur Poutine Mania pour les prix actuels partagés par la communauté."
+    },
+    "poutineReviews": {
+      "question": "Que disent les gens de la poutine de {{restaurant}}?",
+      "answer": "{{restaurant}} a {{reviews}} avis poutine avec une note moyenne de {{rating}}/10. Les utilisateurs commentent particulièrement la qualité des frites, fromage et sauce. Lisez les avis détaillés!"
+    }
   },
   "sidebar": {
     "about": "À Propos",
