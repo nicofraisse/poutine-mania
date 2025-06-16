@@ -148,9 +148,7 @@ const Users = () => {
                 {user.restaurantsCreatedCount > 0 ? (
                   <button
                     className="underline text-blue-600"
-                    onClick={() =>
-                      handleOpenRestaurants(user._id, user.name)
-                    }
+                    onClick={() => handleOpenRestaurants(user._id, user.name)}
                   >
                     {user.restaurantsCreatedCount}
                   </button>
@@ -169,7 +167,9 @@ const Users = () => {
         closeIcon={<X />}
         center
       >
-        <h2 className="text-lg font-bold mb-4">Restaurants created by {modalUser}</h2>
+        <h2 className="text-lg font-bold mb-4">
+          Restaurants created by {modalUser}
+        </h2>
         <ul className="space-y-1">
           {restaurants.map((r) => (
             <li key={r._id} className="flex justify-between">

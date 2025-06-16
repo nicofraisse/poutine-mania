@@ -84,40 +84,47 @@ const Index = ({ SEO }) => {
               "@context": "https://schema.org",
               "@type": "Restaurant",
               name: SEO.restaurantName,
-              image: SEO.allPhotos?.map(photo => `https://res.cloudinary.com/${process.env.CLOUD_NAME}/image/upload/q_80/${photo}`) || [],
+              image:
+                SEO.allPhotos?.map(
+                  (photo) =>
+                    `https://res.cloudinary.com/${process.env.CLOUD_NAME}/image/upload/q_80/${photo}`
+                ) || [],
               address: {
                 "@type": "PostalAddress",
                 streetAddress: SEO.address,
                 addressLocality: SEO.city,
                 addressRegion: SEO.province || "QC",
-                addressCountry: "CA"
+                addressCountry: "CA",
               },
               url: seoUrl,
               telephone: SEO.phone,
               priceRange: SEO.priceRange || "$$",
               servesCuisine: ["Canadian", "Quebec", "Poutine"],
-              aggregateRating: SEO.averageRating ? {
-                "@type": "AggregateRating",
-                ratingValue: Number(SEO.averageRating).toFixed(1),
-                reviewCount: SEO.reviewCount,
-                bestRating: "10",
-                worstRating: "1",
-              } : undefined,
-              review: SEO.topReviews?.map(review => ({
-                "@type": "Review",
-                author: {
-                  "@type": "Person",
-                  name: review.authorName
-                },
-                datePublished: review.createdAt,
-                reviewBody: review.comment,
-                reviewRating: {
-                  "@type": "Rating",
-                  ratingValue: review.rating,
-                  bestRating: "10",
-                  worstRating: "1"
-                }
-              })) || [],
+              aggregateRating: SEO.averageRating
+                ? {
+                    "@type": "AggregateRating",
+                    ratingValue: Number(SEO.averageRating).toFixed(1),
+                    reviewCount: SEO.reviewCount,
+                    bestRating: "10",
+                    worstRating: "1",
+                  }
+                : undefined,
+              review:
+                SEO.topReviews?.map((review) => ({
+                  "@type": "Review",
+                  author: {
+                    "@type": "Person",
+                    name: review.authorName,
+                  },
+                  datePublished: review.createdAt,
+                  reviewBody: review.comment,
+                  reviewRating: {
+                    "@type": "Rating",
+                    ratingValue: review.rating,
+                    bestRating: "10",
+                    worstRating: "1",
+                  },
+                })) || [],
               hasMenu: {
                 "@type": "Menu",
                 hasMenuSection: {
@@ -129,15 +136,15 @@ const Index = ({ SEO }) => {
                     description: `Famous poutine at ${SEO.restaurantName}`,
                     offers: {
                       "@type": "Offer",
-                      priceCurrency: "CAD"
-                    }
-                  }
-                }
-              }
+                      priceCurrency: "CAD",
+                    },
+                  },
+                },
+              },
             }),
           }}
         />
-        
+
         {/* LocalBusiness Schema for better local SEO */}
         <script
           key="local-business-schema"
@@ -148,31 +155,39 @@ const Index = ({ SEO }) => {
               "@type": "LocalBusiness",
               "@id": seoUrl,
               name: SEO.restaurantName,
-              image: SEO.allPhotos?.map(photo => `https://res.cloudinary.com/${process.env.CLOUD_NAME}/image/upload/q_80/${photo}`) || [],
+              image:
+                SEO.allPhotos?.map(
+                  (photo) =>
+                    `https://res.cloudinary.com/${process.env.CLOUD_NAME}/image/upload/q_80/${photo}`
+                ) || [],
               url: seoUrl,
               address: {
                 "@type": "PostalAddress",
                 streetAddress: SEO.address,
                 addressLocality: SEO.city,
                 addressRegion: SEO.province || "QC",
-                addressCountry: "CA"
+                addressCountry: "CA",
               },
-              geo: SEO.coordinates ? {
-                "@type": "GeoCoordinates",
-                latitude: SEO.coordinates.lat,
-                longitude: SEO.coordinates.lng
-              } : undefined,
-              aggregateRating: SEO.averageRating ? {
-                "@type": "AggregateRating",
-                ratingValue: Number(SEO.averageRating).toFixed(1),
-                reviewCount: SEO.reviewCount,
-                bestRating: "10",
-                worstRating: "1"
-              } : undefined
+              geo: SEO.coordinates
+                ? {
+                    "@type": "GeoCoordinates",
+                    latitude: SEO.coordinates.lat,
+                    longitude: SEO.coordinates.lng,
+                  }
+                : undefined,
+              aggregateRating: SEO.averageRating
+                ? {
+                    "@type": "AggregateRating",
+                    ratingValue: Number(SEO.averageRating).toFixed(1),
+                    reviewCount: SEO.reviewCount,
+                    bestRating: "10",
+                    worstRating: "1",
+                  }
+                : undefined,
             }),
           }}
         />
-        
+
         {/* FAQ Schema for common poutine questions */}
         <script
           key="faq-schema"
@@ -184,62 +199,100 @@ const Index = ({ SEO }) => {
               mainEntity: [
                 {
                   "@type": "Question",
-                  name: t("faq.bestPoutine.question", { restaurant: SEO.restaurantName }),
+                  name: t("faq.bestPoutine.question", {
+                    restaurant: SEO.restaurantName,
+                  }),
                   acceptedAnswer: {
                     "@type": "Answer",
-                    text: t("faq.bestPoutine.answer", { 
+                    text: t("faq.bestPoutine.answer", {
                       restaurant: SEO.restaurantName,
-                      rating: SEO.averageRating ? Number(SEO.averageRating).toFixed(1) : "N/A",
-                      reviews: SEO.reviewCount
-                    })
-                  }
+                      rating: SEO.averageRating
+                        ? Number(SEO.averageRating).toFixed(1)
+                        : "N/A",
+                      reviews: SEO.reviewCount,
+                    }),
+                  },
                 },
                 {
                   "@type": "Question",
-                  name: t("faq.poutinePrice.question", { restaurant: SEO.restaurantName }),
+                  name: t("faq.poutinePrice.question", {
+                    restaurant: SEO.restaurantName,
+                  }),
                   acceptedAnswer: {
                     "@type": "Answer",
-                    text: t("faq.poutinePrice.answer", { restaurant: SEO.restaurantName })
-                  }
+                    text: t("faq.poutinePrice.answer", {
+                      restaurant: SEO.restaurantName,
+                    }),
+                  },
                 },
                 {
                   "@type": "Question",
-                  name: t("faq.poutineReviews.question", { restaurant: SEO.restaurantName }),
+                  name: t("faq.poutineReviews.question", {
+                    restaurant: SEO.restaurantName,
+                  }),
                   acceptedAnswer: {
                     "@type": "Answer",
-                    text: t("faq.poutineReviews.answer", { 
+                    text: t("faq.poutineReviews.answer", {
                       restaurant: SEO.restaurantName,
                       reviews: SEO.reviewCount,
-                      rating: SEO.averageRating ? Number(SEO.averageRating).toFixed(1) : "N/A"
-                    })
-                  }
-                }
-              ]
+                      rating: SEO.averageRating
+                        ? Number(SEO.averageRating).toFixed(1)
+                        : "N/A",
+                    }),
+                  },
+                },
+              ],
             }),
           }}
         />
 
         <title>
-          {t(SEO.averageRating ? "seo.restaurant.titleWithRating" : "seo.restaurant.title", {
-            name: SEO.restaurantName,
-            rating: SEO.averageRating ? Number(SEO.averageRating).toFixed(1) : null,
-            reviews: SEO.reviewCount
-          })}
+          {t(
+            SEO.averageRating
+              ? "seo.restaurant.titleWithRating"
+              : "seo.restaurant.title",
+            {
+              name: SEO.restaurantName,
+              rating: SEO.averageRating
+                ? Number(SEO.averageRating).toFixed(1)
+                : null,
+              reviews: SEO.reviewCount,
+            }
+          )}
         </title>
         <meta
           name="description"
-          content={t(SEO.averageRating ? "seo.restaurant.descriptionWithRating" : "seo.restaurant.description", {
-            name: SEO.restaurantName,
-            rating: SEO.averageRating ? Number(SEO.averageRating).toFixed(1) : null,
-            reviews: SEO.reviewCount,
-            address: SEO.city || SEO.address?.split(',')[1]?.trim(),
-            topRatingText: SEO.topRatingText || ""
-          })}
+          content={t(
+            SEO.averageRating
+              ? "seo.restaurant.descriptionWithRating"
+              : "seo.restaurant.description",
+            {
+              name: SEO.restaurantName,
+              rating: SEO.averageRating
+                ? Number(SEO.averageRating).toFixed(1)
+                : null,
+              reviews: SEO.reviewCount,
+              address: SEO.city || SEO.address?.split(",")[1]?.trim(),
+              topRatingText: SEO.topRatingText || "",
+            }
+          )}
         />
         <meta name="image" content={seoImageUrl} />
-        <meta name="keywords" content={`${SEO.restaurantName}, poutine, ${SEO.city}, restaurant, reviews, rating, fries, cheese, gravy, Quebec, Canada${SEO.averageRating ? `, ${Number(SEO.averageRating).toFixed(1)} stars` : ''}`} />
+        <meta
+          name="keywords"
+          content={`${SEO.restaurantName}, poutine, ${
+            SEO.city
+          }, restaurant, reviews, rating, fries, cheese, gravy, Quebec, Canada${
+            SEO.averageRating
+              ? `, ${Number(SEO.averageRating).toFixed(1)} stars`
+              : ""
+          }`}
+        />
         <meta name="author" content="Poutine Mania" />
-        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+        <meta
+          name="robots"
+          content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+        />
         <link rel="canonical" href={seoUrl} />
 
         <meta property="fb:app_id" content="572135587608476" />
@@ -247,20 +300,34 @@ const Index = ({ SEO }) => {
         <meta property="og:url" content={seoUrl} />
         <meta
           property="og:title"
-          content={t(SEO.averageRating ? "seo.restaurant.ogTitleWithRating" : "seo.restaurant.ogTitle", {
-            name: SEO.restaurantName,
-            rating: SEO.averageRating ? Number(SEO.averageRating).toFixed(1) : null,
-            reviews: SEO.reviewCount
-          })}
+          content={t(
+            SEO.averageRating
+              ? "seo.restaurant.ogTitleWithRating"
+              : "seo.restaurant.ogTitle",
+            {
+              name: SEO.restaurantName,
+              rating: SEO.averageRating
+                ? Number(SEO.averageRating).toFixed(1)
+                : null,
+              reviews: SEO.reviewCount,
+            }
+          )}
         />
         <meta
           property="og:description"
-          content={t(SEO.averageRating ? "seo.restaurant.ogDescriptionWithRating" : "seo.restaurant.ogDescription", {
-            name: SEO.restaurantName,
-            rating: SEO.averageRating ? Number(SEO.averageRating).toFixed(1) : null,
-            reviews: SEO.reviewCount,
-            address: SEO.city || SEO.address?.split(',')[1]?.trim()
-          })}
+          content={t(
+            SEO.averageRating
+              ? "seo.restaurant.ogDescriptionWithRating"
+              : "seo.restaurant.ogDescription",
+            {
+              name: SEO.restaurantName,
+              rating: SEO.averageRating
+                ? Number(SEO.averageRating).toFixed(1)
+                : null,
+              reviews: SEO.reviewCount,
+              address: SEO.city || SEO.address?.split(",")[1]?.trim(),
+            }
+          )}
         />
         <meta property="og:image" content={seoImageUrl} />
 
@@ -268,20 +335,34 @@ const Index = ({ SEO }) => {
         <meta property="twitter:url" content={seoUrl} />
         <meta
           property="twitter:title"
-          content={t(SEO.averageRating ? "seo.restaurant.twitterTitleWithRating" : "seo.restaurant.twitterTitle", {
-            name: SEO.restaurantName,
-            rating: SEO.averageRating ? Number(SEO.averageRating).toFixed(1) : null,
-            reviews: SEO.reviewCount
-          })}
+          content={t(
+            SEO.averageRating
+              ? "seo.restaurant.twitterTitleWithRating"
+              : "seo.restaurant.twitterTitle",
+            {
+              name: SEO.restaurantName,
+              rating: SEO.averageRating
+                ? Number(SEO.averageRating).toFixed(1)
+                : null,
+              reviews: SEO.reviewCount,
+            }
+          )}
         />
         <meta
           property="twitter:description"
-          content={t(SEO.averageRating ? "seo.restaurant.twitterDescriptionWithRating" : "seo.restaurant.twitterDescription", {
-            name: SEO.restaurantName,
-            rating: SEO.averageRating ? Number(SEO.averageRating).toFixed(1) : null,
-            reviews: SEO.reviewCount,
-            address: SEO.city || SEO.address?.split(',')[1]?.trim()
-          })}
+          content={t(
+            SEO.averageRating
+              ? "seo.restaurant.twitterDescriptionWithRating"
+              : "seo.restaurant.twitterDescription",
+            {
+              name: SEO.restaurantName,
+              rating: SEO.averageRating
+                ? Number(SEO.averageRating).toFixed(1)
+                : null,
+              reviews: SEO.reviewCount,
+              address: SEO.city || SEO.address?.split(",")[1]?.trim(),
+            }
+          )}
         />
         <meta property="twitter:image" content={seoImageUrl} />
       </Head>
@@ -409,10 +490,16 @@ export const getStaticProps = withI18n(async ({ params }) => {
 
   const address = restaurant.succursales?.[0]?.address?.place_name || "";
   const coordinates = restaurant.succursales?.[0]?.address?.coordinates || null;
-  const city = restaurant.succursales?.[0]?.address?.context?.find(c => c.id?.includes('place'))?.text || "";
-  const province = restaurant.succursales?.[0]?.address?.context?.find(c => c.id?.includes('region'))?.text || "";
+  const city =
+    restaurant.succursales?.[0]?.address?.context?.find((c) =>
+      c.id?.includes("place")
+    )?.text || "";
+  const province =
+    restaurant.succursales?.[0]?.address?.context?.find((c) =>
+      c.id?.includes("region")
+    )?.text || "";
   const phone = restaurant.succursales?.[0]?.phoneNumber || "";
-  
+
   // Get top 3 reviews for structured data
   const topReviews = await db
     .collection("reviews")
@@ -422,30 +509,30 @@ export const getStaticProps = withI18n(async ({ params }) => {
           restaurantId: restaurant._id,
           userId: { $in: validUserIds },
           comment: { $exists: true, $ne: "" },
-          finalRating: { $gte: 7 } // Only good reviews for SEO
-        }
+          finalRating: { $gte: 7 }, // Only good reviews for SEO
+        },
       },
       {
         $lookup: {
           from: "users",
           localField: "userId",
           foreignField: "_id",
-          as: "user"
-        }
+          as: "user",
+        },
       },
       {
-        $unwind: "$user"
+        $unwind: "$user",
       },
       {
         $project: {
           comment: 1,
           finalRating: 1,
           createdAt: 1,
-          authorName: { $ifNull: ["$user.name", "Anonymous"] }
-        }
+          authorName: { $ifNull: ["$user.name", "Anonymous"] },
+        },
       },
       { $sort: { finalRating: -1, createdAt: -1 } },
-      { $limit: 3 }
+      { $limit: 3 },
     ])
     .toArray();
 
@@ -471,18 +558,20 @@ export const getStaticProps = withI18n(async ({ params }) => {
         city,
         province,
         phone,
-        coordinates: coordinates ? {
-          lat: coordinates[1],
-          lng: coordinates[0]
-        } : null,
+        coordinates: coordinates
+          ? {
+              lat: coordinates[1],
+              lng: coordinates[0],
+            }
+          : null,
         slug: restaurant.slug,
-        topReviews: topReviews.map(review => ({
+        topReviews: topReviews.map((review) => ({
           ...review,
           rating: review.finalRating,
-          createdAt: review.createdAt.toISOString()
+          createdAt: review.createdAt.toISOString(),
         })),
         topRatingText,
-        priceRange: restaurant.priceRange || "$$"
+        priceRange: restaurant.priceRange || "$$",
       },
     },
     revalidate: 60,
