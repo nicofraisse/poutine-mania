@@ -7,3 +7,5 @@ backup
 .env.development
 .env.production
 docs
+CLAUDE.md
+CLAUDE_CONVENTIONS.md

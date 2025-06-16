@@ -53,7 +53,7 @@ const HomePage = ({ restaurants }) => {
         <DefaultSEO locale={locale} />
       </Head>
 
-      <FeaturesIntro />
+      {/* <FeaturesIntro /> */}
 
       <div className="justify-evenly text-slate-700 pb-10">
         <div className="flex relative justify-center bg-[#FAF7F2] overflow-hidden">
