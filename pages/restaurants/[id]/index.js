@@ -263,8 +263,13 @@ const Index = ({ SEO }) => {
         <meta
           name="description"
           content={t(
-            SEO.averageRating
+            // Choose the right translation key based on available data
+            SEO.averageRating && SEO.city
+              ? "seo.restaurant.descriptionWithRatingAndAddress"
+              : SEO.averageRating
               ? "seo.restaurant.descriptionWithRating"
+              : SEO.city
+              ? "seo.restaurant.descriptionWithAddress"
               : "seo.restaurant.description",
             {
               name: SEO.restaurantName,
