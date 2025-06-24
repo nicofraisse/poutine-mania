@@ -130,7 +130,13 @@ const UserRanking = ({ reviews, loading }) => {
                           <Tooltip
                             placement="top"
                             trigger={["hover"]}
-                            overlay={<div>Basé sur {r.nbReviews} notes</div>}
+                            overlay={
+                              <div>
+                                {t("userRanking.basedOnNRatings", {
+                                  count: r.nbReviews,
+                                })}
+                              </div>
+                            }
                             className=""
                           >
                             <div>({r.nbReviews})</div>

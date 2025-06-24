@@ -40,15 +40,14 @@ const Header = ({ toggleMobileSidebar }) => {
   const headerSearchbarRef = useRef();
   const headerRef = useRef();
   const { push, pathname, query } = useRouter();
-  const { openLogin, openSignup } = useLoginForm();
+  const { openLogin } = useLoginForm();
   const { setSearchValue } = useRestaurantSearch();
   const currentUser = session?.user;
 
-  const BACKABLE_PAGE_PROPS = {
+  const PAGE_PROPS = {
     "/noter": {
       url: "/",
       buttonText: t("header.backablePage.home"),
-
       hideSearch: true,
       hideRateButton: true,
       hideLogo: true,
@@ -66,6 +65,8 @@ const Header = ({ toggleMobileSidebar }) => {
       hideLogo: true,
     },
   };
+
+  const isRestaurantListPage = pathname === "/restaurants";
 
   useEffect(() => {
     if (window?.innerWidth < 640) {
@@ -90,7 +91,7 @@ const Header = ({ toggleMobileSidebar }) => {
     }
   }, [pathname, setSearchValue]);
 
-  const backablePage = BACKABLE_PAGE_PROPS[pathname];
+  const backablePage = PAGE_PROPS[pathname];
 
   const handleGoBack = () => {
     backablePage?.url ? push(backablePage.url) : history.back();
@@ -152,7 +153,7 @@ const Header = ({ toggleMobileSidebar }) => {
     >
       <div
         className={classNames(
-          "flex justify-between items-center pl-4 z-10 py-3",
+          "flex justify-between items-center px-4 z-10 py-3 gap-2 sm:gap-3",
           {
             "absolute top-0 left-0 w-full z-50": isHomepage,
             "bg-neutral-50": !isHomepage,
@@ -182,7 +183,7 @@ const Header = ({ toggleMobileSidebar }) => {
             )}
 
             {!isHomepage && !(isMobile && showSearchBar) && !backablePage && (
-              <div className="-mb-2 -ml-3 block select-none min-w-20">
+              <div className="-mb-1 -ml-2 block select-none min-w-20">
                 <Link legacyBehavior href="/">
                   <a>
                     <Image
@@ -217,141 +218,133 @@ const Header = ({ toggleMobileSidebar }) => {
         </>
 
         {!(isMobile && showSearchBar) && (
-          <nav>
-            <div className="flex items-center">
-              {!backablePage?.hideSearch && !isHomepage && (
-                <Button
-                  variant="light"
-                  size="sm"
-                  className="mx-3 sm:hidden"
-                  onClick={() => {
-                    setShowSearchBar(true);
-                  }}
-                  height="sm"
-                  width="sm"
-                >
-                  <Search />
-                </Button>
-              )}
-              {!isHomepage && !backablePage?.hideRateButton && (
-                <Button
-                  variant="light"
-                  height="sm"
-                  width="sm"
-                  className="lg:ml-6 sm:w-[220px] sm:ml-2 sm:hidden"
-                  onClick={() => push("/noter")}
-                >
-                  <Edit3 className="xs:mr-2" />{" "}
-                  <span className="hidden xs:block">{t("button.rate")}</span>
-                </Button>
-              )}
-              <div
-                className={classNames("relative flex", {
-                  "pt-1 mr-3": isHomepage,
-                  "mx-2": !isHomepage,
-                })}
+          <nav
+            className={classNames("flex items-center gap-2 sm:gap-3", {
+              "pt-1": isHomepage,
+            })}
+          >
+            {!backablePage?.hideSearch && !isHomepage && (
+              <Button
+                variant="light"
+                size="sm"
+                className="sm:hidden"
+                onClick={() => {
+                  setShowSearchBar(true);
+                }}
+                height="sm"
+                width="sm"
               >
-                <LanguageSwitch isHomepage={isHomepage} />
-              </div>
-              {loading && !currentUser ? (
-                <Skeleton
-                  circle
-                  className="mr-4 lg:mr-5 z-20"
-                  width={44}
-                  height={44}
-                  containerClassName="flex"
-                />
-              ) : currentUser ? (
-                <div className="relative mr-4 lg:mr-5 z-30">
-                  <div
-                    className="h-[44px] w-[44px] bg-gray-400 rounded-full cursor-pointer hover:brightness-110 transition duration-150 flex items-center justify-center shadow"
-                    onClick={() => setDropdownOpen(!dropdownOpen)}
-                    ref={toggleRef}
-                  >
-                    {currentUser.image ? (
-                      <ClImage
-                        alt="user-image"
-                        src={currentUser.image}
-                        className="rounded-full object-cover object-center h-full w-full"
-                        quality={30}
-                      />
-                    ) : (
-                      <User className="text-white" size={30} />
-                    )}
-                  </div>
-                  <Dropdown
-                    isOpen={dropdownOpen}
-                    setIsOpen={setDropdownOpen}
-                    toggleRef={toggleRef}
-                  >
-                    <div
-                      onClick={() => {
-                        setTimeout(() => {
-                          setDropdownOpen(false);
-                        }, 100);
-                      }}
-                    >
-                      <Link
-                        legacyBehavior
-                        href={`/profil/${currentUser.slug}`}
-                        passHref
-                      >
-                        <div className="hover:bg-gray-100 rounded-t-lg px-3 py-2 text-gray-700 cursor-pointer">
-                          {t("dropdown.myProfile")}
-                        </div>
-                      </Link>
+                <Search />
+              </Button>
+            )}
 
-                      <div
-                        className="hover:bg-gray-100 px-3 py-2 rounded-b-lg text-gray-700 cursor-pointer"
-                        onClick={handleSignout}
-                      >
-                        {t("dropdown.signOut")}
-                      </div>
-                    </div>
-                  </Dropdown>
-                </div>
-              ) : (
-                <div className="relative mr-4 lg:mr-5 z-20">
-                  <div
-                    className="h-[44px] w-[44px] bg-gray-400 rounded-full cursor-pointer hover:opacity-80 flex items-center justify-center sm:hidden"
-                    onClick={openLogin}
-                    ref={toggleRef}
-                  >
-                    <User className="text-white" size={30} />
-                  </div>
-                  <div
-                    className={classNames("hidden sm:flex", {
-                      "pt-1": isHomepage,
+            {currentUser && !backablePage?.hideRateButton && (
+              <Link legacyBehavior href="/noter" passHref>
+                <Button
+                  variant={isHomepage ? "transparent" : "light"}
+                  height={isHomepage ? "smd" : "sm"}
+                  width={isHomepage ? "smd" : "sm"}
+                  href="/noter"
+                >
+                  <Edit3 size={22} />
+                  <span
+                    className={classNames("ml-2", {
+                      "xs:hidden": !isRestaurantListPage,
+                      "hidden sm:inline md:hidden": isRestaurantListPage,
                     })}
                   >
-                    <Button
-                      variant={isHomepage ? "transparent" : "secondary"}
-                      height={isHomepage ? "smd" : "sm"}
-                      width={isHomepage ? "smd" : "sm"}
-                      onClick={openLogin}
-                      style={{ flexShrink: 0 }}
-                    >
-                      {t("button.login")}
-                    </Button>
-                    <span
-                      className={classNames({
-                        "hidden md:inline": !isHomepage,
-                      })}
-                    >
-                      <Button
-                        variant="primary"
-                        height={isHomepage ? "smd" : "sm"}
-                        width={isHomepage ? "smd" : "sm"}
-                        className="ml-3"
-                        onClick={openSignup}
-                      >
-                        {t("button.signup")}
-                      </Button>
-                    </span>
-                  </div>
+                    {t("button.rate")}
+                  </span>
+                  <span
+                    className={classNames("ml-2 hidden", {
+                      "xs:inline": !isRestaurantListPage,
+                      "md:inline": isRestaurantListPage,
+                    })}
+                  >
+                    {t("button.ratePoutine")}
+                  </span>
+                </Button>
+              </Link>
+            )}
+            <LanguageSwitch isHomepage={isHomepage} />
+            {loading && !currentUser ? (
+              <Skeleton
+                circle
+                className="mr-4 lg:mr-5 z-20"
+                width={44}
+                height={44}
+                containerClassName="flex"
+              />
+            ) : currentUser ? (
+              <div className="relative z-50">
+                <div
+                  className="h-[44px] w-[44px] bg-gray-400 rounded-full cursor-pointer hover:brightness-110 transition duration-150 flex items-center justify-center shadow"
+                  onClick={() => setDropdownOpen(!dropdownOpen)}
+                  ref={toggleRef}
+                >
+                  {currentUser.image ? (
+                    <ClImage
+                      alt="user-image"
+                      src={currentUser.image}
+                      className="rounded-full object-cover object-center h-full w-full"
+                      quality={30}
+                    />
+                  ) : (
+                    <User className="text-white" size={30} />
+                  )}
                 </div>
-              )}
-            </div>
+                <Dropdown
+                  isOpen={dropdownOpen}
+                  setIsOpen={setDropdownOpen}
+                  toggleRef={toggleRef}
+                >
+                  <div
+                    onClick={() => {
+                      setTimeout(() => {
+                        setDropdownOpen(false);
+                      }, 100);
+                    }}
+                  >
+                    <Link
+                      legacyBehavior
+                      href={`/profil/${currentUser.slug}`}
+                      passHref
+                    >
+                      <div className="hover:bg-gray-100 rounded-t-lg px-3 py-2 text-gray-700 cursor-pointer">
+                        {t("dropdown.myProfile")}
+                      </div>
+                    </Link>
+
+                    <div
+                      className="hover:bg-gray-100 px-3 py-2 rounded-b-lg text-gray-700 cursor-pointer"
+                      onClick={handleSignout}
+                    >
+                      {t("dropdown.signOut")}
+                    </div>
+                  </div>
+                </Dropdown>
+              </div>
+            ) : (
+              <>
+                <div
+                  className="h-[44px] w-[44px] bg-gray-400 rounded-full cursor-pointer hover:opacity-80 flex items-center justify-center sm:hidden"
+                  onClick={openLogin}
+                  ref={toggleRef}
+                >
+                  <User className="text-white" size={30} />
+                </div>
+                <Button
+                  variant={isHomepage ? "secondaryWhite" : "secondary"}
+                  height={isHomepage ? "smd" : "sm"}
+                  width={isHomepage ? "smd" : "sm"}
+                  onClick={openLogin}
+                  style={{ flexShrink: 0 }}
+                  className="hidden sm:block"
+                >
+                  {t("button.login")}
+                </Button>
+              </>
+            )}
           </nav>
         )}
       </div>
@@ -427,30 +420,7 @@ const Header = ({ toggleMobileSidebar }) => {
               variants={itemVariants}
             >
               <RestaurantSearchBar isBanner />
-              {/* <Button
-                onClick={handleSearch}
-                width="smd"
-                height="smd"
-                className="ml-3 shadow-md"
-                style={{ borderRadius: 1000 }}
-              >
-                <Map className="mr-2 xs:mr-3" />
-                <span className="hidden xs:inline">Explorer</span>
-              </Button> */}
             </motion.div>
-            {/* <motion.div className="flex items-center" variants={itemVariants}>
-              <Button
-                onClick={handleSearch}
-                width="smd"
-                height="smd"
-                className="mr-3 shadow-md"
-              >
-                <Map className="mr-2 xs:mr-3" />
-                <span className="hidden xs:inline">Voir la carte</span>
-                <span className="inline xs:hidden">Carte</span>
-              </Button>
-              <SurpriseButton />
-            </motion.div> */}
           </motion.div>
         </div>
       )}

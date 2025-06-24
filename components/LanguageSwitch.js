@@ -24,9 +24,9 @@ export const LanguageSwitch = ({ isHomepage }) => {
         ref={toggleRef}
         onClick={() => setDropdownOpen(!dropdownOpen)}
         className={classNames(
-          "flex items-center px-3 bg-none hover:bg-gray-400 hover:bg-opacity-50 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-gray-500 transition duration-150 ease-in-out",
+          "flex items-center bg-none px-2 xs:px-3 hover:bg-gray-400 hover:bg-opacity-50 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-gray-500 transition duration-150 ease-in-out",
           isHomepage
-            ? "h-[48px] xs:h-[52px] text-white"
+            ? "h-[48px] text-white"
             : "h-[36px] xs:h-[40px] text-gray-900"
         )}
       >

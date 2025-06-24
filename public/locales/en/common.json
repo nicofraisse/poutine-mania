@@ -48,6 +48,7 @@
     "iAte": "I ate it",
     "login": "Log in",
     "rate": "Rate",
+    "ratePoutine": "Rate a poutine",
     "signup": "Sign up",
     "submit": "Submit",
     "surpriseMe": "Surprise me!",
@@ -77,6 +78,20 @@
     "emptyAlt": "empty-poutine",
     "rateButton": "Rate a poutine"
   },
+  "faq": {
+    "bestPoutine": {
+      "answer": "{{restaurant}} has a poutine rating of {{rating}}/10 based on {{reviews}} detailed reviews from poutine enthusiasts. Users rate the fries, cheese, sauce, and overall experience to help you decide if it's worth trying.",
+      "question": "Is {{restaurant}} good for poutine?"
+    },
+    "poutinePrice": {
+      "answer": "Poutine prices at {{restaurant}} vary by size and toppings. Check user reviews and photos on Poutine Mania for current pricing and menu details shared by the poutine community.",
+      "question": "How much does poutine cost at {{restaurant}}?"
+    },
+    "poutineReviews": {
+      "answer": "{{restaurant}} has {{reviews}} poutine reviews with an average rating of {{rating}}/10. Users particularly comment on the quality of fries, cheese curds, and gravy. Read detailed reviews to see what poutine lovers think!",
+      "question": "What do people say about {{restaurant}}'s poutine?"
+    }
+  },
   "header": {
     "backablePage": {
       "home": "Back to homepage",
@@ -105,8 +120,8 @@
       "title": "How it works"
     },
     "recentActivity": {
-      "title": "Latest reviews",
-      "noMoreReviews": "No more reviews to load"
+      "noMoreReviews": "No more reviews to load",
+      "title": "Latest reviews"
     },
     "topPoutines": {
       "subtitle": "According to community votes, here are the top poutines you must try!",
@@ -356,8 +371,8 @@
     "home.description": "Rate your favorite poutines and find hidden gems near! Explore the poutine map, read reviews, and share your top finds with the community.",
     "home.title": "Poutine Mania – Rate your favorite poutines!",
     "restaurant.description": "{{name}} poutine reviews. Expert photos, ratings & detailed reviews from poutine lovers. See fries, cheese & sauce ratings. Add your review!",
-    "restaurant.descriptionWithRating": "⭐ {{rating}}/10 ({{reviews}} reviews) - {{name}} poutine reviews. {{topRatingText}} with expert photos, ratings & detailed reviews. Add your poutine review!",
     "restaurant.descriptionWithAddress": "{{name}} poutine reviews in {{address}}. Expert photos, ratings & detailed reviews from poutine lovers. See fries, cheese & sauce ratings. Add your review!",
+    "restaurant.descriptionWithRating": "⭐ {{rating}}/10 ({{reviews}} reviews) - {{name}} poutine reviews. {{topRatingText}} with expert photos, ratings & detailed reviews. Add your poutine review!",
     "restaurant.descriptionWithRatingAndAddress": "⭐ {{rating}}/10 ({{reviews}} reviews) - {{name}} poutine reviews in {{address}}. {{topRatingText}} with expert photos, ratings & detailed reviews. Add your poutine review!",
     "restaurant.ogDescription": "See photos, detailed reviews and ratings for {{name}}'s poutine. Rate the fries, cheese, sauce & overall experience. {{reviews}} reviews from poutine experts!",
     "restaurant.ogDescriptionWithRating": "{{rating}}/10 stars from {{reviews}} poutine lovers! See photos, detailed reviews and ratings for {{name}}'s poutine. Rate the fries, cheese, sauce & overall experience.",
@@ -370,20 +385,6 @@
     "restaurant.twitterTitle": "{{name}} Poutine",
     "restaurant.twitterTitleWithRating": "{{name}} Poutine - {{rating}}/10 ⭐",
     "title": "Poutine Mania – Rate your favorite poutines!"
-  },
-  "faq": {
-    "bestPoutine": {
-      "question": "Is {{restaurant}} good for poutine?",
-      "answer": "{{restaurant}} has a poutine rating of {{rating}}/10 based on {{reviews}} detailed reviews from poutine enthusiasts. Users rate the fries, cheese, sauce, and overall experience to help you decide if it's worth trying."
-    },
-    "poutinePrice": {
-      "question": "How much does poutine cost at {{restaurant}}?",
-      "answer": "Poutine prices at {{restaurant}} vary by size and toppings. Check user reviews and photos on Poutine Mania for current pricing and menu details shared by the poutine community."
-    },
-    "poutineReviews": {
-      "question": "What do people say about {{restaurant}}'s poutine?",
-      "answer": "{{restaurant}} has {{reviews}} poutine reviews with an average rating of {{rating}}/10. Users particularly comment on the quality of fries, cheese curds, and gravy. Read detailed reviews to see what poutine lovers think!"
-    }
   },
   "sidebar": {
     "about": "About",
@@ -474,6 +475,7 @@
     }
   },
   "userRanking": {
+    "basedOnNRatings": "Based on {{count}} ratings",
     "description": "Description",
     "poutinerie": "Poutinerie",
     "saNote": "Their rating"
