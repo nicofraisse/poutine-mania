@@ -64,6 +64,9 @@ const Header = ({ toggleMobileSidebar }) => {
       hideRateButton: true,
       hideLogo: true,
     },
+    "/nouveau-restaurant": {
+      hideRateButton: isMobile,
+    },
   };
 
   const isRestaurantListPage = pathname === "/restaurants";
