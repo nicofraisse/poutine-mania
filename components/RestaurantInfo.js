@@ -37,7 +37,7 @@ export const RestaurantInfo = ({
 
   const hasMultipleLocations = restaurant?.succursales?.length > 1;
   const totalLocations = restaurant?.succursales?.length || 0;
-  const maxAddressesToShow = isDesktop ? 5 : 2;
+  const maxAddressesToShow = isDesktop ? 3 : 2;
   return (
     <>
       {showMap &&
@@ -127,7 +127,7 @@ export const RestaurantInfo = ({
               onClick={() => setModalOpen(true)}
               className="text-sm hover:text-teal-500 underline mt-2"
             >
-              Voir tout
+              Voir toutes les adresses
             </button>
           )}
         </div>
