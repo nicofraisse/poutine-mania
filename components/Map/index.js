@@ -258,6 +258,8 @@ const MapMap = ({
   }, []);
 
   const [viewState, setViewState] = useState(DEFAULT_COORDINATES);
+  const [hasUserLocationSet, setHasUserLocationSet] = useState(false);
+  const [isGeolocationPending, setIsGeolocationPending] = useState(false);
   const [openPopups, setOpenPopups] = useState([]);
   const [userPopupOpen, setUserPopupOpen] = useState(false);
 
@@ -300,17 +302,30 @@ const MapMap = ({
   const [isSmallMarker, setIsSmallMarker] = useState(!isShowPage);
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        setUserCoordinates([
-          position.coords.longitude,
-          position.coords.latitude,
-        ]);
-      },
-      (err) => console.error("position error", err),
-      { timeout: 10000, enableHighAccuracy: false }
-    );
-  }, []);
+    if (enableSearch) {
+      setIsGeolocationPending(true);
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const coords = [position.coords.longitude, position.coords.latitude];
+          setUserCoordinates(coords);
+
+          // Set user location as map center if enableSearch is true
+          setViewState({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+            zoom: 10,
+          });
+          setHasUserLocationSet(true);
+          setIsGeolocationPending(false);
+        },
+        (err) => {
+          console.error("position error", err);
+          setIsGeolocationPending(false);
+        },
+        { timeout: 10000, enableHighAccuracy: false }
+      );
+    }
+  }, [enableSearch]);
 
   useEffect(() => {
     if (enableSearch && restaurants && bounds) {
@@ -323,7 +338,8 @@ const MapMap = ({
             ],
             { padding: 50, duration: 1000, maxZoom: 17.5 }
           );
-        } else {
+        } else if (!hasUserLocationSet && !isGeolocationPending) {
+          // Only fly to default coordinates if we haven't set user location and geolocation isn't pending
           mapRef.current?.flyTo({
             center: [
               DEFAULT_COORDINATES.longitude,
@@ -342,6 +358,8 @@ const MapMap = ({
     DEFAULT_COORDINATES,
     enableSearch,
     bounds,
+    hasUserLocationSet,
+    isGeolocationPending,
   ]);
 
   const CITIES = [
