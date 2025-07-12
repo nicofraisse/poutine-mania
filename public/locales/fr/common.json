@@ -328,6 +328,14 @@
       "header": "Restaurant créé!",
       "seeRestaurantButton": "Voir le restaurant"
     },
+    "locationModal": {
+      "title": "Toutes les adresses de {{name}}"
+    },
+    "showMoreLocations": "Voir toutes les adresses ({{count}})",
+    "toggleMap": {
+      "hide": "Cacher la carte",
+      "show": "Voir sur la carte"
+    },
     "resultsCount": "{{count}} poutinerie",
     "resultsCount_plural": "{{count}} poutineries",
     "sortOrders": {

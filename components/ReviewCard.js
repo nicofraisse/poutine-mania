@@ -197,7 +197,6 @@ export const ReviewCard = ({
                   "relative",
                   "w-[32%] pb-[32%] sm:w-[30%] sm:pb-[30%]"
                 );
-                console.log("photo", photo);
 
                 return (
                   <div

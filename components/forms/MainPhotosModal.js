@@ -15,7 +15,6 @@ export const MainPhotosModal = ({ isOpen, onClose, restaurant, onUpdate }) => {
 
   // Initialize main photos from restaurant data
   useEffect(() => {
-    console.log("restaurant", restaurant);
     if (restaurant) {
       setMainPhotos(getMainPhotos(restaurant));
     }

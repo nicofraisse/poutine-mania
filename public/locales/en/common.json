@@ -329,6 +329,14 @@
       "header": "Restaurant created!",
       "seeRestaurantButton": "View restaurant"
     },
+    "locationModal": {
+      "title": "All locations for {{name}}"
+    },
+    "showMoreLocations": "View all locations ({{count}})",
+    "toggleMap": {
+      "hide": "Hide the map",
+      "show": "View on map"
+    },
     "resultsCount": "{{count}} poutine place",
     "resultsCount_plural": "{{count}} poutine places",
     "sortOrders": {
