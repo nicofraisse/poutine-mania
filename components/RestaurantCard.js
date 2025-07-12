@@ -135,6 +135,8 @@ export const TagSection = ({
   largeText,
   darkBackground,
   noAddress,
+  onCityClick,
+  hasMultipleLocations,
 }) => {
   const { t } = useTranslation();
 
@@ -159,7 +161,16 @@ export const TagSection = ({
             {i === categories.length - 1 ? " • " : "/"}
           </span>
         )) || <Skeleton />}
-        <span className="">{city}</span>
+        {hasMultipleLocations && onCityClick ? (
+          <span
+            className="underline cursor-pointer hover:opacity-80"
+            onClick={onCityClick}
+          >
+            {city}
+          </span>
+        ) : (
+          <span className="">{city}</span>
+        )}
       </div>
       {!noAddress && (
         <div

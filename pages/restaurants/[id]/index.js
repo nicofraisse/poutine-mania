@@ -29,6 +29,7 @@ const Index = ({ SEO }) => {
   }
 
   const [showMap, setShowMap] = useState(false);
+  const [addressModalOpen, setAddressModalOpen] = useState(false);
   const { currentUser } = useCurrentUser();
 
   useEffect(() => {
@@ -372,7 +373,10 @@ const Index = ({ SEO }) => {
         <meta property="twitter:image" content={seoImageUrl} />
       </Head>
       <div className="bg-[#fafafa] min-h-screen-minus-navbar">
-        <RestaurantHeader restaurant={restaurant} />
+        <RestaurantHeader
+          restaurant={restaurant}
+          onAddressesClick={() => setAddressModalOpen(true)}
+        />
         <div className="pb-4 pt-2 xs:p-4 xl:p-6 flex flex-col-reverse lg:flex-row">
           <div className="lg:basis-2/3 lg:max-w-2/3">
             {!isSkeleton && !restaurant.approved && (
@@ -426,6 +430,8 @@ const Index = ({ SEO }) => {
                 showMap={showMap}
                 setShowMap={setShowMap}
                 restaurant={restaurant}
+                modalOpen={addressModalOpen}
+                setModalOpen={setAddressModalOpen}
               />
             </div>
           </div>

@@ -5,11 +5,13 @@ import { TagSection } from "./RestaurantCard";
 import Skeleton from "react-loading-skeleton";
 import { getMainPhotos } from "../lib/restaurantMainPhotos";
 
-const RestaurantHeader = ({ restaurant }) => {
+const RestaurantHeader = ({ restaurant, onAddressesClick }) => {
+  const hasMultipleLocations = restaurant?.succursales?.length > 1;
+
   const city =
     restaurant &&
-    (restaurant.succursales.length > 1
-      ? `${restaurant.succursales.length} addresses au Quebec`
+    (hasMultipleLocations
+      ? `${restaurant.succursales.length} adresses au Québec`
       : restaurant.succursales[0].address?.context?.find((el) =>
           el.id?.includes("neighborhood")
         )?.text ||
@@ -102,6 +104,10 @@ const RestaurantHeader = ({ restaurant }) => {
                   darkBackground
                   largeText
                   noAddress
+                  hasMultipleLocations={hasMultipleLocations}
+                  onCityClick={
+                    hasMultipleLocations ? onAddressesClick : undefined
+                  }
                 />
               )}
             </div>

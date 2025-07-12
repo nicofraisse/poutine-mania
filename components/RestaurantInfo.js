@@ -6,12 +6,29 @@ import { normalizeUrl } from "../lib/normalizeUrl";
 import { useTranslation } from "next-i18next";
 import { formatPhoneNumber } from "react-phone-number-input";
 import { Modal } from "react-responsive-modal";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-export const RestaurantInfo = ({ showMap, restaurant, setShowMap }) => {
+export const RestaurantInfo = ({
+  showMap,
+  restaurant,
+  setShowMap,
+  modalOpen,
+  setModalOpen,
+}) => {
   const isSkeleton = !restaurant;
   const { t } = useTranslation();
-  const [modalOpen, setModalOpen] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsDesktop(window.innerWidth >= 768);
+    };
+
+    checkScreenSize();
+    window.addEventListener("resize", checkScreenSize);
+
+    return () => window.removeEventListener("resize", checkScreenSize);
+  }, []);
 
   const singlePhoneNumber =
     restaurant?.succursales.length === 1
@@ -19,8 +36,8 @@ export const RestaurantInfo = ({ showMap, restaurant, setShowMap }) => {
       : null;
 
   const hasMultipleLocations = restaurant?.succursales?.length > 1;
-  const firstLocation = restaurant?.succursales?.[0];
   const totalLocations = restaurant?.succursales?.length || 0;
+  const maxAddressesToShow = isDesktop ? 5 : 2;
   return (
     <>
       {showMap &&
@@ -78,32 +95,41 @@ export const RestaurantInfo = ({ showMap, restaurant, setShowMap }) => {
           )}
         </>
       ) : (
-        /* Multiple locations - Show first location only */
+        /* Multiple locations - Show limited list with header */
         <div className="mb-4">
-          {firstLocation && (
-            <div>
-              <div className="flex items-center mb-4">
-                <MapPin className="mr-2 inline shrink-0" size={20} />
-                <span>
-                  {formatAddress({ succursales: [firstLocation] }, t)}
-                </span>
-              </div>
-              {firstLocation.phoneNumber && (
-                <div className="mb-2 flex items-center">
-                  <PhoneCall className="mr-2 inline shrink-0" size={20} />
-                  <a href={`tel:${firstLocation.phoneNumber}`}>
-                    {formatPhoneNumber(firstLocation.phoneNumber)}
-                  </a>
+          <h3 className="font-bold text-lg mb-3">
+            Adresses ({totalLocations})
+          </h3>
+          {restaurant.succursales
+            .slice(0, maxAddressesToShow)
+            .map((location, index) => (
+              <div key={index}>
+                <div className="flex items-center mb-2">
+                  <MapPin className="mr-2 inline shrink-0" size={20} />
+                  <span>{formatAddress({ succursales: [location] }, t)}</span>
                 </div>
-              )}
-            </div>
+                {location.phoneNumber && (
+                  <div className="mb-3 flex items-center">
+                    <PhoneCall className="mr-2 inline shrink-0" size={20} />
+                    <a href={`tel:${location.phoneNumber}`}>
+                      {formatPhoneNumber(location.phoneNumber)}
+                    </a>
+                  </div>
+                )}
+                {index < maxAddressesToShow - 1 &&
+                  index < totalLocations - 1 && (
+                    <div className="border-b border-gray-200 mb-3"></div>
+                  )}
+              </div>
+            ))}
+          {totalLocations > maxAddressesToShow && (
+            <button
+              onClick={() => setModalOpen(true)}
+              className="text-sm hover:text-teal-500 underline mt-2"
+            >
+              Voir tout
+            </button>
           )}
-          <button
-            onClick={() => setModalOpen(true)}
-            className="text-sm hover:text-teal-500 underline mt-2"
-          >
-            {t("restaurants.showMoreLocations", { count: totalLocations })}
-          </button>
         </div>
       )}
 
