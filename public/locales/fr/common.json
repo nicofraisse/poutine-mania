@@ -288,7 +288,7 @@
     "newRestaurantHeader": "Ajouter un restaurant",
     "phoneLabel": "Numéro de téléphone (optionnel)",
     "restaurantLabel": "Nom du restaurant",
-    "succuresalesLabel": "Succursales",
+    "succursalesLabel": "Succursale(s)",
     "validation": {
       "address": "Veuillez indiquer l'adresse de ce restaurant",
       "categories": "Vous devez ajouter au moins 1 catégorie",
@@ -320,6 +320,9 @@
   "restaurants": {
     "forSearch": "pour \"{{search}}\"",
     "h1": "Carte des poutineries - Tous les restaurants à poutine",
+    "locationModal": {
+      "title": "Toutes les adresses de {{name}}"
+    },
     "metaDescription": "Parcourez la carte interactive de poutineries au Québec et Canada. Filtrez par note, prix ou catégorie pour dénicher la poutine parfaite près de chez vous.",
     "noResults": "0 résultats",
     "pageTitle": "Carte des poutines | Poutine Mania",
@@ -328,16 +331,9 @@
       "header": "Restaurant créé!",
       "seeRestaurantButton": "Voir le restaurant"
     },
-    "locationModal": {
-      "title": "Toutes les adresses de {{name}}"
-    },
-    "showMoreLocations": "Voir toutes les adresses ({{count}})",
-    "toggleMap": {
-      "hide": "Cacher la carte",
-      "show": "Voir sur la carte"
-    },
     "resultsCount": "{{count}} poutinerie",
     "resultsCount_plural": "{{count}} poutineries",
+    "showMoreLocations": "Voir toutes les adresses ({{count}})",
     "sortOrders": {
       "asc": "Croissant",
       "desc": "Décroissant"
@@ -348,7 +344,11 @@
       "popularity": "Popularité"
     },
     "succursalesCount": "{{count}} adresse",
-    "succursalesCount_plural": "{{count}} adresses"
+    "succursalesCount_plural": "{{count}} adresses",
+    "toggleMap": {
+      "hide": "Cacher la carte",
+      "show": "Voir sur la carte"
+    }
   },
   "restaurantsFilters": {
     "applyFilters": "Valider",

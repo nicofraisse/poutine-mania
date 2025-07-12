@@ -49,6 +49,7 @@ export const RateRestaurantProvider = ({ children }) => {
           onClose={() => setRateRestaurantOpen(false)}
           closeIcon={<X />}
           center
+          blockScroll={false}
         >
           <RateRestaurantNew
             onSubmit={() => {
