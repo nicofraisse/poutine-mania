@@ -363,6 +363,8 @@
     "sortByTitle": "Sort by"
   },
   "reviewCard": {
+    "delete": "Delete",
+    "edit": "Edit",
     "noComment": "No comment",
     "poutinePhotoAlt": "user poutine photo",
     "reviewCount": "{{count}} reviews",

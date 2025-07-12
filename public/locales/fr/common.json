@@ -362,6 +362,8 @@
     "sortByTitle": "Tri par"
   },
   "reviewCard": {
+    "delete": "Supprimer",
+    "edit": "Modifier",
     "noComment": "Aucun commentaire",
     "poutinePhotoAlt": "photo de poutine utilisateur",
     "reviewCount": "{{count}} avis",

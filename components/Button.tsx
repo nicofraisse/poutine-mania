@@ -103,9 +103,7 @@ const Button = ({
         <div
           className={classNames(
             "flex items-center justify-center relative z-10",
-            {
-              "gap-2": variant !== VariantColor.light2,
-            },
+
             {
               "opacity-0": loading,
             }
@@ -129,6 +127,7 @@ const Button = ({
   return (
     <button
       className={classNames(
+        "flex items-center justify-center",
         bgColorClass[variant],
         borderClass[variant],
         textColorClass[variant],
