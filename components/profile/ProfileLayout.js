@@ -36,7 +36,7 @@ const Tab = ({ isSelected, href, title, description }) => (
   </Link>
 );
 
-const ProfileLayout = ({ children }) => {
+export const ProfileLayout = ({ children }) => {
   const { t } = useTranslation();
   const router = useRouter();
   const { id } = router.query;
@@ -89,5 +89,3 @@ const ProfileLayout = ({ children }) => {
     </div>
   );
 };
-
-export default ProfileLayout;

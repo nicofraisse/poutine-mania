@@ -2,7 +2,7 @@ import { Spinner } from "components/Spinner";
 import { useGet } from "lib/useAxios";
 import { useState, useRef, useEffect } from "react";
 import classNames from "classnames";
-import ProfileReviewCard from "../ProfileReviewCard";
+import { ProfileReviewCard } from "../ProfileReviewCard";
 import { useTranslation } from "next-i18next";
 
 export function RecentActivity({ heightClass, isScrollable }) {

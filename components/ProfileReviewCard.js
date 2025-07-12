@@ -198,5 +198,3 @@ export const ProfileReviewCard = ({ review, isIndex, userName, loading }) => {
     </div>
   );
 };
-
-export default ProfileReviewCard;

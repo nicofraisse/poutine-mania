@@ -3,8 +3,8 @@ import { useRouter } from "next/router";
 import Head from "next/head";
 import { useGet } from "../../../lib/useAxios";
 import { withI18n } from "../../../lib/withI18n";
-import UserLastReviews from "../../../components/profile/UserLastReviews";
-import ProfileLayout from "../../../components/profile/ProfileLayout";
+import { UserLastReviews } from "../../../components/profile/UserLastReviews";
+import { ProfileLayout } from "../../../components/profile/ProfileLayout";
 
 const UserProfileReviews = () => {
   const { query } = useRouter();

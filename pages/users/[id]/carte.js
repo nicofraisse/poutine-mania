@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import Head from "next/head";
 import { useGet } from "../../../lib/useAxios";
 import { withI18n } from "../../../lib/withI18n";
-import ProfileLayout from "../../../components/profile/ProfileLayout";
+import { ProfileLayout } from "../../../components/profile/ProfileLayout";
 import MapMap from "../../../components/Map";
 import { RestaurantCardHoverProvider } from "../../../components/context/RestaurantCardHoverProvider";
 

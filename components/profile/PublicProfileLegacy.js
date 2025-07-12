@@ -4,7 +4,7 @@ import { maxBy } from "lodash";
 import { useCurrentUser } from "../../lib/useCurrentUser";
 import { useGet } from "../../lib/useAxios";
 import { Spinner } from "../Spinner";
-import ProfileReviewCard from "../ProfileReviewCard";
+import { ProfileReviewCard } from "../ProfileReviewCard";
 import { Image } from "components/Image";
 
 const PublicProfile = ({ user }) => {

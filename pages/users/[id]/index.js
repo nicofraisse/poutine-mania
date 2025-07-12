@@ -6,7 +6,7 @@ import { useGet } from "../../../lib/useAxios";
 import { EmptyState } from "../../../components/EmptyState";
 import { useTranslation } from "next-i18next";
 import { withI18n } from "../../../lib/withI18n";
-import ProfileLayout from "../../../components/profile/ProfileLayout";
+import { ProfileLayout } from "../../../components/profile/ProfileLayout";
 
 const UserProfileRankings = () => {
   const { t } = useTranslation();

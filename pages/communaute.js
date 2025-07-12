@@ -1,5 +1,5 @@
 import { Spinner } from "../components/Spinner";
-import ProfileReviewCard from "../components/ProfileReviewCard";
+import { ProfileReviewCard } from "../components/ProfileReviewCard";
 import { useGet } from "../lib/useAxios";
 import { useEffect, useState } from "react";
 import { MapPin } from "react-feather";

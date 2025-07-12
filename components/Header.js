@@ -155,7 +155,7 @@ const Header = ({ toggleMobileSidebar }) => {
         className={classNames(
           "flex justify-between items-center px-4 z-10 py-3 gap-2 sm:gap-3",
           {
-            "absolute top-0 left-0 w-full z-50": isHomepage,
+            "absolute top-0 left-0 w-full": isHomepage,
             "bg-neutral-50": !isHomepage,
           }
         )}

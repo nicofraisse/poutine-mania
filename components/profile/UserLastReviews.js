@@ -1,9 +1,9 @@
 import React from "react";
-import ProfileReviewCard from "../ProfileReviewCard";
+import { ProfileReviewCard } from "../ProfileReviewCard";
 
-const UserLastReviews = ({ reviews, user, loading }) => {
+export const UserLastReviews = ({ reviews, user, loading }) => {
   return (
-    <div>
+    <div className="p-3 xs:p-4 sm:p-0">
       {(reviews || [{}, {}, {}, {}]).map((review, i) => (
         <ProfileReviewCard
           review={review}
@@ -15,5 +15,3 @@ const UserLastReviews = ({ reviews, user, loading }) => {
     </div>
   );
 };
-
-export default UserLastReviews;
