@@ -54,6 +54,7 @@ export const LoginFormProvider = ({ children }) => {
         open={loginOpen}
         onClose={() => toggleLogin(false)}
         closeIcon={<X />}
+        blockScroll={false}
         center
       >
         <div className="flex flex-col items-center">
@@ -81,6 +82,7 @@ export const LoginFormProvider = ({ children }) => {
           setTimeout(() => setEmailToConfirm(null), 500);
         }}
         closeIcon={<X />}
+        blockScroll={false}
         center
       >
         {emailToConfirm ? (

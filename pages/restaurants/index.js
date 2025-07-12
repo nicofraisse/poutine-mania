@@ -212,6 +212,7 @@ const Restaurants = () => {
         open={showCreateModal}
         onClose={handleCloseCreateModal}
         center
+        blockScroll={false}
         classNames={{
           overlay: "customOverlay",
           modal: "customModal",

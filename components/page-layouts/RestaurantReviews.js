@@ -305,6 +305,7 @@ const RestaurantReviews = ({ restaurant }) => {
           setReviewToDelete(null);
           setDeleteFromEatenlist(true);
         }}
+        blockScroll={false}
       >
         <div className="sm:w-xs p-2">
           <div className="text-3xl font-black mb-3">

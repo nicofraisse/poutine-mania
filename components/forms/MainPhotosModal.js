@@ -103,6 +103,7 @@ export const MainPhotosModal = ({ isOpen, onClose, restaurant, onUpdate }) => {
       open={isOpen}
       onClose={onClose}
       closeIcon={<X />}
+      blockScroll={false}
       center
     >
       <div className="p-6">

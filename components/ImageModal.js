@@ -58,6 +58,7 @@ export const ImageModal = ({
       open={isOpen}
       onClose={onClose}
       closeIcon={<X />}
+      blockScroll={false}
       center
     >
       <h2 className="text-center mb-4 px-8">

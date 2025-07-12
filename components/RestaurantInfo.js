@@ -134,6 +134,7 @@ export const RestaurantInfo = ({ showMap, restaurant, setShowMap }) => {
         open={modalOpen}
         onClose={() => setModalOpen(false)}
         closeIcon={<X />}
+        blockScroll={false}
         center
       >
         <h2 className="text-lg font-bold mb-4">
