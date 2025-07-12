@@ -127,7 +127,7 @@ const Button = ({
   return (
     <button
       className={classNames(
-        "flex items-center justify-center",
+        "inline-flex items-center justify-center",
         bgColorClass[variant],
         borderClass[variant],
         textColorClass[variant],
