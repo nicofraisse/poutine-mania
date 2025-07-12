@@ -87,7 +87,7 @@ export const EatenRestaurantCard = ({ restaurant }) => {
           ) : (
             <>
               <MessageCircle className="inline text-stone-500 mr-1" size={18} />
-              <span className="text-sm text-stone-500 inline">
+              <span className="text-sm text-stone-500 inline whitespace-pre-wrap">
                 {restaurant.reviews.length > 0 &&
                 restaurant.reviews.find((rev) => rev.comment) ? (
                   <>

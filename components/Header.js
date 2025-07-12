@@ -177,7 +177,7 @@ const Header = ({ toggleMobileSidebar }) => {
                   "mr-2 min-w-10 sm:mr-3 sm:min-w-12 cursor-pointer hover:opacity-70",
                   { "text-white": isHomepage }
                 )}
-                onClick={() => toggleMobileSidebar()}
+                onClick={toggleMobileSidebar}
                 size={28}
               />
             )}

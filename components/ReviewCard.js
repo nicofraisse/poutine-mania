@@ -10,6 +10,7 @@ import Color from "color";
 import classNames from "classnames";
 import { ImageModal } from "./ImageModal";
 import { useTranslation } from "next-i18next";
+import Button, { VariantColor } from "./Button";
 
 export const RatingSection = ({ review, showDate = true }) => {
   const { t } = useTranslation();
@@ -215,20 +216,27 @@ export const ReviewCard = ({
           </div>
 
           {(review.userId === currentUser?._id || currentUser?.isAdmin) && (
-            <div className="mt-3 text-left text-sm text-slate-400">
-              <button
-                className="hover:text-blue-500"
+            <div className="mt-3 flex space-x-3">
+              <Button
+                variant={VariantColor.light2}
+                width="xs"
+                height="sm"
+                className="text-sm"
                 onClick={() => handleEdit(review)}
               >
-                <Edit size={16} />
-              </button>
-              <span className="font-normal mx-1"></span>
-              <button
-                className="hover:text-red-600"
+                <Edit size={16} className="mr-2" />
+                {t("reviewCard.edit")}
+              </Button>
+              <Button
+                variant={VariantColor.light2}
+                width="xs"
+                height="sm"
+                className="text-sm"
                 onClick={() => handleDelete(review._id)}
               >
-                <Trash size={16} />
-              </button>
+                <Trash size={16} className="mr-2" />
+                {t("reviewCard.delete")}
+              </Button>
             </div>
           )}
         </div>

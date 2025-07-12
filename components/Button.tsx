@@ -13,6 +13,7 @@ export const VariantColor = {
   danger: "danger",
   blue: "blue",
   transparent: "transparent",
+  light2: "light2",
 };
 
 const bgColorClass = {
@@ -26,6 +27,7 @@ const bgColorClass = {
   [VariantColor.lightLink]: "bg-none",
   [VariantColor.danger]: "bg-gradient-to-tr from-red-600 to-red-400",
   [VariantColor.transparent]: "bg-gray-400 bg-opacity-50",
+  [VariantColor.light2]: "hover:bg-slate-100",
 };
 
 const hasBorder = {
@@ -39,6 +41,7 @@ const hasBorder = {
   [VariantColor.lightLink]: false,
   [VariantColor.danger]: false,
   [VariantColor.transparent]: false,
+  [VariantColor.light2]: true,
 };
 
 const borderClass = {
@@ -51,6 +54,7 @@ const borderClass = {
   [VariantColor.white2]: "border-2 border-gray-300",
   [VariantColor.lightLink]: "",
   [VariantColor.danger]: "",
+  [VariantColor.light2]: "border border-slate-200",
 };
 
 const textColorClass = {
@@ -64,6 +68,7 @@ const textColorClass = {
   [VariantColor.lightLink]: "text-gray-500 hover:text-gray-600",
   [VariantColor.danger]: "text-white",
   [VariantColor.transparent]: "text-white",
+  [VariantColor.light2]: "text-slate-400 hover:text-slate-500",
 };
 
 const heightClass = {
@@ -99,6 +104,9 @@ const Button = ({
           className={classNames(
             "flex items-center justify-center relative z-10",
             {
+              "gap-2": variant !== VariantColor.light2,
+            },
+            {
               "opacity-0": loading,
             }
           )}
@@ -127,9 +135,16 @@ const Button = ({
         heightClass[height],
         widthClass[width],
 
-        "font-bold select-none relative transition-all duration-150",
+        {
+          "font-bold": variant !== VariantColor.light2,
+          "font-normal": variant === VariantColor.light2,
+        },
+        "select-none relative transition-all duration-150",
         "active:scale-95",
-        "before:content-[''] before:absolute before:inset-0 before:bg-black before:opacity-0 before:transition-opacity before:duration-150 hover:before:opacity-20",
+        {
+          "before:content-[''] before:absolute before:inset-0 before:bg-black before:opacity-0 before:transition-opacity before:duration-150 hover:before:opacity-20":
+            variant !== VariantColor.light2,
+        },
         {
           "before:-m-0.5": hasBorder[variant],
           "opacity-50 cursor-not-allowed": disabled,
@@ -137,8 +152,10 @@ const Button = ({
           "opacity-100": !loading,
           "rounded-full": rounded,
           "before:rounded-full": rounded,
-          "rounded-lg": !rounded,
-          "before:rounded-lg": !rounded,
+          "rounded-lg": !rounded && variant !== VariantColor.light2,
+          "before:rounded-lg": !rounded && variant !== VariantColor.light2,
+          rounded: !rounded && variant === VariantColor.light2,
+          "before:rounded": !rounded && variant === VariantColor.light2,
         },
         className
       )}

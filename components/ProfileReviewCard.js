@@ -1,7 +1,8 @@
 import Link from "next/link";
 import React, { useState } from "react";
-import { Edit3, User } from "react-feather";
+import { Edit, Edit3, User, Trash } from "react-feather";
 import { Image } from "./Image";
+import Button, { VariantColor } from "./Button";
 import { formatDateAgo } from "lib/formatDateAgo";
 
 import { useCurrentUser } from "../lib/useCurrentUser";
@@ -131,7 +132,7 @@ export const ProfileReviewCard = ({ review, isIndex, userName, loading }) => {
       <div className="text-slate-700 mt-2 mb-8 border border-slate-100 shadow rounded-md p-3 sm:p-4 bg-white">
         <RatingSection review={review} showDate={false} />
         {review.comment && (
-          <p className="rounded-xl text-sm px-1 w-full text-slate-600">
+          <p className="rounded-xl text-sm px-1 w-full text-slate-600 whitespace-pre-wrap">
             {review.comment}
           </p>
         )}
@@ -171,19 +172,27 @@ export const ProfileReviewCard = ({ review, isIndex, userName, loading }) => {
           </div>
         )}
         {(review.userId === currentUser?._id || currentUser?.isAdmin) && (
-          <div className="mt-3 flex space-x-4">
-            <button
-              className="text-sm text-slate-400 hover:text-slate-500"
+          <div className="mt-3 flex space-x-3">
+            <Button
+              variant={VariantColor.light2}
+              width="xs"
+              height="sm"
+              className="text-sm"
               onClick={() => handleEdit(review)}
             >
+              <Edit size={16} className="mr-2" />
               {t("profileReviewCard.edit")}
-            </button>
-            <button
-              className="text-sm text-slate-400 hover:text-slate-500"
+            </Button>
+            <Button
+              variant={VariantColor.light2}
+              width="xs"
+              height="sm"
+              className="text-sm"
               onClick={() => handleDelete(review._id)}
             >
+              <Trash size={16} className="mr-2" />
               {t("profileReviewCard.delete")}
-            </button>
+            </Button>
           </div>
         )}
       </div>
