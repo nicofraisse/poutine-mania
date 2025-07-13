@@ -16,28 +16,44 @@ export const RatingSection = ({ review, showDate = true }) => {
   const { t } = useTranslation();
 
   const miniRatings = (
-    <div className="text-xs sm:text-sm inline-flex text-slate-500 bg-slate-50 rounded px-1 mb-2 py-1 sm:p-0 sm:m-0 sm:bg-transparent">
+    <div className="text-xs sm:text-sm inline-flex gap-[4px] items-center text-slate-500 bg-slate-50 rounded pr-2 mb-2 sm:p-0 sm:m-0 sm:bg-transparent">
+      {review.finalRating && (
+        <div
+          className="mr-1 font-bold text-white px-2 py-[2px] rounded text-sm sm:text-base sm:hidden"
+          style={{
+            backgroundColor: Color(ratingColors[Math.floor(review.finalRating)])
+              .darken(0.4)
+              .desaturate(0.3),
+          }}
+        >
+          {review.finalRating}
+          <span className="text-white font-normal text-xs text-opacity-80 ml-[2px] -mb-[2px]">
+            /10
+          </span>
+        </div>
+      )}
+
       {review.friesRating && (
-        <div className="mr-[4px]">
+        <div>
           {t("ratingSection.fries")}{" "}
           <span className="text-orange-500">{review.friesRating}</span>
         </div>
       )}
       {review.cheeseRating && (
-        <div className="mr-[4px]">
+        <div>
           {review.friesRating && "·"} {t("ratingSection.cheese")}{" "}
           <span className="text-orange-500">{review.cheeseRating}</span>
         </div>
       )}
       {review.sauceRating && (
-        <div className="mr-[4px]">
+        <div>
           {(review.friesRating || review.cheeseRating) && "·"}{" "}
           {t("ratingSection.sauce")}{" "}
           <span className="text-orange-500">{review.sauceRating}</span>
         </div>
       )}
       {review.portionRating && (
-        <div className="mr-[4px]">
+        <div>
           {(review.friesRating || review.cheeseRating || review.sauceRating) &&
             "·"}{" "}
           {t("ratingSection.portion")}{" "}
@@ -45,7 +61,7 @@ export const RatingSection = ({ review, showDate = true }) => {
         </div>
       )}
       {review.serviceRating && (
-        <div className="mr-[4px]">
+        <div>
           {(review.friesRating ||
             review.cheeseRating ||
             review.sauceRating ||
@@ -68,7 +84,7 @@ export const RatingSection = ({ review, showDate = true }) => {
       >
         <div className="sm:flex flex-wrap">
           <span
-            className="py-[1px] px-[6px] bg-green-200 rounded mr-2 text-lg text-white flex items-center"
+            className="py-[1px] px-[6px] bg-green-200 rounded mr-2 text-lg text-white items-center hidden sm:flex"
             style={{
               backgroundColor: Color(
                 ratingColors[Math.floor(review.finalRating)]
@@ -82,12 +98,8 @@ export const RatingSection = ({ review, showDate = true }) => {
               /10
             </span>
           </span>
-          {(review.friesRating ||
-            review.cheeseRating ||
-            review.sauceRating ||
-            review.portionRating) && (
-            <div className="mr-2 flex items-center">{miniRatings}</div>
-          )}
+
+          <div className="mr-2 flex items-center">{miniRatings}</div>
         </div>
 
         {showDate && (

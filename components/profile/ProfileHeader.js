@@ -89,7 +89,24 @@ const ProfileHeader = ({ user }) => {
             )}
           </div>
 
-          <div className="sm:hidden flex justify-center">
+          <p className="relative text-xs text-center sm:text-justify sm:text-sm text-slate-500 whitespace-pre-line break-words sm:w-3/4">
+            {isSkeleton ? (
+              <>
+                <Skeleton />
+                <Skeleton />
+                <Skeleton />
+              </>
+            ) : (
+              <Linkify legacyBehaviorify>
+                {user.bio !== "undefined" && user.bio}
+              </Linkify>
+            )}
+          </p>
+          <div
+            className={classNames("sm:hidden flex justify-center", {
+              "mt-4": !!user?.bio,
+            })}
+          >
             {isSkeleton ? (
               <Skeleton />
             ) : (
@@ -106,20 +123,6 @@ const ProfileHeader = ({ user }) => {
               )
             )}
           </div>
-
-          <p className="relative text-xs text-center sm:text-justify sm:text-sm text-slate-500 whitespace-pre-line break-words sm:w-3/4">
-            {isSkeleton ? (
-              <>
-                <Skeleton />
-                <Skeleton />
-                <Skeleton />
-              </>
-            ) : (
-              <Linkify legacyBehaviorify>
-                {user.bio !== "undefined" && user.bio}
-              </Linkify>
-            )}
-          </p>
         </div>
       </div>
       <div
