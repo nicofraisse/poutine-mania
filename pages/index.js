@@ -7,7 +7,6 @@ import { throttle } from "lodash";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useLoginForm } from "../components/context/LoginFormProvider";
-import DefaultSEO from "../components/DefaultSeo";
 import { useTranslation } from "next-i18next";
 import { withI18n } from "../lib/withI18n";
 
@@ -46,10 +45,51 @@ const HomePage = ({ restaurants }) => {
   return (
     <>
       <Head>
-        <title>Poutine Mania – La communauté de la poutine</title>
         <title>{t("seo.home.title")}</title>
         <meta name="description" content={t("seo.home.description")} />
-        <DefaultSEO locale={locale} />
+        <meta
+          name="image"
+          content={`${process.env.NEXT_PUBLIC_APP_URL}/og-image-${
+            locale === "en" ? "en" : "fr"
+          }.png`}
+        />
+
+        <meta property="fb:app_id" content="572135587608476" />
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:url"
+          content={
+            locale === "en"
+              ? `${process.env.NEXT_PUBLIC_APP_URL}/en`
+              : process.env.NEXT_PUBLIC_APP_URL
+          }
+        />
+        <meta property="og:title" content={t("seo.home.title")} />
+        <meta property="og:description" content={t("seo.home.description")} />
+        <meta
+          property="og:image"
+          content={`${process.env.NEXT_PUBLIC_APP_URL}/og-image-${
+            locale === "en" ? "en" : "fr"
+          }.png`}
+        />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta
+          name="twitter:url"
+          content={
+            locale === "en"
+              ? `${process.env.NEXT_PUBLIC_APP_URL}/en`
+              : process.env.NEXT_PUBLIC_APP_URL
+          }
+        />
+        <meta name="twitter:title" content={t("seo.home.title")} />
+        <meta name="twitter:description" content={t("seo.home.description")} />
+        <meta
+          name="twitter:image"
+          content={`${process.env.NEXT_PUBLIC_APP_URL}/twitter-image-${
+            locale === "en" ? "en" : "fr"
+          }.png`}
+        />
       </Head>
 
       {/* <FeaturesIntro /> */}
