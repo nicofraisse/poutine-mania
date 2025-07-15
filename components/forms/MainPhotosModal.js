@@ -71,7 +71,7 @@ export const MainPhotosModal = ({ isOpen, onClose, restaurant, onUpdate }) => {
   const handleSave = async () => {
     setSaving(true);
     try {
-      await axios.post(`/api/restaurants/${restaurant._id}/update`, {
+      await axios.post(`/api/restaurants/${restaurant.slug}/update`, {
         ...restaurant,
         mainPhotos: mainPhotos,
       });
