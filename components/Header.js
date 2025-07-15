@@ -156,7 +156,7 @@ const Header = ({ toggleMobileSidebar }) => {
     >
       <div
         className={classNames(
-          "flex justify-between items-center px-4 z-10 py-3 gap-2 sm:gap-3",
+          "flex justify-between items-center px-4 z-[110] py-3 gap-2 sm:gap-3",
           {
             "absolute top-0 left-0 w-full": isHomepage,
             "bg-neutral-50": !isHomepage,
@@ -279,7 +279,7 @@ const Header = ({ toggleMobileSidebar }) => {
                 containerClassName="flex"
               />
             ) : currentUser ? (
-              <div className="relative z-50">
+              <div className="relative z-[200]">
                 <div
                   className="h-[44px] w-[44px] bg-gray-400 rounded-full cursor-pointer hover:brightness-110 transition duration-150 flex items-center justify-center shadow"
                   onClick={() => setDropdownOpen(!dropdownOpen)}

@@ -19,7 +19,7 @@ export const LanguageSwitch = ({ isHomepage }) => {
   };
 
   return (
-    <div className="relative z-50">
+    <div className="relative z-[200]">
       <button
         ref={toggleRef}
         onClick={() => setDropdownOpen(!dropdownOpen)}
