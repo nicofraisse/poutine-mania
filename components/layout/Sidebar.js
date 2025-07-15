@@ -99,13 +99,13 @@ export const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
     <>
       {showMobileSidebar && (
         <div
-          className="bg-black fixed h-screen w-screen z-30 bg-opacity-40 block lg:hidden"
+          className="bg-black fixed h-screen w-screen z-[250] bg-opacity-40 block lg:hidden"
           onClick={toggleMobileSidebar}
         />
       )}
       <div
         className={classNames(
-          "fixed lg:sticky lg:top-0 lg:block lg:min-w-[228px] h-screen bg-white z-50 transform transition-transform duration-300 ease-in-out",
+          "fixed lg:sticky lg:top-0 lg:block lg:min-w-[228px] h-screen bg-white z-[500] transform transition-transform duration-300 ease-in-out",
           {
             "translate-x-0": showMobileSidebar,
             "-translate-x-full lg:translate-x-0": !showMobileSidebar,
