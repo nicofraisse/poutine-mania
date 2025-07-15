@@ -5,7 +5,18 @@ import Head from "next/head";
 import classNames from "classnames";
 import { X, Edit3 } from "react-feather";
 import Modal from "react-responsive-modal";
-import Map from "components/Map";
+import dynamic from "next/dynamic";
+
+const Map = dynamic(() => import("components/Map"), {
+  ssr: false,
+  loading: () => <MapLoading />,
+});
+
+const MapLoading = () => {
+  return (
+    <div className="w-full h-full bg-slate-100 animate-pulse flex items-center justify-center"></div>
+  );
+};
 import RestaurantCard from "components/RestaurantCard";
 import RestaurantIntrouvable from "components/RestaurantIntrouvable";
 import Button from "components/Button"; // Assuming this component exists
