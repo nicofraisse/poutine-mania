@@ -6,17 +6,6 @@ import classNames from "classnames";
 import { X, Edit3 } from "react-feather";
 import Modal from "react-responsive-modal";
 import dynamic from "next/dynamic";
-
-const Map = dynamic(() => import("components/Map"), {
-  ssr: false,
-  loading: () => <MapLoading />,
-});
-
-const MapLoading = () => {
-  return (
-    <div className="w-full h-full bg-slate-100 animate-pulse flex items-center justify-center"></div>
-  );
-};
 import RestaurantCard from "components/RestaurantCard";
 import RestaurantIntrouvable from "components/RestaurantIntrouvable";
 import Button from "components/Button"; // Assuming this component exists
@@ -29,6 +18,17 @@ import { RestaurantCardHoverProvider } from "components/context/RestaurantCardHo
 import { flatten } from "lodash";
 import Skeleton from "react-loading-skeleton";
 import { withI18n } from "../../lib/withI18n";
+
+const Map = dynamic(() => import("components/Map"), {
+  ssr: false,
+  loading: () => <MapLoading />,
+});
+
+const MapLoading = () => {
+  return (
+    <div className="w-full h-full bg-slate-100 animate-pulse flex items-center justify-center"></div>
+  );
+};
 
 const Restaurants = () => {
   const { t } = useTranslation();
