@@ -100,12 +100,13 @@ handler.get(async (req, res) => {
     {
       $limit: limit ? Number(limit) : Number.MAX_SAFE_INTEGER,
     },
-    {
-      $sort: {
-        [sort]: Number(order) || 1,
-      },
-    },
   ];
+
+  const sortStage = {
+    $sort: {
+      [sort]: Number(order) || 1,
+    },
+  };
 
   const userLookupStage = {
     $lookup: {
@@ -144,7 +145,12 @@ handler.get(async (req, res) => {
   } else {
     result = await db
       .collection("restaurants")
-      .aggregate([...baseAggregator, userLookupStage, unwindCreatorStage])
+      .aggregate([
+        ...baseAggregator,
+        sortStage,
+        userLookupStage,
+        unwindCreatorStage,
+      ])
       .toArray();
   }
   // eslint-disable-next-line no-unused-vars
