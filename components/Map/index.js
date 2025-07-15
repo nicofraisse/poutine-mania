@@ -52,14 +52,21 @@ const MarkerAndPopup = ({
   };
 
   const theRef = useRef();
+  const rating = restaurant.avgFinalRating ?? restaurant.avgRating;
 
   if (theRef.current) {
-    theRef.current.parentNode.style.zIndex = isHovered ? 100 : 1;
+    let baseZIndex = 1;
+    if (restaurant.reviewCount > 0) {
+      if (rating >= 7) {
+        baseZIndex = 3;
+      } else {
+        baseZIndex = 2;
+      }
+    }
+    theRef.current.parentNode.style.zIndex = isHovered ? 100 : baseZIndex;
   }
 
   const image = getMainPhoto(restaurant);
-  // Handle both avgFinalRating and avgRating
-  const rating = restaurant.avgFinalRating ?? restaurant.avgRating;
 
   return (
     <div>
@@ -93,6 +100,7 @@ const MarkerAndPopup = ({
           ></div>
         ) : (
           <div
+            ref={theRef}
             className={classNames(
               "transition-transform duration-200",
               enableFlyTo && "transform hover:scale-125",
@@ -147,7 +155,6 @@ const MarkerAndPopup = ({
                   "transform scale-125": !enableFlyTo && isHovered,
                 }
               )}
-              ref={theRef}
             />
           </div>
         )}
