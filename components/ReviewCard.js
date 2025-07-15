@@ -12,12 +12,12 @@ import { ImageModal } from "./ImageModal";
 import { useTranslation } from "next-i18next";
 import Button, { VariantColor } from "./Button";
 
-export const RatingSection = ({ review, showDate = true }) => {
+export const RatingSection = ({ review, showDate = true, showFinalRating }) => {
   const { t } = useTranslation();
 
   const miniRatings = (
     <div className="text-xs sm:text-sm inline-flex gap-[4px] items-center text-slate-500 bg-slate-50 rounded pr-2 mb-2 sm:p-0 sm:m-0 sm:bg-transparent">
-      {review.finalRating && (
+      {showFinalRating && review.finalRating && (
         <div
           className="mr-1 font-bold text-white px-2 py-[2px] rounded text-sm sm:text-base sm:hidden"
           style={{
@@ -26,7 +26,7 @@ export const RatingSection = ({ review, showDate = true }) => {
               .desaturate(0.3),
           }}
         >
-          {review.finalRating}
+          {formatRating(review.finalRating)}
           <span className="text-white font-normal text-xs text-opacity-80 ml-[2px] -mb-[2px]">
             /10
           </span>
@@ -188,7 +188,7 @@ export const ReviewCard = ({
           </span>
         </div>
         <div className="sm:basis-5/6 sm:w-5/6 pt-1 sm:pt-2 px-3 sm:px-0">
-          <RatingSection review={review} />
+          <RatingSection review={review} showFinalRating={false} />
           <p
             className="text-slate-500 font-light break-words text-sm sm:text-md whitespace-pre-wrap"
             style={{ width: 0, minWidth: "100%" }}

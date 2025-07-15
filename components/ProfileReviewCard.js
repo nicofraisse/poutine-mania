@@ -130,7 +130,7 @@ export const ProfileReviewCard = ({ review, isIndex, userName, loading }) => {
         </span>
       </div>
       <div className="text-slate-700 mt-2 mb-8 border border-slate-100 shadow rounded-md p-3 sm:p-4 bg-white">
-        <RatingSection review={review} showDate={false} />
+        <RatingSection review={review} showDate={false} showFinalRating />
         {review.comment && (
           <p className="rounded-xl text-sm px-1 w-full text-slate-600 whitespace-pre-wrap">
             {review.comment}
