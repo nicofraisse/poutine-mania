@@ -408,6 +408,7 @@
     "profile": "Mon profil",
     "rate": "Noter une poutine",
     "restaurants": "Carte des poutines",
+    "ranking": "Classement",
     "toTry": "À essayer"
   },
   "signup": {
@@ -518,6 +519,22 @@
       "error": "Une erreur est survenue: ",
       "loading": "Envoi...",
       "success": "Courriel envoyé!"
+    }
+  },
+  "ranking": {
+    "title": "Classement",
+    "pageTitle": "Classement des meilleures poutines | Poutine Mania",
+    "metaDescription": "Découvrez le classement des meilleures poutines au Québec et au Canada.",
+    "montreal": {
+      "heading": "Meilleure poutine à Montréal",
+      "pageTitle": "Meilleure poutine à Montréal | Poutine Mania",
+      "metaDescription": "Classement des meilleures poutines à Montréal selon la communauté.",
+      "intro": "Découvrez nos avis poutine et critiques poutine pour trouver la meilleure poutine de Montréal. Livraison poutine Montréal ou dégustation sur place, voici les restaurants de poutine incontournables."
+    },
+    "quebecCity": {
+      "heading": "Meilleure poutine à Québec",
+      "pageTitle": "Meilleure poutine à Québec | Poutine Mania",
+      "metaDescription": "Où manger la meilleure poutine à Québec? Consultez notre classement."
     }
   },
   "watchlist": {

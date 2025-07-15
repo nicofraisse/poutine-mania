@@ -9,6 +9,7 @@ import {
   Star,
   CheckCircle,
   Edit3,
+  Award,
 } from "react-feather";
 import { useRouter } from "next/router";
 import classNames from "classnames";
@@ -135,6 +136,12 @@ export const Sidebar = ({ showMobileSidebar, toggleMobileSidebar }) => {
               label={t("sidebar.restaurants")}
               icon={Map}
               href="/restaurants"
+            />
+            <Item
+              onClick={onClickItem}
+              label={t("sidebar.ranking")}
+              icon={Award}
+              href="/classement"
             />
             <Item
               onClick={onClickItem}
