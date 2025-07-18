@@ -1,25 +1,35 @@
-import Link from "next/link";
-import React from "react";
-import Button from "../../components/Button";
+import React, { useState, useEffect } from "react";
+import AdminStats from "../../components/AdminStats";
+import AdminLayout from "../../components/AdminLayout";
 import { withI18n } from "../../lib/withI18n";
 
 const index = () => {
+  const [stats, setStats] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const response = await fetch("/api/admin/stats");
+        if (response.ok) {
+          const data = await response.json();
+          setStats(data);
+        }
+      } catch (error) {
+        console.error("Failed to fetch admin stats:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchStats();
+  }, []);
+
   return (
-    <div className="p-6">
-      <div className="text-2xl font-bold mb-4">Admin Panel</div>
-      <div className="flex flex-wrap">
-        <Link legacyBehavior passHref href="/admin/restaurants">
-          <Button variant="secondary" height="sm" className="mr-2">
-            Restaurants
-          </Button>
-        </Link>
-        <Link legacyBehavior passHref href="/admin/users">
-          <Button variant="secondary" height="sm">
-            Users
-          </Button>
-        </Link>
-      </div>
-    </div>
+    <AdminLayout activeTab="statistics">
+      {loading && <div className="text-gray-500">Loading statistics...</div>}
+      {stats && !loading && <AdminStats stats={stats} />}
+    </AdminLayout>
   );
 };
 
