@@ -17,7 +17,7 @@ async function database(req, _, next) {
     cached.promise = mongoClient.connect().then((client) => {
       return {
         client,
-        db: client.db(process.env.MONGODB_DB),
+        db: client.db(process.env.DB_NAME),
       };
     });
     cached.conn = await cached.promise;
