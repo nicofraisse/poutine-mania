@@ -24,15 +24,10 @@ const Users = () => {
 
   useEffect(() => {
     axios
-      .get("/api/users")
+      .get("/api/admin/users")
       .then(({ data }) => {
         setLoading(false);
-        const sortedUsers = data.sort((a, b) => {
-          const dateA = new Date(a.createdAt);
-          const dateB = new Date(b.createdAt);
-          return dateB - dateA;
-        });
-        setUsers(sortedUsers);
+        setUsers(data);
       })
       .catch((err) => {
         setLoading(false);

@@ -6,6 +6,8 @@ backup
 .DS_Store
 .env.development
 .env.production
+.env.local
+.env.*
 docs
 CLAUDE.md
 CLAUDE_CONVENTIONS.md

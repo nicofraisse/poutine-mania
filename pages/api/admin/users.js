@@ -53,6 +53,9 @@ handler.get(async (req, res) => {
           "connectedAccount.accessTokenExpires": 0,
         },
       },
+      {
+        $sort: { createdAt: -1 },
+      },
     ])
     .toArray();
 
