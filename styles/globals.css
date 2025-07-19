@@ -39,6 +39,9 @@ a {
 .mapboxgl-compact {
   display: none !important;
 }
+.mapboxgl-ctrl-bottom-right {
+  z-index: 101 !important;
+}
 
 * {
   box-sizing: border-box;
